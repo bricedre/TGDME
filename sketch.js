@@ -14,7 +14,7 @@ let generateMode = false;
 let currentIndex = 0;
 
 function setup() {
-  createCanvas(cardW / 2, cardH / 2);
+  createCanvas(cardW / 1.5, cardH / 1.5);
 
   page = createGraphics(pageW, pageH);
   card = createGraphics(cardW, cardH);
