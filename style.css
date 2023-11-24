@@ -1,0 +1,100 @@
+:root{
+  --cardAngle : 2deg;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+
+    font-family : Verdana, Geneva, Tahoma, sans-serif;
+
+  }
+
+  nav{
+    background-color: #bfd8d8;
+    height: 10vh;
+    font-size: xx-large;
+    display: flex;
+    align-items: center;
+    padding : 0 2rem; 
+  }
+
+  #title{
+    flex: 1;
+  }
+
+  .navBtn{
+    font-size: 1rem;
+    margin-left: 1rem;
+    transition : all 0.2s ease-in-out;
+  }
+
+  .navBtn:hover{
+    background-color: #95b8b3;
+  }
+
+  .viewer{
+    display: flex;
+    flex : 1;
+    
+  }
+
+  main{
+    
+    display: grid;
+    place-items: center;
+    rotate: var(--cardAngle);
+    transition: scale 0.3s ease-in-out;
+  }
+
+  
+  main:hover{
+    scale: 1.4;
+  }
+
+  canvas {
+    box-shadow: 5px 5px 20px #0005;
+    border-radius: 1rem;
+    z-index : 1;
+  }
+
+  .panel{
+    display: flex;
+    flex-direction: column;
+    flex : 1;
+    align-items: center;
+    justify-content: center;
+    gap : 2rem;
+  }
+  
+  .cardBtns{
+    display: flex;
+  }
+
+  button {
+    padding: 0.5rem 2rem;
+    border-radius: 0.5rem;
+    border: none;
+    display: flex;
+    align-items: center;
+    font-size: 1.5rem;
+    cursor: pointer;
+    background-color: #FFF;
+    transition : all 0.2s ease-in-out;
+    
+    justify-content: center;
+  }
+
+  button:hover{
+    background-color: #EEE;
+  }
+
+  .bottomBar{
+    background-color: #bfd3d8;
+    height: 10vh;
+  }
