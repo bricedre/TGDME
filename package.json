@@ -1,0 +1,14 @@
+{
+    "name": "TGDME",
+    "version": "1.0.0",
+    "description": "This tool allows you to create easily printable pages of playing cards",
+    "main": "main.js",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "Brice ANDRÉ",
+    "license": "MIT",
+    "devDependencies": {
+      "electron": "23.1.3"
+    }
+  }
