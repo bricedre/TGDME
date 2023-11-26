@@ -20,22 +20,18 @@ function generatePages() {
   var lastIndex = 0;
   for (let i = 0; i < _allCardsIndices.length; i++) {
     var cardIndex = _allCardsIndices[i];
-    if (i % 9 == 0) page.background(255);
+    if (i % (colCount*rowCount) == 0) page.background(255);
     renderCardUsingTemplate(cardIndex);
     page.image(
       card,
-      marginX + ((i % 9) % 3) * cardW,
-      marginY + int((i % 9) / 3) * cardH,
+      marginX + ((i % (colCount*rowCount)) % colCount) * cardW,
+      marginY + int((i % (colCount*rowCount)) / colCount) * cardH,
       cardW,
       cardH
     );
-    if (i % 9 == 8) saveCanvas(page, "page" + int(i / 9) + ".jpg");
+    if (i % (colCount*rowCount) == (colCount*rowCount-1) || i === _allCardsIndices.length-1) saveCanvas(page, "page" + Math.floor(i/(colCount*rowCount)) + ".jpg");
     lastIndex = i;
   }
-
-  //SAVE INCOMPLETE PAGE
-  if (_allCardsIndices.length % 9 != 0)
-    saveCanvas(page, "page" + lastIndex + ".jpg");
 
 }
 

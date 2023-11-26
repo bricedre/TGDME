@@ -66,12 +66,10 @@ if(pageOrientation === "landscape"){
     pageH = _temp;
 }
 
-
-pageW = Math.round(pageW * 118.1);
-pageH = Math.round(pageW * 118.1);
-
 // DERIVED MARGINS & COLUMN/ROW COUNTS TO CENTER THE CARDS IN THE PAGE
 let colCount = Math.floor(pageW/cardW);
 let rowCount = Math.floor(pageH/cardH);
 let marginX = (pageW - cardW * colCount) / 2;
 let marginY = (pageH - cardH * rowCount) / 2;
+
+console.log(cardW, cardH, pageW, pageH, colCount, rowCount, marginX, marginY);
