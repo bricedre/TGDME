@@ -1,15 +1,3 @@
-let page;
-let card;
-
-let cardW = 760;
-let cardH = 1033;
-
-let pageW = 2408;
-let pageH = 3508;
-
-let marginX = (pageW - cardW * 3) / 2;
-let marginY = (pageH - cardH * 3) / 2;
-
 let generateMode = false;
 let currentIndex = 0;
 
