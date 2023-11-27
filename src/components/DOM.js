@@ -1,5 +1,6 @@
 import { generatePages } from "./render.js";
-import { currentIndex } from "../sketch.js";
+import { currentIndex } from "../app.js";
+import { goToNextCard, goToPreviousCard } from "./interactions.js";
 
 export const cardCounter = document.getElementById("pageCounter");
 export const rootElement = document.querySelector(":root");
@@ -11,6 +12,14 @@ export const prevCardBtn = document.getElementById("prevCardBtn");
 
 renderBtn.addEventListener("click", () => {
     generatePages();
+})
+
+nextCardBtn.addEventListener("click", () => {
+  goToNextCard();
+})
+
+prevCardBtn.addEventListener("click", () => {
+  goToPreviousCard();
 })
 
 export function updateCardCounter() {

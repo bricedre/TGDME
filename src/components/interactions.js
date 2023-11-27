@@ -1,6 +1,6 @@
 import { renderCardUsingTemplate } from "./render.js";
 import { rootElement, updateCardCounter } from "./DOM.js";
-import { currentIndex } from "../sketch.js";
+import { currentIndex } from "../app.js";
 
 export function keyPressed() {
   if (keyCode === LEFT_ARROW) {

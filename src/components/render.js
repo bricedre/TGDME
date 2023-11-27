@@ -1,6 +1,6 @@
-import { page, card, cardW, cardH, colCount, rowCount, marginX, marginY } from "./deckInfo.js";
-import { cards } from "./cards.js";
-import { generateMode } from "../sketch.js";
+import { page, card, cardW, cardH, colCount, rowCount, marginX, marginY } from "../assets/deckInfo.js";
+import { cards } from "../assets/cards.js";
+import { generateMode } from "../app.js";
 import { renderImageElement, renderStripElement, renderTextElement } from "./elements.js";
 // import { generatePDF } from "./pdf.js";
 

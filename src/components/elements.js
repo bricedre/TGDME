@@ -1,7 +1,7 @@
-import { cards } from "./cards";
-import { template } from "./template";
+import { cards } from "../assets/cards";
+import { template } from "../assets/template";
 import { assetsLibrary } from "./assets";
-import { card } from "./deckInfo";
+import { card } from "../assets/deckInfo";
 
 export function renderImageElement(p5, elementIndex, cardIndex) {
   let cardData = cards[cardIndex];
