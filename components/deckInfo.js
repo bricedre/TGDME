@@ -1,12 +1,12 @@
 // CANVASES
-let page;
-let card;
+export var page;
+export var card;
 
 // CARD FORMAT
 let cardFormat = 'poker'; // poker, square, domino, custom
 let cardOrientation = "portrait"; // portrait, Landscape
-let cardW = 10;
-let cardH = 10;
+export let cardW = 10;
+export let cardH = 10;
 switch (cardFormat) {
     case "poker":
         cardW = Math.round(6.3 * 118.1); // x300dpi
@@ -40,8 +40,8 @@ if(cardOrientation === "landscape"){
 // PAGE FORMAT
 let pageFormat = "A4" // A3, A4, A5, custom 
 let pageOrientation = "portrait"
-let pageW = 10;
-let pageH = 10;
+export let pageW = 10;
+export let pageH = 10;
 switch (pageFormat) {
     case "A3":
         pageW = Math.round(29.7 * 118.1);
@@ -67,9 +67,7 @@ if(pageOrientation === "landscape"){
 }
 
 // DERIVED MARGINS & COLUMN/ROW COUNTS TO CENTER THE CARDS IN THE PAGE
-let colCount = Math.floor(pageW/cardW);
-let rowCount = Math.floor(pageH/cardH);
-let marginX = (pageW - cardW * colCount) / 2;
-let marginY = (pageH - cardH * rowCount) / 2;
-
-console.log(cardW, cardH, pageW, pageH, colCount, rowCount, marginX, marginY);
+export let colCount = Math.floor(pageW/cardW);
+export let rowCount = Math.floor(pageH/cardH);
+export let marginX = (pageW - cardW * colCount) / 2;
+export let marginY = (pageH - cardH * rowCount) / 2;

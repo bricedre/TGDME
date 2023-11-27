@@ -1,50 +1,56 @@
-let generateMode = false;
-let currentIndex = 0;
+import {
+  card,
+  cardW,
+  cardH,
+  page,
+  pageW,
+  pageH,
+} from "./components/deckInfo.js";
+import { renderCardUsingTemplate, generatePages } from "./components/render.js";
+import { keyPressed } from "./components/interactions.js";
+import { preload } from "./components/preload.js";
+import { checkButtons, updateCardCounter } from "./components/DOM.js";
+import p5 from "p5";
 
-function setup() {
-  createCanvas(cardW / 1.5, cardH / 1.5);
+export let generateMode = false;
+export let currentIndex = 0;
 
-  page = createGraphics(pageW, pageH);
-  card = createGraphics(cardW, cardH);
+console.log("aqui");
 
-  imageMode(CORNER);
-  page.imageMode(CORNER);
-  card.imageMode(CENTER);
+const sketch = (p5) => {
+  console.log("new P5 element");
+  p5.setup = () => {
+    p5.createCanvas(cardW / 2, cardH / 2);
 
-  renderCardUsingTemplate(currentIndex);
-  updateCardCounter();
-  checkButtons();
-}
+    page = p5.createGraphics(pageW, pageH);
+    card = p5.createGraphics(cardW, cardH);
 
-function draw() {
-  if (!generateMode) {
-    image(card, 0, 0, width, height);
-  } else {
-    generatePages();
-    generateMode = false;
-    renderCardUsingTemplate(currentIndex);
-  }
-}
+    p5.imageMode(CORNER);
+    page.imageMode(CORNER);
+    card.imageMode(CENTER);
 
-function updateCardCounter(){
-  //INDEX
-  textAlign(CENTER, CENTER);
-  fill(0, 200);
-  if (cards.length > 0){
-    cardCounter.innerHTML = 
-      "Card #"+(currentIndex+1)+
-        " of " +
-        cards.length +
-        " cards - " +
-        (cards[currentIndex].quantity
-          ? cards[currentIndex].quantity + " copies"
-          : "1 copy");
-        }
-  else cardCounter.innerHTML = "NO CARD TO RENDER";
-}
+    renderCardUsingTemplate(p5, currentIndex);
+    updateCardCounter();
+    checkButtons();
+  };
 
+  p5.draw = () => {
+    if (!generateMode) {
+      p5.image(card, 0, 0, p5.width, p5.height);
+    } else {
+      generatePages();
+      generateMode = false;
+      renderCardUsingTemplate(currentIndex);
+    }
+  };
 
+  p5.preload = () => {
+    preload();
+  };
 
+  p5.keyPressed = () => {
+    keyPressed();
+  };
+};
 
-
-
+new p5(sketch);

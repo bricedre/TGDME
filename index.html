@@ -2,7 +2,6 @@
 <html lang="en">
   <head>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.8.0/p5.min.js"></script>
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.8.0/addons/p5.sound.min.js"></script> -->
     <link rel="stylesheet" type="text/css" href="style.css" />
     <meta charset="utf-8" />
     <title>The Greatest Deck Maker Ever</title>
@@ -16,8 +15,8 @@
       <button class="navBtn">
         SAVE DECK
       </button>
-      <button class="navBtn" onclick="triggerGeneration()">
-        RENDER PAGES
+      <button id="renderBtn" class="navBtn">
+        RENDER PAGES (PDF)
       </button></nav>
 
     <div class="viewer">
@@ -36,14 +35,6 @@
 
     <div class="bottomBar"></div>
 
-    <script src="assets.js"></script>
-    <script src="cards.js"></script>
-    <script src="elements.js"></script>
-    <script src="template.js"></script>
-    <script src="interactions.js"></script>
-    <script src="render.js"></script>
-    <script src="DOM.js"></script>
-    <script src="deckInfo.js"></script>
-    <script src="sketch.js"></script>
+    <script type="module" src="./sketch.js"></script>
   </body>
 </html>
