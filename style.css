@@ -2,6 +2,10 @@
   --cardAngle : 2deg;
 }
 
+*{
+  user-select: none;
+}
+
 html, body {
     margin: 0;
     padding: 0;
@@ -12,6 +16,7 @@ html, body {
     flex-direction: column;
 
     font-family : Verdana, Geneva, Tahoma, sans-serif;
+
 
   }
 

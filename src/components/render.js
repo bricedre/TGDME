@@ -1,15 +1,13 @@
 import {
-  page,
-  card,
   cardW,
   cardH,
   colCount,
   rowCount,
   marginX,
   marginY,
-} from "../../assets/deckInfo.js";
+} from "./deck/deckInfo.js";
 import { cards } from "./deck/cards.js";
-import { generateMode } from "../app.js";
+import { generateMode, card, page } from "../app.js";
 import {
   renderImageElement,
   renderStripElement,

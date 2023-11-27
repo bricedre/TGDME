@@ -1,8 +1,6 @@
 import {
-  card,
   cardW,
   cardH,
-  page,
   pageW,
   pageH,
 } from "./components/deck/deckInfo.js";
