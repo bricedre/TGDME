@@ -8,7 +8,7 @@ require("electron-reload")(__dirname, {
 });
 
 const createWindow = () => {
-  const mainWindow = new BrowserWindow({
+  let mainWindow = new BrowserWindow({
     width: 1500,
     height: 900,
     webPreferences: {
