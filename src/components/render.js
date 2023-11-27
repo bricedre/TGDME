@@ -45,6 +45,7 @@ export function generatePages(p5) {
     if (i % (colCount * rowCount) == 0){
       currentPage = p5.createGraphics(pageW, pageH);
       currentPage.background(255);
+      // currentPage.clear();
     }
     renderCardUsingTemplate(p5, cardIndex);
     currentPage.image(
@@ -58,10 +59,10 @@ export function generatePages(p5) {
     if (
       i % (colCount * rowCount) == colCount * rowCount - 1 ||
       i === _allCardsIndices.length - 1
-    )
-    
-    p5.save(currentPage, "page"+i+".jpg");
-    pages.push(currentPage);
+    ) {
+      //p5.save(currentPage, "page"+i+".png");
+      pages.push(currentPage);
+    }
   }
 
   generatePDF(pages);

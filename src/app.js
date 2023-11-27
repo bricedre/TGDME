@@ -21,7 +21,7 @@ const sketch = (p) => {
   console.log("new P5 element");
 
   p.setup = () => {
-    p.createCanvas(cardW / 2, cardH / 2);
+    p.createCanvas(window.innerHeight*0.6*cardW/cardH, window.innerHeight*0.6);
 
     p.page = p.createGraphics(pageW, pageH);
     p.card = p.createGraphics(cardW, cardH);

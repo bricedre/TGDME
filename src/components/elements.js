@@ -1,7 +1,7 @@
 import { cards } from "./deck/cards.js";
 import { template } from "./deck/template.js";
 import { assetsLibrary } from "./preload.js";
-import { cardW, cardH } from "./deck/deckInfo.js";
+import { cardW, cardH, resolution } from "./deck/deckInfo.js";
 
 export function renderImageElement(p5, elementIndex, cardIndex) {
   let cardData = cards[cardIndex];
@@ -102,7 +102,7 @@ export function renderTextElement(p5, elementIndex, cardIndex) {
         p5.card.textAlign(_align, p5.CENTER);
         if (_font !== "") p5.card.textFont(_font);
         else _font = p5.card.textFont("Verdana");
-        p5.card.textSize(_size);
+        p5.card.textSize(_size*resolution*0.1);
         p5.card.fill(_color);
 
         p5.card.text(_textToWrite, _position_x, _position_y);

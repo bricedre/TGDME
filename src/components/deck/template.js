@@ -9,7 +9,7 @@ export const template = [
     element: "IMAGE",
     src: "bg",
     type: "dynamic", // "dynamic" will look for src_0, src_1, src_2...
-    position_x: "cardW*0.5", // You can use pixels or cardW, cardH for evenly sized elements
+    position_x: "cardW*0.5", // You can use pixels or cardW, cardH for values proportional to card dimensions
     position_y: "cardH*0.5",
     width: "cardW",
     height: "cardH*0.95",
@@ -32,8 +32,8 @@ export const template = [
     element: "TEXT",
     src: "title", // Texts use the keys you put in the cards list as sources
     position_x: "cardW*0.5",
-    position_y: "cardH*0.1",
-    size: "60", // defaults to 20, change it only if needed
+    position_y: "cardH*0.095",
+    size: "5", // defaults to 20, change it only if needed
     align: "CENTER", // defaults to "LEFT", change it only if needed ("LEFT", "CENTER", "RIGHT")
     font: "title_font", //Custom font will be loaded if found in assets folder. Don't forget the type !
 
@@ -49,7 +49,7 @@ export const template = [
     src: "effect",
     position_x: "cardW*0.5",
     position_y: "cardH*0.855",
-    size: "35",
+    size: "3",
     align: "CENTER",
   },
   {
@@ -59,8 +59,8 @@ export const template = [
     type: "static",
     position_x: "cardW*0.5",
     position_y: "cardH*0.843",
-    width: "150",
-    height: "150",
+    width: "cardW*0.2",
+    height: "cardW*0.2",
   },
   {
     element: "TEXT",
@@ -68,7 +68,7 @@ export const template = [
     position_x: "cardW*0.195",
     position_y: "cardH*0.35",
     align: "CENTER",
-    size: "80",
+    size: "8",
     font: "title_font",
     color: "[255, 100, 0]",
     // A CODER
@@ -80,7 +80,7 @@ export const template = [
     position_x: "cardW*0.825",
     position_y: "cardH*0.35",
     align: "CENTER",
-    size: "80",
+    size: "8",
     font: "title_font",
     color: "[127, 68, 0]",
   },
@@ -93,9 +93,9 @@ export const template = [
 
     position_x: "cardW*0.5",
     position_y: "cardH*0.755",
-    width: "60",
-    height: "60",
-    spacing_x: "70", // The horizontal spacing between elements
+    width: "cardW*0.1",
+    height: "cardW*0.1",
+    spacing_x: "cardW*0.12", // The horizontal spacing between elements
     spacing_y: "0",  // The vertical   spacing between elements
     style : "alternate", // Each item will drift from their position by corresponding offset amount
     offset_x : "0",
