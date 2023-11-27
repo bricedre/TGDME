@@ -6,7 +6,7 @@
 
 export let assetsLibrary = {};
 
-export const assets = [
+export const assetsList = [
   "title_font.ttf",
   "bg_0.jpg",
   "bg_1.jpg",

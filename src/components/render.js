@@ -7,8 +7,8 @@ import {
   rowCount,
   marginX,
   marginY,
-} from "../assets/deckInfo.js";
-import { cards } from "../assets/cards.js";
+} from "../../assets/deckInfo.js";
+import { cards } from "./deck/cards.js";
 import { generateMode } from "../app.js";
 import {
   renderImageElement,

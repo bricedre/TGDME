@@ -5,12 +5,16 @@ import {
   page,
   pageW,
   pageH,
-} from "./assets/deckInfo.js";
+} from "./components/deck/deckInfo.js";
 
 import { renderCardUsingTemplate, generatePages } from "./components/render.js";
 import { keyPressed } from "./components/interactions.js";
 import { preload } from "./components/preload.js";
 import { checkButtons, updateCardCounter } from "./components/DOM.js";
+
+// CANVASES
+export var page;
+export var card;
 
 export let generateMode = false;
 export let currentIndex = 0;
@@ -45,11 +49,11 @@ const sketch = (p) => {
   };
 
   p.preload = () => {
-    preload();
+    preload(p);
   };
 
   p.keyPressed = () => {
-    keyPressed();
+    keyPressed(p);
   };
 };
 

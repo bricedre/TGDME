@@ -2,10 +2,10 @@ import { renderCardUsingTemplate } from "./render.js";
 import { rootElement, updateCardCounter } from "./DOM.js";
 import { currentIndex } from "../app.js";
 
-export function keyPressed() {
-  if (keyCode === LEFT_ARROW) {
+export function keyPressed(p) {
+  if (p.keyCode === p.LEFT_ARROW) {
     goToPreviousCard();
-  } else if (keyCode === RIGHT_ARROW){
+  } else if (p.keyCode === p.RIGHT_ARROW){
     goToNextCard();
   }
 }
