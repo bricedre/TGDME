@@ -1,7 +1,9 @@
-import { rootPath } from 'electron-root-path';
-import { assetsList } from './deck/assetsList';
+// const { app, BrowserWindow } = require("electron");
+const {rootPath} = require("electron-root-path");
 
-let assetsPath = rootPath+"src/assets/";
+import { assetsList } from './deck/assetsList.js';
+
+let assetsPath = rootPath+"/assets/";
 
 export let assetsLibrary = {};
 

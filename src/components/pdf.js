@@ -1,12 +1,19 @@
-// const { jsPDF } = require("jspdf");
+import { deckName } from "./deck/deckInfo.js";
 
-// let pageGeneration;
+const { jsPDF } = require("jspdf");
 
-// export function generatePDF(pages){
-//     pageGeneration = new jsPDF();
-//     pages.forEach(page => {
-//       pageGeneration.addPage();
-//       pageGeneration.addImage(page, 0, 0);
-//     });
-//     pageGeneration.save('/generatedDeck.pdf');
-//   }
+let pageGeneration;
+
+export function generatePDF(pages) {
+  pageGeneration = new jsPDF({
+    compress : true
+  });
+  pages.forEach((page, index) => {
+    if (index != 0) pageGeneration.addPage();
+    
+    pageGeneration.addImage(page.canvas, "webp", 0, 0, 210, 297);
+  });
+  
+  pageGeneration.save(deckName+".pdf");
+
+}

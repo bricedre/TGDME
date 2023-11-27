@@ -22,7 +22,7 @@ export const cards = [
     storage: "1",
     observation: "4",
     has_image_effect : true,
-    quantity : 3
+    quantity : 6
   },
   {
     title: "Sophia",
@@ -30,7 +30,7 @@ export const cards = [
     observation: "3",
     effect : "This is a short effect.",
     has_text_effect : true,
-    quantity : 3, 
+    quantity : 6, 
     effect_cost :  ["looking_glass"],
   }
 ]

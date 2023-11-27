@@ -1,3 +1,8 @@
+//
+
+export let deckName = "Rédac' Challenge";
+
+
 // CARD FORMAT
 let cardFormat = 'poker'; // poker, square, domino, custom
 let cardOrientation = "portrait"; // portrait, Landscape

@@ -1,7 +1,7 @@
 import { cards } from "./deck/cards.js";
 import { template } from "./deck/template.js";
-import { card } from "../app.js";
 import { assetsLibrary } from "./preload.js";
+import { cardW, cardH } from "./deck/deckInfo.js";
 
 export function renderImageElement(p5, elementIndex, cardIndex) {
   let cardData = cards[cardIndex];
@@ -48,9 +48,11 @@ export function renderImageElement(p5, elementIndex, cardIndex) {
         : 100;
 
       try {
-        card.imageMode(p5.CENTER);
-        card.image(_img, _position_x, _position_y, _width, _height);
-      } catch (e) {}
+        p5.card.imageMode(p5.CENTER);
+        p5.card.image(_img, _position_x, _position_y, _width, _height);
+      } catch (e) {
+        console.log(e)
+      }
     }
   }
 }
@@ -64,6 +66,7 @@ export function renderTextElement(p5, elementIndex, cardIndex) {
   let _position_y = "";
   let _size = "";
   let _font = "";
+  let _color;
 
   // No render if no src
   if (
@@ -95,15 +98,17 @@ export function renderTextElement(p5, elementIndex, cardIndex) {
       }
 
       try {
-        card.noStroke();
-        card.textAlign(_align, p5.CENTER);
-        if (_font !== "") card.textFont(_font);
-        else _font = card.textFont("Verdana");
-        card.textSize(_size);
-        card.fill(_color);
+        p5.card.noStroke();
+        p5.card.textAlign(_align, p5.CENTER);
+        if (_font !== "") p5.card.textFont(_font);
+        else _font = p5.card.textFont("Verdana");
+        p5.card.textSize(_size);
+        p5.card.fill(_color);
 
-        card.text(_textToWrite, _position_x, _position_y);
-      } catch (e) {}
+        p5.card.text(_textToWrite, _position_x, _position_y);
+      } catch (e) {
+        console.log(e)
+      }
     }
   }
 }
@@ -112,12 +117,18 @@ export function renderStripElement(p5, elementIndex, cardIndex) {
   let cardData = cards[cardIndex];
 
   let _imgs = [];
-  let _position_x = "";
-  let _position_y = "";
-  let _width = "";
-  let _height = "";
-  let _spacing_x = "";
-  let _spacing_y = "";
+  let _position_x;
+  let _position_y;
+  let _width;
+  let _height;
+  let _spacing_x;
+  let _spacing_y;
+  let _style;
+  let _offset_x;
+  let _offset_y;
+  let _align;
+  let _totalWidth;
+  let _totalHeight;
 
   // No render if no src
   if (
@@ -178,10 +189,10 @@ export function renderStripElement(p5, elementIndex, cardIndex) {
           2;
 
         try {
-          card.imageMode(p5.CENTER);
+          p5.card.imageMode(p5.CENTER);
           for (let i = 0; i < elementsList.length; i++) {
             if (_align == "CENTER") {
-              card.image(
+              p5.card.image(
                 _imgs[i],
                 _position_x + (elementsList.length > 1?((_spacing_x > 0) ? i * _spacing_x - _totalWidth / 2 : 0) + ((_style == "alternate") ? ((i%2 == 0) ? _offset_x : -_offset_x) : 0):0),
                 _position_y + (elementsList.length > 1?((_spacing_y > 0) ? i * _spacing_y - _totalHeight / 2 : 0) + ((_style == "alternate") ? ((i%2 == 0) ? _offset_y : -_offset_y) : 0):0),
@@ -189,7 +200,7 @@ export function renderStripElement(p5, elementIndex, cardIndex) {
                 _height
               );
             } else if (_align == "LEFT") {
-              card.image(
+              p5.card.image(
                 _imgs[i],
                 _position_x + (elementsList.length > 1 ? i * _spacing_x + ((_style == "alternate") ? ((i%2 == 0) ? _offset_x : -_offset_x) : 0):0),
                 _position_y + (elementsList.length > 1 ? i * _spacing_y + ((_style == "alternate") ? ((i%2 == 0) ? _offset_y : -_offset_y) : 0):0),
@@ -197,7 +208,7 @@ export function renderStripElement(p5, elementIndex, cardIndex) {
                 _height
               );
             } else if (_align == "RIGHT") {
-              card.image(
+              p5.card.image(
                 _imgs[i],
                 _position_x + (elementsList.length > 1? ((_spacing_x > 0) ? i * _spacing_x - _totalWidth : 0) + ((_style == "alternate") ? ((i%2 == 0) ? _offset_x : -_offset_x) : 0):0),
                 _position_y + (elementsList.length > 1? ((_spacing_y > 0) ? i * _spacing_y - _totalHeight : 0) + ((_style == "alternate") ? ((i%2 == 0) ? _offset_y : -_offset_y) : 0):0),

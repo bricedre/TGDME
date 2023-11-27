@@ -7,16 +7,17 @@ import {
   marginY,
 } from "./deck/deckInfo.js";
 import { cards } from "./deck/cards.js";
-import { generateMode, card, page } from "../app.js";
 import {
   renderImageElement,
   renderStripElement,
   renderTextElement,
 } from "./elements.js";
-// import { generatePDF } from "./pdf.js";
+import { template } from "./deck/template.js";
+import {generatePDF} from "./pdf.js"
+import { app } from "../app.js";
 
-export function triggerGeneration() {
-  generateMode = true;
+export function triggerGeneration(app) {
+  app.generateMode = true;
 }
 
 // GENERATE 3x3 A4 PAGES OF CARDS
@@ -37,12 +38,12 @@ export function generatePages(p5) {
 
   for (let i = 0; i < _allCardsIndices.length; i++) {
     var cardIndex = _allCardsIndices[i];
-    if (i % (colCount * rowCount) == 0) page.background(255);
+    if (i % (colCount * rowCount) == 0) p5.page.background(255);
     renderCardUsingTemplate(p5, cardIndex);
-    page.image(
-      card,
+    p5.page.image(
+      p5.card,
       marginX + ((i % (colCount * rowCount)) % colCount) * cardW,
-      marginY + int((i % (colCount * rowCount)) / colCount) * cardH,
+      marginY + Math.floor((i % (colCount * rowCount)) / colCount) * cardH,
       cardW,
       cardH
     );
@@ -51,28 +52,31 @@ export function generatePages(p5) {
       i % (colCount * rowCount) == colCount * rowCount - 1 ||
       i === _allCardsIndices.length - 1
     )
-      pages.push(page);
+    
+    pages.push(p5.page);
+
+    renderCardUsingTemplate(app, app.currentIndex)
   }
 
-  // generatePDF(pages);
+  generatePDF(pages);
 }
 
-export function renderCardUsingTemplate(p5, cardIndex) {
-  card.background(255);
+export function renderCardUsingTemplate(p, cardIndex) {
+  p.card.background(255);
   if (cards.length > 0) {
     for (let i = 0; i < template.length; i++) {
-      if (template[i].element === "TEXT") renderTextElement(p5, i, cardIndex);
+      if (template[i].element === "TEXT") renderTextElement(p, i, cardIndex);
       else if (template[i].element === "IMAGE")
-        renderImageElement(p5, i, cardIndex);
+        renderImageElement(p, i, cardIndex);
       else if (template[i].element === "STRIP")
-        renderStripElement(p5, i, cardIndex);
+        renderStripElement(p, i, cardIndex);
     }
 
-    if (generateMode) {
-      card.noFill();
-      card.stroke(0, 100);
-      card.strokeWeight(2);
-      card.rect(0, 0, cardW, cardH);
+    if (p.generateMode) {
+      p.card.noFill();
+      p.card.stroke(0, 100);
+      p.card.strokeWeight(2);
+      p.card.rect(0, 0, cardW, cardH);
     }
   }
 }
