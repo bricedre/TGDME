@@ -10,7 +10,6 @@ import {
 } from "./components/deck/deckInfo.js";
 
 import { generatePages, renderCardUsingTemplate } from "./components/render.js";
-import { keyPressed } from "./components/DOM.js";
 import { preload } from "./components/preload.js";
 import { checkButtons, updateCardCounter } from "./components/DOM.js";
 
@@ -36,7 +35,7 @@ const sketch = (p) => {
 
     renderCardUsingTemplate(p, p.currentIndex);
     updateCardCounter(p.currentIndex);
-    checkButtons(p.currentIndex);
+    checkButtons();
   };
 
   p.draw = () => {
@@ -51,10 +50,6 @@ const sketch = (p) => {
 
   p.preload = () => {
     preload(p);
-  };
-
-  p.keyPressed = () => {
-    keyPressed(p);
   };
 };
 

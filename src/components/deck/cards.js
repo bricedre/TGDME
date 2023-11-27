@@ -6,7 +6,7 @@ export const cards = [
     observation: "2",
     effect : "This is a rather long text,\nso I need to create line\nbreaks to fit it all.", // Line breaks "\n" can be used in TEXT elements
     has_text_effect : true, // Triggers use booleans (true or false); default is false
-    effect_cost :  ["coin", "coin", "coin"],
+    effect_cost :  ["coin", "coin"],
   },
   {
     title: "Kendrik",
@@ -22,7 +22,6 @@ export const cards = [
     storage: "1",
     observation: "4",
     has_image_effect : true,
-    quantity : 6
   },
   {
     title: "Sophia",
@@ -30,7 +29,6 @@ export const cards = [
     observation: "3",
     effect : "This is a short effect.",
     has_text_effect : true,
-    quantity : 6, 
     effect_cost :  ["looking_glass"],
   }
 ]

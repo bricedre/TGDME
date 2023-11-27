@@ -5,6 +5,8 @@ import {
   rowCount,
   marginX,
   marginY,
+  pageW,
+  pageH,
 } from "./deck/deckInfo.js";
 import { cards } from "./deck/cards.js";
 import {
@@ -24,6 +26,8 @@ export function triggerGeneration(app) {
 export function generatePages(p5) {
   var pages = [];
 
+  var currentPage;
+
   var _allCardsIndices = [];
   var currentCardIndex = 0;
   cards.forEach((card) => {
@@ -38,9 +42,12 @@ export function generatePages(p5) {
 
   for (let i = 0; i < _allCardsIndices.length; i++) {
     var cardIndex = _allCardsIndices[i];
-    if (i % (colCount * rowCount) == 0) p5.page.background(255);
+    if (i % (colCount * rowCount) == 0){
+      currentPage = p5.createGraphics(pageW, pageH);
+      currentPage.background(255);
+    }
     renderCardUsingTemplate(p5, cardIndex);
-    p5.page.image(
+    currentPage.image(
       p5.card,
       marginX + ((i % (colCount * rowCount)) % colCount) * cardW,
       marginY + Math.floor((i % (colCount * rowCount)) / colCount) * cardH,
@@ -53,9 +60,8 @@ export function generatePages(p5) {
       i === _allCardsIndices.length - 1
     )
     
-    pages.push(p5.page);
-
-    renderCardUsingTemplate(app, app.currentIndex)
+    p5.save(currentPage, "page"+i+".jpg");
+    pages.push(currentPage);
   }
 
   generatePDF(pages);

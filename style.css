@@ -16,8 +16,6 @@ html, body {
     flex-direction: column;
 
     font-family : Verdana, Geneva, Tahoma, sans-serif;
-
-
   }
 
   nav{
@@ -46,7 +44,9 @@ html, body {
   .viewer{
     display: flex;
     flex : 1;
-    
+    gap : 1rem;
+    padding : 2rem;
+    justify-content: end;
   }
 
   main{
@@ -71,9 +71,9 @@ html, body {
   .panel{
     display: flex;
     flex-direction: column;
-    flex : 1;
     align-items: center;
     justify-content: center;
+    flex: 1;
     gap : 2rem;
   }
   
@@ -91,15 +91,30 @@ html, body {
     cursor: pointer;
     background-color: #FFF;
     transition : all 0.2s ease-in-out;
-    
     justify-content: center;
   }
 
   button:hover{
-    background-color: #EEE;
+    background-color: #95b8b3;
+  }
+
+  button:disabled{
+    background-color: #FFF5;
+    cursor: default;
   }
 
   .bottomBar{
     background-color: #bfd3d8;
     height: 10vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap : 4rem;
+  }
+
+  .cardBtns{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap : 1rem;
   }

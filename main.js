@@ -9,8 +9,8 @@ require("electron-reload")(__dirname, {
 
 const createWindow = () => {
   const mainWindow = new BrowserWindow({
-    width: 1000,
-    height: 600,
+    width: 1500,
+    height: 900,
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
@@ -18,7 +18,6 @@ const createWindow = () => {
     },
   });
   mainWindow.loadURL(`file://${__dirname}/index.html`);
-  mainWindow.webContents.openDevTools();
 
   mainWindow.on("closed", function () {
     mainWindow = null;

@@ -15,11 +15,20 @@ renderBtn.addEventListener("click", () => {
 })
 
 nextCardBtn.addEventListener("click", () => {
-  goToNextCard(app.currentIndex);
+  goToNextCard();
 })
 
 prevCardBtn.addEventListener("click", () => {
-  goToPreviousCard(app.currentIndex);
+  goToPreviousCard();
+})
+
+document.addEventListener("keydown", (e) => {
+  if(e.keyCode == 37){
+    goToPreviousCard();
+  }
+  else if (e.keyCode == 39){
+    goToNextCard();
+  }
 })
 
 export function updateCardCounter(currentIndex) {
@@ -37,38 +46,30 @@ export function updateCardCounter(currentIndex) {
   } else cardCounter.innerHTML = "NO CARD TO RENDER";
 }
 
-export function checkButtons(currentIndex) {
-  if (currentIndex != 0) prevCardBtn.disabled = false;
+export function checkButtons() {
+  if (app.currentIndex != 0) prevCardBtn.disabled = false;
   else prevCardBtn.disabled = true;
 
-  if (currentIndex != cards.length - 1) nextCardBtn.disabled = false;
+  if (app.currentIndex != cards.length - 1) nextCardBtn.disabled = false;
   else nextCardBtn.disabled = true;
 }
 
-export function keyPressed(p) {
-  if (p.keyCode === p.LEFT_ARROW) {
-    goToPreviousCard();
-  } else if (p.keyCode === p.RIGHT_ARROW){
-    goToNextCard();
-  }
-}
-
-export function goToPreviousCard(currentIndex){
-  if(currentIndex > 0) {
+export function goToPreviousCard(){
+  if(app.currentIndex > 0) {
     app.currentIndex--;
     renderCardUsingTemplate(app, app.currentIndex);
     updateCardCounter(app.currentIndex);
     rootElement.style.setProperty("--cardAngle", (3-app.random()*6)+"deg");
-    checkButtons(app.currentIndex);
+    checkButtons();
   }
 }
 
-export function goToNextCard(currentIndex){
-  if(currentIndex < cards.length - 1) {
+export function goToNextCard(){
+  if(app.currentIndex < cards.length - 1) {
     app.currentIndex++;
     renderCardUsingTemplate(app, app.currentIndex);
     updateCardCounter(app.currentIndex);
     rootElement.style.setProperty("--cardAngle", (3-app.random()*6)+"deg");
-    checkButtons(app.currentIndex);
+    checkButtons();
   }
 }
