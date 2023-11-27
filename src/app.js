@@ -6,51 +6,51 @@ import {
   pageW,
   pageH,
 } from "./assets/deckInfo.js";
+
 import { renderCardUsingTemplate, generatePages } from "./components/render.js";
 import { keyPressed } from "./components/interactions.js";
 import { preload } from "./components/preload.js";
 import { checkButtons, updateCardCounter } from "./components/DOM.js";
-import p5 from "p5";
 
 export let generateMode = false;
 export let currentIndex = 0;
 
 console.log("Début de l'app");
 
-const sketch = (p5) => {
+const sketch = (p) => {
   console.log("new P5 element");
-  p5.setup = () => {
-    p5.createCanvas(cardW / 2, cardH / 2);
+  p.setup = () => {
+    p.createCanvas(cardW / 2, cardH / 2);
 
-    page = p5.createGraphics(pageW, pageH);
-    card = p5.createGraphics(cardW, cardH);
+    page = p.createGraphics(pageW, pageH);
+    card = p.createGraphics(cardW, cardH);
 
-    p5.imageMode(CORNER);
+    p.imageMode(CORNER);
     page.imageMode(CORNER);
     card.imageMode(CENTER);
 
-    renderCardUsingTemplate(p5, currentIndex);
+    renderCardUsingTemplate(p, currentIndex);
     updateCardCounter();
     checkButtons();
   };
 
-  p5.draw = () => {
+  p.draw = () => {
     if (!generateMode) {
-      p5.image(card, 0, 0, p5.width, p5.height);
+      p.image(card, 0, 0, p.width, p.height);
     } else {
-      generatePages();
+      generatePages(p);
       generateMode = false;
-      renderCardUsingTemplate(currentIndex);
+      renderCardUsingTemplate(p, currentIndex);
     }
   };
 
-  p5.preload = () => {
+  p.preload = () => {
     preload();
   };
 
-  p5.keyPressed = () => {
+  p.keyPressed = () => {
     keyPressed();
   };
 };
 
-export const p5 = new p5(sketch);
+new p5(sketch);

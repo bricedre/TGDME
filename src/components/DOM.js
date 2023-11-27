@@ -24,8 +24,6 @@ prevCardBtn.addEventListener("click", () => {
 
 export function updateCardCounter() {
   //INDEX
-  textAlign(CENTER, CENTER);
-  fill(0, 200);
   if (cards.length > 0) {
     cardCounter.innerHTML =
       "Card #" +
