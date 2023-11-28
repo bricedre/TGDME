@@ -1,4 +1,4 @@
-import { deckName } from "./deck/deckInfo.js";
+import { deckName } from "../decks/deckInfo.js";
 
 const { jsPDF } = require("jspdf");
 
