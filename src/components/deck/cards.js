@@ -14,7 +14,7 @@ export const cards = [
     observation: "3",
     effect : "This is a short effect.",
     has_text_effect : true,
-    quantity : 2, //Allow multiple copies of the same card
+    quantity : 20, //Allow multiple copies of the same card
     effect_cost :  ["looking_glass", "looking_glass", "coin", "coin"],
   },
   {

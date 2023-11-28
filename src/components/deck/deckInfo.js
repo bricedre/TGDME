@@ -3,7 +3,7 @@
 export let deckName = "Rédac' Challenge";
 
 //RESOLUTION
-export let resolution = 50; //118.1 (300dpi)
+export let resolution = 60; //118.1 (300dpi)
 
 // CARD FORMAT
 let cardFormat = 'poker'; // poker, square, domino, custom
