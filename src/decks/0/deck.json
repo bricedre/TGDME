@@ -1,0 +1,139 @@
+{
+  "deckInfo": {
+    "deckName": "Rédac' Challenge",
+    "resolution": 60,
+    "cardFormat": "poker",
+    "cardOrientation": "portrait",
+    "pageFormat": "A4",
+    "pageOrientation": "portrait"
+  },
+  "template": [
+    {
+      "element": "IMAGE",
+      "src": "bg",
+      "type": "dynamic",
+      "position_x": "cardW*0.5",
+      "position_y": "cardH*0.5",
+      "width": "cardW",
+      "height": "cardH*0.95",
+      "anchor": "CENTER",
+
+      "image_tint": "[255, 0, 0]",
+      "card_tint": "custom_color"
+    },
+    {
+      "element": "IMAGE",
+      "src": "ui",
+      "type": "static",
+      "position_x": "cardW*0.5",
+      "position_y": "cardH*0.5",
+      "width": "cardW",
+      "height": "cardH"
+    },
+    {
+      "element": "TEXT",
+      "src": "title",
+      "position_x": "cardW*0.5",
+      "position_y": "cardH*0.095",
+      "size": "5",
+      "align": "CENTER",
+      "font": "title_font",
+
+      "shadow_offset_x": "5",
+      "shadow_offset_y": "5",
+      "shadow_color": "[0, 100]"
+    },
+
+    {
+      "element": "TEXT",
+      "trigger": "has_text_effect",
+      "src": "effect",
+      "position_x": "cardW*0.5",
+      "position_y": "cardH*0.855",
+      "size": "3",
+      "align": "CENTER"
+    },
+    {
+      "element": "IMAGE",
+      "trigger": "has_image_effect",
+      "src": "image_effect",
+      "type": "static",
+      "position_x": "cardW*0.5",
+      "position_y": "cardH*0.843",
+      "width": "cardW*0.2",
+      "height": "cardW*0.2"
+    },
+    {
+      "element": "TEXT",
+      "src": "observation",
+      "position_x": "cardW*0.195",
+      "position_y": "cardH*0.35",
+      "align": "CENTER",
+      "size": "8",
+      "font": "title_font",
+      "color": "[255, 100, 0]",
+
+      "angle": "5"
+    },
+    {
+      "element": "TEXT",
+      "src": "storage",
+      "position_x": "cardW*0.825",
+      "position_y": "cardH*0.35",
+      "align": "CENTER",
+      "size": "8",
+      "font": "title_font",
+      "color": "[127, 68, 0]"
+    },
+    {
+      "element": "STRIP",
+      "src": "effect_cost",
+
+      "type": "card_based",
+
+      "position_x": "cardW*0.5",
+      "position_y": "cardH*0.755",
+      "width": "cardW*0.1",
+      "height": "cardW*0.1",
+      "spacing_x": "cardW*0.12",
+      "spacing_y": "0",
+      "style": "alternate",
+      "offset_x": "0",
+      "offset_y": "0",
+      "align": "CENTER"
+    }
+  ],
+  "cards": [
+    {
+      "title": "Lucy", 
+      "storage": "2", 
+      "observation": "2",
+      "effect" : "This is a rather long text,\nso I need to create line\nbreaks to fit it all.",
+      "has_text_effect" : true, 
+      "effect_cost" :  ["coin", "coin"]
+    },
+    {
+      "title": "Kendrik",
+      "storage": "1",
+      "observation": "3",
+      "effect" : "This is a short effect.",
+      "has_text_effect" : true,
+      "quantity" : 20,
+      "effect_cost" :  ["looking_glass", "looking_glass", "coin", "coin"]
+    },
+    {
+      "title": "Tom",
+      "storage": "1",
+      "observation": "4",
+      "has_image_effect" : true
+    },
+    {
+      "title": "Sophia",
+      "storage": "3",
+      "observation": "3",
+      "effect" : "This is a short effect.",
+      "has_text_effect" : true,
+      "effect_cost" :  ["looking_glass"]
+    }
+  ]
+}

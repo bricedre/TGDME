@@ -11,9 +11,9 @@ const p5 = require('p5');
 
 import { generatePages, renderCardUsingTemplate } from "./components/render.js";
 import { preload } from "./components/preload.js";
-import { checkButtons, updateCardCounter, setHeaderButtons } from "./components/DOM.js";
+import { setUI } from "./components/DOM.js";
 
-export let currentDeck = -1;
+export var currentDeck = -1;
 export let currentTemplate;
 export let currentCards;
 export let currentDeckInfo;
@@ -41,7 +41,7 @@ const sketch = (p) => {
     p.page.imageMode(p.CORNER);
     p.card.imageMode(p.CENTER);
     
-    setHeaderButtons();
+    setUI();
 
   };
 
