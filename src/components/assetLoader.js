@@ -9,6 +9,8 @@ export let assetsLibrary = {};
 
 export function loadAssets(p){
 
+  assetsLibrary = {};
+
   let assetsPath = rootPath+"/src/decks/"+currentDeckIndex+"/assets/";
 
   var currentAssetsList = getFiles(assetsPath)
