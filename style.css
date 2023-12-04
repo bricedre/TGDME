@@ -19,12 +19,13 @@ html, body {
   }
 
   nav{
-    background-color: #bfd8d8;
+    background-color: #9dbfd6;
     height: 10vh;
     font-size: xx-large;
     display: flex;
     align-items: center;
     padding : 0 2rem; 
+    box-shadow: 0 0 20px #0005;
   }
 
   #title{
@@ -38,7 +39,7 @@ html, body {
   }
 
   .navBtn:hover{
-    background-color: #95b8b3;
+    background-color: #9dbfd6;
   }
 
   .viewer{
@@ -63,7 +64,7 @@ html, body {
   }
 
   canvas {
-    box-shadow: 5px 5px 20px #0005;
+    box-shadow: 5px 5px 20px #0002;
     border-radius: 1rem;
     z-index : 1;
   }
@@ -85,17 +86,23 @@ html, body {
     padding: 0.5rem 2rem;
     border-radius: 0.5rem;
     border: none;
-    display: flex;
+    display: none;
     align-items: center;
     font-size: 1.5rem;
     cursor: pointer;
-    background-color: #FFF;
+    background-color: #EEE;
     transition : all 0.2s ease-in-out;
     justify-content: center;
+    gap : 1rem;
+  }
+
+  button > img{
+    height: 3rem;
+    rotate: 5deg;
   }
 
   button:hover{
-    background-color: #95b8b3;
+    background-color: #9dbfd6;
   }
 
   button:disabled{
@@ -104,12 +111,17 @@ html, body {
   }
 
   .bottomBar{
-    background-color: #bfd3d8;
+    background-color: #9dbfd6;
     height: 10vh;
     display: flex;
     align-items: center;
     justify-content: center;
     gap : 4rem;
+    box-shadow: 0 0 20px #0002;
+  }
+
+  #pageCounter{
+    display : none;
   }
 
   .cardBtns{

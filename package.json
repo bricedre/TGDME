@@ -12,6 +12,10 @@
   "author": "Brice ANDRÉ",
   "license": "MIT",
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.14.18",
+    "@mui/material": "^5.14.18",
     "electron-reload": "^1.5.0",
     "electron-root-path": "^1.1.0",
     "electron-squirrel-startup": "^1.0.0",

@@ -1,10 +1,14 @@
-import { cards } from "./deck/cards.js";
-import { template } from "./deck/template.js";
+import { currentCards } from "../app.js";
+import { currentTemplate } from "../app.js";
 import { assetsLibrary } from "./preload.js";
-import { cardW, cardH, resolution } from "./deck/deckInfo.js";
+import { currentDeckInfo } from "../app.js";
 
 export function renderImageElement(p5, elementIndex, cardIndex) {
-  let cardData = cards[cardIndex];
+  let cardData = currentCards[cardIndex];
+
+  var cardW = currentDeckInfo.cardW;
+  var cardH = currentDeckInfo.cardH;
+  var resolution = currentDeckInfo.resolution;
 
   let _img;
   let _type = "";
@@ -15,36 +19,36 @@ export function renderImageElement(p5, elementIndex, cardIndex) {
 
   // No render if no src
   if (
-    template[elementIndex].trigger == null ||
-    cardData[template[elementIndex].trigger]
+    currentTemplate[elementIndex].trigger == null ||
+    cardData[currentTemplate[elementIndex].trigger]
   ) {
-    if (template[elementIndex].src) {
-      if (template[elementIndex].type) {
-        _type = template[elementIndex].type;
+    if (currentTemplate[elementIndex].src) {
+      if (currentTemplate[elementIndex].type) {
+        _type = currentTemplate[elementIndex].type;
 
         if (_type === "static")
-          _img = assetsLibrary[template[elementIndex].src];
+          _img = assetsLibrary[currentTemplate[elementIndex].src];
         else if (_type === "dynamic")
-          _img = assetsLibrary[template[elementIndex].src + "_" + cardIndex];
+          _img = assetsLibrary[currentTemplate[elementIndex].src + "_" + cardIndex];
         else {
           console.log("Image Type NOT SUPPORTED. Set to static.");
-          assetsLibrary[template[elementIndex].src];
+          assetsLibrary[currentTemplate[elementIndex].src];
         }
       }
 
       _position_x =
-        template[elementIndex].position_x != null
-          ? eval(template[elementIndex].position_x)
+      currentTemplate[elementIndex].position_x != null
+          ? eval(currentTemplate[elementIndex].position_x)
           : 0;
       _position_y =
-        template[elementIndex].position_y != null
-          ? eval(template[elementIndex].position_y)
+      currentTemplate[elementIndex].position_y != null
+          ? eval(currentTemplate[elementIndex].position_y)
           : 0;
-      _width = template[elementIndex].width
-        ? eval(template[elementIndex].width)
+      _width = currentTemplate[elementIndex].width
+        ? eval(currentTemplate[elementIndex].width)
         : 100;
-      _height = template[elementIndex].height
-        ? eval(template[elementIndex].height)
+      _height = currentTemplate[elementIndex].height
+        ? eval(currentTemplate[elementIndex].height)
         : 100;
 
       try {
@@ -58,7 +62,11 @@ export function renderImageElement(p5, elementIndex, cardIndex) {
 }
 
 export function renderTextElement(p5, elementIndex, cardIndex) {
-  let cardData = cards[cardIndex];
+  let cardData = currentCards[cardIndex];
+
+  var cardW = currentDeckInfo.cardW;
+  var cardH = currentDeckInfo.cardH;
+  var resolution = currentDeckInfo.resolution;
 
   let _textToWrite = "";
   let _align = "";
@@ -70,31 +78,31 @@ export function renderTextElement(p5, elementIndex, cardIndex) {
 
   // No render if no src
   if (
-    template[elementIndex].trigger == null ||
-    cardData[template[elementIndex].trigger]
+    currentTemplate[elementIndex].trigger == null ||
+    cardData[currentTemplate[elementIndex].trigger]
   ) {
-    if (template[elementIndex].src) {
-      _textToWrite = cardData[template[elementIndex].src];
+    if (currentTemplate[elementIndex].src) {
+      _textToWrite = cardData[currentTemplate[elementIndex].src];
       _position_x =
-        template[elementIndex].position_x != null
-          ? eval(template[elementIndex].position_x)
+      currentTemplate[elementIndex].position_x != null
+          ? eval(currentTemplate[elementIndex].position_x)
           : 0;
       _position_y =
-        template[elementIndex].position_y != null
-          ? eval(template[elementIndex].position_y)
+      currentTemplate[elementIndex].position_y != null
+          ? eval(currentTemplate[elementIndex].position_y)
           : 0;
-      _size = template[elementIndex].size
-        ? eval(template[elementIndex].size)
+      _size = currentTemplate[elementIndex].size
+        ? eval(currentTemplate[elementIndex].size)
         : 20;
-      _color = template[elementIndex].color
-        ? p5.color(eval(template[elementIndex].color))
+      _color = currentTemplate[elementIndex].color
+        ? p5.color(eval(currentTemplate[elementIndex].color))
         : p5.color(0);
-      if (template[elementIndex].align) {
-        if (template[elementIndex].align === "CENTER") _align = p5.CENTER;
-        else if (template[elementIndex].align === "RIGHT") _align = p5.RIGHT;
+      if (currentTemplate[elementIndex].align) {
+        if (currentTemplate[elementIndex].align === "CENTER") _align = p5.CENTER;
+        else if (currentTemplate[elementIndex].align === "RIGHT") _align = p5.RIGHT;
       } else _align = p5.LEFT;
-      if (template[elementIndex].font) {
-        _font = assetsLibrary[template[elementIndex].font];
+      if (currentTemplate[elementIndex].font) {
+        _font = assetsLibrary[currentTemplate[elementIndex].font];
       }
 
       try {
@@ -114,7 +122,11 @@ export function renderTextElement(p5, elementIndex, cardIndex) {
 }
 
 export function renderStripElement(p5, elementIndex, cardIndex) {
-  let cardData = cards[cardIndex];
+  let cardData = currentCards[cardIndex];
+
+  var cardW = currentDeckInfo.cardW;
+  var cardH = currentDeckInfo.cardH;
+  var resolution = currentDeckInfo.resolution;
 
   let _imgs = [];
   let _position_x;
@@ -132,12 +144,12 @@ export function renderStripElement(p5, elementIndex, cardIndex) {
 
   // No render if no src
   if (
-    template[elementIndex].trigger == null ||
+    currentTemplate[elementIndex].trigger == null ||
     cardData[template[elementIndex].trigger]
   ) {
-    if (template[elementIndex].src) {
-      var elementsList = cardData[template[elementIndex].src]
-        ? cardData[template[elementIndex].src]
+    if (currentTemplate[elementIndex].src) {
+      var elementsList = cardData[currentTemplate[elementIndex].src]
+        ? cardData[currentTemplate[elementIndex].src]
         : [];
 
       if (elementsList.length > 0) {
@@ -146,36 +158,36 @@ export function renderStripElement(p5, elementIndex, cardIndex) {
         }
 
         _position_x =
-          template[elementIndex].position_x != null
-            ? eval(template[elementIndex].position_x)
+        currentTemplate[elementIndex].position_x != null
+            ? eval(currentTemplate[elementIndex].position_x)
             : 0;
         _position_y =
-          template[elementIndex].position_y != null
-            ? eval(template[elementIndex].position_y)
+        currentTemplate[elementIndex].position_y != null
+            ? eval(currentTemplate[elementIndex].position_y)
             : 0;
-        _width = template[elementIndex].width
-          ? eval(template[elementIndex].width)
+        _width = currentTemplate[elementIndex].width
+          ? eval(currentTemplate[elementIndex].width)
           : 100;
-        _height = template[elementIndex].height
-          ? eval(template[elementIndex].height)
+        _height = currentTemplate[elementIndex].height
+          ? eval(currentTemplate[elementIndex].height)
           : 100;
-        _spacing_x = template[elementIndex].spacing_x
-          ? eval(template[elementIndex].spacing_x)
+        _spacing_x = currentTemplate[elementIndex].spacing_x
+          ? eval(currentTemplate[elementIndex].spacing_x)
           : 0;
-        _spacing_y = template[elementIndex].spacing_y
-          ? eval(template[elementIndex].spacing_y)
+        _spacing_y = currentTemplate[elementIndex].spacing_y
+          ? eval(currentTemplate[elementIndex].spacing_y)
           : 0;
-          _style = template[elementIndex].style
-          ? template[elementIndex].style
+          _style = currentTemplate[elementIndex].style
+          ? currentTemplate[elementIndex].style
           : "straight";
-          _offset_x = template[elementIndex].offset_x
-          ? eval(template[elementIndex].offset_x)
+          _offset_x = currentTemplate[elementIndex].offset_x
+          ? eval(currentTemplate[elementIndex].offset_x)
           : 0;
-          _offset_y = template[elementIndex].offset_y
-          ? eval(template[elementIndex].offset_y)
+          _offset_y = currentTemplate[elementIndex].offset_y
+          ? eval(currentTemplate[elementIndex].offset_y)
           : 0;
-        _align = template[elementIndex].align
-          ? template[elementIndex].align
+        _align = currentTemplate[elementIndex].align
+          ? currentTemplate[elementIndex].align
           : "LEFT";
 
         _totalWidth =

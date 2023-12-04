@@ -1,14 +1,18 @@
 import { renderCardUsingTemplate, triggerGeneration } from "./render.js";
-import { cards } from "./deck/cards.js";
-import { app } from "../app.js";
+import { app, currentCards, currentDeck } from "../app.js";
 
-export const cardCounter = document.getElementById("pageCounter");
-export const rootElement = document.querySelector(":root");
+const cardCounter = document.getElementById("pageCounter");
+const rootElement = document.querySelector(":root");
+const canvasPanel = document.getElementById("canvasPanel");
 
-export const renderBtn = document.getElementById("renderBtn");
+const newBtn = document.getElementById("newBtn");
+const loadBtn = document.getElementById("loadBtn");
+const saveBtn = document.getElementById("saveBtn");
+const renderBtn = document.getElementById("renderBtn");
 
-export const nextCardBtn = document.getElementById("nextCardBtn");
-export const prevCardBtn = document.getElementById("prevCardBtn");
+const pageCounter = document.getElementById("pageCounter");
+const nextCardBtn = document.getElementById("nextCardBtn");
+const prevCardBtn = document.getElementById("prevCardBtn");
 
 renderBtn.addEventListener("click", () => {
     triggerGeneration(app);
@@ -31,17 +35,37 @@ document.addEventListener("keydown", (e) => {
   }
 })
 
+export function setHeaderButtons(){
+  if(currentDeck == -1){
+    newBtn.style.display = "flex";
+    loadBtn.style.display = "flex";
+    saveBtn.style.display = "none";
+    renderBtn.style.display = "none";
+    pageCounter.style.display = "none";
+    canvasPanel.style.display = "none";
+  }
+  else{
+    newBtn.style.display = "none";
+    loadBtn.style.display = "none";
+    saveBtn.style.display = "flex";
+    renderBtn.style.display = "flex";
+    pageCounter.style.display = "flex";
+    canvasPanel.style.display = "flex";
+  }
+
+}
+
 export function updateCardCounter(currentIndex) {
   //INDEX
-  if (cards.length > 0) {
+  if (currentCards.length > 0) {
     cardCounter.innerHTML =
       "Card #" +
       (currentIndex + 1) +
       " of " +
-      cards.length +
+      currentCards.length +
       " cards - " +
-      (cards[currentIndex].quantity
-        ? cards[currentIndex].quantity + " copies"
+      (currentCards[currentIndex].quantity
+        ? currentCards[currentIndex].quantity + " copies"
         : "1 copy");
   } else cardCounter.innerHTML = "NO CARD TO RENDER";
 }
@@ -50,7 +74,7 @@ export function checkButtons() {
   if (app.currentIndex != 0) prevCardBtn.disabled = false;
   else prevCardBtn.disabled = true;
 
-  if (app.currentIndex != cards.length - 1) nextCardBtn.disabled = false;
+  if (app.currentIndex != currentCards.length - 1) nextCardBtn.disabled = false;
   else nextCardBtn.disabled = true;
 }
 
@@ -65,7 +89,7 @@ export function goToPreviousCard(){
 }
 
 export function goToNextCard(){
-  if(app.currentIndex < cards.length - 1) {
+  if(app.currentIndex < currentCards.length - 1) {
     app.currentIndex++;
     renderCardUsingTemplate(app, app.currentIndex);
     updateCardCounter(app.currentIndex);

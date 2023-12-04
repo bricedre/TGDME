@@ -1,10 +1,13 @@
-import { deckName } from "../decks/deckInfo.js";
+import { currentDeck } from "../app.js";
 
 const { jsPDF } = require("jspdf");
 
 let pageGeneration;
 
 export function generatePDF(pages) {
+
+  var deckName = currentDeck.deckName;
+
   pageGeneration = new jsPDF("p", "mm", "a4", true);
   pages.forEach((page, index) => {
     if (index != 0) pageGeneration.addPage();
@@ -13,6 +16,5 @@ export function generatePDF(pages) {
   });
   
   pageGeneration.save(deckName+".pdf");
-  pageGeneration.output('datauri');
 
 }

@@ -10,10 +10,8 @@
   <body>
 
     <nav><div id="title">The Greatest Deck Maker Ever</div>
-      <button class="navBtn">
-        LOAD DECK
-      </button>
-      <button class="navBtn">
+      
+      <button id="saveBtn" class="navBtn">
         SAVE DECK
       </button>
       <button id="renderBtn" class="navBtn">
@@ -21,19 +19,29 @@
       </button></nav>
 
     <div class="viewer">
-      <div class="panel"> COUCOU </div>
-      <div class="panel"> <main></main> </div>
+      <div class="panel">
+        <button id="newBtn">
+          <img src="./assets/add.svg" alt="add symbol"/>
+        <p>CREATE NEW DECK</p>
+      </button>
+      <button id="loadBtn">
+        <img src="./assets/deck.svg" alt="add symbol"/>
+        <p>LOAD EXISTING DECK</p>
+      </button> </div>
+      <div id="canvasPanel" class="panel"> <main></main> </div>
       
       </div>
     </div>
 
     <div class="bottomBar">
-        <div id="pageCounter">1/4 - 1 copy</div>
-        <div class="cardBtns">
+      <div id="pageCounter">
+        <div id="pageCounterLabel">1/4 - 1 copy</div>
+        <div id="pageCounterBtns">
           <button id="prevCardBtn">
             PREVIOUS
           </button>
           <button id="nextCardBtn">NEXT</button>
         </div>
+      </div>
   </body>
 </html>

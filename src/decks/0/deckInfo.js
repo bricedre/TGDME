@@ -1,5 +1,3 @@
-//
-
 export let deckName = "Rédac' Challenge";
 
 //RESOLUTION
