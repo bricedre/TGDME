@@ -4,33 +4,41 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.8.0/p5.min.js"></script>
     <link rel="stylesheet" type="text/css" href="style.css" />
     <meta charset="utf-8" />
-    <title>The Greatest Deck Maker Ever</title>
+    <title>LOGICIEL TROP BIEN !</title>
     <script type="module" src="./src/app.js"></script>
   </head>
   <body>
 
-    <nav><div id="title">The Greatest Deck Maker Ever</div>
+    <nav>
+      <button id="homeBtn" class="homeBtn">
+        <
+      </button>
+      <div id="title">LOGICIEL TROP BIEN !</div>
       
       <button id="saveBtn" class="navBtn">
-        SAVE DECK
+        SAUVEGARDER
       </button>
       <button id="renderBtn" class="navBtn">
-        RENDER PAGES (PDF)
+        GÉNÉRER (PDF)
       </button></nav>
 
     <div class="viewer">
-      <div class="panel">
+      <div id="startPanel" class="panel">
         <button id="newBtn">
           <img src="./assets/add.svg" alt="add symbol"/>
-        <p>CREATE NEW DECK</p>
-      </button>
-      <button id="loadBtn">
-        <img src="./assets/deck.svg" alt="add symbol"/>
-        <p>LOAD EXISTING DECK</p>
-      </button> </div>
-      <div id="canvasPanel" class="panel"> <main></main> </div>
-      
+          <p>NOUVEAU PAQUET</p>
+        </button>
+        <button id="loadBtn">
+          <img src="./assets/deck.svg" alt="add symbol"/>
+          <p>BIBLIOTHÈQUE</p>
+        </button>
       </div>
+      <div id="loadingPanel" class="panel">
+      </div>
+      <div id="editionPanel" class="panel">EDITION</div>
+    
+      <div id="canvasPanel" class="panel"> <main></main> </div>
+
     </div>
 
     <div class="bottomBar">
@@ -38,9 +46,9 @@
         <div id="pageCounterLabel">1/4 - 1 copy</div>
         <div id="pageCounterBtns">
           <button id="prevCardBtn">
-            PREVIOUS
+            PRÉCÉDENT
           </button>
-          <button id="nextCardBtn">NEXT</button>
+          <button id="nextCardBtn">SUIVANT</button>
         </div>
       </div>
   </body>

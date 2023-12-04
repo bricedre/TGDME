@@ -1,15 +1,17 @@
 import {
+  currentDeck
+} from "./globalStuff.js";
+import {
   renderImageElement,
   renderStripElement,
   renderTextElement,
 } from "./elements.js";
 import { generatePDF } from "./pdf.js";
 import {
-  app,
-  currentCards,
-  currentTemplate,
-  currentDeckInfo
+  app
 } from "../app.js";
+
+
 
 export function triggerGeneration() {
   app.generateMode = true;
@@ -17,14 +19,15 @@ export function triggerGeneration() {
 
 // GENERATE 3x3 A4 PAGES OF CARDS
 export function generatePages(p5) {
-  var cardW = currentDeckInfo.cardW;
-  var cardH = currentDeckInfo.cardH;
-  var colCount = currentDeckInfo.colCount;
-  var rowCount = currentDeckInfo.rowCount;
-  var marginX = currentDeckInfo.marginX;;
-  var marginY = currentDeckInfo.marginY;
-  var pageW = currentDeckInfo.pageW;
-  var pageH = currentDeckInfo.pageH;
+  
+  var cardW = currentDeck.deckInfo.cardW;
+  var cardH = currentDeck.deckInfo.cardH;
+  var colCount = currentDeck.deckInfo.colCount;
+  var rowCount = currentDeck.deckInfo.rowCount;
+  var marginX = currentDeck.deckInfo.marginX;;
+  var marginY = currentDeck.deckInfo.marginY;
+  var pageW = currentDeck.deckInfo.pageW;
+  var pageH = currentDeck.deckInfo.pageH;
 
   var pages = [];
 
@@ -71,12 +74,12 @@ export function generatePages(p5) {
 
 export function renderCardUsingTemplate(p, cardIndex) {
   p.card.background(255);
-  if (currentCards.length > 0) {
-    for (let i = 0; i < currentTemplate.length; i++) {
-      if (currentTemplate[i].element === "TEXT") renderTextElement(p, i, cardIndex);
-      else if (currentTemplate[i].element === "IMAGE")
+  if (currentDeck.cards.length > 0) {
+    for (let i = 0; i < currentDeck.template.length; i++) {
+      if (currentDeck.template[i].element === "TEXT") renderTextElement(p, i, cardIndex);
+      else if (currentDeck.template[i].element === "IMAGE")
         renderImageElement(p, i, cardIndex);
-      else if (currentTemplate[i].element === "STRIP")
+      else if (currentDeck.template[i].element === "STRIP")
         renderStripElement(p, i, cardIndex);
     }
 

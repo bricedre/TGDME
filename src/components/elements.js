@@ -1,9 +1,12 @@
-import { currentCards } from "../app.js";
-import { currentTemplate } from "../app.js";
-import { assetsLibrary } from "./preload.js";
-import { currentDeckInfo } from "../app.js";
+import { assetsLibrary } from "./assetLoader.js";
+import { currentDeck } from "./globalStuff.js";
 
 export function renderImageElement(p5, elementIndex, cardIndex) {
+
+  let currentCards = currentDeck.cards;
+  let currentDeckInfo = currentDeck.deckInfo;
+  let currentTemplate = currentDeck.template;
+
   let cardData = currentCards[cardIndex];
 
   var cardW = currentDeckInfo.cardW;
@@ -62,6 +65,11 @@ export function renderImageElement(p5, elementIndex, cardIndex) {
 }
 
 export function renderTextElement(p5, elementIndex, cardIndex) {
+
+  let currentCards = currentDeck.cards;
+  let currentDeckInfo = currentDeck.deckInfo;
+  let currentTemplate = currentDeck.template;
+
   let cardData = currentCards[cardIndex];
 
   var cardW = currentDeckInfo.cardW;
@@ -122,6 +130,11 @@ export function renderTextElement(p5, elementIndex, cardIndex) {
 }
 
 export function renderStripElement(p5, elementIndex, cardIndex) {
+
+  let currentCards = currentDeck.cards;
+  let currentDeckInfo = currentDeck.deckInfo;
+  let currentTemplate = currentDeck.template;
+
   let cardData = currentCards[cardIndex];
 
   var cardW = currentDeckInfo.cardW;

@@ -2,22 +2,10 @@
 
 const p5 = require('p5');
 
-// import {
-//   cardW,
-//   cardH,
-//   pageW,
-//   pageH,
-// } from "./components/deck/deckInfo.js";
-
+import { currentDeckIndex } from "./components/globalStuff.js";
 import { generatePages, renderCardUsingTemplate } from "./components/render.js";
-import { preload } from "./components/preload.js";
 import { setUI } from "./components/DOM.js";
 
-export var currentDeck = -1;
-export let currentTemplate;
-export let currentCards;
-export let currentDeckInfo;
-export let currentAssetsList;
 
 const sketch = (p) => {
 
@@ -29,7 +17,7 @@ const sketch = (p) => {
     // p.page = p.createGraphics(pageW, pageH);
     // p.card = p.createGraphics(cardW, cardH);
 
-    p.createCanvas(100, 100);
+    p.setupCanvas(200, 200)
 
     p.page = p.createGraphics(100, 100);
     p.card = p.createGraphics(100, 100);
@@ -47,7 +35,7 @@ const sketch = (p) => {
 
   p.draw = () => {
     if (!p.generateMode) {
-      if(currentDeck !== -1){
+      if(currentDeckIndex !== -1){
         p.image(p.card, 0, 0, p.width, p.height);
       }
     } else {
@@ -57,9 +45,9 @@ const sketch = (p) => {
     }
   };
 
-  p.preload = () => {
-    preload(p);
-  };
+  p.setupCanvas = (w, h) => {
+    p.createCanvas(w, h);
+  }
 };
 
 export const app = new p5(sketch);

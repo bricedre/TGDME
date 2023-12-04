@@ -1,0 +1,13 @@
+{
+    "deckInfo": {
+      "deckName": "Nouveau Deck",
+      "resolution": 60,
+      "cardFormat": "poker",
+      "cardOrientation": "portrait",
+      "pageFormat": "A4",
+      "pageOrientation": "portrait"
+    },
+    "template": [],
+    "cards": []
+  }
+  
