@@ -23,13 +23,14 @@ const loadBtn = document.getElementById("loadBtn");
 const saveBtn = document.getElementById("saveBtn");
 const renderBtn = document.getElementById("renderBtn");
 
+const bottomBar = document.querySelector(".bottomBar");
 const cardCounter = document.getElementById("cardCounter");
 const cardCounterLabel = document.getElementById("cardCounterLabel");
 const nextCardBtn = document.getElementById("nextCardBtn");
 const prevCardBtn = document.getElementById("prevCardBtn");
 
 homeBtn.addEventListener("click", () => {
-  loadExistingDeck(-1);
+  setCurrentDeckIndex(-1);
   openPanel("start");
 });
 
@@ -43,16 +44,18 @@ loadBtn.addEventListener("click", () => {
   decksAvailable.forEach((deck, index) => {
     
     var btnElement = document.createElement("button");
+    btnElement.classList.add("deckBtn");
     btnElement.innerHTML = deck.deckInfo.deckName;
     btnElement.addEventListener("click", () => {
       setCurrentDeckIndex(index);
-      openPanel("edition");
     })
+    
     loadingPanel.appendChild(btnElement);
   })
 
   openPanel("loading");
   titleElement.innerHTML = "BIBLIOTHÈQUE DE COLLECTIONS";
+  homeBtn.style.display = "flex";
 });
 
 renderBtn.addEventListener("click", () => {
@@ -76,6 +79,8 @@ document.addEventListener("keydown", (e) => {
 });
 
 export function setUI() {
+
+  //MENU
   if (currentDeckIndex == -1) {
     newBtn.style.display = "flex";
     loadBtn.style.display = "flex";
@@ -83,15 +88,22 @@ export function setUI() {
     renderBtn.style.display = "none";
     cardCounter.style.display = "none";
     canvasPanel.style.display = "none";
-    titleElement.innerHTML = "LOGICIEL TROP BIEN !";
-  } else {
+    titleElement.innerHTML = "LUAP - L'USINE À PROTOS";
+    // homeBtn.style.display = "none";
+    bottomBar.style.display = "none";
+  } 
+  
+  //EDITION
+  else {
     newBtn.style.display = "none";
     loadBtn.style.display = "none";
     saveBtn.style.display = "flex";
     renderBtn.style.display = "flex";
     cardCounter.style.display = "flex";
-    if(currentDeck.cards.length > 0) canvasPanel.style.display = "flex";
-    else canvasPanel.style.display = "none";
+    homeBtn.style.display = "flex";
+    bottomBar.style.display = "flex";
+    canvasPanel.style.display = "flex";
+    // else canvasPanel.style.display = "none";
     titleElement.innerHTML = currentDeck?.deckInfo.deckName;
     updateCardCounter(app.currentIndex);
   }
@@ -159,14 +171,16 @@ export function createNewDeck() {
       "./src/decks/" + deckQty + "/deck.json"
     );
     getDecks();
-    setCurrentDeckIndex(deckQty);
-
-    setUI();
-    openPanel("edition");
+    setTimeout(
+      () => setCurrentDeckIndex(deckQty), 100
+    )
+    
   }
 }
 
-openPanel("start")
+export function loadExistingDeck(index) {
+  setCurrentDeckIndex(index);
+}
 
 export function openPanel(panelName) {
   startPanel.style.display = "none";
@@ -186,9 +200,8 @@ export function openPanel(panelName) {
       editionPanel.style.display = "flex";
       break;
   }
-}
 
-export function loadExistingDeck(index) {
-  setCurrentDeckIndex(index);
   setUI();
 }
+
+

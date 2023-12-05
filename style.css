@@ -19,12 +19,12 @@ html, body {
   }
 
   nav{
-    background-color: #9dbfd6;
+    background-color: #90c4e5;
     height: 10vh;
     font-size: xx-large;
     display: flex;
     align-items: center;
-    padding : 0 2rem; 
+    padding : 0 1rem; 
     box-shadow: 0 0 20px #0005;
     gap : 2rem;
   }
@@ -71,7 +71,6 @@ html, body {
   
   #loadingPanel{
     grid-template-columns: repeat(6, 1fr);
-    align-items: baseline;
     height: fit-content;
   }
   
@@ -83,14 +82,15 @@ html, body {
     padding: 0.5rem 2rem;
     border-radius: 0.5rem;
     border: none;
-    /* display: none; */
+    display: none;
     align-items: center;
     font-size: 1.5rem;
     cursor: pointer;
-    background-color: #EEE;
+    background-color: #d4eeff ;
     transition : all 0.2s ease-in-out;
     justify-content: center;
     gap : 1rem;
+    box-shadow: 5px 5px 10px #104d6924;
   }
 
   button > img{
@@ -99,7 +99,7 @@ html, body {
   }
 
   button:hover{
-    background-color: #7ca0b8;
+    background-color: #63a9d5;
   }
 
   button:disabled{
@@ -107,10 +107,21 @@ html, body {
     cursor: default;
   }
 
-  .bottomBar{
-    background-color: #9dbfd6;
-    height: 10vh;
+  .deckBtn, .cardBtn{
+    display : flex;
+    height : 100%;
+  }
+
+  #homeBtn{
     display: flex;
+    padding: 0.5rem;
+    border-radius: 50%;
+  }
+
+  .bottomBar{
+    background-color: #90c4e5;
+    height: 10vh;
+    display: none;
     align-items: center;
     justify-content: center;
     gap : 4rem;
@@ -122,7 +133,7 @@ html, body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap : 1rem;
+    gap : 0.5rem;
   }
 
   #cardCounterBtns{

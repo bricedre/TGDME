@@ -93,4 +93,10 @@ export function renderCardUsingTemplate(p, cardIndex) {
       p.card.rect(0, 0, cardW, cardH);
     }
   }
+  else{
+    p.card.background(200);
+    p.card.textAlign(p.CENTER, p.CENTER);
+    p.card.textSize(30);
+    p.card.text("AUCUN ÉLÉMENT DANS LA COLLECTION!\n\nCRÉEZ UN MODÈLE ET DES ÉLÉMENTS DANS LE PANNEAU D'ÉDITION!", 0, 0, cardW, cardH);
+  }
 }
