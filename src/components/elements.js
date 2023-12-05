@@ -34,7 +34,6 @@ export function renderImageElement(p5, elementIndex, cardIndex) {
         else if (_type === "dynamic")
           _img = assetsLibrary[currentTemplate[elementIndex].src + "_" + cardIndex];
         else {
-          console.log("Image Type NOT SUPPORTED. Set to static.");
           assetsLibrary[currentTemplate[elementIndex].src];
         }
       }
@@ -54,12 +53,12 @@ export function renderImageElement(p5, elementIndex, cardIndex) {
         ? eval(currentTemplate[elementIndex].height)
         : 100;
 
-      try {
+      // try {
         p5.card.imageMode(p5.CENTER);
         p5.card.image(_img, _position_x, _position_y, _width, _height);
-      } catch (e) {
-        console.log(e)
-      }
+      // } catch (e) {
+      //   console.log(e)
+      // }
     }
   }
 }

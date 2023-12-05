@@ -1,11 +1,15 @@
 {
   "deckInfo": {
     "deckName": "Rédac' Challenge",
-    "resolution": 60,
+    "resolution": 118.11,
     "cardFormat": "poker",
     "cardOrientation": "portrait",
     "pageFormat": "A4",
-    "pageOrientation": "portrait"
+    "pageOrientation": "portrait",
+    "cardW" : 100,
+    "cardH" : 100,
+    "pageW" : 100,
+    "pageH" : 100
   },
   "template": [
     {

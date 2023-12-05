@@ -1,4 +1,3 @@
-// const { app, BrowserWindow } = require("electron");
 const {rootPath} = require("electron-root-path");
 const fs = require('fs');
 

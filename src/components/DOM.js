@@ -1,14 +1,15 @@
 import {
   currentDeck,
   currentDeckIndex,
+  decksAvailable,
+  getDecks,
   setCurrentDeckIndex,
 } from "./globalStuff.js";
 import { renderCardUsingTemplate, triggerGeneration } from "./render.js";
 import { app } from "../app.js";
 
-const { readdirSync, existsSync, mkdirSync, copyFileSync } = require("fs");
+const { existsSync, mkdirSync, copyFileSync } = require("fs");
 
-const cardCounter = document.getElementById("pageCounter");
 const rootElement = document.querySelector(":root");
 const titleElement = document.getElementById("title");
 
@@ -22,7 +23,8 @@ const loadBtn = document.getElementById("loadBtn");
 const saveBtn = document.getElementById("saveBtn");
 const renderBtn = document.getElementById("renderBtn");
 
-const pageCounter = document.getElementById("pageCounter");
+const cardCounter = document.getElementById("cardCounter");
+const cardCounterLabel = document.getElementById("cardCounterLabel");
 const nextCardBtn = document.getElementById("nextCardBtn");
 const prevCardBtn = document.getElementById("prevCardBtn");
 
@@ -32,16 +34,16 @@ homeBtn.addEventListener("click", () => {
 });
 
 newBtn.addEventListener("click", () => createNewDeck());
+
 loadBtn.addEventListener("click", () => {
   while (loadingPanel.firstChild) {
     loadingPanel.removeChild(loadingPanel.lastChild);
   }
-  var decksAvailable = getDecks();
 
   decksAvailable.forEach((deck, index) => {
     
     var btnElement = document.createElement("button");
-    btnElement.innerHTML = index;
+    btnElement.innerHTML = deck.deckInfo.deckName;
     btnElement.addEventListener("click", () => {
       setCurrentDeckIndex(index);
       openPanel("edition");
@@ -50,7 +52,7 @@ loadBtn.addEventListener("click", () => {
   })
 
   openPanel("loading");
-  titleElement.innerHTML = "BIBLIOTHÈQUE";
+  titleElement.innerHTML = "BIBLIOTHÈQUE DE COLLECTIONS";
 });
 
 renderBtn.addEventListener("click", () => {
@@ -79,7 +81,7 @@ export function setUI() {
     loadBtn.style.display = "flex";
     saveBtn.style.display = "none";
     renderBtn.style.display = "none";
-    pageCounter.style.display = "none";
+    cardCounter.style.display = "none";
     canvasPanel.style.display = "none";
     titleElement.innerHTML = "LOGICIEL TROP BIEN !";
   } else {
@@ -87,16 +89,21 @@ export function setUI() {
     loadBtn.style.display = "none";
     saveBtn.style.display = "flex";
     renderBtn.style.display = "flex";
-    pageCounter.style.display = "flex";
-    canvasPanel.style.display = "flex";
+    cardCounter.style.display = "flex";
+    if(currentDeck.cards.length > 0) canvasPanel.style.display = "flex";
+    else canvasPanel.style.display = "none";
     titleElement.innerHTML = currentDeck?.deckInfo.deckName;
+    updateCardCounter(app.currentIndex);
   }
+
+  
 }
 
 export function updateCardCounter(currentIndex) {
   //INDEX
   if (currentDeck.cards.length > 0) {
-    cardCounter.innerHTML =
+
+    cardCounterLabel.innerHTML =
       "Carte #" +
       (currentIndex + 1) +
       " sur " +
@@ -105,14 +112,18 @@ export function updateCardCounter(currentIndex) {
       (currentDeck.cards[currentIndex].quantity
         ? currentDeck.cards[currentIndex].quantity + " copies"
         : "1 copie");
-  } else cardCounter.innerHTML = "PAS DE CARTE À AFFICHER";
+  } else{
+    cardCounterLabel.innerHTML = "PAS DE CARTE À AFFICHER";
+  }
+
+  checkButtons()
 }
 
 export function checkButtons() {
   if (app.currentIndex != 0) prevCardBtn.disabled = false;
   else prevCardBtn.disabled = true;
 
-  if (app.currentIndex != currentCards.length - 1) nextCardBtn.disabled = false;
+  if (currentDeck.cards.length > 0 && app.currentIndex != currentDeck.cards.length - 1) nextCardBtn.disabled = false;
   else nextCardBtn.disabled = true;
 }
 
@@ -136,13 +147,8 @@ export function goToNextCard() {
   }
 }
 
-const getDecks = () =>
-  readdirSync("./src/decks", { withFileTypes: true })
-    .filter((dirent) => dirent.isDirectory())
-    .map((dirent) => dirent.name);
-
 export function createNewDeck() {
-  const deckQty = getDecks().length;
+  const deckQty = decksAvailable.length;
   var dir = "./src/decks/" + deckQty;
 
   if (!existsSync(dir)) {
@@ -152,6 +158,7 @@ export function createNewDeck() {
       "./src/components/deckTemplate.json",
       "./src/decks/" + deckQty + "/deck.json"
     );
+    getDecks();
     setCurrentDeckIndex(deckQty);
 
     setUI();

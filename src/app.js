@@ -9,13 +9,10 @@ import { setUI } from "./components/DOM.js";
 
 const sketch = (p) => {
 
-  console.log("new P5 element");
+  console.log("Bienvenue !");
 
   p.setup = () => {
-    // p.createCanvas(window.innerHeight*0.6*cardW/cardH, window.innerHeight*0.6);
 
-    // p.page = p.createGraphics(pageW, pageH);
-    // p.card = p.createGraphics(cardW, cardH);
 
     p.setupCanvas(200, 200)
 
@@ -28,14 +25,14 @@ const sketch = (p) => {
     p.imageMode(p.CORNER);
     p.page.imageMode(p.CORNER);
     p.card.imageMode(p.CENTER);
-    
+
     setUI();
 
   };
 
   p.draw = () => {
     if (!p.generateMode) {
-      if(currentDeckIndex !== -1){
+      if (currentDeckIndex !== -1) {
         p.image(p.card, 0, 0, p.width, p.height);
       }
     } else {
@@ -45,8 +42,10 @@ const sketch = (p) => {
     }
   };
 
-  p.setupCanvas = (w, h) => {
-    p.createCanvas(w, h);
+  p.setupCanvas = (cardW, cardH, pageW, pageH) => {
+    p.createCanvas(window.innerHeight * 0.6 * cardW / cardH, window.innerHeight * 0.6);
+    p.page = p.createGraphics(pageW, pageH);
+    p.card = p.createGraphics(cardW, cardH);
   }
 };
 

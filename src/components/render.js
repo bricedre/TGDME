@@ -35,7 +35,7 @@ export function generatePages(p5) {
 
   var _allCardsIndices = [];
   var currentCardIndex = 0;
-  currentCards.forEach((card) => {
+  currentDeck.cards.forEach((card) => {
     if (card.quantity) {
       for (let i = 0; i < card.quantity; i++)
         _allCardsIndices.push(currentCardIndex);
@@ -50,7 +50,6 @@ export function generatePages(p5) {
     if (i % (colCount * rowCount) == 0) {
       currentPage = p5.createGraphics(pageW, pageH);
       currentPage.background(255);
-      // currentPage.clear();
     }
     renderCardUsingTemplate(p5, cardIndex);
     currentPage.image(
@@ -73,6 +72,10 @@ export function generatePages(p5) {
 }
 
 export function renderCardUsingTemplate(p, cardIndex) {
+
+  var cardW = currentDeck.deckInfo.cardW;
+  var cardH = currentDeck.deckInfo.cardH;
+
   p.card.background(255);
   if (currentDeck.cards.length > 0) {
     for (let i = 0; i < currentDeck.template.length; i++) {
