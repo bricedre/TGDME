@@ -1,144 +1,245 @@
-:root{
-  --cardAngle : 2deg;
+@font-face {
+  font-family: "Main Font";
+  src: url("assets/font.ttf");
 }
 
-*{
+:root {
+  --cardAngle: 2deg;
+}
+
+* {
   user-select: none;
+  box-sizing: border-box;
 }
 
-html, body {
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    height: 100vh;
+html,
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  height: 100vh;
 
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 
-    font-family : Verdana, Geneva, Tahoma, sans-serif;
-  }
+  font-family: "Main Font", sans-serif;
+}
 
-  nav{
-    background-color: #90c4e5;
-    height: 10vh;
-    font-size: xx-large;
-    display: flex;
-    align-items: center;
-    padding : 0 1rem; 
-    box-shadow: 0 0 20px #0005;
-    gap : 2rem;
-  }
+body {
+}
 
-  #title{
-    flex: 1;
-  }
+nav {
+  background-color: #90c4e5;
+  height: 10vh;
+  font-size: xx-large;
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+  box-shadow: 0 0 20px #0005;
+  gap: 2rem;
+  border-radius: 0 0 2.5rem 2.5rem;
+  overflow: auto;
+  margin: 0 2rem;
+}
 
-  .viewer{
-    display: flex;
-    flex : 1;
-    gap : 1rem;
-    padding : 2rem;
-    justify-content: end;
-  }
+#title {
+  flex: 1;
+}
 
-  main{
-    
-    display: grid;
-    place-items: center;
-    rotate: var(--cardAngle);
-    transition: scale 0.3s ease-in-out;
-  }
+.viewer {
+  display: flex;
+  flex: 1;
+  gap: 1rem;
+  padding: 2rem;
+  justify-content: end;
+}
 
-  
-  main:hover{
-    scale: 1.4;
-  }
+main {
+  display: grid;
+  place-items: center;
+  rotate: var(--cardAngle);
+  transition: scale 0.3s ease-in-out;
+}
 
-  canvas {
-    box-shadow: 5px 5px 30px #0003;
-    border-radius: 1rem;
-    z-index : 1;
-  }
+main:hover {
+  scale: 1.4;
+}
 
-  .panel{
-    display: none;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    flex: 1;
-    gap : 2rem;
-  }
-  
-  #loadingPanel{
-    grid-template-columns: repeat(6, 1fr);
-    height: fit-content;
-  }
-  
-  .cardBtns{
-    display: flex;
-  }
+canvas {
+  box-shadow: 5px 5px 30px #0003;
+  border-radius: 1rem;
+  z-index: 1;
+}
 
-  button {
-    padding: 0.5rem 2rem;
-    border-radius: 0.5rem;
-    border: none;
-    display: none;
-    align-items: center;
-    font-size: 1.5rem;
-    cursor: pointer;
-    background-color: #d4eeff ;
-    transition : all 0.2s ease-in-out;
-    justify-content: center;
-    gap : 1rem;
-    box-shadow: 5px 5px 10px #104d6924;
-  }
+.panel {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  gap: 2rem;
+}
 
-  button > img{
-    height: 3rem;
-    rotate: 5deg;
-  }
+#loadingPanel {
+  grid-template-columns: repeat(6, 1fr);
+  height: fit-content;
+}
 
-  button:hover{
-    background-color: #63a9d5;
-  }
+#editionPanel {
+  background-color: #edf6fc;
+  border-radius: 2.5rem;
+}
 
-  button:disabled{
-    background-color: #FFF5;
-    cursor: default;
-  }
+.cardBtns {
+  display: flex;
+}
 
-  .deckBtn, .cardBtn{
-    display : flex;
-    height : 100%;
-  }
+button {
+  padding: 0.5rem 2rem;
+  border-radius: 10vh;
+  border: none;
+  display: none;
+  align-items: center;
+  font-size: 1.5rem;
+  cursor: pointer;
+  background-color: #d4eeff;
+  transition: all 0.2s ease-in-out;
+  justify-content: center;
+  gap: 1rem;
+  box-shadow: 5px 5px 10px #104d6924;
+  font-family: "Main Font", sans-serif;
+}
 
-  #homeBtn{
-    display: flex;
-    padding: 0.5rem;
-    border-radius: 50%;
-  }
+button > img {
+  height: 3rem;
+  rotate: 5deg;
+}
 
-  .bottomBar{
-    background-color: #90c4e5;
-    height: 10vh;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    gap : 4rem;
-    box-shadow: 0 0 20px #0002;
-  }
+button:hover {
+  background-color: #63a9d5;
+}
 
-  #cardCounter{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap : 0.5rem;
-  }
+button:disabled {
+  background-color: #fff5;
+  cursor: default;
+}
 
-  #cardCounterBtns{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap : 2rem;
-  }
+.cardBtn, .deckBtn{
+  display: flex;
+  height: 100%;
+}
+
+#homeBtn {
+  display: flex;
+  padding: 0.5rem;
+  border-radius: 50%;
+}
+
+#deleteBtn {
+  background-color: #B00;
+  color: white;
+}
+
+#deleteBtn:hover{
+  background-color: #800;
+}
+
+.bottomBar {
+  background-color: #90c4e5;
+  height: 10vh;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 4rem;
+  box-shadow: 0 0 20px #0005;
+  border-radius: 2.5rem 2.5rem 0 0;
+  margin: 0 2rem;
+}
+
+#cardCounter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+#cardCounterBtns {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+
+/*      TAB SYSTEM     */
+
+.tabs {
+  width: 100%;
+  height: 100%;
+}
+
+.content {
+  backface-visibility: hidden;
+  overflow-y: auto;
+}
+.content > div {
+  display: none;
+  padding: 20px 25px;
+}
+
+.content button{
+  margin-top: 1rem;
+  width: 100%;
+}
+
+input[type="radio"] {
+  display: none;
+}
+label {
+  display: inline-block;
+  padding: 15px 25px;
+  text-align: center;
+  border-bottom: 1px solid transparent;
+  transition: color 0.2s ease-out;
+}
+label:hover {
+  color: #90c4e5;
+  cursor: pointer;
+}
+input:checked + label {
+  color: #63a9d5;
+  border-bottom: 5px solid;
+}
+
+#tab-config:checked ~ .content #content-config,
+#tab-template:checked ~ .content #content-template,
+#tab-elements:checked ~ .content #content-elements,
+#tab-printing:checked ~ .content #content-printing {
+  display: block;
+  animation-name: inUp;
+  animation-timing-function: ease-in-out;
+  animation-duration: 0.6s;
+}
+
+/* TABS CONTENT */
+
+.parameterSlot {
+  margin-bottom: 0.5rem;
+}
+
+.parameterName {
+  padding: 0;
+  margin: 0 0 0.2rem 0;
+  font-size: 0.8rem;
+}
+
+.parameterInput {
+  width: -webkit-fill-available;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 0.5rem;
+}
+
+*:focus {
+  outline: 3px solid #63a9d588;
+}

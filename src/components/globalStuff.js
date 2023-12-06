@@ -1,5 +1,5 @@
 import { app } from "../app.js";
-import { openPanel, setUI } from "./DOM.js";
+import { openPanel, populateEditionFields, setUI } from "./DOM.js";
 import { loadAssets } from "./assetLoader.js";
 import { renderCardUsingTemplate } from "./render.js";
 
@@ -44,14 +44,14 @@ function setCurrentDeck(value) {
     renderCardUsingTemplate(app, app.currentIndex);
     setUI();
     openPanel("edition");
+    populateEditionFields();
   }, 500);
- 
 }
 
 function setupDeckValues() {
   console.log(currentDeck);
   switch (currentDeck.deckInfo.cardFormat) {
-    case "poker":
+    case "pokerCard":
       currentDeck.deckInfo.cardW = Math.round(
         6.3 * currentDeck.deckInfo.resolution
       );
@@ -60,7 +60,16 @@ function setupDeckValues() {
       );
       break;
 
-    case "square":
+    case "tarotCard":
+      currentDeck.deckInfo.cardW = Math.round(
+        6.3 * currentDeck.deckInfo.resolution
+      );
+      currentDeck.deckInfo.cardH = Math.round(
+        8.8 * currentDeck.deckInfo.resolution
+      );
+      break;
+
+    case "squareCard":
       currentDeck.deckInfo.cardW = Math.round(
         8.8 * currentDeck.deckInfo.resolution
       );
@@ -69,7 +78,7 @@ function setupDeckValues() {
       );
       break;
 
-    case "domino":
+    case "dominoCard":
       currentDeck.deckInfo.cardW = Math.round(
         4.4 * currentDeck.deckInfo.resolution
       );
@@ -78,13 +87,13 @@ function setupDeckValues() {
       );
       break;
 
-    case Custom:
+    case "custom":
     default:
       currentDeck.deckInfo.cardW = Math.round(
-        cardW * currentDeck.deckInfo.resolution
+        currentDeck.deckInfo.cardW * currentDeck.deckInfo.resolution
       );
       currentDeck.deckInfo.cardH = Math.round(
-        cardH * currentDeck.deckInfo.resolution
+        currentDeck.deckInfo.cardH * currentDeck.deckInfo.resolution
       );
       break;
   }
@@ -114,7 +123,7 @@ function setupDeckValues() {
       );
       break;
 
-    case custom:
+    case "custom":
     default:
       currentDeck.deckInfo.pageW = Math.round(
         currentDeck.deckInfo.pageW * currentDeck.deckInfo.resolution

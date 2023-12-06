@@ -2,7 +2,7 @@
     "deckInfo": {
       "deckName": "Nouvelle Collection",
       "resolution": 60,
-      "cardFormat": "poker",
+      "cardFormat": "pokerCard",
       "cardOrientation": "portrait",
       "pageFormat": "A4",
       "pageOrientation": "portrait",

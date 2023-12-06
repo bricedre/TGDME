@@ -15,12 +15,10 @@
       </button>
       <div id="title">LUAP - L'USINE À PROTOS</div>
       
-      <button id="saveBtn" class="navBtn">
+      <!-- <button id="saveBtn" class="navBtn">
         SAUVEGARDER
-      </button>
-      <button id="renderBtn" class="navBtn">
-        GÉNÉRER (PDF)
-      </button></nav>
+      </button> -->
+    </nav>
 
     <div class="viewer">
       <div id="startPanel" class="panel">
@@ -35,7 +33,122 @@
       </div>
       <div id="loadingPanel" class="panel">
       </div>
-      <div id="editionPanel" class="panel">EDITION</div>
+      <div id="editionPanel" class="panel">
+
+        <div class="tabs">
+          <input id="tab-config" type="radio" name="tabs" checked>
+          <label for="tab-config">Configuration</label>
+          <span>></span>
+        
+          <input id="tab-template" type="radio" name="tabs">
+          <label for="tab-template">Modèle</label>
+          <span>></span>
+
+          <input id="tab-elements" type="radio" name="tabs">
+          <label for="tab-elements">Éléments</label>
+          <span>></span>
+
+          <input id="tab-printing" type="radio" name="tabs">
+          <label for="tab-printing">Impression</label>
+        
+          <div class="content">
+            <div id="content-config">
+
+              <div class="parameterSlot">
+                <p class="parameterName">Nom de la Collection</p>
+                <input id="collectionName" class="parameterInput">
+              </div>
+
+              <div class="parameterSlot">
+                <p class="parameterName">Format des Éléments</p>
+                <select id="elementFormat" class="parameterInput">
+                  <option value="pokerCard">Carte Poker</option>
+                  <option value="tarotCard">Carte Tarot</option>
+                  <option value="dominoCard">Carte Domino</option>
+                  <option value="squareCard">Carte Carrée</option>
+                  <option value="smallToken">Jeton 2cm</option>
+                  <option value="mediumToken">Jeton 4cm</option>
+                  <option value="largeToken">Jeton 8cm</option>
+                  <option value="custom">Personnalisé</option>
+                </select>
+              </div>
+
+              <div class="parameterSlot">
+                <p class="parameterName">Largeur des Éléments (cm)</p>
+                <input id="elementWidth" disabled type="number" class="parameterInput" step="0.1" >
+              </div>
+
+              <div class="parameterSlot">
+                <p class="parameterName">Hauteur des Éléments (cm)</p>
+                <input id="elementHeight" disabled type="number" class="parameterInput" step="0.1">
+              </div>
+
+              <button id="duplicateBtn" class="navBtn">
+                DUPLIQUER LA COLLECTION
+              </button>
+
+              <button id="deleteBtn" class="navBtn">
+                SUPPRIMER LA COLLECTION
+              </button>
+
+            </div>
+        
+            <div id="content-template">
+              <h2>Tab-2</h2>
+              <p>
+                This is tab2
+              </p>
+            </div>
+        
+            <div id="content-elements">
+              <h2>Tab-3</h2>
+              <p>
+                This is tab3
+              </p>
+            </div>
+
+            <div id="content-printing">
+
+              <div class="parameterSlot">
+                <p class="parameterName">Format de Page</p>
+                <select id="pageFormat" class="parameterInput">
+                  <option value="A4">A4</option>
+                  <option value="A3">A3</option>
+                  <option value="custom">Personnalisé</option>
+                </select>
+              </div>
+
+              <div class="parameterSlot">
+                <p class="parameterName">Orientation de Page</p>
+                <select id="pageOrientation" class="parameterInput">
+                  <option value="portrait">Portrait</option>
+                  <option value="landscape">Paysage</option>
+                </select>
+              </div>
+
+              <div class="parameterSlot">
+                <p class="parameterName">Largeur de Page (cm)</p>
+                <input id="pageWidth" disabled type="number" class="parameterInput" step="0.1">
+              </div>
+
+              <div class="parameterSlot">
+                <p class="parameterName">Hauteur de Page (cm)</p>
+                <input id="pageHeight" disabled type="number" class="parameterInput" step="0.1">
+              </div>
+
+              <div class="parameterSlot">
+                <p class="parameterName">Résolution d'Impression (pixels/cm) | 300dpi = 118.11ppcm</p>
+                <input id="pageResolution" type="number" class="parameterInput" step="0.1">
+              </div>
+
+              <button id="renderBtn" class="navBtn">
+                GÉNÉRER (PDF)
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
     
       <div id="canvasPanel" class="panel"> <main></main> </div>
 
