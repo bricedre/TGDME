@@ -3,20 +3,20 @@ const path = require("path");
 
 const { app, BrowserWindow } = electron;
 
-require("electron-reload")(__dirname, {
-  electron: path.join(__dirname, "node_modules", ".bin", "electron"),
-});
+// require("electron-reload")(__dirname, {
+//   electron: path.join(__dirname, "node_modules", ".bin", "electron"),
+// });
 
 const createWindow = () => {
   let mainWindow = new BrowserWindow({
-    width: 1500,
-    height: 900,
+    show: false,
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
       enableRemoteModule: true,
     },
   });
+  mainWindow.maximize();
   mainWindow.loadURL(`file://${__dirname}/index.html`);
 
   mainWindow.on("closed", function () {

@@ -9,8 +9,8 @@ export function renderImageElement(p5, elementIndex, cardIndex) {
 
   let cardData = currentCards[cardIndex];
 
-  var cardW = currentDeckInfo.cardW;
-  var cardH = currentDeckInfo.cardH;
+  var cardW = currentDeckInfo.cardW*currentDeckInfo.resolution;
+  var cardH = currentDeckInfo.cardH*currentDeckInfo.resolution;
   var resolution = currentDeckInfo.resolution;
 
   let _img;
@@ -71,8 +71,8 @@ export function renderTextElement(p5, elementIndex, cardIndex) {
 
   let cardData = currentCards[cardIndex];
 
-  var cardW = currentDeckInfo.cardW;
-  var cardH = currentDeckInfo.cardH;
+  var cardW = currentDeckInfo.cardW*currentDeckInfo.resolution;
+  var cardH = currentDeckInfo.cardH*currentDeckInfo.resolution;
   var resolution = currentDeckInfo.resolution;
 
   let _textToWrite = "";
@@ -136,8 +136,8 @@ export function renderStripElement(p5, elementIndex, cardIndex) {
 
   let cardData = currentCards[cardIndex];
 
-  var cardW = currentDeckInfo.cardW;
-  var cardH = currentDeckInfo.cardH;
+  var cardW = currentDeckInfo.cardW*currentDeckInfo.resolution;
+  var cardH = currentDeckInfo.cardH*currentDeckInfo.resolution;
   var resolution = currentDeckInfo.resolution;
 
   let _imgs = [];

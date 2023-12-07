@@ -6,10 +6,10 @@
     "cardOrientation": "portrait",
     "pageFormat": "A4",
     "pageOrientation": "portrait",
-    "cardW" : 100,
-    "cardH" : 100,
-    "pageW" : 100,
-    "pageH" : 100
+    "cardW": 100,
+    "cardH": 100,
+    "pageW": 100,
+    "pageH": 100
   },
   "template": [
     {
@@ -109,35 +109,35 @@
   ],
   "cards": [
     {
-      "title": "Lucy", 
-      "storage": "2", 
+      "title": "Lucy",
+      "storage": "2",
       "observation": "2",
-      "effect" : "This is a rather long text,\nso I need to create line\nbreaks to fit it all.",
-      "has_text_effect" : true, 
-      "effect_cost" :  ["coin", "coin"]
+      "effect": "This is a rather long text,\nso I need to create line\nbreaks to fit it all.",
+      "has_text_effect": true,
+      "effect_cost": ["coin", "coin"]
     },
     {
       "title": "Kendrik",
       "storage": "1",
       "observation": "3",
-      "effect" : "This is a short effect.",
-      "has_text_effect" : true,
-      "quantity" : 20,
-      "effect_cost" :  ["looking_glass", "looking_glass", "coin", "coin"]
+      "effect": "This is a short effect.",
+      "has_text_effect": true,
+      "quantity": 20,
+      "effect_cost": ["looking_glass", "looking_glass", "coin", "coin"]
     },
     {
       "title": "Tom",
       "storage": "1",
       "observation": "4",
-      "has_image_effect" : true
+      "has_image_effect": true
     },
     {
       "title": "Sophia",
       "storage": "3",
       "observation": "3",
-      "effect" : "This is a short effect.",
-      "has_text_effect" : true,
-      "effect_cost" :  ["looking_glass"]
+      "effect": "This is a short effect.",
+      "has_text_effect": true,
+      "effect_cost": ["looking_glass"]
     }
   ]
 }

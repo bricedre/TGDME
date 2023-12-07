@@ -13,7 +13,7 @@
       <button id="homeBtn" class="homeBtn">
         <img src="./assets/home.png" alt="add symbol"/>
       </button>
-      <div id="title">LUAP - L'USINE À PROTOS</div>
+      <div id="title"></div>
       
       <!-- <button id="saveBtn" class="navBtn">
         SAUVEGARDER
@@ -62,25 +62,54 @@
               <div class="parameterSlot">
                 <p class="parameterName">Format des Éléments</p>
                 <select id="elementFormat" class="parameterInput">
-                  <option value="pokerCard">Carte Poker</option>
-                  <option value="tarotCard">Carte Tarot</option>
-                  <option value="dominoCard">Carte Domino</option>
-                  <option value="squareCard">Carte Carrée</option>
-                  <option value="smallToken">Jeton 2cm</option>
-                  <option value="mediumToken">Jeton 4cm</option>
-                  <option value="largeToken">Jeton 8cm</option>
-                  <option value="custom">Personnalisé</option>
+                  <optgroup label="Cartes">
+                    <option value="pokerCard">Carte Poker</option>
+                    <option value="bridgeCard">Carte Bridge</option>
+                    <option value="tarotCard">Carte Tarot</option>
+                    <option value="dominoCard">Carte Domino</option>
+                    <option value="halfCard">Demi-carte</option>
+                    <option value="squareCard">Carte carrée</option>
+                  </optgroup>
+
+                  <optgroup label="Tuiles Hexagones">
+                    <option value="hexTileP">Tuile hexagonale Portrait</option>
+                    <option value="hexTileL">Tuile hexagonale Paysage</option>
+                  </optgroup>
+
+                  <optgroup label="Jetons">
+                    <option value="smallToken">Jeton 2cm</option>
+                    <option value="mediumToken">Jeton 4cm</option>
+                    <option value="largeToken">Jeton 8cm</option>
+                  </optgroup>
+
+                  <optgroup label="Personnalisé">
+                    <option value="custom">Choisir ses dimensions...</option>
+                  </optgroup>
                 </select>
               </div>
 
               <div class="parameterSlot">
                 <p class="parameterName">Largeur des Éléments (cm)</p>
-                <input id="elementWidth" disabled type="number" class="parameterInput" step="0.1" >
+                <input id="elementWidth" inputmode="decimal" class="parameterInput" step="0.1" >
               </div>
 
               <div class="parameterSlot">
                 <p class="parameterName">Hauteur des Éléments (cm)</p>
-                <input id="elementHeight" disabled type="number" class="parameterInput" step="0.1">
+                <input id="elementHeight" inputmode="decimal" class="parameterInput" step="0.1">
+              </div>
+
+              <div class="parameterSlot">
+                <p class="parameterName">Repère Visuel</p>
+                <select id="visualGuide" class="parameterInput">
+                  <option value="none">Aucun</option>
+                  <option value="center">Centre</option>
+                  <option value="grid3">Grille 3x3</option>
+                  <option value="grid4">Grille 4x4</option>
+                  <option value="grid6">Grille 6x6</option>
+                    <option value="circle">Ellipse</option>
+                    <option value="hexp">Hexagone Portrait</option>
+                    <option value="hexl">Hexagone Paysage</option>
+                </select>
               </div>
 
               <button id="duplicateBtn" class="navBtn">
@@ -112,9 +141,13 @@
               <div class="parameterSlot">
                 <p class="parameterName">Format de Page</p>
                 <select id="pageFormat" class="parameterInput">
-                  <option value="A4">A4</option>
-                  <option value="A3">A3</option>
-                  <option value="custom">Personnalisé</option>
+                  <optgroup label="Formats standards">
+                    <option value="A4">A4</option>
+                    <option value="A3">A3</option>
+                  </optgroup>
+                  <optgroup label="Personnalisé">
+                    <option value="custom">Choisir ses dimensions...</option>
+                  </optgroup>
                 </select>
               </div>
 
@@ -128,17 +161,17 @@
 
               <div class="parameterSlot">
                 <p class="parameterName">Largeur de Page (cm)</p>
-                <input id="pageWidth" disabled type="number" class="parameterInput" step="0.1">
+                <input id="pageWidth" disabled inputmode="decimal" class="parameterInput" step="0.1">
               </div>
 
               <div class="parameterSlot">
                 <p class="parameterName">Hauteur de Page (cm)</p>
-                <input id="pageHeight" disabled type="number" class="parameterInput" step="0.1">
+                <input id="pageHeight" disabled inputmode="decimal" class="parameterInput" step="0.1">
               </div>
 
               <div class="parameterSlot">
                 <p class="parameterName">Résolution d'Impression (pixels/cm) | 300dpi = 118.11ppcm</p>
-                <input id="pageResolution" type="number" class="parameterInput" step="0.1">
+                <input id="pageResolution" inputmode="decimal" class="parameterInput" step="0.1">
               </div>
 
               <button id="renderBtn" class="navBtn">
@@ -150,7 +183,7 @@
         </div>
       </div>
     
-      <div id="canvasPanel" class="panel"> <main></main> </div>
+      <div id="canvasPanel" class="panel"><main></main></div>
 
     </div>
 

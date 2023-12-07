@@ -1,8 +1,7 @@
 const {rootPath} = require("electron-root-path");
 const fs = require('fs');
 
-
-import { currentDeck, currentDeckIndex } from "./globalStuff.js";
+import { currentDeckIndex } from "./globalStuff.js";
 
 export let assetsLibrary = {};
 

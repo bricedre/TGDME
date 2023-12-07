@@ -1,14 +1,13 @@
 import {
+  createNewDeck,
   currentDeck,
   currentDeckIndex,
   decksAvailable,
-  getDecks,
+  saveDeck,
   setCurrentDeckIndex,
 } from "./globalStuff.js";
 import { renderCardUsingTemplate, triggerGeneration } from "./render.js";
 import { app } from "../app.js";
-
-const { existsSync, mkdirSync, copyFileSync } = require("fs");
 
 const rootElement = document.querySelector(":root");
 const titleElement = document.getElementById("title");
@@ -31,15 +30,19 @@ const nextCardBtn = document.getElementById("nextCardBtn");
 const prevCardBtn = document.getElementById("prevCardBtn");
 
 //COLLECTION PARAMETERS
-const collectionName = document.getElementById("collectionName");
-const elementFormat = document.getElementById("elementFormat");
-const elementWidth = document.getElementById("elementWidth");
-const elementHeight = document.getElementById("elementHeight");
-const pageFormat = document.getElementById("pageFormat");
-const pageOrientation = document.getElementById("pageOrientation");
-const pageWidth = document.getElementById("pageWidth");
-const pageHeight = document.getElementById("pageHeight");
-const pageResolution = document.getElementById("pageResolution");
+export const collectionName = document.getElementById("collectionName");
+export const elementFormat = document.getElementById("elementFormat");
+export const elementWidth = document.getElementById("elementWidth");
+export const elementHeight = document.getElementById("elementHeight");
+export const visualGuide = document.getElementById("visualGuide");
+export const pageFormat = document.getElementById("pageFormat");
+export const pageOrientation = document.getElementById("pageOrientation");
+export const pageWidth = document.getElementById("pageWidth");
+export const pageHeight = document.getElementById("pageHeight");
+export const pageResolution = document.getElementById("pageResolution");
+
+const allInputs = document.querySelectorAll("input");
+const allSelects = document.querySelectorAll("select");
 
 homeBtn.addEventListener("click", () => {
   setCurrentDeckIndex(-1);
@@ -80,13 +83,23 @@ prevCardBtn.addEventListener("click", () => {
   goToPreviousCard();
 });
 
-// document.addEventListener("keydown", (e) => {
-//   if (e.keyCode == 37) {
-//     goToPreviousCard();
-//   } else if (e.keyCode == 39) {
-//     goToNextCard();
-//   }
-// });
+allInputs.forEach((input) => {
+  input.addEventListener("input", (e) => {
+    saveDeck(false);
+    checkOtherInputs(e.target.id, e.target.value);
+  });
+});
+
+allSelects.forEach((select) => {
+  select.addEventListener("change", (e) => {
+    saveDeck(false);
+    checkOtherInputs(e.target.id, e.target.value);
+  });
+});
+
+//
+// FUNCTIONS
+//
 
 export function setUI() {
   //MENU
@@ -99,7 +112,7 @@ export function setUI() {
     renderBtn.style.display = "none";
     cardCounter.style.display = "none";
     canvasPanel.style.display = "none";
-    titleElement.innerHTML = "LUAP - L'USINE À PROTOS";
+    titleElement.innerHTML = "L'USINE À PROTOS";
     bottomBar.style.display = "none";
   }
 
@@ -153,7 +166,7 @@ export function checkCardButtons() {
 export function goToPreviousCard() {
   if (app.currentIndex > 0) {
     app.currentIndex--;
-    renderCardUsingTemplate(app, app.currentIndex);
+    renderCardUsingTemplate(app, app.currentIndex, currentDeck.deckInfo.visualGuide);
     updateCardCounter(app.currentIndex);
     rootElement.style.setProperty("--cardAngle", 3 - app.random() * 6 + "deg");
     checkCardButtons();
@@ -163,28 +176,10 @@ export function goToPreviousCard() {
 export function goToNextCard() {
   if (app.currentIndex < currentDeck.cards.length - 1) {
     app.currentIndex++;
-    renderCardUsingTemplate(app, app.currentIndex);
+    renderCardUsingTemplate(app, app.currentIndex, currentDeck.deckInfo.visualGuide);
     updateCardCounter(app.currentIndex);
     rootElement.style.setProperty("--cardAngle", 3 - app.random() * 6 + "deg");
     checkCardButtons();
-  }
-}
-
-export function createNewDeck() {
-  const deckQty = decksAvailable.length;
-  var dir = "./src/decks/" + deckQty;
-
-  if (!existsSync(dir)) {
-    mkdirSync(dir);
-    mkdirSync(dir + "/assets");
-    copyFileSync(
-      "./src/components/deckTemplate.json",
-      "./src/decks/" + deckQty + "/deck.json"
-    );
-    getDecks();
-    setTimeout(() => {
-      setCurrentDeckIndex(deckQty);
-    }, 100);
   }
 }
 
@@ -213,11 +208,41 @@ export function openPanel(panelName) {
 export function populateEditionFields() {
   collectionName.value = currentDeck.deckInfo.deckName;
   elementFormat.value = currentDeck.deckInfo.cardFormat;
-  elementWidth.value = currentDeck.deckInfo.cardW / currentDeck.deckInfo.resolution;
-  elementHeight.value = currentDeck.deckInfo.cardH / currentDeck.deckInfo.resolution;
+  elementWidth.value = currentDeck.deckInfo.cardW;
+  elementHeight.value = currentDeck.deckInfo.cardH;
+  visualGuide.value = currentDeck.deckInfo.visualGuide;
+
   pageFormat.value = currentDeck.deckInfo.pageFormat;
   pageOrientation.value = currentDeck.deckInfo.pageOrientation;
-  pageWidth.value = currentDeck.deckInfo.pageW / currentDeck.deckInfo.resolution;
-  pageHeight.value = currentDeck.deckInfo.pageH / currentDeck.deckInfo.resolution;
+  pageWidth.value = currentDeck.deckInfo.pageW;
+  pageHeight.value = currentDeck.deckInfo.pageH;
   pageResolution.value = currentDeck.deckInfo.resolution;
+}
+
+export function checkOtherInputs(eventTargetId, eventTargetValue) {
+  switch (eventTargetId) {
+    case "elementFormat":
+      if (eventTargetValue === "custom") {
+        elementHeight.disabled = false;
+        elementWidth.disabled = false;
+        populateEditionFields();
+      } else {
+        elementHeight.disabled = true;
+        elementWidth.disabled = true;
+      }
+      break;
+
+    case "pageFormat":
+      if (eventTargetValue === "custom") {
+        pageWidth.disabled = false;
+        pageHeight.disabled = false;
+        pageOrientation.disabled = true;
+        populateEditionFields();
+      } else {
+        pageWidth.disabled = true;
+        pageHeight.disabled = true;
+        pageOrientation.disabled = false;
+      }
+      break;
+  }
 }

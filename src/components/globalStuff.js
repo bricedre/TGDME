@@ -1,10 +1,24 @@
 import { app } from "../app.js";
-import { openPanel, populateEditionFields, setUI } from "./DOM.js";
+import {
+  checkOtherInputs,
+  collectionName,
+  elementFormat,
+  elementHeight,
+  elementWidth,
+  openPanel,
+  pageFormat,
+  pageHeight,
+  pageResolution,
+  pageWidth,
+  populateEditionFields,
+  setUI,
+  visualGuide,
+} from "./DOM.js";
 import { loadAssets } from "./assetLoader.js";
 import { renderCardUsingTemplate } from "./render.js";
 
 const fs = require("fs").promises;
-const { readdirSync } = require("fs");
+const { existsSync, mkdirSync, copyFileSync, readdirSync } = require("fs");
 
 export let decksAvailable;
 export let currentDeckIndex = -1;
@@ -31,128 +45,181 @@ export function setCurrentDeckIndex(value) {
 
 function setCurrentDeck(value) {
   currentDeck = value;
+
+  var coll = currentDeck.deckInfo;
+
   loadAssets(app);
-  setupDeckValues();
+  setupCollectionDimensions();
+
   app.setupCanvas(
-    currentDeck.deckInfo.cardW,
-    currentDeck.deckInfo.cardH,
-    currentDeck.deckInfo.pageW,
-    currentDeck.deckInfo.pageH
+    coll.cardW * coll.resolution,
+    coll.cardH * coll.resolution,
+    coll.pageW * coll.resolution,
+    coll.pageH * coll.resolution
   );
 
   setTimeout(() => {
-    renderCardUsingTemplate(app, app.currentIndex);
+    renderCardUsingTemplate(app, app.currentIndex, currentDeck.deckInfo.visualGuide);
     setUI();
     openPanel("edition");
     populateEditionFields();
+    checkOtherInputs(elementFormat.id, elementFormat.value);
+    checkOtherInputs(pageFormat.id, pageFormat.value);
   }, 500);
 }
 
-function setupDeckValues() {
-  console.log(currentDeck);
-  switch (currentDeck.deckInfo.cardFormat) {
+export function createNewDeck() {
+  const deckQty = decksAvailable.length;
+  var dir = "./src/decks/" + deckQty;
+
+  if (!existsSync(dir)) {
+    mkdirSync(dir);
+    mkdirSync(dir + "/assets");
+    copyFileSync(
+      "./src/components/deckTemplate.json",
+      "./src/decks/" + deckQty + "/deck.json"
+    );
+    getDecks();
+    setTimeout(() => {
+      setCurrentDeckIndex(deckQty);
+    }, 100);
+  }
+}
+
+export function saveDeck(refreshAssets) {
+  var coll = currentDeck.deckInfo;
+
+  //ALTER THE DATA TO CURRENT DECK
+  coll.deckName = collectionName.value;
+  coll.cardFormat = elementFormat.value;
+  coll.cardW = elementWidth.value;
+  coll.cardH = elementHeight.value;
+  coll.visualGuide = visualGuide.value;
+
+  coll.pageFormat = pageFormat.value;
+  coll.pageW = pageWidth.value;
+  coll.pageH = pageHeight.value;
+  
+  coll.pageH = pageHeight.value;
+
+  coll.pageOrientation = pageOrientation.value;
+  coll.resolution = Math.max(1, pageResolution.value);
+
+  setupCollectionDimensions();
+  populateEditionFields();
+
+  //SAVE CURRENT DECK IN FOLDER
+  var deckToSave = JSON.stringify(currentDeck);
+  fs.writeFile(
+    "./src/decks/" + currentDeckIndex + "/deck.json",
+    deckToSave,
+    (err) => {
+      if (err) {
+        console.error(err);
+      }
+      // file written successfully
+    }
+  );
+
+  //RELOAD DECK
+  if (refreshAssets) loadAssets(app);
+
+  app.resizeExistingCanvas(
+    coll.cardW * coll.resolution,
+    coll.cardH * coll.resolution,
+    coll.pageW * coll.resolution,
+    coll.pageH * coll.resolution
+  );
+
+  setTimeout(() => {
+    renderCardUsingTemplate(app, app.currentIndex, currentDeck.deckInfo.visualGuide);
+    setUI();
+  }, 500);
+}
+
+function setupCollectionDimensions() {
+  var coll = currentDeck.deckInfo;
+
+  switch (coll.cardFormat) {
     case "pokerCard":
-      currentDeck.deckInfo.cardW = Math.round(
-        6.3 * currentDeck.deckInfo.resolution
-      );
-      currentDeck.deckInfo.cardH = Math.round(
-        8.8 * currentDeck.deckInfo.resolution
-      );
+      coll.cardW = 6.3;
+      coll.cardH = 8.8;
+      break;
+
+    case "bridgeCard":
+      coll.cardW = 5.7;
+      coll.cardH = 8.9;
       break;
 
     case "tarotCard":
-      currentDeck.deckInfo.cardW = Math.round(
-        6.3 * currentDeck.deckInfo.resolution
-      );
-      currentDeck.deckInfo.cardH = Math.round(
-        8.8 * currentDeck.deckInfo.resolution
-      );
-      break;
-
-    case "squareCard":
-      currentDeck.deckInfo.cardW = Math.round(
-        8.8 * currentDeck.deckInfo.resolution
-      );
-      currentDeck.deckInfo.cardH = Math.round(
-        8.8 * currentDeck.deckInfo.resolution
-      );
+      coll.cardW = 7;
+      coll.cardH = 12;
       break;
 
     case "dominoCard":
-      currentDeck.deckInfo.cardW = Math.round(
-        4.4 * currentDeck.deckInfo.resolution
-      );
-      currentDeck.deckInfo.cardH = Math.round(
-        8.8 * currentDeck.deckInfo.resolution
-      );
+      coll.cardW = 4.4;
+      coll.cardH = 8.8;
       break;
 
-    case "custom":
-    default:
-      currentDeck.deckInfo.cardW = Math.round(
-        currentDeck.deckInfo.cardW * currentDeck.deckInfo.resolution
-      );
-      currentDeck.deckInfo.cardH = Math.round(
-        currentDeck.deckInfo.cardH * currentDeck.deckInfo.resolution
-      );
+    case "halfCard":
+      coll.cardW = 4.4;
+      coll.cardH = 6.3;
+      break;
+
+    case "squareCard":
+      coll.cardW = 8.8;
+      coll.cardH = 8.8;
+      break;
+
+    case "hexTileP":
+      coll.cardW = 8.3;
+      coll.cardH = 9.5;
+      break;
+   
+      case "hexTileL":
+      coll.cardW = 9.5;
+      coll.cardH = 8.3;
+      break;
+
+    case "smallToken":
+      coll.cardW = 2;
+      coll.cardH = 2;
+      break;
+
+    case "mediumToken":
+      coll.cardW = 4;
+      coll.cardH = 4;
+      break;
+
+    case "largeToken":
+      coll.cardW = 8;
+      coll.cardH = 8;
       break;
   }
 
-  if (currentDeck.deckInfo.cardOrientation === "landscape") {
-    let _temp = currentDeck.deckInfo.cardW;
-    currentDeck.deckInfo.cardW = cardH;
-    currentDeck.deckInfo.cardH = _temp;
-  }
-
-  switch (currentDeck.deckInfo.pageFormat) {
+  switch (coll.pageFormat) {
     case "A3":
-      currentDeck.deckInfo.pageW = Math.round(
-        29.7 * currentDeck.deckInfo.resolution
-      );
-      currentDeck.deckInfo.pageH = Math.round(
-        42 * currentDeck.deckInfo.resolution
-      );
+      coll.pageW = 29.7;
+      coll.pageH = 42;
       break;
 
     case "A4":
-      currentDeck.deckInfo.pageW = Math.round(
-        21 * currentDeck.deckInfo.resolution
-      );
-      currentDeck.deckInfo.pageH = Math.round(
-        29.7 * currentDeck.deckInfo.resolution
-      );
-      break;
-
-    case "custom":
-    default:
-      currentDeck.deckInfo.pageW = Math.round(
-        currentDeck.deckInfo.pageW * currentDeck.deckInfo.resolution
-      );
-      currentDeck.deckInfo.pageH = Math.round(
-        currentDeck.deckInfo.pageH * currentDeck.deckInfo.resolution
-      );
+      coll.pageW = 21;
+      coll.pageH = 29.7;
       break;
   }
 
-  if (currentDeck.deckInfo.pageOrientation === "landscape") {
-    let _temp = currentDeck.deckInfo.pageW;
-    currentDeck.deckInfo.pageW = pageH;
-    currentDeck.deckInfo.pageH = _temp;
+  if (coll.pageOrientation === "landscape") {
+    let _temp = coll.pageW;
+    coll.pageW = coll.pageH;
+    coll.pageH = _temp;
   }
 
   // DERIVED MARGINS & COLUMN/ROW COUNTS TO CENTER THE CARDS IN THE PAGE
-  currentDeck.deckInfo.colCount = Math.floor(
-    currentDeck.deckInfo.pageW / currentDeck.deckInfo.cardW
-  );
-  currentDeck.deckInfo.rowCount = Math.floor(
-    currentDeck.deckInfo.pageH / currentDeck.deckInfo.cardH
-  );
-  currentDeck.deckInfo.marginX =
-    (currentDeck.deckInfo.pageW -
-      currentDeck.deckInfo.cardW * currentDeck.deckInfo.colCount) /
-    2;
-  currentDeck.deckInfo.marginY =
-    (currentDeck.deckInfo.pageH -
-      currentDeck.deckInfo.cardH * currentDeck.deckInfo.rowCount) /
-    2;
+  coll.colCount = Math.floor(coll.pageW / coll.cardW);
+  coll.rowCount = Math.floor(coll.pageH / coll.cardH);
+  coll.marginX =
+    ((coll.pageW - coll.cardW * coll.colCount) / 2) * coll.resolution;
+  coll.marginY =
+    ((coll.pageH - coll.cardH * coll.rowCount) / 2) * coll.resolution;
 }

@@ -81,13 +81,16 @@ canvas {
 }
 
 #loadingPanel {
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   height: fit-content;
 }
 
 #editionPanel {
   background-color: #edf6fc;
   border-radius: 2.5rem;
+}
+
+#canvasPanel{
 }
 
 .cardBtns {
@@ -100,7 +103,7 @@ button {
   border: none;
   display: none;
   align-items: center;
-  font-size: 1.5rem;
+  font-size: 1rem;
   cursor: pointer;
   background-color: #d4eeff;
   transition: all 0.2s ease-in-out;
