@@ -6,6 +6,7 @@ import {
 } from "./elements.js";
 import { generatePDF } from "./pdf.js";
 import { app } from "../app.js";
+import { cuttingHelp } from "./DOM.js";
 
 export function triggerGeneration() {
   app.generateMode = true;
@@ -80,10 +81,13 @@ export function renderCardUsingTemplate(p, cardIndex, guide) {
     }
 
     if (p.generateMode) {
-      p.card.noFill();
-      p.card.stroke(0, 100);
-      p.card.strokeWeight(2);
-      p.card.rect(0, 0, cardW, cardH);
+      console.log(currentDeck.deckInfo.cuttingHelp)
+      if(currentDeck.deckInfo.cuttingHelp){
+        p.card.noFill();
+        p.card.stroke(0, 100);
+        p.card.strokeWeight(2);
+        p.card.rect(0, 0, cardH, cardH);
+      }
     } else {
       p.card.stroke(255, 0, 0, 100);
       p.card.noFill();
@@ -174,6 +178,15 @@ export function renderCardUsingTemplate(p, cardIndex, guide) {
           p.card.endShape(p.CLOSE);
           
           break;
+
+          case "oct":
+            p.card.beginShape();
+            for (let i = 0; i < 8; i++) {
+              p.card.vertex(cardW/2 + Math.cos(Math.PI*2/16 + Math.PI*2/8*i)*cardW*0.54, cardH/2 + Math.sin(Math.PI*2/16 + Math.PI*2/8*i)*cardH*0.54);
+            }
+            p.card.endShape(p.CLOSE);
+            
+            break;
       }
     }
   } else {

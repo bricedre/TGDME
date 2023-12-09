@@ -19,9 +19,16 @@ const canvasPanel = document.getElementById("canvasPanel");
 
 const newBtn = document.getElementById("newBtn");
 const loadBtn = document.getElementById("loadBtn");
-const renderBtn = document.getElementById("renderBtn");
+
+const imageTemplateBtn = document.getElementById("imageTemplateBtn");
+const stripTemplateBtn = document.getElementById("stripTemplateBtn");
+const textTemplateBtn = document.getElementById("textTemplateBtn");
 const duplicateBtn = document.getElementById("duplicateBtn");
 const deleteBtn = document.getElementById("deleteBtn");
+const renderBtn = document.getElementById("renderBtn");
+
+const templateItems = document.getElementById("templateItems");
+const elementItems = document.getElementById("elementItems");
 
 const bottomBar = document.querySelector(".bottomBar");
 const cardCounter = document.getElementById("cardCounter");
@@ -40,8 +47,9 @@ export const pageOrientation = document.getElementById("pageOrientation");
 export const pageWidth = document.getElementById("pageWidth");
 export const pageHeight = document.getElementById("pageHeight");
 export const pageResolution = document.getElementById("pageResolution");
+export const cuttingHelp = document.getElementById("cuttingHelp");
 
-const allInputs = document.querySelectorAll("input");
+const allInputs = document.querySelectorAll('input:not([type="radio"])');
 const allSelects = document.querySelectorAll("select");
 
 homeBtn.addEventListener("click", () => {
@@ -109,6 +117,11 @@ export function setUI() {
     renderBtn.style.display = "none";
     deleteBtn.style.display = "none";
     duplicateBtn.style.display = "none";
+
+    textTemplateBtn.style.display = "none";
+    stripTemplateBtn.style.display = "none";
+    imageTemplateBtn.style.display = "none";
+
     renderBtn.style.display = "none";
     cardCounter.style.display = "none";
     canvasPanel.style.display = "none";
@@ -123,6 +136,9 @@ export function setUI() {
     renderBtn.style.display = "flex";
     deleteBtn.style.display = "flex";
     duplicateBtn.style.display = "flex";
+    textTemplateBtn.style.display = "flex";
+    stripTemplateBtn.style.display = "flex";
+    imageTemplateBtn.style.display = "flex";
     cardCounter.style.display = "flex";
     homeBtn.style.display = "flex";
     bottomBar.style.display = "flex";
@@ -130,6 +146,57 @@ export function setUI() {
     titleElement.innerHTML = currentDeck?.deckInfo.deckName;
     updateCardCounter(app.currentIndex);
   }
+}
+
+export function updateTemplateItems() {
+  while (templateItems.firstChild) {
+    templateItems.removeChild(templateItems.lastChild);
+  }
+
+  currentDeck.template.forEach((item) => {
+    var itemAccordion = document.createElement("button");
+    itemAccordion.style.display = "block";
+    itemAccordion.classList.add("accordion");
+    var icon;
+    switch (item.element) {
+      case "IMAGE":
+        icon = "assets/img.png";
+        break;
+      case "TEXT":
+        icon = "assets/text.png";
+        break;
+      case "STRIP":
+        icon = "assets/plus.png";
+        break;
+    }
+    itemAccordion.innerHTML =
+      "<img src='" + icon + "'><span>" + item.elementName + "</span>";
+    itemAccordion.addEventListener("click", function () {
+
+      var panel = itemAccordion.nextElementSibling;
+      if (itemAccordion.classList.contains("active")) {
+        panel.style.maxHeight = "0";
+        panel.style.marginBottom = "0rem";
+        panel.style.padding = "0rem";
+      } else {
+        panel.style.maxHeight = "calc(2rem + "+panel.scrollHeight + "px)";
+        panel.style.marginBottom = "1rem";
+        panel.style.padding = "1rem";
+      }
+
+      itemAccordion.classList.toggle("active");
+    });
+
+    var itemPanel = document.createElement("div");
+    itemPanel.classList.add("itemPanel");
+    itemPanel.innerHTML = "BONJOUR";
+    // btnElement.addEventListener("click", () => {
+    //   setCurrentDeckIndex(index);
+    // });
+
+    templateItems.appendChild(itemAccordion);
+    templateItems.appendChild(itemPanel);
+  });
 }
 
 export function updateCardCounter(currentIndex) {
@@ -166,7 +233,11 @@ export function checkCardButtons() {
 export function goToPreviousCard() {
   if (app.currentIndex > 0) {
     app.currentIndex--;
-    renderCardUsingTemplate(app, app.currentIndex, currentDeck.deckInfo.visualGuide);
+    renderCardUsingTemplate(
+      app,
+      app.currentIndex,
+      currentDeck.deckInfo.visualGuide
+    );
     updateCardCounter(app.currentIndex);
     rootElement.style.setProperty("--cardAngle", 3 - app.random() * 6 + "deg");
     checkCardButtons();
@@ -176,7 +247,11 @@ export function goToPreviousCard() {
 export function goToNextCard() {
   if (app.currentIndex < currentDeck.cards.length - 1) {
     app.currentIndex++;
-    renderCardUsingTemplate(app, app.currentIndex, currentDeck.deckInfo.visualGuide);
+    renderCardUsingTemplate(
+      app,
+      app.currentIndex,
+      currentDeck.deckInfo.visualGuide
+    );
     updateCardCounter(app.currentIndex);
     rootElement.style.setProperty("--cardAngle", 3 - app.random() * 6 + "deg");
     checkCardButtons();
@@ -217,6 +292,7 @@ export function populateEditionFields() {
   pageWidth.value = currentDeck.deckInfo.pageW;
   pageHeight.value = currentDeck.deckInfo.pageH;
   pageResolution.value = currentDeck.deckInfo.resolution;
+  cuttingHelp.value = currentDeck.deckInfo.cuttingHelp;
 }
 
 export function checkOtherInputs(eventTargetId, eventTargetValue) {

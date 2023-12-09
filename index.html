@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.8.0/p5.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="style.css" />
+    <link rel="stylesheet" type="text/css" href="styles.css" />
     <meta charset="utf-8" />
     <title>LUAP - L'USINE À PROTOS</title>
     <script type="module" src="./src/app.js"></script>
@@ -22,13 +22,17 @@
 
     <div class="viewer">
       <div id="startPanel" class="panel">
-        <button id="newBtn">
-          <img src="./assets/add.svg" alt="add symbol"/>
-          <p>NOUVELLE COLLECTION</p>
+        <button class="homePageBtn" id="newBtn">
+          <div class="imgContainer">
+            <img src="./assets/add.svg" alt="add symbol"/>
+          </div>
+          <p>CRÉER UNE NOUVELLE COLLECTION</p>
         </button>
-        <button id="loadBtn">
-          <img src="./assets/deck.svg" alt="add symbol"/>
-          <p>BIBLIOTHÈQUE DE COLLECTIONS</p>
+        <button class="homePageBtn" id="loadBtn">
+          <div class="imgContainer">
+            <img src="./assets/deck.svg" alt="add symbol"/>
+          </div>
+          <p>OUVRIR LA BIBLIOTHÈQUE DE COLLECTIONS</p>
         </button>
       </div>
       <div id="loadingPanel" class="panel">
@@ -37,19 +41,19 @@
 
         <div class="tabs">
           <input id="tab-config" type="radio" name="tabs" checked>
-          <label for="tab-config">Configuration</label>
+          <label for="tab-config" title="Configuration générale, de la collection et des élements">Configuration</label>
           <span>></span>
-        
+          <input id="tab-ress" type="radio" name="tabs">
+          <label for="tab-ress" title="Ressources liées à la Collection">Ressources</label>
+          <span>></span>
           <input id="tab-template" type="radio" name="tabs">
-          <label for="tab-template">Modèle</label>
+          <label for="tab-template" title="Création du Modèle">Modèle</label>
           <span>></span>
-
           <input id="tab-elements" type="radio" name="tabs">
-          <label for="tab-elements">Éléments</label>
+          <label for="tab-elements" title="Création des Éléments">Éléments</label>
           <span>></span>
-
           <input id="tab-printing" type="radio" name="tabs">
-          <label for="tab-printing">Impression</label>
+          <label for="tab-printing" title="Configuration d'impression">Impression</label>
         
           <div class="content">
             <div id="content-config">
@@ -78,8 +82,8 @@
 
                   <optgroup label="Jetons">
                     <option value="smallToken">Jeton 2cm</option>
-                    <option value="mediumToken">Jeton 4cm</option>
-                    <option value="largeToken">Jeton 8cm</option>
+                    <option value="mediumToken">Jeton 3cm</option>
+                    <option value="largeToken">Jeton 4cm</option>
                   </optgroup>
 
                   <optgroup label="Personnalisé">
@@ -98,17 +102,24 @@
                 <input id="elementHeight" inputmode="decimal" class="parameterInput" step="0.1">
               </div>
 
-              <div class="parameterSlot">
+              <div class="parameterSlot" title="Les repères visuels ne seront inclus dans le PDF final.">
                 <p class="parameterName">Repère Visuel</p>
                 <select id="visualGuide" class="parameterInput">
                   <option value="none">Aucun</option>
+                  <optgroup label="Grille">
                   <option value="center">Centre</option>
-                  <option value="grid3">Grille 3x3</option>
-                  <option value="grid4">Grille 4x4</option>
-                  <option value="grid6">Grille 6x6</option>
+                    <option value="grid3">Grille 3x3</option>
+                    <option value="grid4">Grille 4x4</option>
+                    <option value="grid6">Grille 6x6</option>
+                  </optgroup>
+                  
+                  <optgroup label="Formes">
                     <option value="circle">Ellipse</option>
                     <option value="hexp">Hexagone Portrait</option>
                     <option value="hexl">Hexagone Paysage</option>
+                    <option value="oct">Octogone</option>
+                  </optgroup>
+                    
                 </select>
               </div>
 
@@ -116,24 +127,33 @@
                 DUPLIQUER LA COLLECTION
               </button>
 
-              <button id="deleteBtn" class="navBtn">
+              <button id="deleteBtn" class="navBtn" title="Attention ! Cette action est irréversible !">
                 SUPPRIMER LA COLLECTION
               </button>
 
             </div>
+
+            <div id="content-ress">
+              LES RESSOURCES
+            </div>
         
             <div id="content-template">
-              <h2>Tab-2</h2>
-              <p>
-                This is tab2
-              </p>
+              <div id="templateItems"></div>
+              <div class="templateBtns">
+                <button id="imageTemplateBtn" class="navBtn">
+                  + IMAGE
+                </button>
+                <button id="stripTemplateBtn" class="navBtn">
+                  + BANDEAU
+                </button>
+                <button id="textTemplateBtn" class="navBtn">
+                  + TEXTE
+                </button>
+              </div>
             </div>
         
             <div id="content-elements">
-              <h2>Tab-3</h2>
-              <p>
-                This is tab3
-              </p>
+              <div id="elementItems"></div>
             </div>
 
             <div id="content-printing">
@@ -169,9 +189,14 @@
                 <input id="pageHeight" disabled inputmode="decimal" class="parameterInput" step="0.1">
               </div>
 
-              <div class="parameterSlot">
-                <p class="parameterName">Résolution d'Impression (pixels/cm) | 300dpi = 118.11ppcm</p>
+              <div class="parameterSlot" title="300 dpi = 118.11 ppcm | Plus cette valeur sera haute, plus votre image sera nette.">
+                <p class="parameterName">Résolution d'Impression (pixels/cm)</p>
                 <input id="pageResolution" inputmode="decimal" class="parameterInput" step="0.1">
+              </div>
+
+              <div class="parameterSlot" title="L'aide à la Découpe est une simple bordure semi-transparente mise autour des élements afin de guider la découpe une fois imprimés.">
+                <input type="checkbox" id="cuttingHelp" name="cuttingHelp" />
+                <label class="parameterName" for="cuttingHelp">Aide à la Découpe</label>
               </div>
 
               <button id="renderBtn" class="navBtn">

@@ -1,0 +1,336 @@
+@font-face {
+  font-family: "Main Font";
+  src: url("assets/font.ttf");
+}
+
+:root {
+  --cardAngle: 2deg;
+}
+
+* {
+  user-select: none;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+
+  font-family: "Main Font", sans-serif;
+}
+
+body {
+  /* background-image: url(assets/bg.jpg);
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat; */
+}
+
+nav {
+  background-color: #90c4e5;
+  height: 10vh;
+  font-size: xx-large;
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+  box-shadow: 0 0 20px #0005;
+  gap: 2rem;
+  border-radius: 0 0 2.5rem 2.5rem;
+  overflow: auto;
+  margin: 0 2rem;
+}
+
+#title {
+  flex: 1;
+}
+
+.viewer {
+  display: flex;
+  flex: 1;
+  gap: 1rem;
+  padding: 2rem;
+  justify-content: end;
+}
+
+main {
+  display: grid;
+  place-items: center;
+  rotate: var(--cardAngle);
+  transition: scale 0.3s ease-in-out;
+}
+
+main:hover {
+  scale: 1.4;
+}
+
+canvas {
+  box-shadow: 5px 5px 30px #0003;
+  border-radius: 1rem;
+  z-index: 1;
+}
+
+.panel {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  gap: 2rem;
+}
+
+#startPanel{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+#loadingPanel {
+  grid-template-columns: repeat(5, 1fr);
+  height: fit-content;
+}
+
+#editionPanel {
+  background-color: #edf6fc;
+  border-radius: 2.5rem;
+}
+
+.templateBtns{
+  display: flex;
+  gap : 1rem;
+}
+
+.cardBtns {
+  display: flex;
+}
+
+button {
+  padding: 0.5rem 2rem;
+  border-radius: 3vh;
+  border: none;
+  display: none;
+  align-items: center;
+  font-size: 1rem;
+  cursor: pointer;
+  background-color: #d4eeff;
+  transition: all 0.2s ease-in-out;
+  justify-content: center;
+  gap: 1rem;
+  box-shadow: 5px 5px 10px #104d6924;
+  font-family: "Main Font", sans-serif;
+}
+
+button > img {
+  height: 3rem;
+  rotate: 5deg;
+}
+
+button:hover {
+  background-color: #63a9d5;
+}
+
+button:disabled {
+  background-color: #fff5;
+  cursor: default;
+}
+
+.homePageBtn{
+  font-size: 2rem;
+  position: relative;
+  aspect-ratio: 2;
+  width: 36vw;
+}
+
+.homePageBtn > .imgContainer{
+  position: absolute;
+  bottom: 86%;
+  background: #77c7ff;
+  border-radius: 50%;
+  padding: 1rem;
+  border: 10px white solid;
+  display: grid;
+  place-items: center;
+}
+
+.imgContainer > img{
+  height: 4rem;
+  rotate: 5deg;
+}
+
+
+.cardBtn, .deckBtn{
+  display: flex;
+  height: 100%;
+}
+
+#homeBtn {
+  display: flex;
+  padding: 0.5rem;
+  border-radius: 50%;
+}
+
+#deleteBtn {
+  background-color: #B00;
+  color: white;
+}
+
+#deleteBtn:hover{
+  background-color: #800;
+}
+
+.bottomBar {
+  background-color: #90c4e5;
+  height: 10vh;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 4rem;
+  box-shadow: 0 0 20px #0005;
+  border-radius: 2.5rem 2.5rem 0 0;
+  margin: 0 2rem;
+}
+
+#cardCounter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+#cardCounterBtns {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+
+/*      TAB SYSTEM     */
+
+.tabs {
+  width: 100%;
+  height: 100%;
+}
+
+.content {
+  backface-visibility: hidden;
+  height: 66vh;
+}
+.content > div {
+  display: none;
+  padding: 1rem;
+}
+
+#content-template{
+  display: none;
+  flex-direction: column;
+  height: 100%;
+}
+
+#content-template button{
+  margin: 0.5rem auto;
+}
+
+.content button{
+  margin-top: 1rem;
+  width: 100%;
+}
+
+input[type="radio"] {
+  display: none;
+}
+
+.tabs > label {
+  display: inline-block;
+  padding: 15px 25px;
+  text-align: center;
+  border-bottom: 1px solid transparent;
+  transition: color 0.2s ease-out;
+}
+.tabs >label:hover {
+  color: #90c4e5;
+  cursor: pointer;
+}
+.tabs > input:checked + label {
+  color: #63a9d5;
+  border-bottom: 5px solid;
+}
+
+#tab-config:checked ~ .content #content-config,
+#tab-printing:checked ~ .content #content-printing {
+  display: block;
+
+}
+
+#tab-template:checked ~ .content #content-template,
+#tab-elements:checked ~ .content #content-elements,
+#tab-ress:checked ~ .content #content-ress {
+  display: flex;
+}
+
+/* TABS CONTENT */
+
+.parameterSlot {
+  margin-bottom: 0.5rem;
+}
+
+.parameterName {
+  padding: 0;
+  margin: 0 0 0.2rem 0;
+  font-size: 0.8rem;
+}
+
+.parameterInput {
+  width: -webkit-fill-available;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 0.5rem;
+}
+
+*:focus {
+  outline: 3px solid #63a9d588;
+}
+
+#templateItems{
+  overflow-y: auto;
+  flex : 1;
+}
+
+/* ACCORDION */
+
+.accordion{
+  background-color: #FFF;
+  box-shadow: none;
+  border-radius: 0.3rem;
+  text-align: left;
+  width: 100%;
+  padding-left: 0.5rem;
+}
+
+.accordion.active{
+  background-color: #90c4e5;
+}
+
+.accordion > img{
+  rotate: 0deg;
+  margin-right: 0.5rem;
+  width: 1rem;
+  height: 1rem;
+}
+
+.itemPanel{
+  display: flex;
+  overflow: hidden;
+  max-height: 0;
+  transition: all 0.2s ease-out;
+  background-color: #FFF;
+    translate: 0 -0.5rem;
+    border-radius: 0.3rem;
+}
+
+/* CHECKBOXES */

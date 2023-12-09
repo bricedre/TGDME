@@ -2,6 +2,7 @@ import { app } from "../app.js";
 import {
   checkOtherInputs,
   collectionName,
+  cuttingHelp,
   elementFormat,
   elementHeight,
   elementWidth,
@@ -12,6 +13,7 @@ import {
   pageWidth,
   populateEditionFields,
   setUI,
+  updateTemplateItems,
   visualGuide,
 } from "./DOM.js";
 import { loadAssets } from "./assetLoader.js";
@@ -65,6 +67,7 @@ function setCurrentDeck(value) {
     populateEditionFields();
     checkOtherInputs(elementFormat.id, elementFormat.value);
     checkOtherInputs(pageFormat.id, pageFormat.value);
+    updateTemplateItems();
   }, 500);
 }
 
@@ -87,6 +90,7 @@ export function createNewDeck() {
 }
 
 export function saveDeck(refreshAssets) {
+  
   var coll = currentDeck.deckInfo;
 
   //ALTER THE DATA TO CURRENT DECK
@@ -95,15 +99,16 @@ export function saveDeck(refreshAssets) {
   coll.cardW = elementWidth.value;
   coll.cardH = elementHeight.value;
   coll.visualGuide = visualGuide.value;
-
+  
   coll.pageFormat = pageFormat.value;
   coll.pageW = pageWidth.value;
   coll.pageH = pageHeight.value;
   
   coll.pageH = pageHeight.value;
-
+  
   coll.pageOrientation = pageOrientation.value;
   coll.resolution = Math.max(1, pageResolution.value);
+  coll.cuttingHelp = cuttingHelp.checked;
 
   setupCollectionDimensions();
   populateEditionFields();
@@ -187,13 +192,13 @@ function setupCollectionDimensions() {
       break;
 
     case "mediumToken":
-      coll.cardW = 4;
-      coll.cardH = 4;
+      coll.cardW = 3;
+      coll.cardH = 3;
       break;
 
     case "largeToken":
-      coll.cardW = 8;
-      coll.cardH = 8;
+      coll.cardW = 4;
+      coll.cardH = 4;
       break;
   }
 
