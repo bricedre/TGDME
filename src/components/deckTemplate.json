@@ -2,14 +2,14 @@
     "deckInfo": {
       "deckName": "Nouvelle Collection",
       "resolution": 60,
-      "cardFormat": "pokerCard",
+      "elementFormat": "pokerCard",
       "pageFormat": "A4",
       "pageOrientation": "portrait",
       "visualGuide": "none",
-      "cardW" : 100,
-      "cardH" : 100,
-      "pageW" : 100,
-      "pageH" : 100
+      "W" : 100,
+      "H" : 100,
+      "pageWidth" : 100,
+      "pageHeight" : 100
     },
     "template": [],
     "cards": []

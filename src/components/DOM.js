@@ -153,33 +153,65 @@ export function updateTemplateItems() {
     templateItems.removeChild(templateItems.lastChild);
   }
 
+  var IMAGE_parameters = [
+    { name: "Informations Générales", type: "spacer" },
+    { name: "Nom du Composant ", refValue: "componentName", type: "text" },
+    { name: "Source de l'Image ", refValue: "src", type: "text" },
+    { name: "Visible ?", refValue: "isVisible", type: "checkbox" },
+    { name: "Positionnement, Dimensions et Rotation", type: "spacer" },
+    {
+      name: "Ancre",
+      refValue: "anchor",
+      type: "select",
+      options: [
+        { value: "CENTER", label: "CENTRE" },
+        { value: "CORNER", label: "COIN SUPÉRIEUR GAUCHE" },
+      ],
+    },
+    { name: "Position Horizontale", refValue: "position_x", type: "text" },
+    { name: "Position Verticale", refValue: "position_y", type: "text" },
+    { name: "Largeur", refValue: "width", type: "text" },
+    { name: "Hauteur", refValue: "height", type: "text" },
+    { name: "Rotation", refValue: "angle", type: "text" },
+    { name: "Paramètres Avancés", type: "spacer" },
+    { name: "Déclencheur", refValue: "trigger", type: "text" },
+    { name: "Filtre de Teinte", refValue: "tint", type: "color" },
+  ];
+  var TEXT_parameters = [];
+  var STRIP_parameters = [];
+
   currentDeck.template.forEach((item) => {
     var itemAccordion = document.createElement("button");
     itemAccordion.style.display = "block";
     itemAccordion.classList.add("accordion");
+
     var icon;
+    var parametersToLoad;
     switch (item.element) {
       case "IMAGE":
         icon = "assets/img.png";
+        parametersToLoad = IMAGE_parameters;
         break;
       case "TEXT":
         icon = "assets/text.png";
+        parametersToLoad = TEXT_parameters;
         break;
       case "STRIP":
         icon = "assets/plus.png";
+        parametersToLoad = STRIP_parameters;
         break;
     }
     itemAccordion.innerHTML =
-      "<img src='" + icon + "'><span>" + item.elementName + "</span>";
-    itemAccordion.addEventListener("click", function () {
+      "<img src='" + icon + "'><span>" + item.componentName + "</span>";
 
+    itemAccordion.addEventListener("click", function () {
       var panel = itemAccordion.nextElementSibling;
       if (itemAccordion.classList.contains("active")) {
         panel.style.maxHeight = "0";
         panel.style.marginBottom = "0rem";
         panel.style.padding = "0rem";
       } else {
-        panel.style.maxHeight = "calc(2rem + "+panel.scrollHeight + "px)";
+        panel.style.maxHeight = "calc(2rem + " + panel.scrollHeight + "px)";
         panel.style.marginBottom = "1rem";
         panel.style.padding = "1rem";
       }
@@ -189,10 +221,56 @@ export function updateTemplateItems() {
 
     var itemPanel = document.createElement("div");
     itemPanel.classList.add("itemPanel");
-    itemPanel.innerHTML = "BONJOUR";
-    // btnElement.addEventListener("click", () => {
-    //   setCurrentDeckIndex(index);
-    // });
+
+    parametersToLoad.forEach((param) => {
+      var parameterSlot = document.createElement("div");
+      parameterSlot.classList.add("parameterSlot");
+
+      var parameterName = document.createElement("p");
+      parameterName.classList.add("parameterName");
+      parameterName.innerHTML = param.name;
+
+      var parameterInput = document.createElement("input");
+      var inputID = param.refValue + Math.floor(Math.random() * 999999);
+      parameterInput.id = inputID;
+
+      if (param.type !== "spacer") {
+        if (param.type === "checkbox") {
+          parameterInput.type = param.type;
+          parameterInput.checked = item[param.refValue];
+          parameterName = document.createElement("label");
+          parameterName.setAttribute("for", inputID);
+          parameterName.classList.add("parameterName");
+          parameterName.innerHTML = param.name;
+          parameterSlot.appendChild(parameterInput);
+          parameterSlot.appendChild(parameterName);
+        } else if (param.type === "select") {
+          parameterInput = document.createElement("select");
+          parameterInput.classList.add("parameterInput");
+          param.options.forEach((opt) => {
+            var option = document.createElement("option");
+            option.value = opt.value;
+            option.innerHTML = opt.label;
+            parameterInput.appendChild(option);
+          });
+          parameterInput.value = item[param.refValue];
+          parameterSlot.appendChild(parameterName);
+          parameterSlot.appendChild(parameterInput);
+        } else {
+          parameterInput.classList.add("parameterInput");
+          if(param.type === "color") parameterInput.style.padding = "0.2rem"
+          parameterInput.type = param.type;
+          parameterInput.value = item[param.refValue];
+          parameterSlot.appendChild(parameterName);
+          parameterSlot.appendChild(parameterInput);
+        }
+      } else {
+        parameterName.classList.add("spacer");
+        parameterSlot.appendChild(parameterName);
+      }
+
+      itemPanel.appendChild(parameterSlot);
+    });
 
     templateItems.appendChild(itemAccordion);
     templateItems.appendChild(itemPanel);
@@ -282,15 +360,15 @@ export function openPanel(panelName) {
 
 export function populateEditionFields() {
   collectionName.value = currentDeck.deckInfo.deckName;
-  elementFormat.value = currentDeck.deckInfo.cardFormat;
-  elementWidth.value = currentDeck.deckInfo.cardW;
-  elementHeight.value = currentDeck.deckInfo.cardH;
+  elementFormat.value = currentDeck.deckInfo.elementFormat;
+  elementWidth.value = currentDeck.deckInfo.W;
+  elementHeight.value = currentDeck.deckInfo.H;
   visualGuide.value = currentDeck.deckInfo.visualGuide;
 
   pageFormat.value = currentDeck.deckInfo.pageFormat;
   pageOrientation.value = currentDeck.deckInfo.pageOrientation;
-  pageWidth.value = currentDeck.deckInfo.pageW;
-  pageHeight.value = currentDeck.deckInfo.pageH;
+  pageWidth.value = currentDeck.deckInfo.pageWidth;
+  pageHeight.value = currentDeck.deckInfo.pageHeight;
   pageResolution.value = currentDeck.deckInfo.resolution;
   cuttingHelp.value = currentDeck.deckInfo.cuttingHelp;
 }

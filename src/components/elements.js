@@ -9,8 +9,8 @@ export function renderImageElement(p5, elementIndex, cardIndex) {
 
   let cardData = currentCards[cardIndex];
 
-  var cardW = currentDeckInfo.cardW*currentDeckInfo.resolution;
-  var cardH = currentDeckInfo.cardH*currentDeckInfo.resolution;
+  var W = currentDeckInfo.W*currentDeckInfo.resolution;
+  var H = currentDeckInfo.H*currentDeckInfo.resolution;
   var resolution = currentDeckInfo.resolution;
 
   let _img;
@@ -71,8 +71,8 @@ export function renderTextElement(p5, elementIndex, cardIndex) {
 
   let cardData = currentCards[cardIndex];
 
-  var cardW = currentDeckInfo.cardW*currentDeckInfo.resolution;
-  var cardH = currentDeckInfo.cardH*currentDeckInfo.resolution;
+  var W = currentDeckInfo.W*currentDeckInfo.resolution;
+  var H = currentDeckInfo.H*currentDeckInfo.resolution;
   var resolution = currentDeckInfo.resolution;
 
   let _textToWrite = "";
@@ -117,7 +117,7 @@ export function renderTextElement(p5, elementIndex, cardIndex) {
         p5.card.textAlign(_align, p5.CENTER);
         if (_font !== "") p5.card.textFont(_font);
         else _font = p5.card.textFont("Verdana");
-        p5.card.textSize(_size*resolution*0.1);
+        p5.card.textSize(_size*H*0.02);
         p5.card.fill(_color);
 
         p5.card.text(_textToWrite, _position_x, _position_y);
@@ -136,8 +136,8 @@ export function renderStripElement(p5, elementIndex, cardIndex) {
 
   let cardData = currentCards[cardIndex];
 
-  var cardW = currentDeckInfo.cardW*currentDeckInfo.resolution;
-  var cardH = currentDeckInfo.cardH*currentDeckInfo.resolution;
+  var W = currentDeckInfo.W*currentDeckInfo.resolution;
+  var H = currentDeckInfo.H*currentDeckInfo.resolution;
   var resolution = currentDeckInfo.resolution;
 
   let _imgs = [];

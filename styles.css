@@ -19,22 +19,15 @@ body {
   overflow: hidden;
   height: 100vh;
 
-  display: flex;
-  flex-direction: column;
+  /* display: flex;
+  flex-direction: column; */
 
   font-family: "Main Font", sans-serif;
 }
 
-body {
-  /* background-image: url(assets/bg.jpg);
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat; */
-}
-
 nav {
   background-color: #90c4e5;
-  height: 10vh;
+  min-height: 10vh;
   font-size: xx-large;
   display: flex;
   align-items: center;
@@ -52,10 +45,11 @@ nav {
 
 .viewer {
   display: flex;
-  flex: 1;
   gap: 1rem;
   padding: 2rem;
   justify-content: end;
+  height: 100%;
+  max-height: 80vh;
 }
 
 main {
@@ -84,7 +78,7 @@ canvas {
   gap: 2rem;
 }
 
-#startPanel{
+#startPanel {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
@@ -97,12 +91,12 @@ canvas {
 
 #editionPanel {
   background-color: #edf6fc;
-  border-radius: 2.5rem;
+  border-radius: 1rem;
 }
 
-.templateBtns{
+.templateBtns {
   display: flex;
-  gap : 1rem;
+  gap: 1rem;
 }
 
 .cardBtns {
@@ -139,14 +133,14 @@ button:disabled {
   cursor: default;
 }
 
-.homePageBtn{
+.homePageBtn {
   font-size: 2rem;
   position: relative;
   aspect-ratio: 2;
   width: 36vw;
 }
 
-.homePageBtn > .imgContainer{
+.homePageBtn > .imgContainer {
   position: absolute;
   bottom: 86%;
   background: #77c7ff;
@@ -157,13 +151,13 @@ button:disabled {
   place-items: center;
 }
 
-.imgContainer > img{
+.imgContainer > img {
   height: 4rem;
   rotate: 5deg;
 }
 
-
-.cardBtn, .deckBtn{
+.cardBtn,
+.deckBtn {
   display: flex;
   height: 100%;
 }
@@ -175,17 +169,17 @@ button:disabled {
 }
 
 #deleteBtn {
-  background-color: #B00;
+  background-color: #b00;
   color: white;
 }
 
-#deleteBtn:hover{
+#deleteBtn:hover {
   background-color: #800;
 }
 
 .bottomBar {
   background-color: #90c4e5;
-  height: 10vh;
+  min-height: 10vh;
   display: none;
   align-items: center;
   justify-content: center;
@@ -226,17 +220,17 @@ button:disabled {
   padding: 1rem;
 }
 
-#content-template{
+#content-template {
   display: none;
   flex-direction: column;
   height: 100%;
 }
 
-#content-template button{
+#content-template button {
   margin: 0.5rem auto;
 }
 
-.content button{
+.content button {
   margin-top: 1rem;
   width: 100%;
 }
@@ -247,24 +241,29 @@ input[type="radio"] {
 
 .tabs > label {
   display: inline-block;
-  padding: 15px 25px;
+  padding: 0.5rem;
   text-align: center;
   border-bottom: 1px solid transparent;
   transition: color 0.2s ease-out;
+  font-size: 0.8rem;
 }
-.tabs >label:hover {
+.tabs > label:hover {
   color: #90c4e5;
   cursor: pointer;
 }
 .tabs > input:checked + label {
-  color: #63a9d5;
-  border-bottom: 5px solid;
+  color: #2d5a76;
+  background-color: #63a9d5;
+  border-radius: 0.7rem;
+}
+
+#tab-config + label {
+  margin: 1rem 0 0 1rem;
 }
 
 #tab-config:checked ~ .content #content-config,
 #tab-printing:checked ~ .content #content-printing {
   display: block;
-
 }
 
 #tab-template:checked ~ .content #content-template,
@@ -285,6 +284,11 @@ input[type="radio"] {
   font-size: 0.8rem;
 }
 
+.spacer{
+  color: #0006;
+  font-size: 1rem;
+}
+
 .parameterInput {
   width: -webkit-fill-available;
   padding: 0.5rem;
@@ -296,15 +300,15 @@ input[type="radio"] {
   outline: 3px solid #63a9d588;
 }
 
-#templateItems{
+#templateItems {
   overflow-y: auto;
-  flex : 1;
+  flex: 1;
 }
 
 /* ACCORDION */
 
-.accordion{
-  background-color: #FFF;
+.accordion {
+  background-color: #fff;
   box-shadow: none;
   border-radius: 0.3rem;
   text-align: left;
@@ -312,25 +316,42 @@ input[type="radio"] {
   padding-left: 0.5rem;
 }
 
-.accordion.active{
+.accordion.active {
   background-color: #90c4e5;
+  border-radius: 0.3rem 0.3rem 0 0;
 }
 
-.accordion > img{
+.accordion > img {
   rotate: 0deg;
   margin-right: 0.5rem;
   width: 1rem;
   height: 1rem;
 }
 
-.itemPanel{
-  display: flex;
+.itemPanel {
+  display: block;
   overflow: hidden;
   max-height: 0;
   transition: all 0.2s ease-out;
-  background-color: #FFF;
-    translate: 0 -0.5rem;
-    border-radius: 0.3rem;
+  background-color: #cdd6e0;
+  translate: 0 -0.5rem;
+  border-radius: 0 0 0.3rem 0.3rem;
 }
 
-/* CHECKBOXES */
+/* SCROLLBAR */
+/* width */
+::-webkit-scrollbar {
+  width: 20px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #63a9d5;
+  border-radius: 10px;
+  border: 6px solid #edf6fc;
+}

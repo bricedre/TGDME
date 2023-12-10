@@ -33,22 +33,22 @@ const sketch = (p) => {
     }
   };
 
-  p.setupCanvas = (cardW, cardH, pageW, pageH) => {
+  p.setupCanvas = (W, H, pageWidth, pageHeight) => {
     p.createCanvas(
-      (window.innerHeight * 0.6 * cardW) / cardH,
+      (window.innerHeight * 0.6 * W) / H,
       window.innerHeight * 0.6
     );
-    p.page = p.createGraphics(pageW, pageH);
-    p.card = p.createGraphics(cardW, cardH);
+    p.page = p.createGraphics(pageWidth, pageHeight);
+    p.card = p.createGraphics(W, H);
   };
 
-  p.resizeExistingCanvas = (cardW, cardH, pageW, pageH) => {
+  p.resizeExistingCanvas = (W, H, pageWidth, pageHeight) => {
     p.resizeCanvas(
-      (window.innerHeight * 0.6 * cardW) / cardH,
+      (window.innerHeight * 0.6 * W) / H,
       window.innerHeight * 0.6
     );
-    p.page = p.createGraphics(pageW, pageH);
-    p.card = p.createGraphics(cardW, cardH);
+    p.page = p.createGraphics(pageWidth, pageHeight);
+    p.card = p.createGraphics(W, H);
   };
 };
 

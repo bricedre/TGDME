@@ -54,10 +54,10 @@ function setCurrentDeck(value) {
   setupCollectionDimensions();
 
   app.setupCanvas(
-    coll.cardW * coll.resolution,
-    coll.cardH * coll.resolution,
-    coll.pageW * coll.resolution,
-    coll.pageH * coll.resolution
+    coll.W * coll.resolution,
+    coll.H * coll.resolution,
+    coll.pageWidth * coll.resolution,
+    coll.pageHeight * coll.resolution
   );
 
   setTimeout(() => {
@@ -95,16 +95,16 @@ export function saveDeck(refreshAssets) {
 
   //ALTER THE DATA TO CURRENT DECK
   coll.deckName = collectionName.value;
-  coll.cardFormat = elementFormat.value;
-  coll.cardW = elementWidth.value;
-  coll.cardH = elementHeight.value;
+  coll.elementFormat = elementFormat.value;
+  coll.W = elementWidth.value;
+  coll.H = elementHeight.value;
   coll.visualGuide = visualGuide.value;
   
   coll.pageFormat = pageFormat.value;
-  coll.pageW = pageWidth.value;
-  coll.pageH = pageHeight.value;
+  coll.pageWidth = pageWidth.value;
+  coll.pageHeight = pageHeight.value;
   
-  coll.pageH = pageHeight.value;
+  coll.pageHeight = pageHeight.value;
   
   coll.pageOrientation = pageOrientation.value;
   coll.resolution = Math.max(1, pageResolution.value);
@@ -130,10 +130,10 @@ export function saveDeck(refreshAssets) {
   if (refreshAssets) loadAssets(app);
 
   app.resizeExistingCanvas(
-    coll.cardW * coll.resolution,
-    coll.cardH * coll.resolution,
-    coll.pageW * coll.resolution,
-    coll.pageH * coll.resolution
+    coll.W * coll.resolution,
+    coll.H * coll.resolution,
+    coll.pageWidth * coll.resolution,
+    coll.pageHeight * coll.resolution
   );
 
   setTimeout(() => {
@@ -145,86 +145,86 @@ export function saveDeck(refreshAssets) {
 function setupCollectionDimensions() {
   var coll = currentDeck.deckInfo;
 
-  switch (coll.cardFormat) {
+  switch (coll.elementFormat) {
     case "pokerCard":
-      coll.cardW = 6.3;
-      coll.cardH = 8.8;
+      coll.W = 6.3;
+      coll.H = 8.8;
       break;
 
     case "bridgeCard":
-      coll.cardW = 5.7;
-      coll.cardH = 8.9;
+      coll.W = 5.7;
+      coll.H = 8.9;
       break;
 
     case "tarotCard":
-      coll.cardW = 7;
-      coll.cardH = 12;
+      coll.W = 7;
+      coll.H = 12;
       break;
 
     case "dominoCard":
-      coll.cardW = 4.4;
-      coll.cardH = 8.8;
+      coll.W = 4.4;
+      coll.H = 8.8;
       break;
 
     case "halfCard":
-      coll.cardW = 4.4;
-      coll.cardH = 6.3;
+      coll.W = 4.4;
+      coll.H = 6.3;
       break;
 
     case "squareCard":
-      coll.cardW = 8.8;
-      coll.cardH = 8.8;
+      coll.W = 8.8;
+      coll.H = 8.8;
       break;
 
     case "hexTileP":
-      coll.cardW = 8.3;
-      coll.cardH = 9.5;
+      coll.W = 8.3;
+      coll.H = 9.5;
       break;
    
       case "hexTileL":
-      coll.cardW = 9.5;
-      coll.cardH = 8.3;
+      coll.W = 9.5;
+      coll.H = 8.3;
       break;
 
     case "smallToken":
-      coll.cardW = 2;
-      coll.cardH = 2;
+      coll.W = 2;
+      coll.H = 2;
       break;
 
     case "mediumToken":
-      coll.cardW = 3;
-      coll.cardH = 3;
+      coll.W = 3;
+      coll.H = 3;
       break;
 
     case "largeToken":
-      coll.cardW = 4;
-      coll.cardH = 4;
+      coll.W = 4;
+      coll.H = 4;
       break;
   }
 
   switch (coll.pageFormat) {
     case "A3":
-      coll.pageW = 29.7;
-      coll.pageH = 42;
+      coll.pageWidth = 29.7;
+      coll.pageHeight = 42;
       break;
 
     case "A4":
-      coll.pageW = 21;
-      coll.pageH = 29.7;
+      coll.pageWidth = 21;
+      coll.pageHeight = 29.7;
       break;
   }
 
   if (coll.pageOrientation === "landscape") {
-    let _temp = coll.pageW;
-    coll.pageW = coll.pageH;
-    coll.pageH = _temp;
+    let _temp = coll.pageWidth;
+    coll.pageWidth = coll.pageHeight;
+    coll.pageHeight = _temp;
   }
 
   // DERIVED MARGINS & COLUMN/ROW COUNTS TO CENTER THE CARDS IN THE PAGE
-  coll.colCount = Math.floor(coll.pageW / coll.cardW);
-  coll.rowCount = Math.floor(coll.pageH / coll.cardH);
+  coll.colCount = Math.floor(coll.pageWidth / coll.W);
+  coll.rowCount = Math.floor(coll.pageHeight / coll.H);
   coll.marginX =
-    ((coll.pageW - coll.cardW * coll.colCount) / 2) * coll.resolution;
+    ((coll.pageWidth - coll.W * coll.colCount) / 2) * coll.resolution;
   coll.marginY =
-    ((coll.pageH - coll.cardH * coll.rowCount) / 2) * coll.resolution;
+    ((coll.pageHeight - coll.H * coll.rowCount) / 2) * coll.resolution;
 }
