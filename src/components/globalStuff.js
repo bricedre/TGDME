@@ -14,6 +14,7 @@ import {
   populateEditionFields,
   setUI,
   setupTemplateItems,
+  updateTemplateItems,
   visualGuide,
 } from "./DOM.js";
 import { loadAssets } from "./assetLoader.js";
@@ -40,12 +41,12 @@ export function getDecks() {
   });
 }
 
-export function setcurrentCollectionIndex(value) {
+export function setCurrentCollectionIndex(value) {
   currentCollectionIndex = value;
-  if (currentCollectionIndex != -1) setcurrentCollection(decksAvailable[currentCollectionIndex]);
+  if (currentCollectionIndex != -1) setCurrentCollection(decksAvailable[currentCollectionIndex]);
 }
 
-function setcurrentCollection(value) {
+function setCurrentCollection(value) {
   currentCollection = value;
 
   var coll = currentCollection.collectionInfo;
@@ -68,6 +69,7 @@ function setcurrentCollection(value) {
     checkOtherInputs(elementFormat.id, elementFormat.value);
     checkOtherInputs(pageFormat.id, pageFormat.value);
     setupTemplateItems();
+    updateTemplateItems();
   }, 500);
 }
 
@@ -84,7 +86,7 @@ export function createNewDeck() {
     );
     getDecks();
     setTimeout(() => {
-      setcurrentCollectionIndex(deckQty);
+      setCurrentCollectionIndex(deckQty);
     }, 100);
   }
 }
@@ -112,6 +114,7 @@ export function saveCollection(refreshAssets) {
 
   setupCollectionDimensions();
   populateEditionFields();
+  updateTemplateItems();
 
   //SAVE CURRENT DECK IN FOLDER
   var deckToSave = JSON.stringify(currentCollection);

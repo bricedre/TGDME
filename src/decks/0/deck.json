@@ -1,1 +1,144 @@
-{"collectionInfo":{"deckName":"Rédac' Challenge 1","resolution":100,"elementFormat":"pokerCard","pageFormat":"A4","pageOrientation":"portrait","W":6.3,"H":8.8,"pageWidth":21,"pageHeight":29.7,"colCount":3,"rowCount":3,"marginX":105.00000000000007,"marginY":164.99999999999986,"visualGuide":"none","cuttingHelp":false},"template":[{"isVisible":true,"component":"IMAGE","componentName":{"value":"Fond Ado"},"trigger":{"value":""},"src":{"value":"bg","type":"1"},"position_x":{"value":"W*0.5","type":"0"},"position_y":{"value":"H*0.5","type":"0"},"width":{"value":"W","type":"0"},"height":{"value":"H*0.95","type":"0"},"anchor":{"value":"CENTER","type":"0"},"tint":{"value":"#FFFFFF","type":"0"},"angle":{"value":"0","type":"0"}},{"isVisible":true,"component":"IMAGE","componentName":{"value":"UI"},"trigger":{"value":""},"src":{"value":"ui","type":"0"},"position_x":{"value":"W*0.5","type":"0"},"position_y":{"value":"H*0.5","type":"0"},"width":{"value":"W","type":"1"},"height":{"value":"H","type":"0"},"anchor":{"value":"CENTER","type":"0"},"tint":{"value":"#FFFFFF","type":"0"},"angle":{"value":"0","type":"0"}},{"componentName":{"value":"Titre"},"component":"TEXT","src":"title","position_x":"W*0.5","position_y":"H*0.095","size":"4","align":"CENTER","font":"title_font","shadow_offset_x":"5","shadow_offset_y":"5","shadow_color":"[0, 100]"},{"componentName":{"value":"Effet"},"component":"TEXT","trigger":"has_text_effect","src":"effect","position_x":"W*0.5","position_y":"H*0.855","size":"1.5","align":"CENTER"},{"componentName":{"value":"Observation"},"component":"TEXT","src":"observation","position_x":"W*0.195","position_y":"H*0.35","align":"CENTER","size":"5","font":"title_font","color":"[255, 100, 0]","angle":"5"},{"componentName":{"value":"Capacité"},"component":"TEXT","src":"storage","position_x":"W*0.825","position_y":"H*0.35","align":"CENTER","size":"5","font":"title_font","color":"[127, 68, 0]"},{"componentName":{"value":"Coût"},"component":"STRIP","src":"effect_cost","type":"card_based","position_x":"W*0.5","position_y":"H*0.755","width":"W*0.1","height":"W*0.1","spacing_x":"W*0.12","spacing_y":"0","style":"alternate","offset_x":"0","offset_y":"0","align":"CENTER"}],"cards":[{"title":"Lucy","storage":"2","observation":"2","effect":"This is a rather long text,\nso I need to create line\nbreaks to fit it all.","has_text_effect":true,"effect_cost":["coin","coin"]},{"title":"Kendrik","storage":"1","observation":"3","effect":"This is a short effect.","has_text_effect":true,"quantity":20,"effect_cost":["looking_glass","looking_glass","coin","coin"]},{"title":"Tom","storage":"1","observation":"4","has_image_effect":true},{"title":"Sophia","storage":"3","observation":"3","effect":"This is a short effect.","has_text_effect":true,"effect_cost":["looking_glass"]}]}
+{
+  "collectionInfo": {
+    "deckName": "Rédac' Challenge 1",
+    "resolution": 100,
+    "elementFormat": "pokerCard",
+    "pageFormat": "A4",
+    "pageOrientation": "portrait",
+    "W": 6.3,
+    "H": 8.8,
+    "pageWidth": 21,
+    "pageHeight": 29.7,
+    "colCount": 3,
+    "rowCount": 3,
+    "marginX": 105.00000000000007,
+    "marginY": 164.99999999999986,
+    "visualGuide": "none",
+    "cuttingHelp": false
+  },
+  "template": [
+    {
+      "isVisible": true,
+      "component": "IMAGE",
+      "componentName": { "value": "Fond Ado" },
+      "trigger": { "value": "" },
+      "src": { "value": "bg", "type": "1" },
+      "position_x": { "value": "W*0.5", "type": "0" },
+      "position_y": { "value": "H*0.5", "type": "0" },
+      "width": { "value": "W", "type": "0" },
+      "height": { "value": "H*0.95", "type": "0" },
+      "anchor": { "value": "CENTER", "type": "0" },
+      "tint": { "value": "#FFFFFF", "type": "0" },
+      "angle": { "value": "0", "type": "0" }
+    },
+    {
+      "isVisible": true,
+      "component": "IMAGE",
+      "componentName": { "value": "UI" },
+      "trigger": { "value": "" },
+      "src": { "value": "ui", "type": "0" },
+      "position_x": { "value": "W*0.5", "type": "0" },
+      "position_y": { "value": "H*0.5", "type": "0" },
+      "width": { "value": "W", "type": "0" },
+      "height": { "value": "H", "type": "0" },
+      "anchor": { "value": "CENTER", "type": "0" },
+      "tint": { "value": "#FFFFFF", "type": "0" },
+      "angle": { "value": "0", "type": "0" }
+    },
+    {
+      "componentName": { "value": "Titre" },
+      "component": "TEXT",
+      "src": "title",
+      "position_x": "W*0.5",
+      "position_y": "H*0.095",
+      "size": "4",
+      "align": "CENTER",
+      "font": "title_font",
+      "shadow_offset_x": "5",
+      "shadow_offset_y": "5",
+      "shadow_color": "[0, 100]"
+    },
+    {
+      "componentName": { "value": "Effet" },
+      "component": "TEXT",
+      "trigger": "has_text_effect",
+      "src": "effect",
+      "position_x": "W*0.5",
+      "position_y": "H*0.855",
+      "size": "1.5",
+      "align": "CENTER"
+    },
+    {
+      "componentName": { "value": "Observation" },
+      "component": "TEXT",
+      "src": "observation",
+      "position_x": "W*0.195",
+      "position_y": "H*0.35",
+      "align": "CENTER",
+      "size": "5",
+      "font": "title_font",
+      "color": "[255, 100, 0]",
+      "angle": "5"
+    },
+    {
+      "componentName": { "value": "Capacité" },
+      "component": "TEXT",
+      "src": "storage",
+      "position_x": "W*0.825",
+      "position_y": "H*0.35",
+      "align": "CENTER",
+      "size": "5",
+      "font": "title_font",
+      "color": "[127, 68, 0]"
+    },
+    {
+      "componentName": { "value": "Coût" },
+      "component": "STRIP",
+      "src": "effect_cost",
+      "type": "card_based",
+      "position_x": "W*0.5",
+      "position_y": "H*0.755",
+      "width": "W*0.1",
+      "height": "W*0.1",
+      "spacing_x": "W*0.12",
+      "spacing_y": "0",
+      "style": "alternate",
+      "offset_x": "0",
+      "offset_y": "0",
+      "align": "CENTER"
+    }
+  ],
+  "elements": [
+    {
+      "title": "Lucy",
+      "storage": "2",
+      "observation": "2",
+      "effect": "This is a rather long text,\nso I need to create line\nbreaks to fit it all.",
+      "has_text_effect": true,
+      "effect_cost": ["coin", "coin"]
+    },
+    {
+      "title": "Kendrik",
+      "storage": "1",
+      "observation": "3",
+      "effect": "This is a short effect.",
+      "has_text_effect": true,
+      "quantity": 20,
+      "effect_cost": ["looking_glass", "looking_glass", "coin", "coin"]
+    },
+    {
+      "title": "Tom",
+      "storage": "1",
+      "observation": "4",
+      "has_image_effect": true
+    },
+    {
+      "title": "Sophia",
+      "storage": "3",
+      "observation": "3",
+      "effect": "This is a short effect.",
+      "has_text_effect": true,
+      "effect_cost": ["looking_glass"]
+    }
+  ]
+}

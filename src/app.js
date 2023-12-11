@@ -17,6 +17,8 @@ const sketch = (p) => {
     p.imageMode(p.CORNER);
     p.page.imageMode(p.CORNER);
     p.card.imageMode(p.CENTER);
+    
+
 
     setUI();
   };

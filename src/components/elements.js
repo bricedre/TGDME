@@ -2,11 +2,11 @@ import { assetsLibrary, errorImage } from "./assetLoader.js";
 import { currentCollection } from "./globalStuff.js";
 
 export function renderImageComponent(p5, componentIndex, elementIndex) {
-  let currentCards = currentCollection.cards;
+  let currentElements = currentCollection.elements;
   let currentCollectionInfo = currentCollection.collectionInfo;
   let currentTemplate = currentCollection.template;
 
-  let cardData = currentCards[elementIndex];
+  let cardData = currentElements[elementIndex];
 
   var W = currentCollectionInfo.W * currentCollectionInfo.resolution;
   var H = currentCollectionInfo.H * currentCollectionInfo.resolution;
@@ -19,6 +19,8 @@ export function renderImageComponent(p5, componentIndex, elementIndex) {
   let _width = "";
   let _height = "";
   let _align = "";
+  let _angle = "";
+  let _tint = "";
 
   // No render if no src
 
@@ -34,7 +36,9 @@ export function renderImageComponent(p5, componentIndex, elementIndex) {
         else if (_type === "1") {
           _img =
             assetsLibrary[
-              currentTemplate[componentIndex].src.value + "_" + elementIndex
+              currentElements[elementIndex][
+                currentTemplate[componentIndex].src.value
+              ]
             ];
         } else {
           assetsLibrary[currentTemplate[componentIndex].src];
@@ -58,25 +62,38 @@ export function renderImageComponent(p5, componentIndex, elementIndex) {
       _align = currentTemplate[componentIndex].anchor
         ? currentTemplate[componentIndex].anchor.value
         : "CENTER";
-        if(_align === "CENTER") _align = p5.CENTER;
-        else if(_align === "CORNER") _align = p5.CORNER;
+      if (_align === "CENTER") _align = p5.CENTER;
+      else if (_align === "CORNER") _align = p5.CORNER;
+      _angle = currentTemplate[componentIndex].angle
+        ? currentTemplate[componentIndex].angle.value
+        : 0;
+      _tint = currentTemplate[componentIndex].tint
+        ? currentTemplate[componentIndex].tint.value
+        : [255, 255, 255];
 
+      p5.card.push();
       try {
+        p5.card.angleMode(p5.DEGREES);
         p5.card.imageMode(_align);
-        p5.card.image(_img, _position_x, _position_y, _width, _height);
+        p5.card.translate(_position_x, _position_y);
+        if (_angle !== 0) p5.card.rotate(_angle);
+        p5.card.tint(_tint);
+        p5.card.image(_img, 0, 0, _width, _height);
       } catch (e) {
-        p5.card.image(errorImage, _position_x, _position_y, _width, _height);
+        console.log(e);
+        p5.card.image(errorImage, 0, 0, _width, _height);
       }
+      p5.card.pop();
     }
   }
 }
 
 export function renderTextComponent(p5, componentIndex, elementIndex) {
-  let currentCards = currentCollection.cards;
+  let currentElements = currentCollection.elements;
   let currentCollectionInfo = currentCollection.collectionInfo;
   let currentTemplate = currentCollection.template;
 
-  let cardData = currentCards[elementIndex];
+  let cardData = currentElements[elementIndex];
 
   var W = currentCollectionInfo.W * currentCollectionInfo.resolution;
   var H = currentCollectionInfo.H * currentCollectionInfo.resolution;
@@ -138,11 +155,11 @@ export function renderTextComponent(p5, componentIndex, elementIndex) {
 }
 
 export function renderStripComponent(p5, componentIndex, elementIndex) {
-  let currentCards = currentCollection.cards;
+  let currentElements = currentCollection.elements;
   let currentCollectionInfo = currentCollection.collectionInfo;
   let currentTemplate = currentCollection.template;
 
-  let cardData = currentCards[elementIndex];
+  let cardData = currentElements[elementIndex];
 
   var W = currentCollectionInfo.W * currentCollectionInfo.resolution;
   var H = currentCollectionInfo.H * currentCollectionInfo.resolution;
