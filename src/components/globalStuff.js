@@ -18,6 +18,7 @@ import {
   visualGuide,
 } from "./DOM.js";
 import { loadAssets } from "./assetLoader.js";
+import { imageComponentTemplate } from "./imageComponentTemplate.js";
 import { renderCardUsingTemplate } from "./render.js";
 
 const fs = require("fs").promises;
@@ -230,4 +231,17 @@ function setupCollectionDimensions() {
     ((coll.pageWidth - coll.W * coll.colCount) / 2) * coll.resolution;
   coll.marginY =
     ((coll.pageHeight - coll.H * coll.rowCount) / 2) * coll.resolution;
+}
+export function addNewImage(){
+  currentCollection.template.push({...imageComponentTemplate});
+  setupTemplateItems();
+  saveCollection(false);
+}
+export function addNewText(){
+  console.log("new text");
+  
+}
+export function addNewStrip(){
+  console.log("new strip");
+  
 }

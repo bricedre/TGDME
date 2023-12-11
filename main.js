@@ -15,9 +15,11 @@ const createWindow = () => {
       contextIsolation: false,
       enableRemoteModule: true,
     },
-    icon: path.join(__dirname, 'assets/icon.png')
+    icon: path.join(__dirname, 'assets/icon.png'),
+
   });
   mainWindow.maximize();
+  // mainWindow.removeMenu();
   mainWindow.loadURL(`file://${__dirname}/index.html`);
 
   mainWindow.on("closed", function () {
