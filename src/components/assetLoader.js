@@ -4,6 +4,7 @@ const fs = require('fs');
 import { currentCollectionIndex } from "./globalStuff.js";
 
 export let assetsLibrary = {};
+export let errorImage;
 
 export function loadAssets(p){
 
@@ -25,6 +26,8 @@ export function loadAssets(p){
         assetsLibrary[fileName] = p.loadFont(asset);
     });
   }
+
+  errorImage = p.loadImage(rootPath+"/assets/imageError.png");
 }
 
 function getFiles(dir, files = []) {

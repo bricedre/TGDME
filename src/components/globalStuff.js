@@ -13,7 +13,7 @@ import {
   pageWidth,
   populateEditionFields,
   setUI,
-  updateTemplateItems,
+  setupTemplateItems,
   visualGuide,
 } from "./DOM.js";
 import { loadAssets } from "./assetLoader.js";
@@ -67,7 +67,7 @@ function setcurrentCollection(value) {
     populateEditionFields();
     checkOtherInputs(elementFormat.id, elementFormat.value);
     checkOtherInputs(pageFormat.id, pageFormat.value);
-    updateTemplateItems();
+    setupTemplateItems();
   }, 500);
 }
 

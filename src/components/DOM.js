@@ -148,14 +148,19 @@ export function setUI() {
   }
 }
 
-export function updateTemplateItems() {
+export function setupTemplateItems() {
   while (templateItems.firstChild) {
     templateItems.removeChild(templateItems.lastChild);
   }
 
   var IMAGE_parameters = [
     { name: "Informations Générales", type: "spacer" },
-    { name: "Nom du Composant ", refValue: "componentName", type: "text", forced : true },
+    {
+      name: "Nom du Composant ",
+      refValue: "componentName",
+      type: "text",
+      forced: true,
+    },
     { name: "Source de l'Image ", refValue: "src", type: "text" },
     { name: "Positionnement, Dimensions et Rotation", type: "spacer" },
     {
@@ -173,7 +178,7 @@ export function updateTemplateItems() {
     { name: "Hauteur", refValue: "height", type: "text" },
     { name: "Rotation", refValue: "angle", type: "text" },
     { name: "Paramètres Avancés", type: "spacer" },
-    { name: "Déclencheur", refValue: "trigger", type: "text", forced : true},
+    { name: "Déclencheur", refValue: "trigger", type: "text", forced: true },
     { name: "Filtre de Teinte", refValue: "tint", type: "color" },
   ];
   var TEXT_parameters = [];
@@ -204,12 +209,12 @@ export function updateTemplateItems() {
       "<img src='" + icon + "'><span>" + item.componentName.value + "</span>";
     var visibilityBtn = document.createElement("img");
     visibilityBtn.classList.add("visibilityBtn");
-    if(item.isVisible) visibilityBtn.src = "./assets/eye.png";
+    if (item.isVisible) visibilityBtn.src = "./assets/eye.png";
     else visibilityBtn.src = "./assets/eyeClosed.png";
     visibilityBtn.addEventListener("click", (e) => {
       e.preventDefault();
       e.stopPropagation();
-    })
+    });
     itemAccordion.appendChild(visibilityBtn);
 
     itemAccordion.addEventListener("click", function () {
@@ -242,19 +247,34 @@ export function updateTemplateItems() {
       parameterInputLine.classList.add("parameterInputLine");
 
       var parameterInput = document.createElement("input");
-      var inputID = item.componentName+"_"+param.refValue;
+      var inputID = itemIndex + "-" + param.refValue;
       parameterInput.id = inputID;
       parameterInput.addEventListener("input", (e) => {
-        currentCollection.template[itemIndex][param.refValue]["value"] = e.target.value;
+        currentCollection.template[itemIndex][param.refValue]["value"] =
+          e.target.value;
         saveCollection(false);
+        updateTemplateItems();
       });
 
       var modeInput = document.createElement("img");
       modeInput.classList.add("modeInput");
-      modeInput.src = "./assets/elementBased.png";
-      modeInput.setAttribute("mode", 0);
-      modeInput.title = "Arbitraire";
-      modeInput.id = item.componentName+"_"+param.refValue+'Type'
+
+      if (param.type !== "spacer") {
+        var currentMode =
+          currentCollection.template[itemIndex][param.refValue]["type"];
+        modeInput.src =
+          currentMode == "0"
+            ? "./assets/arbitrary.png"
+            : "./assets/elementBased.png";
+        modeInput.title = currentMode == "0" ? "Fixe" : "Basé sur l'élement";
+        modeInput.id = inputID;
+        modeInput.addEventListener("click", () => {
+          currentCollection.template[itemIndex][param.refValue]["type"] =
+          currentCollection.template[itemIndex][param.refValue]["type"] == "0" ? "1" : "0";
+          saveCollection(false);
+          updateTemplateItems();
+        });
+      }
 
       if (param.type !== "spacer") {
         if (param.type === "checkbox") {
@@ -266,7 +286,7 @@ export function updateTemplateItems() {
           parameterName.innerHTML = param.name;
           parameterInputLine.appendChild(parameterInput);
           parameterInputLine.appendChild(parameterName);
-          if(!param.forced) parameterInputLine.appendChild(modeInput);
+          if (!param.forced) parameterInputLine.appendChild(modeInput);
           parameterSlot.appendChild(parameterInputLine);
         } else if (param.type === "select") {
           parameterInput = document.createElement("select");
@@ -282,7 +302,7 @@ export function updateTemplateItems() {
 
           parameterSlot.appendChild(parameterName);
           parameterInputLine.appendChild(parameterInput);
-          if(!param.forced) parameterInputLine.appendChild(modeInput);
+          if (!param.forced) parameterInputLine.appendChild(modeInput);
           parameterSlot.appendChild(parameterInputLine);
         } else {
           parameterInput.classList.add("parameterInput");
@@ -291,7 +311,7 @@ export function updateTemplateItems() {
           parameterInput.value = item[param.refValue]["value"];
           parameterSlot.appendChild(parameterName);
           parameterInputLine.appendChild(parameterInput);
-          if(!param.forced) parameterInputLine.appendChild(modeInput);
+          if (!param.forced) parameterInputLine.appendChild(modeInput);
           parameterSlot.appendChild(parameterInputLine);
         }
       } else {
@@ -305,6 +325,32 @@ export function updateTemplateItems() {
     templateItems.appendChild(itemAccordion);
     templateItems.appendChild(itemPanel);
   });
+}
+
+export function updateTemplateItems() {
+  var allInputs = templateItems.querySelectorAll("input, select");
+  allInputs.forEach((input) => {
+    var inputID = input.id;
+    var inputIndex = inputID.split("-")[0];
+    var inputRefValue = inputID.split("-")[1];
+    input.value =
+      currentCollection.template[inputIndex][inputRefValue]["value"];
+  });
+
+  var allModeBtns = templateItems.querySelectorAll(".modeInput");
+  allModeBtns.forEach((input) => {
+    var inputID = input.id;
+    var inputIndex = inputID.split("-")[0];
+    var inputRefValue = inputID.split("-")[1];
+    var currentMode =
+          currentCollection.template[inputIndex][inputRefValue]["type"];
+          input.src =
+          currentMode == "0"
+            ? "./assets/arbitrary.png"
+            : "./assets/elementBased.png";
+            input.title = currentMode == "0" ? "Fixe" : "Basé sur l'élement";
+  })
+
 }
 
 export function updateCardCounter(currentIndex) {
