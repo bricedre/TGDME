@@ -1,4 +1,4 @@
-import { currentDeck } from "./globalStuff.js";
+import { currentCollection } from "./globalStuff.js";
 
 const { jsPDF } = require("jspdf");
 
@@ -6,13 +6,13 @@ let pageGeneration;
 
 export function generatePDF(pages) {
 
-  var deckName = currentDeck.deckInfo.deckName;
+  var deckName = currentCollection.collectionInfo.deckName;
 
-  pageGeneration = new jsPDF("p", "px", [currentDeck.deckInfo.pageWidth*currentDeck.deckInfo.resolution, currentDeck.deckInfo.pageHeight*currentDeck.deckInfo.resolution], true);
+  pageGeneration = new jsPDF("p", "px", [currentCollection.collectionInfo.pageWidth*currentCollection.collectionInfo.resolution, currentCollection.collectionInfo.pageHeight*currentCollection.collectionInfo.resolution], true);
   pages.forEach((page, index) => {
     if (index != 0) pageGeneration.addPage();
 
-    pageGeneration.addImage(page.canvas, "JPEG", 0, 0, currentDeck.deckInfo.pageWidth*currentDeck.deckInfo.resolution, currentDeck.deckInfo.pageHeight*currentDeck.deckInfo.resolution, "", "FAST");
+    pageGeneration.addImage(page.canvas, "JPEG", 0, 0, currentCollection.collectionInfo.pageWidth*currentCollection.collectionInfo.resolution, currentCollection.collectionInfo.pageHeight*currentCollection.collectionInfo.resolution, "", "FAST");
   });
   
   pageGeneration.save(deckName+".pdf");

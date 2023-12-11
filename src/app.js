@@ -2,7 +2,7 @@
 
 const p5 = require("p5");
 
-import { currentDeck, currentDeckIndex } from "./components/globalStuff.js";
+import { currentCollection, currentCollectionIndex } from "./components/globalStuff.js";
 import { generatePages, renderCardUsingTemplate } from "./components/render.js";
 import { setUI } from "./components/DOM.js";
 
@@ -23,13 +23,13 @@ const sketch = (p) => {
 
   p.draw = () => {
     if (!p.generateMode) {
-      if (currentDeckIndex !== -1) {
+      if (currentCollectionIndex !== -1) {
         p.image(p.card, 0, 0, p.width, p.height);
       }
     } else {
       generatePages(p);
       p.generateMode = false;
-      renderCardUsingTemplate(p, p.currentIndex, currentDeck.deckInfo.visualGuide);
+      renderCardUsingTemplate(p, p.currentIndex, currentCollection.collectionInfo.visualGuide);
     }
   };
 

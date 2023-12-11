@@ -1,17 +1,17 @@
 import { assetsLibrary } from "./assetLoader.js";
-import { currentDeck } from "./globalStuff.js";
+import { currentCollection } from "./globalStuff.js";
 
-export function renderImageElement(p5, elementIndex, cardIndex) {
+export function renderImageComponent(p5, componentIndex, elementIndex) {
 
-  let currentCards = currentDeck.cards;
-  let currentDeckInfo = currentDeck.deckInfo;
-  let currentTemplate = currentDeck.template;
+  let currentCards = currentCollection.cards;
+  let currentCollectionInfo = currentCollection.collectionInfo;
+  let currentTemplate = currentCollection.template;
 
-  let cardData = currentCards[cardIndex];
+  let cardData = currentCards[elementIndex];
 
-  var W = currentDeckInfo.W*currentDeckInfo.resolution;
-  var H = currentDeckInfo.H*currentDeckInfo.resolution;
-  var resolution = currentDeckInfo.resolution;
+  var W = currentCollectionInfo.W*currentCollectionInfo.resolution;
+  var H = currentCollectionInfo.H*currentCollectionInfo.resolution;
+  var resolution = currentCollectionInfo.resolution;
 
   let _img;
   let _type = "";
@@ -21,36 +21,38 @@ export function renderImageElement(p5, elementIndex, cardIndex) {
   let _height = "";
 
   // No render if no src
+
   if (
-    currentTemplate[elementIndex].trigger == null ||
-    cardData[currentTemplate[elementIndex].trigger]
+    currentTemplate[componentIndex].trigger.value == "" ||
+    cardData[currentTemplate[componentIndex].trigger.value]
   ) {
-    if (currentTemplate[elementIndex].src) {
-      if (currentTemplate[elementIndex].type) {
-        _type = currentTemplate[elementIndex].type;
-
-        if (_type === "static")
-          _img = assetsLibrary[currentTemplate[elementIndex].src];
-        else if (_type === "dynamic")
-          _img = assetsLibrary[currentTemplate[elementIndex].src + "_" + cardIndex];
-        else {
-          assetsLibrary[currentTemplate[elementIndex].src];
-        }
+    
+    if (currentTemplate[componentIndex].src) {
+      if (currentTemplate[componentIndex].src.type) {
+        _type = currentTemplate[componentIndex].src.type;
+        if (_type === "0")
+        _img = assetsLibrary[currentTemplate[componentIndex].src.value];
+      else if (_type === "1"){
+        _img = assetsLibrary[currentTemplate[componentIndex].src.value + "_" + elementIndex];
       }
-
+      else {
+        assetsLibrary[currentTemplate[componentIndex].src];
+      }
+    }
+    
       _position_x =
-      currentTemplate[elementIndex].position_x != null
-          ? eval(currentTemplate[elementIndex].position_x)
+      currentTemplate[componentIndex].position_x != null
+          ? eval(currentTemplate[componentIndex].position_x.value)
           : 0;
       _position_y =
-      currentTemplate[elementIndex].position_y != null
-          ? eval(currentTemplate[elementIndex].position_y)
+      currentTemplate[componentIndex].position_y != null
+          ? eval(currentTemplate[componentIndex].position_y.value)
           : 0;
-      _width = currentTemplate[elementIndex].width
-        ? eval(currentTemplate[elementIndex].width)
+      _width = currentTemplate[componentIndex].width
+        ? eval(currentTemplate[componentIndex].width.value)
         : 100;
-      _height = currentTemplate[elementIndex].height
-        ? eval(currentTemplate[elementIndex].height)
+      _height = currentTemplate[componentIndex].height
+        ? eval(currentTemplate[componentIndex].height.value)
         : 100;
 
       // try {
@@ -63,17 +65,17 @@ export function renderImageElement(p5, elementIndex, cardIndex) {
   }
 }
 
-export function renderTextElement(p5, elementIndex, cardIndex) {
+export function renderTextComponent(p5, componentIndex, elementIndex) {
 
-  let currentCards = currentDeck.cards;
-  let currentDeckInfo = currentDeck.deckInfo;
-  let currentTemplate = currentDeck.template;
+  let currentCards = currentCollection.cards;
+  let currentCollectionInfo = currentCollection.collectionInfo;
+  let currentTemplate = currentCollection.template;
 
-  let cardData = currentCards[cardIndex];
+  let cardData = currentCards[elementIndex];
 
-  var W = currentDeckInfo.W*currentDeckInfo.resolution;
-  var H = currentDeckInfo.H*currentDeckInfo.resolution;
-  var resolution = currentDeckInfo.resolution;
+  var W = currentCollectionInfo.W*currentCollectionInfo.resolution;
+  var H = currentCollectionInfo.H*currentCollectionInfo.resolution;
+  var resolution = currentCollectionInfo.resolution;
 
   let _textToWrite = "";
   let _align = "";
@@ -85,31 +87,31 @@ export function renderTextElement(p5, elementIndex, cardIndex) {
 
   // No render if no src
   if (
-    currentTemplate[elementIndex].trigger == null ||
-    cardData[currentTemplate[elementIndex].trigger]
+    currentTemplate[componentIndex].trigger == null ||
+    cardData[currentTemplate[componentIndex].trigger]
   ) {
-    if (currentTemplate[elementIndex].src) {
-      _textToWrite = cardData[currentTemplate[elementIndex].src];
+    if (currentTemplate[componentIndex].src) {
+      _textToWrite = cardData[currentTemplate[componentIndex].src];
       _position_x =
-      currentTemplate[elementIndex].position_x != null
-          ? eval(currentTemplate[elementIndex].position_x)
+      currentTemplate[componentIndex].position_x != null
+          ? eval(currentTemplate[componentIndex].position_x)
           : 0;
       _position_y =
-      currentTemplate[elementIndex].position_y != null
-          ? eval(currentTemplate[elementIndex].position_y)
+      currentTemplate[componentIndex].position_y != null
+          ? eval(currentTemplate[componentIndex].position_y)
           : 0;
-      _size = currentTemplate[elementIndex].size
-        ? eval(currentTemplate[elementIndex].size)
+      _size = currentTemplate[componentIndex].size
+        ? eval(currentTemplate[componentIndex].size)
         : 20;
-      _color = currentTemplate[elementIndex].color
-        ? p5.color(eval(currentTemplate[elementIndex].color))
+      _color = currentTemplate[componentIndex].color
+        ? p5.color(eval(currentTemplate[componentIndex].color))
         : p5.color(0);
-      if (currentTemplate[elementIndex].align) {
-        if (currentTemplate[elementIndex].align === "CENTER") _align = p5.CENTER;
-        else if (currentTemplate[elementIndex].align === "RIGHT") _align = p5.RIGHT;
+      if (currentTemplate[componentIndex].align) {
+        if (currentTemplate[componentIndex].align === "CENTER") _align = p5.CENTER;
+        else if (currentTemplate[componentIndex].align === "RIGHT") _align = p5.RIGHT;
       } else _align = p5.LEFT;
-      if (currentTemplate[elementIndex].font) {
-        _font = assetsLibrary[currentTemplate[elementIndex].font];
+      if (currentTemplate[componentIndex].font) {
+        _font = assetsLibrary[currentTemplate[componentIndex].font];
       }
 
       try {
@@ -128,17 +130,17 @@ export function renderTextElement(p5, elementIndex, cardIndex) {
   }
 }
 
-export function renderStripElement(p5, elementIndex, cardIndex) {
+export function renderStripComponent(p5, componentIndex, elementIndex) {
 
-  let currentCards = currentDeck.cards;
-  let currentDeckInfo = currentDeck.deckInfo;
-  let currentTemplate = currentDeck.template;
+  let currentCards = currentCollection.cards;
+  let currentCollectionInfo = currentCollection.collectionInfo;
+  let currentTemplate = currentCollection.template;
 
-  let cardData = currentCards[cardIndex];
+  let cardData = currentCards[elementIndex];
 
-  var W = currentDeckInfo.W*currentDeckInfo.resolution;
-  var H = currentDeckInfo.H*currentDeckInfo.resolution;
-  var resolution = currentDeckInfo.resolution;
+  var W = currentCollectionInfo.W*currentCollectionInfo.resolution;
+  var H = currentCollectionInfo.H*currentCollectionInfo.resolution;
+  var resolution = currentCollectionInfo.resolution;
 
   let _imgs = [];
   let _position_x;
@@ -156,12 +158,12 @@ export function renderStripElement(p5, elementIndex, cardIndex) {
 
   // No render if no src
   if (
-    currentTemplate[elementIndex].trigger == null ||
-    cardData[template[elementIndex].trigger]
+    currentTemplate[componentIndex].trigger == null ||
+    cardData[template[componentIndex].trigger]
   ) {
-    if (currentTemplate[elementIndex].src) {
-      var elementsList = cardData[currentTemplate[elementIndex].src]
-        ? cardData[currentTemplate[elementIndex].src]
+    if (currentTemplate[componentIndex].src) {
+      var elementsList = cardData[currentTemplate[componentIndex].src]
+        ? cardData[currentTemplate[componentIndex].src]
         : [];
 
       if (elementsList.length > 0) {
@@ -170,36 +172,36 @@ export function renderStripElement(p5, elementIndex, cardIndex) {
         }
 
         _position_x =
-        currentTemplate[elementIndex].position_x != null
-            ? eval(currentTemplate[elementIndex].position_x)
+        currentTemplate[componentIndex].position_x != null
+            ? eval(currentTemplate[componentIndex].position_x)
             : 0;
         _position_y =
-        currentTemplate[elementIndex].position_y != null
-            ? eval(currentTemplate[elementIndex].position_y)
+        currentTemplate[componentIndex].position_y != null
+            ? eval(currentTemplate[componentIndex].position_y)
             : 0;
-        _width = currentTemplate[elementIndex].width
-          ? eval(currentTemplate[elementIndex].width)
+        _width = currentTemplate[componentIndex].width
+          ? eval(currentTemplate[componentIndex].width)
           : 100;
-        _height = currentTemplate[elementIndex].height
-          ? eval(currentTemplate[elementIndex].height)
+        _height = currentTemplate[componentIndex].height
+          ? eval(currentTemplate[componentIndex].height)
           : 100;
-        _spacing_x = currentTemplate[elementIndex].spacing_x
-          ? eval(currentTemplate[elementIndex].spacing_x)
+        _spacing_x = currentTemplate[componentIndex].spacing_x
+          ? eval(currentTemplate[componentIndex].spacing_x)
           : 0;
-        _spacing_y = currentTemplate[elementIndex].spacing_y
-          ? eval(currentTemplate[elementIndex].spacing_y)
+        _spacing_y = currentTemplate[componentIndex].spacing_y
+          ? eval(currentTemplate[componentIndex].spacing_y)
           : 0;
-          _style = currentTemplate[elementIndex].style
-          ? currentTemplate[elementIndex].style
+          _style = currentTemplate[componentIndex].style
+          ? currentTemplate[componentIndex].style
           : "straight";
-          _offset_x = currentTemplate[elementIndex].offset_x
-          ? eval(currentTemplate[elementIndex].offset_x)
+          _offset_x = currentTemplate[componentIndex].offset_x
+          ? eval(currentTemplate[componentIndex].offset_x)
           : 0;
-          _offset_y = currentTemplate[elementIndex].offset_y
-          ? eval(currentTemplate[elementIndex].offset_y)
+          _offset_y = currentTemplate[componentIndex].offset_y
+          ? eval(currentTemplate[componentIndex].offset_y)
           : 0;
-        _align = currentTemplate[elementIndex].align
-          ? currentTemplate[elementIndex].align
+        _align = currentTemplate[componentIndex].align
+          ? currentTemplate[componentIndex].align
           : "LEFT";
 
         _totalWidth =

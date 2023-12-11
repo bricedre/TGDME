@@ -23,8 +23,8 @@ const fs = require("fs").promises;
 const { existsSync, mkdirSync, copyFileSync, readdirSync } = require("fs");
 
 export let decksAvailable;
-export let currentDeckIndex = -1;
-export let currentDeck;
+export let currentCollectionIndex = -1;
+export let currentCollection;
 
 getDecks();
 openPanel("start");
@@ -40,15 +40,15 @@ export function getDecks() {
   });
 }
 
-export function setCurrentDeckIndex(value) {
-  currentDeckIndex = value;
-  if (currentDeckIndex != -1) setCurrentDeck(decksAvailable[currentDeckIndex]);
+export function setcurrentCollectionIndex(value) {
+  currentCollectionIndex = value;
+  if (currentCollectionIndex != -1) setcurrentCollection(decksAvailable[currentCollectionIndex]);
 }
 
-function setCurrentDeck(value) {
-  currentDeck = value;
+function setcurrentCollection(value) {
+  currentCollection = value;
 
-  var coll = currentDeck.deckInfo;
+  var coll = currentCollection.collectionInfo;
 
   loadAssets(app);
   setupCollectionDimensions();
@@ -61,7 +61,7 @@ function setCurrentDeck(value) {
   );
 
   setTimeout(() => {
-    renderCardUsingTemplate(app, app.currentIndex, currentDeck.deckInfo.visualGuide);
+    renderCardUsingTemplate(app, app.currentIndex, currentCollection.collectionInfo.visualGuide);
     setUI();
     openPanel("edition");
     populateEditionFields();
@@ -84,39 +84,39 @@ export function createNewDeck() {
     );
     getDecks();
     setTimeout(() => {
-      setCurrentDeckIndex(deckQty);
+      setcurrentCollectionIndex(deckQty);
     }, 100);
   }
 }
 
-export function saveDeck(refreshAssets) {
+export function saveCollection(refreshAssets) {
   
-  var coll = currentDeck.deckInfo;
+  var coll = currentCollection;
 
   //ALTER THE DATA TO CURRENT DECK
-  coll.deckName = collectionName.value;
-  coll.elementFormat = elementFormat.value;
-  coll.W = elementWidth.value;
-  coll.H = elementHeight.value;
-  coll.visualGuide = visualGuide.value;
+  coll.collectionInfo.deckName = collectionName.value;
+  coll.collectionInfo.elementFormat = elementFormat.value;
+  coll.collectionInfo.W = elementWidth.value;
+  coll.collectionInfo.H = elementHeight.value;
+  coll.collectionInfo.visualGuide = visualGuide.value;
   
-  coll.pageFormat = pageFormat.value;
-  coll.pageWidth = pageWidth.value;
-  coll.pageHeight = pageHeight.value;
+  coll.collectionInfo.pageFormat = pageFormat.value;
+  coll.collectionInfo.pageWidth = pageWidth.value;
+  coll.collectionInfo.pageHeight = pageHeight.value;
   
-  coll.pageHeight = pageHeight.value;
+  coll.collectionInfo.pageHeight = pageHeight.value;
   
-  coll.pageOrientation = pageOrientation.value;
-  coll.resolution = Math.max(1, pageResolution.value);
-  coll.cuttingHelp = cuttingHelp.checked;
+  coll.collectionInfo.pageOrientation = pageOrientation.value;
+  coll.collectionInfo.resolution = Math.max(1, pageResolution.value);
+  coll.collectionInfo.cuttingHelp = cuttingHelp.checked;
 
   setupCollectionDimensions();
   populateEditionFields();
 
   //SAVE CURRENT DECK IN FOLDER
-  var deckToSave = JSON.stringify(currentDeck);
+  var deckToSave = JSON.stringify(currentCollection);
   fs.writeFile(
-    "./src/decks/" + currentDeckIndex + "/deck.json",
+    "./src/decks/" + currentCollectionIndex + "/deck.json",
     deckToSave,
     (err) => {
       if (err) {
@@ -130,20 +130,20 @@ export function saveDeck(refreshAssets) {
   if (refreshAssets) loadAssets(app);
 
   app.resizeExistingCanvas(
-    coll.W * coll.resolution,
-    coll.H * coll.resolution,
-    coll.pageWidth * coll.resolution,
-    coll.pageHeight * coll.resolution
+    coll.collectionInfo.W * coll.collectionInfo.resolution,
+    coll.collectionInfo.H * coll.collectionInfo.resolution,
+    coll.collectionInfo.pageWidth * coll.collectionInfo.resolution,
+    coll.collectionInfo.pageHeight * coll.collectionInfo.resolution
   );
 
   setTimeout(() => {
-    renderCardUsingTemplate(app, app.currentIndex, currentDeck.deckInfo.visualGuide);
+    renderCardUsingTemplate(app, app.currentIndex, currentCollection.collectionInfo.visualGuide);
     setUI();
   }, 500);
 }
 
 function setupCollectionDimensions() {
-  var coll = currentDeck.deckInfo;
+  var coll = currentCollection.collectionInfo;
 
   switch (coll.elementFormat) {
     case "pokerCard":

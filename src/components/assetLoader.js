@@ -1,7 +1,7 @@
 const {rootPath} = require("electron-root-path");
 const fs = require('fs');
 
-import { currentDeckIndex } from "./globalStuff.js";
+import { currentCollectionIndex } from "./globalStuff.js";
 
 export let assetsLibrary = {};
 
@@ -9,7 +9,7 @@ export function loadAssets(p){
 
   assetsLibrary = {};
 
-  let assetsPath = rootPath+"/src/decks/"+currentDeckIndex+"/assets/";
+  let assetsPath = rootPath+"/src/decks/"+currentCollectionIndex+"/assets/";
 
   var currentAssetsList = getFiles(assetsPath)
   if(currentAssetsList){

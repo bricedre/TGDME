@@ -1,10 +1,10 @@
 import {
   createNewDeck,
-  currentDeck,
-  currentDeckIndex,
+  currentCollection,
+  currentCollectionIndex,
   decksAvailable,
-  saveDeck,
-  setCurrentDeckIndex,
+  saveCollection,
+  setcurrentCollectionIndex,
 } from "./globalStuff.js";
 import { renderCardUsingTemplate, triggerGeneration } from "./render.js";
 import { app } from "../app.js";
@@ -53,7 +53,7 @@ const allInputs = document.querySelectorAll('input:not([type="radio"])');
 const allSelects = document.querySelectorAll("select");
 
 homeBtn.addEventListener("click", () => {
-  setCurrentDeckIndex(-1);
+  setcurrentCollectionIndex(-1);
   openPanel("start");
 });
 
@@ -67,9 +67,9 @@ loadBtn.addEventListener("click", () => {
   decksAvailable.forEach((deck, index) => {
     var btnElement = document.createElement("button");
     btnElement.classList.add("deckBtn");
-    btnElement.innerHTML = deck.deckInfo.deckName;
+    btnElement.innerHTML = deck.collectionInfo.deckName;
     btnElement.addEventListener("click", () => {
-      setCurrentDeckIndex(index);
+      setcurrentCollectionIndex(index);
     });
 
     loadingPanel.appendChild(btnElement);
@@ -93,14 +93,14 @@ prevCardBtn.addEventListener("click", () => {
 
 allInputs.forEach((input) => {
   input.addEventListener("input", (e) => {
-    saveDeck(false);
+    saveCollection(false);
     checkOtherInputs(e.target.id, e.target.value);
   });
 });
 
 allSelects.forEach((select) => {
   select.addEventListener("change", (e) => {
-    saveDeck(false);
+    saveCollection(false);
     checkOtherInputs(e.target.id, e.target.value);
   });
 });
@@ -111,7 +111,7 @@ allSelects.forEach((select) => {
 
 export function setUI() {
   //MENU
-  if (currentDeckIndex == -1) {
+  if (currentCollectionIndex == -1) {
     newBtn.style.display = "flex";
     loadBtn.style.display = "flex";
     renderBtn.style.display = "none";
@@ -143,7 +143,7 @@ export function setUI() {
     homeBtn.style.display = "flex";
     bottomBar.style.display = "flex";
     canvasPanel.style.display = "flex";
-    titleElement.innerHTML = currentDeck?.deckInfo.deckName;
+    titleElement.innerHTML = currentCollection?.collectionInfo.deckName;
     updateCardCounter(app.currentIndex);
   }
 }
@@ -155,9 +155,8 @@ export function updateTemplateItems() {
 
   var IMAGE_parameters = [
     { name: "Informations Générales", type: "spacer" },
-    { name: "Nom du Composant ", refValue: "componentName", type: "text" },
+    { name: "Nom du Composant ", refValue: "componentName", type: "text", forced : true },
     { name: "Source de l'Image ", refValue: "src", type: "text" },
-    { name: "Visible ?", refValue: "isVisible", type: "checkbox" },
     { name: "Positionnement, Dimensions et Rotation", type: "spacer" },
     {
       name: "Ancre",
@@ -174,20 +173,19 @@ export function updateTemplateItems() {
     { name: "Hauteur", refValue: "height", type: "text" },
     { name: "Rotation", refValue: "angle", type: "text" },
     { name: "Paramètres Avancés", type: "spacer" },
-    { name: "Déclencheur", refValue: "trigger", type: "text" },
+    { name: "Déclencheur", refValue: "trigger", type: "text", forced : true},
     { name: "Filtre de Teinte", refValue: "tint", type: "color" },
   ];
   var TEXT_parameters = [];
   var STRIP_parameters = [];
 
-  currentDeck.template.forEach((item) => {
+  currentCollection.template.forEach((item, itemIndex) => {
     var itemAccordion = document.createElement("button");
-    itemAccordion.style.display = "block";
     itemAccordion.classList.add("accordion");
 
     var icon;
     var parametersToLoad;
-    switch (item.element) {
+    switch (item.component) {
       case "IMAGE":
         icon = "assets/img.png";
         parametersToLoad = IMAGE_parameters;
@@ -201,8 +199,18 @@ export function updateTemplateItems() {
         parametersToLoad = STRIP_parameters;
         break;
     }
+
     itemAccordion.innerHTML =
-      "<img src='" + icon + "'><span>" + item.componentName + "</span>";
+      "<img src='" + icon + "'><span>" + item.componentName.value + "</span>";
+    var visibilityBtn = document.createElement("img");
+    visibilityBtn.classList.add("visibilityBtn");
+    if(item.isVisible) visibilityBtn.src = "./assets/eye.png";
+    else visibilityBtn.src = "./assets/eyeClosed.png";
+    visibilityBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+    })
+    itemAccordion.appendChild(visibilityBtn);
 
     itemAccordion.addEventListener("click", function () {
       var panel = itemAccordion.nextElementSibling;
@@ -230,39 +238,61 @@ export function updateTemplateItems() {
       parameterName.classList.add("parameterName");
       parameterName.innerHTML = param.name;
 
+      var parameterInputLine = document.createElement("div");
+      parameterInputLine.classList.add("parameterInputLine");
+
       var parameterInput = document.createElement("input");
-      var inputID = param.refValue + Math.floor(Math.random() * 999999);
+      var inputID = item.componentName+"_"+param.refValue;
       parameterInput.id = inputID;
+      parameterInput.addEventListener("input", (e) => {
+        currentCollection.template[itemIndex][param.refValue]["value"] = e.target.value;
+        saveCollection(false);
+      });
+
+      var modeInput = document.createElement("img");
+      modeInput.classList.add("modeInput");
+      modeInput.src = "./assets/elementBased.png";
+      modeInput.setAttribute("mode", 0);
+      modeInput.title = "Arbitraire";
+      modeInput.id = item.componentName+"_"+param.refValue+'Type'
 
       if (param.type !== "spacer") {
         if (param.type === "checkbox") {
           parameterInput.type = param.type;
-          parameterInput.checked = item[param.refValue];
+          parameterInput.checked = item[param.refValue]["value"];
           parameterName = document.createElement("label");
           parameterName.setAttribute("for", inputID);
           parameterName.classList.add("parameterName");
           parameterName.innerHTML = param.name;
-          parameterSlot.appendChild(parameterInput);
-          parameterSlot.appendChild(parameterName);
+          parameterInputLine.appendChild(parameterInput);
+          parameterInputLine.appendChild(parameterName);
+          if(!param.forced) parameterInputLine.appendChild(modeInput);
+          parameterSlot.appendChild(parameterInputLine);
         } else if (param.type === "select") {
           parameterInput = document.createElement("select");
           parameterInput.classList.add("parameterInput");
+          parameterInput.id = inputID;
           param.options.forEach((opt) => {
             var option = document.createElement("option");
             option.value = opt.value;
             option.innerHTML = opt.label;
             parameterInput.appendChild(option);
           });
-          parameterInput.value = item[param.refValue];
+          parameterInput.value = item[param.refValue]["value"];
+
           parameterSlot.appendChild(parameterName);
-          parameterSlot.appendChild(parameterInput);
+          parameterInputLine.appendChild(parameterInput);
+          if(!param.forced) parameterInputLine.appendChild(modeInput);
+          parameterSlot.appendChild(parameterInputLine);
         } else {
           parameterInput.classList.add("parameterInput");
-          if(param.type === "color") parameterInput.style.padding = "0.2rem"
+          if (param.type === "color") parameterInput.style.padding = "0.2rem";
           parameterInput.type = param.type;
-          parameterInput.value = item[param.refValue];
+          parameterInput.value = item[param.refValue]["value"];
           parameterSlot.appendChild(parameterName);
-          parameterSlot.appendChild(parameterInput);
+          parameterInputLine.appendChild(parameterInput);
+          if(!param.forced) parameterInputLine.appendChild(modeInput);
+          parameterSlot.appendChild(parameterInputLine);
         }
       } else {
         parameterName.classList.add("spacer");
@@ -279,15 +309,15 @@ export function updateTemplateItems() {
 
 export function updateCardCounter(currentIndex) {
   //INDEX
-  if (currentDeck.cards.length > 0) {
+  if (currentCollection.cards.length > 0) {
     cardCounterLabel.innerHTML =
       "Élément #" +
       (currentIndex + 1) +
       " sur " +
-      currentDeck.cards.length +
+      currentCollection.cards.length +
       " - " +
-      (currentDeck.cards[currentIndex].quantity
-        ? currentDeck.cards[currentIndex].quantity + " copies"
+      (currentCollection.cards[currentIndex].quantity
+        ? currentCollection.cards[currentIndex].quantity + " copies"
         : "1 copie");
   } else {
     cardCounterLabel.innerHTML = "PAS DE CARTE À AFFICHER";
@@ -301,8 +331,8 @@ export function checkCardButtons() {
   else prevCardBtn.disabled = true;
 
   if (
-    currentDeck.cards.length > 0 &&
-    app.currentIndex != currentDeck.cards.length - 1
+    currentCollection.cards.length > 0 &&
+    app.currentIndex != currentCollection.cards.length - 1
   )
     nextCardBtn.disabled = false;
   else nextCardBtn.disabled = true;
@@ -314,7 +344,7 @@ export function goToPreviousCard() {
     renderCardUsingTemplate(
       app,
       app.currentIndex,
-      currentDeck.deckInfo.visualGuide
+      currentCollection.collectionInfo.visualGuide
     );
     updateCardCounter(app.currentIndex);
     rootElement.style.setProperty("--cardAngle", 3 - app.random() * 6 + "deg");
@@ -323,12 +353,12 @@ export function goToPreviousCard() {
 }
 
 export function goToNextCard() {
-  if (app.currentIndex < currentDeck.cards.length - 1) {
+  if (app.currentIndex < currentCollection.cards.length - 1) {
     app.currentIndex++;
     renderCardUsingTemplate(
       app,
       app.currentIndex,
-      currentDeck.deckInfo.visualGuide
+      currentCollection.collectionInfo.visualGuide
     );
     updateCardCounter(app.currentIndex);
     rootElement.style.setProperty("--cardAngle", 3 - app.random() * 6 + "deg");
@@ -359,18 +389,18 @@ export function openPanel(panelName) {
 }
 
 export function populateEditionFields() {
-  collectionName.value = currentDeck.deckInfo.deckName;
-  elementFormat.value = currentDeck.deckInfo.elementFormat;
-  elementWidth.value = currentDeck.deckInfo.W;
-  elementHeight.value = currentDeck.deckInfo.H;
-  visualGuide.value = currentDeck.deckInfo.visualGuide;
+  collectionName.value = currentCollection.collectionInfo.deckName;
+  elementFormat.value = currentCollection.collectionInfo.elementFormat;
+  elementWidth.value = currentCollection.collectionInfo.W;
+  elementHeight.value = currentCollection.collectionInfo.H;
+  visualGuide.value = currentCollection.collectionInfo.visualGuide;
 
-  pageFormat.value = currentDeck.deckInfo.pageFormat;
-  pageOrientation.value = currentDeck.deckInfo.pageOrientation;
-  pageWidth.value = currentDeck.deckInfo.pageWidth;
-  pageHeight.value = currentDeck.deckInfo.pageHeight;
-  pageResolution.value = currentDeck.deckInfo.resolution;
-  cuttingHelp.value = currentDeck.deckInfo.cuttingHelp;
+  pageFormat.value = currentCollection.collectionInfo.pageFormat;
+  pageOrientation.value = currentCollection.collectionInfo.pageOrientation;
+  pageWidth.value = currentCollection.collectionInfo.pageWidth;
+  pageHeight.value = currentCollection.collectionInfo.pageHeight;
+  pageResolution.value = currentCollection.collectionInfo.resolution;
+  cuttingHelp.value = currentCollection.collectionInfo.cuttingHelp;
 }
 
 export function checkOtherInputs(eventTargetId, eventTargetValue) {

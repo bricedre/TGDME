@@ -1,12 +1,11 @@
-import { currentDeck } from "./globalStuff.js";
+import { currentCollection } from "./globalStuff.js";
 import {
-  renderImageElement,
-  renderStripElement,
-  renderTextElement,
+  renderImageComponent,
+  renderStripComponent,
+  renderTextComponent,
 } from "./elements.js";
 import { generatePDF } from "./pdf.js";
 import { app } from "../app.js";
-import { cuttingHelp } from "./DOM.js";
 
 export function triggerGeneration() {
   app.generateMode = true;
@@ -14,38 +13,38 @@ export function triggerGeneration() {
 
 // GENERATE 3x3 A4 PAGES OF CARDS
 export function generatePages(p5) {
-  var W = currentDeck.deckInfo.W * currentDeck.deckInfo.resolution;
-  var H = currentDeck.deckInfo.H * currentDeck.deckInfo.resolution;
-  var colCount = currentDeck.deckInfo.colCount;
-  var rowCount = currentDeck.deckInfo.rowCount;
-  var marginX = currentDeck.deckInfo.marginX;
-  var marginY = currentDeck.deckInfo.marginY;
-  var pageWidth = currentDeck.deckInfo.pageWidth * currentDeck.deckInfo.resolution;
-  var pageHeight = currentDeck.deckInfo.pageHeight * currentDeck.deckInfo.resolution;
+  var W = currentCollection.collectionInfo.W * currentCollection.collectionInfo.resolution;
+  var H = currentCollection.collectionInfo.H * currentCollection.collectionInfo.resolution;
+  var colCount = currentCollection.collectionInfo.colCount;
+  var rowCount = currentCollection.collectionInfo.rowCount;
+  var marginX = currentCollection.collectionInfo.marginX;
+  var marginY = currentCollection.collectionInfo.marginY;
+  var pageWidth = currentCollection.collectionInfo.pageWidth * currentCollection.collectionInfo.resolution;
+  var pageHeight = currentCollection.collectionInfo.pageHeight * currentCollection.collectionInfo.resolution;
 
   var pages = [];
 
   var currentPage;
 
   var _allCardsIndices = [];
-  var currentCardIndex = 0;
-  currentDeck.cards.forEach((card) => {
+  var currentElementIndex = 0;
+  currentCollection.cards.forEach((card) => {
     if (card.quantity) {
       for (let i = 0; i < card.quantity; i++)
-        _allCardsIndices.push(currentCardIndex);
+        _allCardsIndices.push(currentElementIndex);
     } else {
-      _allCardsIndices.push(currentCardIndex);
+      _allCardsIndices.push(currentElementIndex);
     }
-    currentCardIndex++;
+    currentElementIndex++;
   });
 
   for (let i = 0; i < _allCardsIndices.length; i++) {
-    var cardIndex = _allCardsIndices[i];
+    var elementIndex = _allCardsIndices[i];
     if (i % (colCount * rowCount) == 0) {
       currentPage = p5.createGraphics(pageWidth, pageHeight);
       currentPage.background(255);
     }
-    renderCardUsingTemplate(p5, cardIndex, currentDeck.deckInfo.visualGuide);
+    renderCardUsingTemplate(p5, elementIndex, currentCollection.collectionInfo.visualGuide);
     currentPage.image(
       p5.card,
       marginX + ((i % (colCount * rowCount)) % colCount) * W,
@@ -65,24 +64,23 @@ export function generatePages(p5) {
   generatePDF(pages);
 }
 
-export function renderCardUsingTemplate(p, cardIndex, guide) {
-  var W = currentDeck.deckInfo.W * currentDeck.deckInfo.resolution;
-  var H = currentDeck.deckInfo.H * currentDeck.deckInfo.resolution;
+export function renderCardUsingTemplate(p, elementIndex, guide) {
+  var W = currentCollection.collectionInfo.W * currentCollection.collectionInfo.resolution;
+  var H = currentCollection.collectionInfo.H * currentCollection.collectionInfo.resolution;
 
   p.card.background(255);
-  if (currentDeck.cards.length > 0) {
-    for (let i = 0; i < currentDeck.template.length; i++) {
-      if (currentDeck.template[i].element === "TEXT")
-        renderTextElement(p, i, cardIndex);
-      else if (currentDeck.template[i].element === "IMAGE")
-        renderImageElement(p, i, cardIndex);
-      else if (currentDeck.template[i].element === "STRIP")
-        renderStripElement(p, i, cardIndex);
+  if (currentCollection.cards.length > 0) {
+    for (let i = 0; i < currentCollection.template.length; i++) {
+      if (currentCollection.template[i].component === "TEXT")
+        renderTextComponent(p, i, elementIndex);
+      else if (currentCollection.template[i].component === "IMAGE")
+        renderImageComponent(p, i, elementIndex);
+      else if (currentCollection.template[i].component === "STRIP")
+        renderStripComponent(p, i, elementIndex);
     }
 
     if (p.generateMode) {
-      console.log(currentDeck.deckInfo.cuttingHelp)
-      if(currentDeck.deckInfo.cuttingHelp){
+      if(currentCollection.collectionInfo.cuttingHelp){
         p.card.noFill();
         p.card.stroke(0, 100);
         p.card.strokeWeight(2);
