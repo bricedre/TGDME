@@ -15,6 +15,7 @@ const createWindow = () => {
       contextIsolation: false,
       enableRemoteModule: true,
     },
+    icon: path.join(__dirname, 'assets/icon.png')
   });
   mainWindow.maximize();
   mainWindow.loadURL(`file://${__dirname}/index.html`);
