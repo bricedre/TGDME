@@ -199,7 +199,32 @@ export function createNewComponent(item, itemIndex) {
 
   itemAccordion.innerHTML =
     "<img src='" + icon + "'><span>" + item.componentName.value + "</span>";
-  var visibilityBtn = document.createElement("img");
+
+    if(itemIndex > 0){
+      var upElementBtn = document.createElement("img");
+      upElementBtn.classList.add("upElementBtn");
+      upElementBtn.src = "./assets/upElement.png";
+      upElementBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        moveElement(itemIndex, -1);
+      });
+      itemAccordion.appendChild(upElementBtn);
+    }
+
+    if(itemIndex < currentCollection.template.length-1){
+      var downElementBtn = document.createElement("img");
+      downElementBtn.classList.add("downElementBtn");
+      downElementBtn.src = "./assets/downElement.png";
+      downElementBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        moveElement(itemIndex, 1);
+      });
+      itemAccordion.appendChild(downElementBtn);
+    }
+    
+    var visibilityBtn = document.createElement("img");
   visibilityBtn.classList.add("visibilityBtn");
   if (item.isVisible) visibilityBtn.src = "./assets/eye.png";
   else visibilityBtn.src = "./assets/eyeClosed.png";
@@ -345,6 +370,26 @@ export function createNewComponent(item, itemIndex) {
 export function updateTemplateItems() {
   var allAccordions = templateItems.querySelectorAll(".accordion");
   currentCollection.template.forEach((item, index) => {
+
+    var icon;
+    var parametersToLoad;
+    switch (item.component) {
+      case "IMAGE":
+        icon = "assets/img.png";
+        parametersToLoad = IMAGE_parameters;
+        break;
+      case "TEXT":
+        icon = "assets/text.png";
+        parametersToLoad = TEXT_parameters;
+        break;
+      case "STRIP":
+        icon = "assets/plus.png";
+        parametersToLoad = STRIP_parameters;
+        break;
+    }
+
+      allAccordions[index].querySelector("img").src = icon;
+
     allAccordions[index].querySelector("span").innerHTML =
       item.componentName.value;
     if (item.isVisible)
@@ -529,3 +574,14 @@ export let IMAGE_parameters = [
 ];
 export let TEXT_parameters = [];
 export let STRIP_parameters = [];
+
+export function moveElement(currentIndex, delta){
+  var destinationIndex = currentIndex + delta;
+  var currentElement = {...currentCollection.template[currentIndex]};
+  var destinationElement = {...currentCollection.template[destinationIndex]};
+
+  currentCollection.template[destinationIndex] = currentElement;
+  currentCollection.template[currentIndex] = destinationElement;
+  setupTemplateItems();
+  saveCollection(false);
+}
