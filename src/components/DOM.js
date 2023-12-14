@@ -8,9 +8,15 @@ import {
   decksAvailable,
   saveCollection,
   setCurrentCollectionIndex,
+  setupCollectionDimensions,
 } from "./globalStuff.js";
 import { renderCardUsingTemplate, triggerGeneration } from "./render.js";
 import { app } from "../app.js";
+import {
+  IMAGE_parameters,
+  STRIP_parameters,
+  TEXT_parameters,
+} from "./elementsParameters.js";
 
 const rootElement = document.querySelector(":root");
 const titleElement = document.getElementById("title");
@@ -62,6 +68,10 @@ homeBtn.addEventListener("click", () => {
   openPanel("start");
 });
 
+generateBtn.addEventListener("click", () => {
+  saveCollection(false);
+});
+
 newBtn.addEventListener("click", () => createNewDeck());
 
 loadBtn.addEventListener("click", () => {
@@ -110,14 +120,18 @@ stripTemplateBtn.addEventListener("click", () => addNewStrip());
 
 allInputs.forEach((input) => {
   input.addEventListener("input", (e) => {
-    saveCollection(false);
+    // saveCollection(false);
+    // populateEditionFields();
+    updateTemplateItems();
     checkOtherInputs(e.target.id, e.target.value);
   });
 });
 
 allSelects.forEach((select) => {
   select.addEventListener("change", (e) => {
-    saveCollection(false);
+    // saveCollection(false);
+    // populateEditionFields();
+    updateTemplateItems();
     checkOtherInputs(e.target.id, e.target.value);
   });
 });
@@ -129,6 +143,7 @@ allSelects.forEach((select) => {
 export function setUI() {
   //MENU
   if (currentCollectionIndex == -1) {
+    generateBtn.style.display = "none";
     newBtn.style.display = "flex";
     loadBtn.style.display = "flex";
     renderBtn.style.display = "none";
@@ -148,6 +163,8 @@ export function setUI() {
 
   //EDITION
   else {
+    homeBtn.style.display = "flex";
+    generateBtn.style.display = "flex";
     newBtn.style.display = "none";
     loadBtn.style.display = "none";
     renderBtn.style.display = "flex";
@@ -157,7 +174,6 @@ export function setUI() {
     stripTemplateBtn.style.display = "flex";
     imageTemplateBtn.style.display = "flex";
     cardCounter.style.display = "flex";
-    homeBtn.style.display = "flex";
     bottomBar.style.display = "flex";
     canvasPanel.style.display = "flex";
     titleElement.innerHTML = currentCollection?.collectionInfo.deckName;
@@ -200,31 +216,31 @@ export function createNewComponent(item, itemIndex) {
   itemAccordion.innerHTML =
     "<img src='" + icon + "'><span>" + item.componentName.value + "</span>";
 
-    if(itemIndex > 0){
-      var upElementBtn = document.createElement("img");
-      upElementBtn.classList.add("upElementBtn");
-      upElementBtn.src = "./assets/upElement.png";
-      upElementBtn.addEventListener("click", (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        moveElement(itemIndex, -1);
-      });
-      itemAccordion.appendChild(upElementBtn);
-    }
+  if (itemIndex > 0) {
+    var upElementBtn = document.createElement("img");
+    upElementBtn.classList.add("upElementBtn");
+    upElementBtn.src = "./assets/upElement.png";
+    upElementBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      moveElement(itemIndex, -1);
+    });
+    itemAccordion.appendChild(upElementBtn);
+  }
 
-    if(itemIndex < currentCollection.template.length-1){
-      var downElementBtn = document.createElement("img");
-      downElementBtn.classList.add("downElementBtn");
-      downElementBtn.src = "./assets/downElement.png";
-      downElementBtn.addEventListener("click", (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        moveElement(itemIndex, 1);
-      });
-      itemAccordion.appendChild(downElementBtn);
-    }
-    
-    var visibilityBtn = document.createElement("img");
+  if (itemIndex < currentCollection.template.length - 1) {
+    var downElementBtn = document.createElement("img");
+    downElementBtn.classList.add("downElementBtn");
+    downElementBtn.src = "./assets/downElement.png";
+    downElementBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      moveElement(itemIndex, 1);
+    });
+    itemAccordion.appendChild(downElementBtn);
+  }
+
+  var visibilityBtn = document.createElement("img");
   visibilityBtn.classList.add("visibilityBtn");
   if (item.isVisible) visibilityBtn.src = "./assets/eye.png";
   else visibilityBtn.src = "./assets/eyeClosed.png";
@@ -232,7 +248,7 @@ export function createNewComponent(item, itemIndex) {
     e.preventDefault();
     e.stopPropagation();
     item.isVisible = !item.isVisible;
-    saveCollection(false);
+    updateTemplateItems();
   });
   itemAccordion.appendChild(visibilityBtn);
 
@@ -244,11 +260,10 @@ export function createNewComponent(item, itemIndex) {
     e.stopPropagation();
     currentCollection.template.splice(e.target.parentNode.id, 1);
     setupTemplateItems();
-    saveCollection(false);
   });
   itemAccordion.appendChild(deleteBtn);
 
-  itemAccordion.addEventListener("click", function () {
+  itemAccordion.addEventListener("click", () => {
     var panel = itemAccordion.nextElementSibling;
     if (itemAccordion.classList.contains("active")) {
       panel.style.maxHeight = "0";
@@ -266,7 +281,7 @@ export function createNewComponent(item, itemIndex) {
   var itemPanel = document.createElement("div");
   itemPanel.classList.add("itemPanel");
 
-  parametersToLoad.forEach((param) => {
+  parametersToLoad.forEach((param, paramIndex) => {
     var parameterSlot = document.createElement("div");
     parameterSlot.classList.add("parameterSlot");
 
@@ -281,17 +296,30 @@ export function createNewComponent(item, itemIndex) {
     var inputID = itemIndex + "-" + param.refValue;
     parameterInput.id = inputID;
     parameterInput.addEventListener("input", (e) => {
-      currentCollection.template[itemIndex][param.refValue]["value"] =
-        e.target.value;
-      saveCollection(false);
+      try {
+        currentCollection.template[itemIndex][param.refValue]["value"] =
+          e.target.value;
+      } catch {
+        currentCollection.template[itemIndex][param.refValue] = {
+          value: e.target.value,
+          type: "0",
+        };
+      }
+      // saveCollection(false);
     });
 
     var modeInput = document.createElement("img");
     modeInput.classList.add("modeInput");
 
     if (param.type !== "spacer") {
-      var currentMode =
-        currentCollection.template[itemIndex][param.refValue]["type"];
+      var currentMode;
+      try {
+        currentMode =
+          currentCollection.template[itemIndex][param.refValue]["type"];
+      } catch (e) {
+        currentMode = "0";
+      }
+
       modeInput.src =
         currentMode == "0"
           ? "./assets/arbitrary.png"
@@ -303,7 +331,7 @@ export function createNewComponent(item, itemIndex) {
           currentCollection.template[itemIndex][param.refValue]["type"] == "0"
             ? "1"
             : "0";
-        saveCollection(false);
+        updateTemplateItems();
       });
     }
 
@@ -314,7 +342,7 @@ export function createNewComponent(item, itemIndex) {
         parameterInput.addEventListener("input", (e) => {
           currentCollection.template[itemIndex][param.refValue]["value"] =
             e.target.checked;
-          saveCollection(false);
+          // saveCollection(false);
         });
         parameterName = document.createElement("label");
         parameterName.setAttribute("for", inputID);
@@ -331,7 +359,8 @@ export function createNewComponent(item, itemIndex) {
         parameterInput.addEventListener("input", (e) => {
           currentCollection.template[itemIndex][param.refValue]["value"] =
             e.target.value;
-          saveCollection(false);
+          updateTemplateItems();
+          // saveCollection(false);
         });
         param.options.forEach((opt) => {
           var option = document.createElement("option");
@@ -349,7 +378,11 @@ export function createNewComponent(item, itemIndex) {
         parameterInput.classList.add("parameterInput");
         if (param.type === "color") parameterInput.style.padding = "0.2rem";
         parameterInput.type = param.type;
-        parameterInput.value = item[param.refValue]["value"];
+        try {
+          parameterInput.value = item[param.refValue]["value"];
+        } catch (e) {
+          parameterInput.value = "";
+        }
         parameterSlot.appendChild(parameterName);
         parameterInputLine.appendChild(parameterInput);
         if (!param.forced) parameterInputLine.appendChild(modeInput);
@@ -357,6 +390,7 @@ export function createNewComponent(item, itemIndex) {
       }
     } else {
       parameterName.classList.add("spacer");
+      if(paramIndex == 0) parameterName.classList.add("firstSpacer");
       parameterSlot.appendChild(parameterName);
     }
 
@@ -370,7 +404,6 @@ export function createNewComponent(item, itemIndex) {
 export function updateTemplateItems() {
   var allAccordions = templateItems.querySelectorAll(".accordion");
   currentCollection.template.forEach((item, index) => {
-
     var icon;
     var parametersToLoad;
     switch (item.component) {
@@ -388,7 +421,7 @@ export function updateTemplateItems() {
         break;
     }
 
-      allAccordions[index].querySelector("img").src = icon;
+    allAccordions[index].querySelector("img").src = icon;
 
     allAccordions[index].querySelector("span").innerHTML =
       item.componentName.value;
@@ -405,8 +438,12 @@ export function updateTemplateItems() {
     var inputID = input.id;
     var inputIndex = inputID.split("-")[0];
     var inputRefValue = inputID.split("-")[1];
-    input.value =
-      currentCollection.template[inputIndex][inputRefValue]["value"];
+    try {
+      input.value =
+        currentCollection.template[inputIndex][inputRefValue]["value"];
+    } catch (e) {
+      input.value = 0;
+    }
   });
 
   var allModeBtns = templateItems.querySelectorAll(".modeInput");
@@ -414,8 +451,13 @@ export function updateTemplateItems() {
     var inputID = input.id;
     var inputIndex = inputID.split("-")[0];
     var inputRefValue = inputID.split("-")[1];
-    var currentMode =
-      currentCollection.template[inputIndex][inputRefValue]["type"];
+    var currentMode;
+    try {
+      currentMode =
+        currentCollection.template[inputIndex][inputRefValue]["type"];
+    } catch (e) {
+      currentMode = "0";
+    }
     input.src =
       currentMode == "0"
         ? "./assets/arbitrary.png"
@@ -544,44 +586,20 @@ export function checkOtherInputs(eventTargetId, eventTargetValue) {
   }
 }
 
-export let IMAGE_parameters = [
-  { name: "Informations Générales", type: "spacer" },
-  {
-    name: "Nom du Composant ",
-    refValue: "componentName",
-    type: "text",
-    forced: true,
-  },
-  { name: "Source de l'Image ", refValue: "src", type: "text" },
-  { name: "Positionnement, Dimensions et Rotation", type: "spacer" },
-  {
-    name: "Ancre",
-    refValue: "anchor",
-    type: "select",
-    options: [
-      { value: "CENTER", label: "CENTRE" },
-      { value: "CORNER", label: "COIN SUPÉRIEUR GAUCHE" },
-    ],
-  },
-  { name: "Position Horizontale", refValue: "position_x", type: "text" },
-  { name: "Position Verticale", refValue: "position_y", type: "text" },
-  { name: "Largeur", refValue: "width", type: "text" },
-  { name: "Hauteur", refValue: "height", type: "text" },
-  { name: "Rotation", refValue: "angle", type: "text" },
-  { name: "Paramètres Avancés", type: "spacer" },
-  { name: "Déclencheur", refValue: "trigger", type: "text", forced: true },
-  { name: "Filtre de Teinte", refValue: "tint", type: "color" },
-];
-export let TEXT_parameters = [];
-export let STRIP_parameters = [];
+export function moveElement(currentIndex, delta) {
+  var allAccordions = templateItems.querySelectorAll(".accordion");
 
-export function moveElement(currentIndex, delta){
   var destinationIndex = currentIndex + delta;
-  var currentElement = {...currentCollection.template[currentIndex]};
-  var destinationElement = {...currentCollection.template[destinationIndex]};
+  var currentElement = { ...currentCollection.template[currentIndex] };
+  var destinationElement = { ...currentCollection.template[destinationIndex] };
 
   currentCollection.template[destinationIndex] = currentElement;
   currentCollection.template[currentIndex] = destinationElement;
-  setupTemplateItems();
-  saveCollection(false);
+
+  allAccordions[currentIndex].style.translate = "0 " + 145 * delta + "%";
+  allAccordions[destinationIndex].style.translate = "0 " + 145 * -delta + "%";
+
+  setTimeout(() => {
+    setupTemplateItems();
+  }, 200);
 }

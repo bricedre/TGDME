@@ -21,6 +21,7 @@ export function renderImageComponent(p5, componentIndex, elementIndex) {
   let _align = "";
   let _angle = "";
   let _tint = "";
+  let _opacity = "";
 
   // No render if no src
 
@@ -70,6 +71,9 @@ export function renderImageComponent(p5, componentIndex, elementIndex) {
       _tint = currentTemplate[componentIndex].tint
         ? currentTemplate[componentIndex].tint.value
         : [255, 255, 255];
+      _opacity = currentTemplate[componentIndex].opacity
+        ? currentTemplate[componentIndex].opacity.value
+        : 100;
 
       p5.card.push();
       try {
@@ -77,7 +81,7 @@ export function renderImageComponent(p5, componentIndex, elementIndex) {
         p5.card.imageMode(_align);
         p5.card.translate(_position_x, _position_y);
         if (_angle !== 0) p5.card.rotate(_angle);
-        p5.card.tint(_tint);
+        p5.card.tint(_tint + Math.round(_opacity * 2.55).toString(16));
         p5.card.image(_img, 0, 0, _width, _height);
       } catch (e) {
         console.log(e);
@@ -100,51 +104,63 @@ export function renderTextComponent(p5, componentIndex, elementIndex) {
   var resolution = currentCollectionInfo.resolution;
 
   let _textToWrite = "";
+  let _type = "";
   let _align = "";
   let _position_x = "";
   let _position_y = "";
   let _size = "";
   let _font = "";
   let _color;
+  let _opacity;
+  let _angle;
 
   // No render if no src
   if (
-    currentTemplate[componentIndex].trigger == null ||
-    cardData[currentTemplate[componentIndex].trigger]
+    currentTemplate[componentIndex].trigger.value == "" ||
+    cardData[currentTemplate[componentIndex].trigger.value]
   ) {
     if (currentTemplate[componentIndex].src) {
-      _textToWrite = cardData[currentTemplate[componentIndex].src];
-      _position_x =
-        currentTemplate[componentIndex].position_x != null
-          ? eval(currentTemplate[componentIndex].position_x)
-          : 0;
-      _position_y =
-        currentTemplate[componentIndex].position_y != null
-          ? eval(currentTemplate[componentIndex].position_y)
-          : 0;
-      _size = currentTemplate[componentIndex].size
-        ? eval(currentTemplate[componentIndex].size)
-        : 20;
-      _color = currentTemplate[componentIndex].color
-        ? p5.color(eval(currentTemplate[componentIndex].color))
-        : p5.color(0);
-      if (currentTemplate[componentIndex].align) {
-        if (currentTemplate[componentIndex].align === "CENTER")
-          _align = p5.CENTER;
-        else if (currentTemplate[componentIndex].align === "RIGHT")
-          _align = p5.RIGHT;
-      } else _align = p5.LEFT;
-      if (currentTemplate[componentIndex].font) {
-        _font = assetsLibrary[currentTemplate[componentIndex].font];
+      if (currentTemplate[componentIndex].src.type) {
+        _type = currentTemplate[componentIndex].src.type;
+        if (_type === "0")
+          _textToWrite = currentTemplate[componentIndex].src.value;
+        else if (_type === "1")
+          _textToWrite = cardData[currentTemplate[componentIndex].src.value];
       }
+
+      _position_x = currentTemplate[componentIndex].position_x
+        ? eval(currentTemplate[componentIndex].position_x.value)
+        : 0;
+      _position_y = currentTemplate[componentIndex].position_y
+        ? eval(currentTemplate[componentIndex].position_y.value)
+        : 0;
+
+      _size = currentTemplate[componentIndex].size
+        ? eval(currentTemplate[componentIndex].size.value)
+        : 20;
+
+      _color = currentTemplate[componentIndex].color
+        ? currentTemplate[componentIndex].color.value
+        : "#000000";
+
+      _align = currentTemplate[componentIndex].align
+        ? eval("p5." + currentTemplate[componentIndex].align.value)
+        : p5.CENTER;
+
+      _font = currentTemplate[componentIndex].font.value != ""
+        ? assetsLibrary[currentTemplate[componentIndex].font.value]
+        : "Verdana";
+
+      _opacity = currentTemplate[componentIndex].opacity
+        ? currentTemplate[componentIndex].opacity.value
+        : "100";
 
       try {
         p5.card.noStroke();
         p5.card.textAlign(_align, p5.CENTER);
-        if (_font !== "") p5.card.textFont(_font);
-        else _font = p5.card.textFont("Verdana");
+        p5.card.textFont(_font);
         p5.card.textSize(_size * H * 0.02);
-        p5.card.fill(_color);
+        p5.card.fill(_color + Math.round(_opacity * 2.55).toString(16));
 
         p5.card.text(_textToWrite, _position_x, _position_y);
       } catch (e) {

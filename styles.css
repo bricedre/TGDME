@@ -92,6 +92,7 @@ canvas {
 #editionPanel {
   background-color: #edf6fc;
   border-radius: 1rem;
+  position: relative;
 }
 
 .templateBtns {
@@ -166,6 +167,15 @@ button:disabled {
   display: flex;
   padding: 0.5rem;
   border-radius: 50%;
+}
+
+#generateBtn {
+  padding: 0.5rem;
+  border-radius: 50%;
+  position: absolute;
+  right: 0;
+  top: 0;
+  translate: 20% -20%;
 }
 
 #deleteBtn {
@@ -288,6 +298,11 @@ input[type="radio"] {
 .spacer{
   color: #0006;
   font-size: 1rem;
+  margin-top: 1rem;
+}
+ 
+.firstSpacer{
+  margin-top: 0;
 }
 
 .parameterInputLine{

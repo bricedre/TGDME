@@ -18,7 +18,7 @@ import {
   visualGuide,
 } from "./DOM.js";
 import { loadAssets } from "./assetLoader.js";
-import { imageComponentTemplate } from "./imageComponentTemplate.js";
+import { imageComponentTemplate, textComponentTemplate, stripComponentTemplate } from "./componentTemplates.js";
 import { renderCardUsingTemplate } from "./render.js";
 
 const fs = require("fs").promises;
@@ -146,7 +146,7 @@ export function saveCollection(refreshAssets) {
   }, 500);
 }
 
-function setupCollectionDimensions() {
+export function setupCollectionDimensions() {
   var coll = currentCollection.collectionInfo;
 
   switch (coll.elementFormat) {
@@ -233,15 +233,17 @@ function setupCollectionDimensions() {
     ((coll.pageHeight - coll.H * coll.rowCount) / 2) * coll.resolution;
 }
 export function addNewImage(){
+  console.log(imageComponentTemplate)
   currentCollection.template.push({...imageComponentTemplate});
   setupTemplateItems();
-  saveCollection(false);
 }
 export function addNewText(){
-  console.log("new text");
+  currentCollection.template.push({...textComponentTemplate});
+  setupTemplateItems();
   
 }
 export function addNewStrip(){
-  console.log("new strip");
+  currentCollection.template.push({...stripComponentTemplate});
+  setupTemplateItems();
   
 }
