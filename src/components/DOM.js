@@ -68,6 +68,22 @@ homeBtn.addEventListener("click", () => {
   openPanel("start");
 });
 
+document.addEventListener("keyup", function (event) {
+  if (event.key === "Enter") {
+    saveCollection(false);
+  } else if (event.key === "F1") {
+    document.getElementById("tab-config").checked = true;
+  } else if (event.key === "F2") {
+    document.getElementById("tab-ress").checked = true;
+  } else if (event.key === "F3") {
+    document.getElementById("tab-template").checked = true;
+  } else if (event.key === "F4") {
+    document.getElementById("tab-elements").checked = true;
+  } else if (event.key === "F5") {
+    document.getElementById("tab-printing").checked = true;
+  }
+});
+
 generateBtn.addEventListener("click", () => {
   saveCollection(false);
 });
@@ -131,7 +147,8 @@ allSelects.forEach((select) => {
   select.addEventListener("change", (e) => {
     // saveCollection(false);
     // populateEditionFields();
-    updateTemplateItems();
+    saveCollection(false);
+    // updateTemplateItems();
     checkOtherInputs(e.target.id, e.target.value);
   });
 });
@@ -224,6 +241,7 @@ export function createNewComponent(item, itemIndex) {
       e.preventDefault();
       e.stopPropagation();
       moveElement(itemIndex, -1);
+      saveCollection(false);
     });
     itemAccordion.appendChild(upElementBtn);
   }
@@ -236,6 +254,7 @@ export function createNewComponent(item, itemIndex) {
       e.preventDefault();
       e.stopPropagation();
       moveElement(itemIndex, 1);
+      saveCollection(false);
     });
     itemAccordion.appendChild(downElementBtn);
   }
@@ -248,6 +267,7 @@ export function createNewComponent(item, itemIndex) {
     e.preventDefault();
     e.stopPropagation();
     item.isVisible = !item.isVisible;
+    saveCollection(false);
     updateTemplateItems();
   });
   itemAccordion.appendChild(visibilityBtn);
@@ -259,6 +279,7 @@ export function createNewComponent(item, itemIndex) {
     e.preventDefault();
     e.stopPropagation();
     currentCollection.template.splice(e.target.parentNode.id, 1);
+    saveCollection(false);
     setupTemplateItems();
   });
   itemAccordion.appendChild(deleteBtn);
@@ -390,7 +411,7 @@ export function createNewComponent(item, itemIndex) {
       }
     } else {
       parameterName.classList.add("spacer");
-      if(paramIndex == 0) parameterName.classList.add("firstSpacer");
+      if (paramIndex == 0) parameterName.classList.add("firstSpacer");
       parameterSlot.appendChild(parameterName);
     }
 

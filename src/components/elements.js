@@ -46,10 +46,17 @@ export function renderImageComponent(p5, componentIndex, elementIndex) {
         }
       }
 
-      _position_x =
-        currentTemplate[componentIndex].position_x != null
-          ? eval(currentTemplate[componentIndex].position_x.value)
-          : 0;
+      // _position_x =
+      //   currentTemplate[componentIndex].position_x != null
+      //     ? eval(currentTemplate[componentIndex].position_x.value)
+      //     : 0;
+
+      _position_x = getActualValue(
+        currentTemplate[componentIndex].position_x,
+        0,
+        true
+      );
+
       _position_y =
         currentTemplate[componentIndex].position_y != null
           ? eval(currentTemplate[componentIndex].position_y.value)
@@ -122,10 +129,10 @@ export function renderTextComponent(p5, componentIndex, elementIndex) {
     if (currentTemplate[componentIndex].src) {
       if (currentTemplate[componentIndex].src.type) {
         _type = currentTemplate[componentIndex].src.type;
-        if (_type === "0")
-          _textToWrite = currentTemplate[componentIndex].src.value;
-        else if (_type === "1")
-          _textToWrite = cardData[currentTemplate[componentIndex].src.value];
+        _textToWrite =
+          _type === "0"
+            ? currentTemplate[componentIndex].src.value
+            : cardData[currentTemplate[componentIndex].src.value];
       }
 
       _position_x = currentTemplate[componentIndex].position_x
@@ -147,25 +154,36 @@ export function renderTextComponent(p5, componentIndex, elementIndex) {
         ? eval("p5." + currentTemplate[componentIndex].align.value)
         : p5.CENTER;
 
-      _font = currentTemplate[componentIndex].font.value != ""
-        ? assetsLibrary[currentTemplate[componentIndex].font.value]
-        : "Verdana";
+      _font =
+        currentTemplate[componentIndex].font.value != ""
+          ? assetsLibrary[currentTemplate[componentIndex].font.value]
+          : "Verdana";
 
       _opacity = currentTemplate[componentIndex].opacity
         ? currentTemplate[componentIndex].opacity.value
         : "100";
 
+      _angle = currentTemplate[componentIndex].angle
+        ? currentTemplate[componentIndex].angle.value
+        : "0";
+
+      p5.card.push();
       try {
+        p5.card.angleMode(p5.DEGREES);
+        p5.card.translate(_position_x, _position_y);
+        if (_angle !== 0) p5.card.rotate(_angle);
         p5.card.noStroke();
         p5.card.textAlign(_align, p5.CENTER);
         p5.card.textFont(_font);
         p5.card.textSize(_size * H * 0.02);
         p5.card.fill(_color + Math.round(_opacity * 2.55).toString(16));
 
-        p5.card.text(_textToWrite, _position_x, _position_y);
+        p5.card.text(_textToWrite, 0, 0);
       } catch (e) {
         console.log(e);
       }
+
+      p5.card.pop();
     }
   }
 }
@@ -336,4 +354,25 @@ export function renderStripComponent(p5, componentIndex, elementIndex) {
       }
     }
   }
+}
+
+/*
+_position_x =
+        currentTemplate[componentIndex].position_x != null
+          ? eval(currentTemplate[componentIndex].position_x.value)
+          : 0;
+*/
+
+function getActualValue(refValue, dft, ev) {
+  let currentCollectionInfo = currentCollection.collectionInfo;
+  var W = currentCollectionInfo.W * currentCollectionInfo.resolution;
+  var H = currentCollectionInfo.H * currentCollectionInfo.resolution;
+  var resolution = currentCollectionInfo.resolution;
+  var finalValue;
+  if (refValue) {
+    if (ev) finalValue = eval(refValue.value);
+    else finalValue = refValue.value;
+  } else finalValue == null;
+
+  return finalValue ? finalValue : dft;
 }

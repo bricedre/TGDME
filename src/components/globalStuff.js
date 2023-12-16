@@ -1,3 +1,5 @@
+const cloneDeep = require('lodash/cloneDeep');
+
 import { app } from "../app.js";
 import {
   checkOtherInputs,
@@ -82,7 +84,7 @@ export function createNewDeck() {
     mkdirSync(dir);
     mkdirSync(dir + "/assets");
     copyFileSync(
-      "./src/components/deckTemplate.json",
+      "./src/components/collectionTemplate.json",
       "./src/decks/" + deckQty + "/deck.json"
     );
     getDecks();
@@ -232,18 +234,22 @@ export function setupCollectionDimensions() {
   coll.marginY =
     ((coll.pageHeight - coll.H * coll.rowCount) / 2) * coll.resolution;
 }
+
 export function addNewImage(){
-  console.log(imageComponentTemplate)
-  currentCollection.template.push({...imageComponentTemplate});
+  currentCollection.template.push(cloneDeep(imageComponentTemplate));
   setupTemplateItems();
+  saveCollection(false);
 }
+
 export function addNewText(){
-  currentCollection.template.push({...textComponentTemplate});
+  currentCollection.template.push(cloneDeep(textComponentTemplate));
   setupTemplateItems();
+  saveCollection(false);
   
 }
+
 export function addNewStrip(){
-  currentCollection.template.push({...stripComponentTemplate});
+  currentCollection.template.push(cloneDeep(stripComponentTemplate));
   setupTemplateItems();
-  
+  saveCollection(false);
 }
