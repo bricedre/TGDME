@@ -43,5 +43,9 @@ export let stripComponentTemplate = {
   anchor: { value: "CENTER", type: "0" },
   tint: { value: "#ffffff", type: "0" },
   angle: { value: "0", type: "0" },
-  opacity: { value: "100", type: "0" },
+  spacing_x: { value: "100", type: "0" },
+  spacing_y: { value: "100", type: "0" },
+  style: { value: "straight", type: "0" },
+  offset_x: { value: "100", type: "0" },
+  offset_y: { value: "0", type: "0" },
 };

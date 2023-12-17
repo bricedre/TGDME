@@ -18,7 +18,7 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
     var _img;
     var _textToWrite;
     var _elementsList = [];
-    var _imgs;
+    var _imgs = [];
 
     if (_type === "0") {
       if (componentType == "IMAGE") _img = assetsLibrary[_src];
@@ -49,11 +49,9 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
     var _color = getActualValue(templateData.color, "#000000", false);
     var _spacing_x = getActualValue(templateData.spacing_x, _width, true);
     var _spacing_y = getActualValue(templateData.spacing_y, _height, true);
-    var _style = getActualValue(templateData.style, "straight", true);
+    var _style = getActualValue(templateData.style, "straight", false);
     var _offset_x = getActualValue(templateData.offset_x, _width / 2, true);
     var _offset_y = getActualValue(templateData.offset_y, _height / 2, true);
-    var _totalWidth = (_elementsList.length * Math.min(_width, _spacing_x) + (_elementsList.length - 2) * _spacing_x) / 2;
-    var _totalHeight = (_elementsList.length * Math.min(_height, _spacing_y) + (_elementsList.length - 1) * _spacing_y) / 2;
 
     p5.card.push();
     try {
@@ -80,9 +78,15 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
 
       //! STRIP
       else if (componentType == "STRIP") {
+        var _totalWidth = (_elementsList.length * Math.min(_width, _spacing_x) + (_elementsList.length - 2) * _spacing_x) / 2;
+        var _totalHeight = (_elementsList.length * Math.min(_height, _spacing_y) + (_elementsList.length - 1) * _spacing_y) / 2;
+
         p5.card.imageMode(p5.CENTER);
         for (let i = 0; i < _elementsList.length; i++) {
-          if (_anchor == "CENTER") {
+
+          console.log(_anchor)
+          
+          if (_anchor == p5.CENTER) {
             p5.card.image(
               _imgs[i],
               _elementsList.length > 1 ? (_spacing_x > 0 ? i * _spacing_x - _totalWidth / 2 : 0) + (_style == "alternate" ? (i % 2 == 0 ? _offset_x : -_offset_x) : 0) : 0,
@@ -90,7 +94,7 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
               _width,
               _height
             );
-          } else if (_anchor == "LEFT") {
+          } else if (_anchor == p5.LEFT) {
             p5.card.image(
               _imgs[i],
               _elementsList.length > 1 ? i * _spacing_x + (_style == "alternate" ? (i % 2 == 0 ? _offset_x : -_offset_x) : 0) : 0,
@@ -98,7 +102,7 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
               _width,
               _height
             );
-          } else if (_anchor == "RIGHT") {
+          } else if (_anchor == p5.CENTER.RIGHT) {
             p5.card.image(
               _imgs[i],
               _elementsList.length > 1 ? (_spacing_x > 0 ? i * _spacing_x - _totalWidth : 0) + (_style == "alternate" ? (i % 2 == 0 ? _offset_x : -_offset_x) : 0) : 0,
@@ -110,7 +114,7 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
         }
       }
     } catch (e) {
-      console.log(e)
+      console.log(e);
 
       if (componentType == "IMAGE") {
         p5.card.image(errorImage, 0, 0, _width, _height);

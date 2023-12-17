@@ -102,7 +102,7 @@ export function createNewComponent(item, itemIndex) {
     e.stopPropagation();
     item.isVisible = !item.isVisible;
     saveCollection(false);
-    updatetemplateItems();
+    updateTemplateItems();
   });
   itemAccordion.appendChild(visibilityBtn);
 
@@ -185,7 +185,7 @@ export function createNewComponent(item, itemIndex) {
           currentCollection.template[itemIndex][param.refValue]["type"] == "0"
             ? "1"
             : "0";
-        updatetemplateItems();
+        updateTemplateItems();
       });
     }
 
@@ -212,7 +212,7 @@ export function createNewComponent(item, itemIndex) {
         parameterInput.addEventListener("input", (e) => {
           currentCollection.template[itemIndex][param.refValue]["value"] =
             e.target.value;
-          updatetemplateItems();
+          updateTemplateItems();
         });
         param.options.forEach((opt) => {
           var option = document.createElement("option");
