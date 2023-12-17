@@ -1,3 +1,4 @@
+import { app } from "../app.js";
 import { assetsLibrary, errorImage } from "./assetLoader.js";
 import { currentCollection } from "./collectionManager.js";
 
@@ -8,20 +9,17 @@ export function renderImageComponent(p5, componentIndex, elementIndex) {
 
   let cardData = currentElements[elementIndex];
 
-  var W = currentCollectionInfo.W * currentCollectionInfo.resolution;
-  var H = currentCollectionInfo.H * currentCollectionInfo.resolution;
-  var resolution = currentCollectionInfo.resolution;
-
-  let _img;
-  let _type = "";
-  let _position_x = "";
-  let _position_y = "";
-  let _width = "";
-  let _height = "";
-  let _align = "";
-  let _angle = "";
-  let _tint = "";
-  let _opacity = "";
+  let _src,
+    _img,
+    _type,
+    _position_x,
+    _position_y,
+    _width,
+    _height,
+    _anchor,
+    _angle,
+    _tint,
+    _opacity;
 
   // No render if no src
 
@@ -29,73 +27,74 @@ export function renderImageComponent(p5, componentIndex, elementIndex) {
     currentTemplate[componentIndex].trigger.value == "" ||
     cardData[currentTemplate[componentIndex].trigger.value]
   ) {
-    if (currentTemplate[componentIndex].src) {
-      if (currentTemplate[componentIndex].src.type) {
-        _type = currentTemplate[componentIndex].src.type;
-        if (_type === "0")
-          _img = assetsLibrary[currentTemplate[componentIndex].src.value];
-        else if (_type === "1") {
-          _img =
-            assetsLibrary[
-              currentElements[elementIndex][
-                currentTemplate[componentIndex].src.value
-              ]
-            ];
-        } else {
-          assetsLibrary[currentTemplate[componentIndex].src];
-        }
-      }
+    _src = getActualValue(currentTemplate[componentIndex].src, "", false);
 
-      // _position_x =
-      //   currentTemplate[componentIndex].position_x != null
-      //     ? eval(currentTemplate[componentIndex].position_x.value)
-      //     : 0;
+    _type = currentTemplate[componentIndex].src.type;
 
-      _position_x = getActualValue(
-        currentTemplate[componentIndex].position_x,
-        0,
-        true
-      );
-
-      _position_y =
-        currentTemplate[componentIndex].position_y != null
-          ? eval(currentTemplate[componentIndex].position_y.value)
-          : 0;
-      _width = currentTemplate[componentIndex].width
-        ? eval(currentTemplate[componentIndex].width.value)
-        : 100;
-      _height = currentTemplate[componentIndex].height
-        ? eval(currentTemplate[componentIndex].height.value)
-        : 100;
-      _align = currentTemplate[componentIndex].anchor
-        ? currentTemplate[componentIndex].anchor.value
-        : "CENTER";
-      if (_align === "CENTER") _align = p5.CENTER;
-      else if (_align === "CORNER") _align = p5.CORNER;
-      _angle = currentTemplate[componentIndex].angle
-        ? currentTemplate[componentIndex].angle.value
-        : 0;
-      _tint = currentTemplate[componentIndex].tint
-        ? currentTemplate[componentIndex].tint.value
-        : [255, 255, 255];
-      _opacity = currentTemplate[componentIndex].opacity
-        ? currentTemplate[componentIndex].opacity.value
-        : 100;
-
-      p5.card.push();
-      try {
-        p5.card.angleMode(p5.DEGREES);
-        p5.card.imageMode(_align);
-        p5.card.translate(_position_x, _position_y);
-        if (_angle !== 0) p5.card.rotate(_angle);
-        p5.card.tint(_tint + Math.round(_opacity * 2.55).toString(16));
-        p5.card.image(_img, 0, 0, _width, _height);
-      } catch (e) {
-        console.log(e);
-        p5.card.image(errorImage, 0, 0, _width, _height);
-      }
-      p5.card.pop();
+    if (_type === "0") {
+      _img = assetsLibrary[currentTemplate[componentIndex].src.value];
+    } else if (_type === "1") {
+      _img =
+        assetsLibrary[
+          currentElements[elementIndex][
+            currentTemplate[componentIndex].src.value
+          ]
+        ];
     }
+
+    _position_x = getActualValue(
+      currentTemplate[componentIndex].position_x,
+      0,
+      true
+    );
+
+    _position_y = getActualValue(
+      currentTemplate[componentIndex].position_y,
+      0,
+      true
+    );
+
+    _width = getActualValue(currentTemplate[componentIndex].width, "W", true);
+
+    _height = getActualValue(currentTemplate[componentIndex].height, "W", true);
+
+    _anchor = getActualValue(
+      currentTemplate[componentIndex].anchor,
+      p5.CENTER,
+      true
+    );
+
+    _angle = getActualValue(
+      currentTemplate[componentIndex].angle,
+      0,
+      true
+    );
+
+    _tint = getActualValue(
+      currentTemplate[componentIndex].tint,
+      "#FFFFFF",
+      false
+    );
+
+    _opacity = getActualValue(
+      currentTemplate[componentIndex].opacity,
+      100,
+      true
+    );
+
+    p5.card.push();
+    try {
+      p5.card.angleMode(p5.DEGREES);
+      p5.card.imageMode(_anchor);
+      p5.card.translate(_position_x, _position_y);
+      if (_angle !== 0) p5.card.rotate(_angle);
+      p5.card.tint(_tint + Math.round(_opacity * 2.55).toString(16));
+      p5.card.image(_img, 0, 0, _width, _height);
+    } catch (e) {
+      console.log(e);
+      p5.card.image(errorImage, 0, 0, _width, _height);
+    }
+    p5.card.pop();
   }
 }
 
@@ -356,23 +355,17 @@ export function renderStripComponent(p5, componentIndex, elementIndex) {
   }
 }
 
-/*
-_position_x =
-        currentTemplate[componentIndex].position_x != null
-          ? eval(currentTemplate[componentIndex].position_x.value)
-          : 0;
-*/
-
 function getActualValue(refValue, dft, ev) {
   let currentCollectionInfo = currentCollection.collectionInfo;
   var W = currentCollectionInfo.W * currentCollectionInfo.resolution;
   var H = currentCollectionInfo.H * currentCollectionInfo.resolution;
-  var resolution = currentCollectionInfo.resolution;
+  var CENTER = app.CENTER;
+  var CORNER = app.CORNER;
+
   var finalValue;
   if (refValue) {
     if (ev) finalValue = eval(refValue.value);
     else finalValue = refValue.value;
   } else finalValue == null;
-
   return finalValue ? finalValue : dft;
 }
