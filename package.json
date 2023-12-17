@@ -20,7 +20,6 @@
     "electron-root-path": "^1.1.0",
     "electron-squirrel-startup": "^1.0.0",
     "fs": "^0.0.1-security",
-    "jquery": "^3.7.1",
     "jspdf": "^2.5.1",
     "lodash": "^4.17.21",
     "p5": "^1.8.0"

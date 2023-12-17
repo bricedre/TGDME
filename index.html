@@ -13,59 +13,59 @@
       <button id="homeBtn" class="homeBtn">
         <img src="./assets/home.png" alt="add symbol"/>
       </button>
-      <div id="title"></div>
+      <div id="mainTitleDiv"></div>
     </nav>
 
     <div class="viewer">
-      <div id="startPanel" class="panel">
-        <button class="homePageBtn" id="newBtn">
+      <div id="startPanelDiv" class="panel">
+        <button class="homePageBtn" id="newCollectionBtn">
           <div class="imgContainer">
             <img src="./assets/add.svg" alt="add symbol"/>
           </div>
           <p>CRÉER UNE NOUVELLE COLLECTION</p>
         </button>
-        <button class="homePageBtn" id="loadBtn">
+        <button class="homePageBtn" id="loadCollectionBtn">
           <div class="imgContainer">
             <img src="./assets/deck.svg" alt="add symbol"/>
           </div>
           <p>OUVRIR LA BIBLIOTHÈQUE DE COLLECTIONS</p>
         </button>
       </div>
-      <div id="loadingPanel" class="panel">
+      <div id="loadingPanelDiv" class="panel">
       </div>
-      <div id="editionPanel" class="panel">
+      <div id="editionPanelDiv" class="panel">
 
-        <button id="generateBtn" title="Re-générer la Collection (Entrée)" class="generateBtn">
+        <button id="generateCollectionBtn" title="Re-générer la Collection (Entrée)" class="generateCollectionBtn">
           <img src="./assets/reload.png" alt="add symbol"/>
         </button>
 
         <div class="tabs">
-          <input id="tab-config" type="radio" name="tabs" checked>
-          <label for="tab-config" title="Configuration générale, de la collection et des élements (F1)">Configuration</label>
+          <input id="tabConfigInput" type="radio" name="tabs" checked>
+          <label for="tabConfigInput" title="Configuration générale, de la collection et des élements (F1)">Configuration</label>
           <span>></span>
-          <input id="tab-ress" type="radio" name="tabs">
-          <label for="tab-ress" title="Ressources liées à la Collection (F2)">Ressources</label>
+          <input id="tabRessInput" type="radio" name="tabs">
+          <label for="tabRessInput" title="Ressources liées à la Collection (F2)">Ressources</label>
           <span>></span>
-          <input id="tab-template" type="radio" name="tabs">
-          <label for="tab-template" title="Création du Modèle (F3)">Modèle</label>
+          <input id="tabTemplateInput" type="radio" name="tabs">
+          <label for="tabTemplateInput" title="Création du Modèle (F3)">Modèle</label>
           <span>></span>
-          <input id="tab-elements" type="radio" name="tabs">
-          <label for="tab-elements" title="Création des Éléments (F4)">Éléments</label>
+          <input id="tabElementsInput" type="radio" name="tabs">
+          <label for="tabElementsInput" title="Création des Éléments (F4)">Éléments</label>
           <span>></span>
-          <input id="tab-printing" type="radio" name="tabs">
-          <label for="tab-printing" title="Configuration d'impression (F5)">Impression</label>
+          <input id="tabPrintingInput" type="radio" name="tabs">
+          <label for="tabPrintingInput" title="Configuration d'impression (F5)">Impression</label>
         
           <div class="content">
-            <div id="content-config">
+            <div id="contentConfigDiv">
 
               <div class="parameterSlot">
                 <p class="parameterName">Nom de la Collection</p>
-                <input id="collectionName" class="parameterInput">
+                <input id="collectionNameInput" class="parameterInput">
               </div>
 
               <div class="parameterSlot">
                 <p class="parameterName">Format des Éléments</p>
-                <select id="elementFormat" class="parameterInput">
+                <select id="elementFormatSelect" class="parameterInput">
                   <optgroup label="Cartes">
                     <option value="pokerCard">Carte Poker</option>
                     <option value="bridgeCard">Carte Bridge</option>
@@ -94,17 +94,17 @@
 
               <div class="parameterSlot">
                 <p class="parameterName">Largeur des Éléments (cm)</p>
-                <input id="elementWidth" inputmode="decimal" class="parameterInput" step="0.1" >
+                <input id="elementWidthInput" inputmode="decimal" class="parameterInput" step="0.1" >
               </div>
 
               <div class="parameterSlot">
                 <p class="parameterName">Hauteur des Éléments (cm)</p>
-                <input id="elementHeight" inputmode="decimal" class="parameterInput" step="0.1">
+                <input id="elementHeightInput" inputmode="decimal" class="parameterInput" step="0.1">
               </div>
 
               <div class="parameterSlot" title="Les repères visuels ne seront inclus dans le PDF final.">
                 <p class="parameterName">Repère Visuel</p>
-                <select id="visualGuide" class="parameterInput">
+                <select id="visualGuideSelect" class="parameterInput">
                   <option value="none">Aucun</option>
                   <optgroup label="Grille">
                   <option value="center">Centre</option>
@@ -123,47 +123,47 @@
                 </select>
               </div>
 
-              <button id="duplicateBtn" class="navBtn">
+              <button id="duplicateCollectionBtn" class="navBtn">
                 DUPLIQUER LA COLLECTION
               </button>
 
-              <button id="deleteBtn" class="navBtn" title="Attention ! Cette action est irréversible !">
+              <button id="deleteCollectionBtn" class="navBtn" title="Attention ! Cette action est irréversible !">
                 SUPPRIMER LA COLLECTION
               </button>
 
             </div>
 
-            <div id="content-ress">
+            <div id="contentRessDiv">
               LES RESSOURCES
             </div>
         
-            <div id="content-template">
-              <div id="templateItems"></div>
+            <div id="contentTemplateDiv">
+              <div id="templateItemsDiv"></div>
               <div class="templateBtns">
-                <button id="imageTemplateBtn" class="navBtn">
+                <button id="addImageComponentBtn" class="navBtn">
                   AJOUTER
                   <img src="./assets/img.png">
                 </button>
-                <button id="textTemplateBtn" class="navBtn">
+                <button id="addTextComponentBtn" class="navBtn">
                   AJOUTER
                   <img src="./assets/text.png">
                 </button>
-                <button id="stripTemplateBtn" class="navBtn">
+                <button id="addStripComponentBtn" class="navBtn">
                   AJOUTER
                   <img src="./assets/plus.png">
                 </button>
               </div>
             </div>
         
-            <div id="content-elements">
-              <div id="elementItems"></div>
+            <div id="contentElementsDiv">
+              <div id="elementItemsDiv"></div>
             </div>
 
-            <div id="content-printing">
+            <div id="contentPrintingDiv">
 
               <div class="parameterSlot">
                 <p class="parameterName">Format de Page</p>
-                <select id="pageFormat" class="parameterInput">
+                <select id="pageFormatSelect" class="parameterInput">
                   <optgroup label="Formats standards">
                     <option value="A4">A4</option>
                     <option value="A3">A3</option>
@@ -176,7 +176,7 @@
 
               <div class="parameterSlot">
                 <p class="parameterName">Orientation de Page</p>
-                <select id="pageOrientation" class="parameterInput">
+                <select id="pageOrientationSelect" class="parameterInput">
                   <option value="portrait">Portrait</option>
                   <option value="landscape">Paysage</option>
                 </select>
@@ -184,25 +184,25 @@
 
               <div class="parameterSlot">
                 <p class="parameterName">Largeur de Page (cm)</p>
-                <input id="pageWidth" disabled inputmode="decimal" class="parameterInput" step="0.1">
+                <input id="pageWidthInput" disabled inputmode="decimal" class="parameterInput" step="0.1">
               </div>
 
               <div class="parameterSlot">
                 <p class="parameterName">Hauteur de Page (cm)</p>
-                <input id="pageHeight" disabled inputmode="decimal" class="parameterInput" step="0.1">
+                <input id="pageHeightInput" disabled inputmode="decimal" class="parameterInput" step="0.1">
               </div>
 
               <div class="parameterSlot" title="300 dpi = 118.11 ppcm | Plus cette valeur sera haute, plus votre image sera nette.">
                 <p class="parameterName">Résolution d'Impression (pixels/cm)</p>
-                <input id="pageResolution" inputmode="decimal" class="parameterInput" step="0.1">
+                <input id="pageResolutionInput" inputmode="decimal" class="parameterInput" step="0.1">
               </div>
 
               <div class="parameterSlot" title="L'aide à la Découpe est une simple bordure semi-transparente mise autour des élements afin de guider la découpe une fois imprimés.">
-                <input type="checkbox" id="cuttingHelp" name="cuttingHelp" />
-                <label class="parameterName" for="cuttingHelp">Aide à la Découpe</label>
+                <input type="checkbox" id="cuttingHelpInput" name="cuttingHelpInput" />
+                <label class="parameterName" for="cuttingHelpInput">Aide à la Découpe</label>
               </div>
 
-              <button id="renderBtn" class="navBtn">
+              <button id="renderCollectionBtn" class="navBtn">
                 GÉNÉRER (PDF)
               </button>
             </div>
@@ -211,14 +211,14 @@
         </div>
       </div>
     
-      <div id="canvasPanel" class="panel"><main></main></div>
+      <div id="canvasDiv" class="panel"><main></main></div>
 
     </div>
 
     <div class="bottomBar">
-      <div id="cardCounter">
-        <div id="cardCounterLabel">1/4 - 1 copy</div>
-        <div id="cardCounterBtns">
+      <div id="cardCounterDiv">
+        <div id="cardCounterDivLabel">1/4 - 1 copy</div>
+        <div id="cardCounterDivBtns">
           <button class="cardBtn" id="bigPrevCardBtn">
             ◄ 10
           </button>

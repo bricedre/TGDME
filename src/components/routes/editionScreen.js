@@ -1,45 +1,16 @@
 import { app } from "../../app.js";
 import { addNewImage, addNewStrip, addNewText, currentCollection, saveCollection } from "../collectionManager.js";
 import { rootElement } from "./mainLayout.js";
-import { IMAGE_parameters, TEXT_parameters, STRIP_parameters } from "../elementsParameters.js";
+import { IMAGE_parameters, TEXT_parameters, STRIP_parameters } from "../componentParameters.js";
 import { renderCardUsingTemplate } from "../render.js";
 
 //COLLECTION PARAMETERS
-export const collectionName = document.getElementById("collectionName");
-export const elementFormat = document.getElementById("elementFormat");
-export const elementWidth = document.getElementById("elementWidth");
-export const elementHeight = document.getElementById("elementHeight");
-export const visualGuide = document.getElementById("visualGuide");
-export const pageFormat = document.getElementById("pageFormat");
-export const pageOrientation = document.getElementById("pageOrientation");
-export const pageWidth = document.getElementById("pageWidth");
-export const pageHeight = document.getElementById("pageHeight");
-export const pageResolution = document.getElementById("pageResolution");
-export const cuttingHelp = document.getElementById("cuttingHelp");
 
-const imageTemplateBtn = document.getElementById("imageTemplateBtn");
-const stripTemplateBtn = document.getElementById("stripTemplateBtn");
-const textTemplateBtn = document.getElementById("textTemplateBtn");
-const duplicateBtn = document.getElementById("duplicateBtn");
-const deleteBtn = document.getElementById("deleteBtn");
-const renderBtn = document.getElementById("renderBtn");
-
-
-const cardCounterLabel = document.getElementById("cardCounterLabel");
-const bigNextCardBtn = document.getElementById("bigNextCardBtn");
-const nextCardBtn = document.getElementById("nextCardBtn");
-const prevCardBtn = document.getElementById("prevCardBtn");
-const bigPrevCardBtn = document.getElementById("bigPrevCardBtn");
-
-const templateItems = document.getElementById("templateItems");
-const elementItems = document.getElementById("elementItems");
-
-
-renderBtn.addEventListener("click", () => {
+renderCollectionBtn.addEventListener("click", () => {
   triggerGeneration(app);
 });
 
-generateBtn.addEventListener("click", () => {
+generateCollectionBtn.addEventListener("click", () => {
   saveCollection(false);
 });
 
@@ -59,13 +30,13 @@ bigNextCardBtn.addEventListener("click", () => {
   goToOtherCard(10);
 });
 
-imageTemplateBtn.addEventListener("click", () => addNewImage());
-textTemplateBtn.addEventListener("click", () => addNewText());
-stripTemplateBtn.addEventListener("click", () => addNewStrip());
+addImageComponentBtn.addEventListener("click", () => addNewImage());
+addTextComponentBtn.addEventListener("click", () => addNewText());
+addStripComponentBtn.addEventListener("click", () => addNewStrip());
 
 export function setupTemplateItems() {
-  while (templateItems.firstChild) {
-    templateItems.removeChild(templateItems.lastChild);
+  while (templateItemsDiv.firstChild) {
+    templateItemsDiv.removeChild(templateItemsDiv.lastChild);
   }
 
   currentCollection.template.forEach((item, itemIndex) => {
@@ -131,21 +102,21 @@ export function createNewComponent(item, itemIndex) {
     e.stopPropagation();
     item.isVisible = !item.isVisible;
     saveCollection(false);
-    updateTemplateItems();
+    updatetemplateItems();
   });
   itemAccordion.appendChild(visibilityBtn);
 
-  var deleteBtn = document.createElement("img");
-  deleteBtn.classList.add("deleteBtn");
-  deleteBtn.src = "./assets/delete.png";
-  deleteBtn.addEventListener("click", (e) => {
+  var deleteCollectionBtn = document.createElement("img");
+  deleteCollectionBtn.classList.add("deleteCollectionBtn");
+  deleteCollectionBtn.src = "./assets/delete.png";
+  deleteCollectionBtn.addEventListener("click", (e) => {
     e.preventDefault();
     e.stopPropagation();
     currentCollection.template.splice(e.target.parentNode.id, 1);
     saveCollection(false);
     setupTemplateItems();
   });
-  itemAccordion.appendChild(deleteBtn);
+  itemAccordion.appendChild(deleteCollectionBtn);
 
   itemAccordion.addEventListener("click", () => {
     var panel = itemAccordion.nextElementSibling;
@@ -189,7 +160,6 @@ export function createNewComponent(item, itemIndex) {
           type: "0",
         };
       }
-      // saveCollection(false);
     });
 
     var modeInput = document.createElement("img");
@@ -215,7 +185,7 @@ export function createNewComponent(item, itemIndex) {
           currentCollection.template[itemIndex][param.refValue]["type"] == "0"
             ? "1"
             : "0";
-        updateTemplateItems();
+        updatetemplateItems();
       });
     }
 
@@ -226,7 +196,6 @@ export function createNewComponent(item, itemIndex) {
         parameterInput.addEventListener("input", (e) => {
           currentCollection.template[itemIndex][param.refValue]["value"] =
             e.target.checked;
-          // saveCollection(false);
         });
         parameterName = document.createElement("label");
         parameterName.setAttribute("for", inputID);
@@ -243,8 +212,7 @@ export function createNewComponent(item, itemIndex) {
         parameterInput.addEventListener("input", (e) => {
           currentCollection.template[itemIndex][param.refValue]["value"] =
             e.target.value;
-          updateTemplateItems();
-          // saveCollection(false);
+          updatetemplateItems();
         });
         param.options.forEach((opt) => {
           var option = document.createElement("option");
@@ -281,12 +249,12 @@ export function createNewComponent(item, itemIndex) {
     itemPanel.appendChild(parameterSlot);
   });
 
-  templateItems.appendChild(itemAccordion);
-  templateItems.appendChild(itemPanel);
+  templateItemsDiv.appendChild(itemAccordion);
+  templateItemsDiv.appendChild(itemPanel);
 }
 
 export function updateTemplateItems() {
-  var allAccordions = templateItems.querySelectorAll(".accordion");
+  var allAccordions = templateItemsDiv.querySelectorAll(".accordion");
   currentCollection.template.forEach((item, index) => {
     var icon;
     var parametersToLoad;
@@ -317,7 +285,7 @@ export function updateTemplateItems() {
         "./assets/eyeClosed.png";
   });
 
-  var allInputs = templateItems.querySelectorAll("input, select");
+  var allInputs = templateItemsDiv.querySelectorAll("input, select");
   allInputs.forEach((input) => {
     var inputID = input.id;
     var inputIndex = inputID.split("-")[0];
@@ -330,7 +298,7 @@ export function updateTemplateItems() {
     }
   });
 
-  var allModeBtns = templateItems.querySelectorAll(".modeInput");
+  var allModeBtns = templateItemsDiv.querySelectorAll(".modeInput");
   allModeBtns.forEach((input) => {
     var inputID = input.id;
     var inputIndex = inputID.split("-")[0];
@@ -355,7 +323,7 @@ export function updateTemplateItems() {
 export function updateCardCounter(currentIndex) {
   //INDEX
   if (currentCollection.elements.length > 0) {
-    cardCounterLabel.innerHTML =
+    cardCounterDivLabel.innerHTML =
       "Élément #" +
       (currentIndex + 1) +
       " sur " +
@@ -365,7 +333,7 @@ export function updateCardCounter(currentIndex) {
         ? currentCollection.elements[currentIndex].quantity + " copies"
         : "1 copie");
   } else {
-    cardCounterLabel.innerHTML = "PAS DE CARTE À AFFICHER";
+    cardCounterDivLabel.innerHTML = "PAS DE CARTE À AFFICHER";
   }
 
   checkCardButtons();
@@ -408,50 +376,50 @@ export function goToOtherCard(delta) {
 
 
 export function populateEditionFields() {
-  collectionName.value = currentCollection.collectionInfo.deckName;
-  elementFormat.value = currentCollection.collectionInfo.elementFormat;
-  elementWidth.value = currentCollection.collectionInfo.W;
-  elementHeight.value = currentCollection.collectionInfo.H;
-  visualGuide.value = currentCollection.collectionInfo.visualGuide;
+  collectionNameInput.value = currentCollection.collectionInfo.deckName;
+  elementFormatSelect.value = currentCollection.collectionInfo.elementFormat;
+  elementWidthInput.value = currentCollection.collectionInfo.W;
+  elementHeightInput.value = currentCollection.collectionInfo.H;
+  visualGuideSelect.value = currentCollection.collectionInfo.visualGuide;
 
-  pageFormat.value = currentCollection.collectionInfo.pageFormat;
-  pageOrientation.value = currentCollection.collectionInfo.pageOrientation;
-  pageWidth.value = currentCollection.collectionInfo.pageWidth;
-  pageHeight.value = currentCollection.collectionInfo.pageHeight;
-  pageResolution.value = currentCollection.collectionInfo.resolution;
-  cuttingHelp.value = currentCollection.collectionInfo.cuttingHelp;
+  pageFormatSelect.value = currentCollection.collectionInfo.pageFormat;
+  pageOrientationSelect.value = currentCollection.collectionInfo.pageOrientation;
+  pageWidthInput.value = currentCollection.collectionInfo.pageWidth;
+  pageHeightInput.value = currentCollection.collectionInfo.pageHeight;
+  pageResolutionInput.value = currentCollection.collectionInfo.resolution;
+  cuttingHelpInput.value = currentCollection.collectionInfo.cuttingHelp;
 }
 
 export function checkOtherInputs(eventTargetId, eventTargetValue) {
   switch (eventTargetId) {
-    case "elementFormat":
+    case "elementFormatSelect":
       if (eventTargetValue === "custom") {
-        elementHeight.disabled = false;
-        elementWidth.disabled = false;
+        elementHeightInput.disabled = false;
+        elementWidthInput.disabled = false;
         populateEditionFields();
       } else {
-        elementHeight.disabled = true;
-        elementWidth.disabled = true;
+        elementHeightInput.disabled = true;
+        elementWidthInput.disabled = true;
       }
       break;
 
     case "pageFormat":
       if (eventTargetValue === "custom") {
-        pageWidth.disabled = false;
+        pageWidthInput.disabled = false;
         pageHeight.disabled = false;
-        pageOrientation.disabled = true;
+        pageOrientationSelect.disabled = true;
         populateEditionFields();
       } else {
-        pageWidth.disabled = true;
-        pageHeight.disabled = true;
-        pageOrientation.disabled = false;
+        pageWidthInput.disabled = true;
+        pageHeightInput.disabled = true;
+        pageOrientationSelect.disabled = false;
       }
       break;
   }
 }
 
 export function moveElement(currentIndex, delta) {
-  var allAccordions = templateItems.querySelectorAll(".accordion");
+  var allAccordions = templateItemsDiv.querySelectorAll(".accordion");
 
   var destinationIndex = currentIndex + delta;
   var currentElement = { ...currentCollection.template[currentIndex] };

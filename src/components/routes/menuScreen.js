@@ -1,18 +1,13 @@
 import { createNewCollection, decksAvailable, setCurrentCollectionIndex } from "../collectionManager.js";
-import { openPanel, titleElement } from "./mainLayout.js";
-
-const newBtn = document.getElementById("newBtn");
-const loadBtn = document.getElementById("loadBtn");
-
-console.log(newBtn, loadBtn);
+import { openPanel } from "./mainLayout.js";
 
 export function setupMenu() {
 
-  newBtn.addEventListener("click", () => createNewCollection());
+  newCollectionBtn.addEventListener("click", () => createNewCollection());
 
-  loadBtn.addEventListener("click", () => {
-    while (loadingPanel.firstChild) {
-      loadingPanel.removeChild(loadingPanel.lastChild);
+  loadCollectionBtn.addEventListener("click", () => {
+    while (loadingPanelDiv.firstChild) {
+      loadingPanelDiv.removeChild(loadingPanelDiv.lastChild);
     }
 
     decksAvailable.forEach((deck, index) => {
@@ -23,11 +18,11 @@ export function setupMenu() {
         setCurrentCollectionIndex(index);
       });
 
-      loadingPanel.appendChild(btnElement);
+      loadingPanelDiv.appendChild(btnElement);
     });
 
     openPanel("loading");
-    titleElement.innerHTML = "BIBLIOTHÈQUE DE COLLECTIONS";
+    mainTitleDiv.innerHTML = "BIBLIOTHÈQUE DE COLLECTIONS";
   });
 
 }

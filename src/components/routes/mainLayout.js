@@ -3,16 +3,9 @@ import { currentCollection, currentCollectionIndex, saveCollection, setCurrentCo
 import { checkOtherInputs, updateCardCounter, updateTemplateItems } from "./editionScreen.js";
 
 const bottomBar = document.querySelector(".bottomBar");
-const cardCounter = document.getElementById("cardCounter");
-
 
 export const rootElement = document.querySelector(":root");
-export const titleElement = document.getElementById("title");
 
-const startPanel = document.getElementById("startPanel");
-const loadingPanel = document.getElementById("loadingPanel");
-const editionPanel = document.getElementById("editionPanel");
-const canvasPanel = document.getElementById("canvasPanel");
 
 homeBtn.addEventListener("click", () => {
   setCurrentCollectionIndex(-1);
@@ -23,15 +16,15 @@ document.addEventListener("keyup", function (event) {
   if (event.key === "Enter") {
     saveCollection(false);
   } else if (event.key === "F1") {
-    document.getElementById("tab-config").checked = true;
+    document.getElementById("tabConfigInput").checked = true;
   } else if (event.key === "F2") {
-    document.getElementById("tab-ress").checked = true;
+    document.getElementById("tabRessInput").checked = true;
   } else if (event.key === "F3") {
-    document.getElementById("tab-template").checked = true;
+    document.getElementById("tabTemplateInput").checked = true;
   } else if (event.key === "F4") {
-    document.getElementById("tab-elements").checked = true;
+    document.getElementById("tabElementsInput").checked = true;
   } else if (event.key === "F5") {
-    document.getElementById("tab-printing").checked = true;
+    document.getElementById("tabPrintingInput").checked = true;
   }
 });
 
@@ -40,8 +33,6 @@ const allSelects = document.querySelectorAll("select");
 
 allInputs.forEach((input) => {
   input.addEventListener("input", (e) => {
-    // saveCollection(false);
-    // populateEditionFields();
     updateTemplateItems();
     checkOtherInputs(e.target.id, e.target.value);
   });
@@ -49,10 +40,7 @@ allInputs.forEach((input) => {
 
 allSelects.forEach((select) => {
   select.addEventListener("change", (e) => {
-    // saveCollection(false);
-    // populateEditionFields();
     saveCollection(false);
-    // updateTemplateItems();
     checkOtherInputs(e.target.id, e.target.value);
   });
 });
@@ -60,60 +48,60 @@ allSelects.forEach((select) => {
 export function setUI() {
   //MENU
   if (currentCollectionIndex == -1) {
-    generateBtn.style.display = "none";
-    newBtn.style.display = "flex";
-    loadBtn.style.display = "flex";
-    renderBtn.style.display = "none";
-    deleteBtn.style.display = "none";
-    duplicateBtn.style.display = "none";
+    generateCollectionBtn.style.display = "none";
+    newCollectionBtn.style.display = "flex";
+    loadCollectionBtn.style.display = "flex";
+    renderCollectionBtn.style.display = "none";
+    deleteCollectionBtn.style.display = "none";
+    duplicateCollectionBtn.style.display = "none";
 
-    textTemplateBtn.style.display = "none";
-    stripTemplateBtn.style.display = "none";
-    imageTemplateBtn.style.display = "none";
+    addTextComponentBtn.style.display = "none";
+    addStripComponentBtn.style.display = "none";
+    addImageComponentBtn.style.display = "none";
 
-    renderBtn.style.display = "none";
-    cardCounter.style.display = "none";
-    canvasPanel.style.display = "none";
-    titleElement.innerHTML = "L'USINE À PROTOS";
+    renderCollectionBtn.style.display = "none";
+    cardCounterDiv.style.display = "none";
+    canvasDiv.style.display = "none";
+    mainTitleDiv.innerHTML = "L'USINE À PROTOS";
     bottomBar.style.display = "none";
   }
 
   //EDITION
   else {
     homeBtn.style.display = "flex";
-    generateBtn.style.display = "flex";
-    newBtn.style.display = "none";
-    loadBtn.style.display = "none";
-    renderBtn.style.display = "flex";
-    deleteBtn.style.display = "flex";
-    duplicateBtn.style.display = "flex";
-    textTemplateBtn.style.display = "flex";
-    stripTemplateBtn.style.display = "flex";
-    imageTemplateBtn.style.display = "flex";
-    cardCounter.style.display = "flex";
+    generateCollectionBtn.style.display = "flex";
+    newCollectionBtn.style.display = "none";
+    loadCollectionBtn.style.display = "none";
+    renderCollectionBtn.style.display = "flex";
+    deleteCollectionBtn.style.display = "flex";
+    duplicateCollectionBtn.style.display = "flex";
+    addTextComponentBtn.style.display = "flex";
+    addStripComponentBtn.style.display = "flex";
+    addImageComponentBtn.style.display = "flex";
+    cardCounterDiv.style.display = "flex";
     bottomBar.style.display = "flex";
-    canvasPanel.style.display = "flex";
-    titleElement.innerHTML = currentCollection?.collectionInfo.deckName;
+    canvasDiv.style.display = "flex";
+    mainTitleDiv.innerHTML = currentCollection?.collectionInfo.deckName;
     updateCardCounter(app.currentIndex);
   }
 }
 
 export function openPanel(panelName) {
-  startPanel.style.display = "none";
-  loadingPanel.style.display = "none";
-  editionPanel.style.display = "none";
+  startPanelDiv.style.display = "none";
+  loadingPanelDiv.style.display = "none";
+  editionPanelDiv.style.display = "none";
 
   switch (panelName) {
     case "start":
-      startPanel.style.display = "flex";
+      startPanelDiv.style.display = "flex";
       break;
 
     case "loading":
-      loadingPanel.style.display = "grid";
+      loadingPanelDiv.style.display = "grid";
       break;
 
     case "edition":
-      editionPanel.style.display = "flex";
+      editionPanelDiv.style.display = "flex";
       break;
   }
 

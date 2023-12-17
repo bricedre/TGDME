@@ -78,18 +78,18 @@ canvas {
   gap: 2rem;
 }
 
-#startPanel {
+#startPanelDiv {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
 }
 
-#loadingPanel {
+#loadingPanelDiv {
   grid-template-columns: repeat(5, 1fr);
   height: fit-content;
 }
 
-#editionPanel {
+#editionPanelDiv {
   background-color: #edf6fc;
   border-radius: 1rem;
   position: relative;
@@ -169,7 +169,7 @@ button:disabled {
   border-radius: 50%;
 }
 
-#generateBtn {
+#generateCollectionBtn {
   padding: 0.5rem;
   border-radius: 50%;
   position: absolute;
@@ -178,12 +178,12 @@ button:disabled {
   translate: 20% -20%;
 }
 
-#deleteBtn {
+#deleteCollectionBtn {
   background-color: #b00;
   color: white;
 }
 
-#deleteBtn:hover {
+#deleteCollectionBtn:hover {
   background-color: #800;
 }
 
@@ -199,7 +199,7 @@ button:disabled {
   margin: 0 2rem;
 }
 
-#cardCounter {
+#cardCounterDiv {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -207,7 +207,7 @@ button:disabled {
   gap: 0.5rem;
 }
 
-#cardCounterBtns {
+#cardCounterDivBtns {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -230,13 +230,13 @@ button:disabled {
   padding: 1rem;
 }
 
-#content-template {
+#contentTemplateDiv {
   display: none;
   flex-direction: column;
   height: 100%;
 }
 
-#content-template button {
+#contentTemplateDiv button {
   margin: 0.5rem auto;
 }
 
@@ -267,18 +267,18 @@ input[type="radio"] {
   border-radius: 0.7rem;
 }
 
-#tab-config + label {
+#tabConfigInput + label {
   margin: 1rem 0 0 1rem;
 }
 
-#tab-config:checked ~ .content #content-config,
-#tab-printing:checked ~ .content #content-printing {
+#tabConfigInput:checked ~ .content #contentConfigDiv,
+#tabPrintingInput:checked ~ .content #contentPrintingDiv {
   display: block;
 }
 
-#tab-template:checked ~ .content #content-template,
-#tab-elements:checked ~ .content #content-elements,
-#tab-ress:checked ~ .content #content-ress {
+#tabTemplateInput:checked ~ .content #contentTemplateDiv,
+#tabElementsInput:checked ~ .content #contentElementsDiv,
+#tabRessInput:checked ~ .content #contentRessDiv {
   display: flex;
 }
 
@@ -329,7 +329,7 @@ input[type="radio"] {
   outline: 3px solid #63a9d588;
 }
 
-#templateItems {
+#templateItemsDiv {
   overflow-y: auto;
   flex: 1;
 }

@@ -44,7 +44,7 @@ export let TEXT_parameters = [
   { name: "Rotation", refValue: "angle", type: "text" },
   {
     name: "Alignement",
-    refValue: "align",
+    refValue: "anchor",
     type: "select",
     options: [
       { value: "LEFT", label: "GAUCHE" },

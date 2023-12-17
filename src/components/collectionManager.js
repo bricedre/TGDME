@@ -3,15 +3,6 @@ const cloneDeep = require('lodash/cloneDeep');
 import { app } from "../app.js";
 import {
   checkOtherInputs,
-  collectionName,
-  cuttingHelp,
-  elementFormat,
-  elementHeight,
-  elementWidth,
-  pageFormat,
-  pageHeight,
-  pageResolution,
-  pageWidth,
   populateEditionFields,
   setupTemplateItems,
   updateTemplateItems,
@@ -71,8 +62,8 @@ function setCurrentCollection(value) {
     setUI();
     openPanel("edition");
     populateEditionFields();
-    checkOtherInputs(elementFormat.id, elementFormat.value);
-    checkOtherInputs(pageFormat.id, pageFormat.value);
+    checkOtherInputs(elementFormatSelect.id, elementFormatSelect.value);
+    checkOtherInputs(pageFormatSelect.id, pageFormatSelect.value);
     setupTemplateItems();
     updateTemplateItems();
   }, 500);
@@ -101,21 +92,19 @@ export function saveCollection(refreshAssets) {
   var coll = currentCollection;
 
   //ALTER THE DATA TO CURRENT DECK
-  coll.collectionInfo.deckName = collectionName.value;
-  coll.collectionInfo.elementFormat = elementFormat.value;
-  coll.collectionInfo.W = elementWidth.value;
-  coll.collectionInfo.H = elementHeight.value;
-  coll.collectionInfo.visualGuide = visualGuide.value;
+  coll.collectionInfo.deckName = collectionNameInput.value;
+  coll.collectionInfo.elementFormat = elementFormatSelect.value;
+  coll.collectionInfo.W = elementWidthInput.value;
+  coll.collectionInfo.H = elementHeightInput.value;
+  coll.collectionInfo.visualGuide = visualGuideSelect.value;
   
-  coll.collectionInfo.pageFormat = pageFormat.value;
-  coll.collectionInfo.pageWidth = pageWidth.value;
-  coll.collectionInfo.pageHeight = pageHeight.value;
+  coll.collectionInfo.pageFormat = pageFormatSelect.value;
+  coll.collectionInfo.pageWidth = pageWidthInput.value;
+  coll.collectionInfo.pageHeight = pageHeightInput.value;
   
-  coll.collectionInfo.pageHeight = pageHeight.value;
-  
-  coll.collectionInfo.pageOrientation = pageOrientation.value;
-  coll.collectionInfo.resolution = Math.max(1, pageResolution.value);
-  coll.collectionInfo.cuttingHelp = cuttingHelp.checked;
+  coll.collectionInfo.pageOrientation = pageOrientationSelect.value;
+  coll.collectionInfo.resolution = Math.max(1, pageResolutionInput.value);
+  coll.collectionInfo.cuttingHelp = cuttingHelpInput.checked;
 
   setupCollectionDimensions();
   populateEditionFields();
