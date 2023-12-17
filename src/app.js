@@ -2,9 +2,10 @@
 
 const p5 = require("p5");
 
-import { currentCollection, currentCollectionIndex } from "./components/globalStuff.js";
+import { currentCollection, currentCollectionIndex } from "./components/collectionManager.js";
 import { generatePages, renderCardUsingTemplate } from "./components/render.js";
-import { setUI } from "./components/DOM.js";
+import { setUI } from "./components/routes/mainLayout.js";
+import { setupMenu } from "./components/routes/menuScreen.js";
 
 const sketch = (p) => {
 
@@ -21,6 +22,7 @@ const sketch = (p) => {
 
 
     setUI();
+    setupMenu();
   };
 
   p.draw = () => {

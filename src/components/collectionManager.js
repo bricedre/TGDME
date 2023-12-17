@@ -8,17 +8,19 @@ import {
   elementFormat,
   elementHeight,
   elementWidth,
-  openPanel,
   pageFormat,
   pageHeight,
   pageResolution,
   pageWidth,
   populateEditionFields,
-  setUI,
   setupTemplateItems,
   updateTemplateItems,
-  visualGuide,
-} from "./DOM.js";
+} from "./routes/editionScreen.js";
+import {
+  openPanel,
+  setUI,
+} from "./routes/mainLayout.js";
+
 import { loadAssets } from "./assetLoader.js";
 import { imageComponentTemplate, textComponentTemplate, stripComponentTemplate } from "./componentTemplates.js";
 import { renderCardUsingTemplate } from "./render.js";
@@ -76,7 +78,7 @@ function setCurrentCollection(value) {
   }, 500);
 }
 
-export function createNewDeck() {
+export function createNewCollection() {
   const deckQty = decksAvailable.length;
   var dir = "./src/decks/" + deckQty;
 

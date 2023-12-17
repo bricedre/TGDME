@@ -1,4 +1,4 @@
-import { currentCollection } from "./globalStuff.js";
+import { currentCollection } from "./collectionManager.js";
 import {
   renderImageComponent,
   renderStripComponent,

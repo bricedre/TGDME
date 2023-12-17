@@ -1,7 +1,7 @@
 const {rootPath} = require("electron-root-path");
 const fs = require('fs');
 
-import { currentCollectionIndex } from "./globalStuff.js";
+import { currentCollectionIndex } from "./collectionManager.js";
 
 export let assetsLibrary = {};
 export let errorImage;

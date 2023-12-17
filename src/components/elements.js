@@ -1,5 +1,5 @@
 import { assetsLibrary, errorImage } from "./assetLoader.js";
-import { currentCollection } from "./globalStuff.js";
+import { currentCollection } from "./collectionManager.js";
 
 export function renderImageComponent(p5, componentIndex, elementIndex) {
   let currentElements = currentCollection.elements;
