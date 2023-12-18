@@ -48,30 +48,29 @@ allSelects.forEach((select) => {
 export function setUI() {
   //MENU
   if (currentCollectionIndex == -1) {
-    generateCollectionBtn.style.display = "none";
+    mainTitleDiv.innerHTML = "L'USINE À PROTOS";
+    tutorialBtn.style.display = "flex";
     newCollectionBtn.style.display = "flex";
     loadCollectionBtn.style.display = "flex";
+
+    generateCollectionBtn.style.display = "none";
     renderCollectionBtn.style.display = "none";
     deleteCollectionBtn.style.display = "none";
     duplicateCollectionBtn.style.display = "none";
-
     addTextComponentBtn.style.display = "none";
     addShapeComponentBtn.style.display = "none";
     addImageComponentBtn.style.display = "none";
-
     renderCollectionBtn.style.display = "none";
     cardCounterDiv.style.display = "none";
     canvasDiv.style.display = "none";
-    mainTitleDiv.innerHTML = "L'USINE À PROTOS";
     bottomBar.style.display = "none";
   }
 
   //EDITION
   else {
+    mainTitleDiv.innerHTML = currentCollection?.collectionInfo.deckName;
     homeBtn.style.display = "flex";
     generateCollectionBtn.style.display = "flex";
-    newCollectionBtn.style.display = "none";
-    loadCollectionBtn.style.display = "none";
     renderCollectionBtn.style.display = "flex";
     deleteCollectionBtn.style.display = "flex";
     duplicateCollectionBtn.style.display = "flex";
@@ -81,7 +80,11 @@ export function setUI() {
     cardCounterDiv.style.display = "flex";
     bottomBar.style.display = "flex";
     canvasDiv.style.display = "flex";
-    mainTitleDiv.innerHTML = currentCollection?.collectionInfo.deckName;
+
+    tutorialBtn.style.display = "none";
+    newCollectionBtn.style.display = "none";
+    loadCollectionBtn.style.display = "none";
+
     updateCardCounter(app.currentIndex);
   }
 }

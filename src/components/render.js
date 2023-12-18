@@ -208,7 +208,7 @@ export function renderCardUsingTemplate(p, elementIndex, guide) {
         p.card.noFill();
         p.card.stroke(0, 100);
         p.card.strokeWeight(2);
-        p.card.rect(0, 0, H, H);
+        p.card.rect(0, 0, currentCollection.collectionInfo.W, currentCollection.collectionInfo.H);
       }
     } else {
       renderVisualGuide(p, guide);
@@ -218,9 +218,6 @@ export function renderCardUsingTemplate(p, elementIndex, guide) {
   //EMPTY COLLECTION
   else {
     p.card.background(200);
-    p.card.textAlign(p.CENTER, p.CENTER);
-    p.card.textSize(30);
-    p.card.text("AUCUN ÉLÉMENT DANS LA COLLECTION!\n\nCRÉEZ UN MODÈLE ET DES ÉLÉMENTS DANS LE PANNEAU D'ÉDITION!", 0, 0, W, H);
   }
 }
 

@@ -42,8 +42,8 @@ export let IMAGE_parameters = [
       { value: "alternate", label: "DÉCALÉE" },
     ],
   },
-  { name: "Décalage Horizontal", refValue: "offset_x", type: "text", title: "Actif uniquement si le style de Chaîne = DÉCALÉE" },
-  { name: "Décalage Vertical", refValue: "offset_y", type: "text", title: "Actif uniquement si le style de Chaîne = DÉCALÉE" },
+  { name: "Décalage Horizontal", refValue: "offset_x", type: "text", title: "Actif uniquement si Style de Chaîne = DÉCALÉE" },
+  { name: "Décalage Vertical", refValue: "offset_y", type: "text", title: "Actif uniquement si Style de Chaîne = DÉCALÉE" },
 ];
 
 export let SHAPE_parameters = [

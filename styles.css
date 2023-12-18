@@ -135,10 +135,10 @@ button:disabled {
 }
 
 .homePageBtn {
-  font-size: 2rem;
+  font-size: 1.8rem;
   position: relative;
   aspect-ratio: 2;
-  width: 36vw;
+  width: 29vw;
 }
 
 .homePageBtn > .imgContainer {

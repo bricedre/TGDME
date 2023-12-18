@@ -18,15 +18,21 @@
 
     <div class="viewer">
       <div id="startPanelDiv" class="panel">
+        <button class="homePageBtn" id="tutorialBtn">
+          <div class="imgContainer">
+            <img src="./assets/tutorialBtn.png" alt="add symbol"/>
+          </div>
+          <p>DÉCOUVRIR LUAP</p>
+        </button>
         <button class="homePageBtn" id="newCollectionBtn">
           <div class="imgContainer">
-            <img src="./assets/add.svg" alt="add symbol"/>
+            <img src="./assets/newCollectionBtn.png" alt="add symbol"/>
           </div>
           <p>CRÉER UNE NOUVELLE COLLECTION</p>
         </button>
         <button class="homePageBtn" id="loadCollectionBtn">
           <div class="imgContainer">
-            <img src="./assets/deck.svg" alt="add symbol"/>
+            <img src="./assets/loadCollectionBtn.png" alt="add symbol"/>
           </div>
           <p>OUVRIR LA BIBLIOTHÈQUE DE COLLECTIONS</p>
         </button>
@@ -102,8 +108,8 @@
                 <input id="elementHeightInput" inputmode="decimal" class="parameterInput" step="0.1">
               </div>
 
-              <div class="parameterSlot" title="Les repères visuels ne seront inclus dans le PDF final.">
-                <p class="parameterName">Repère Visuel</p>
+              <div class="parameterSlot" title="Les repères visuels ne seront pas inclus dans le PDF final">
+                <p class="parameterName">Repère Visuel 🔍</p>
                 <select id="visualGuideSelect" class="parameterInput">
                   <option value="none">Aucun</option>
                   <optgroup label="Grille">
@@ -192,14 +198,14 @@
                 <input id="pageHeightInput" disabled inputmode="decimal" class="parameterInput" step="0.1">
               </div>
 
-              <div class="parameterSlot" title="300 dpi = 118.11 ppcm | Plus cette valeur sera haute, plus votre image sera nette.">
-                <p class="parameterName">Résolution d'Impression (pixels/cm)</p>
+              <div class="parameterSlot" title="300 dpi = 118.11 ppcm | Plus cette valeur sera haute, plus votre image sera nette">
+                <p class="parameterName">Résolution d'Impression (pixels/cm) 🔍</p>
                 <input id="pageResolutionInput" inputmode="decimal" class="parameterInput" step="0.1">
               </div>
 
-              <div class="parameterSlot" title="L'aide à la Découpe est une simple bordure semi-transparente mise autour des élements afin de guider la découpe une fois imprimés.">
+              <div class="parameterSlot" title="L'Aide à la Découpe est une simple bordure semi-transparente mise autour des élements afin de guider la découpe une fois imprimés">
                 <input type="checkbox" id="cuttingHelpInput" name="cuttingHelpInput" />
-                <label class="parameterName" for="cuttingHelpInput">Aide à la Découpe</label>
+                <label class="parameterName" for="cuttingHelpInput">Aide à la Découpe 🔍</label>
               </div>
 
               <button id="renderCollectionBtn" class="navBtn">
