@@ -95,7 +95,8 @@ canvas {
   position: relative;
 }
 
-.templateBtns {
+.templateBtns,
+.ressBtns {
   display: flex;
   gap: 1rem;
 }
@@ -106,7 +107,7 @@ canvas {
 
 button {
   padding: 0.5rem 2rem;
-  border-radius: 3vh;
+  border-radius: 2vh;
   border: none;
   display: none;
   align-items: center;
@@ -230,13 +231,15 @@ button:disabled {
   padding: 1rem;
 }
 
-#contentTemplateDiv {
+#contentTemplateDiv,
+#contentRessDiv {
   display: none;
   flex-direction: column;
   height: 100%;
 }
 
-#contentTemplateDiv button {
+#contentTemplateDiv button,
+#contentRessDiv button {
   margin: 0.5rem auto;
 }
 
@@ -295,36 +298,35 @@ input[type="radio"] {
   width: -webkit-fill-available;
 }
 
-.spacer{
-  color: #68A;
+.spacer {
+  color: #68a;
   font-size: 1.2rem;
   margin-top: 1rem;
-  background: #FFF8;
+  background: #fff8;
   padding: 0.5rem;
   border-radius: 0.5rem;
   display: flex;
   gap: 0.5rem;
   align-items: center;
-  
 }
 
-.spacerIcon{
+.spacerIcon {
   font-size: 2rem;
   translate: 0 -2px;
 }
 
-.spacerIconCentered{
+.spacerIconCentered {
   translate: 0 -7px;
 }
- 
-.firstSpacer{
+
+.firstSpacer {
   margin-top: 0;
 }
 
-.parameterInputLine{
+.parameterInputLine {
   display: flex;
-  align-items: center;  
-  gap : 0.5rem;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .parameterInput {
@@ -334,14 +336,14 @@ input[type="radio"] {
   border-radius: 0.5rem;
 }
 
-.modeInput{
-  width : 2rem;
+.modeInput {
+  width: 2rem;
   cursor: pointer;
   background: #0002;
   border-radius: 0.5rem;
   padding: 0.2rem;
 }
-.modeInput:hover{
+.modeInput:hover {
   background: #0004;
 }
 
@@ -349,9 +351,16 @@ input[type="radio"] {
   outline: 3px solid #63a9d588;
 }
 
-#templateItemsDiv {
+#templateItemsDiv,
+#ressItemsDiv {
   overflow-y: auto;
   flex: 1;
+
+}
+
+#ressItemsDiv {
+  display: flex;
+  flex-direction: column;
 }
 
 /* ACCORDION */
@@ -364,7 +373,7 @@ input[type="radio"] {
   width: 100%;
   padding: 0.5rem;
   display: flex;
-  gap : 0.5rem;
+  gap: 0.5rem;
 }
 
 .accordion.active {
@@ -379,7 +388,7 @@ input[type="radio"] {
 }
 
 .accordion > span {
- width: -webkit-fill-available;
+  width: -webkit-fill-available;
 }
 
 .itemPanel {

@@ -1,6 +1,6 @@
 import { app } from "../../app.js";
 import { currentCollection, currentCollectionIndex, saveCollection, setCurrentCollectionIndex } from "../collectionManager.js";
-import { checkOtherInputs, updateCardCounter, updateTemplateItems } from "./editionScreen.js";
+import { checkOtherInputs, updateCardCounter, updateComponents } from "./editionScreen.js";
 
 const bottomBar = document.querySelector(".bottomBar");
 
@@ -33,7 +33,7 @@ const allSelects = document.querySelectorAll("select");
 
 allInputs.forEach((input) => {
   input.addEventListener("input", (e) => {
-    updateTemplateItems();
+    updateComponents();
     checkOtherInputs(e.target.id, e.target.value);
   });
 });
@@ -57,6 +57,7 @@ export function setUI() {
     renderCollectionBtn.style.display = "none";
     deleteCollectionBtn.style.display = "none";
     duplicateCollectionBtn.style.display = "none";
+    addResourceBtn.style.display = "none";
     addTextComponentBtn.style.display = "none";
     addShapeComponentBtn.style.display = "none";
     addImageComponentBtn.style.display = "none";
@@ -74,6 +75,7 @@ export function setUI() {
     renderCollectionBtn.style.display = "flex";
     deleteCollectionBtn.style.display = "flex";
     duplicateCollectionBtn.style.display = "flex";
+    addResourceBtn.style.display = "flex";
     addTextComponentBtn.style.display = "flex";
     addShapeComponentBtn.style.display = "flex";
     addImageComponentBtn.style.display = "flex";

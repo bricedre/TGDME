@@ -4,8 +4,9 @@ import { app } from "../app.js";
 import {
   checkOtherInputs,
   populateEditionFields,
-  setupTemplateItems,
-  updateTemplateItems,
+  setupComponents,
+  setupResources,
+  updateComponents,
 } from "./routes/editionScreen.js";
 import {
   openPanel,
@@ -64,8 +65,9 @@ function setCurrentCollection(value) {
     populateEditionFields();
     checkOtherInputs(elementFormatSelect.id, elementFormatSelect.value);
     checkOtherInputs(pageFormatSelect.id, pageFormatSelect.value);
-    setupTemplateItems();
-    updateTemplateItems();
+    setupResources();
+    setupComponents();
+    updateComponents();
   }, 500);
 }
 
@@ -108,7 +110,7 @@ export function saveCollection(refreshAssets) {
 
   setupCollectionDimensions();
   populateEditionFields();
-  updateTemplateItems();
+  updateComponents();
 
   //SAVE CURRENT DECK IN FOLDER
   var deckToSave = JSON.stringify(currentCollection);
@@ -228,19 +230,19 @@ export function setupCollectionDimensions() {
 
 export function addNewImage(){
   currentCollection.template.push(cloneDeep(imageComponentTemplate));
-  setupTemplateItems();
+  setupComponents();
   saveCollection(false);
 }
 
 export function addNewText(){
   currentCollection.template.push(cloneDeep(textComponentTemplate));
-  setupTemplateItems();
+  setupComponents();
   saveCollection(false);
   
 }
 
 export function addNewShape(){
   currentCollection.template.push(cloneDeep(shapeComponentTemplate));
-  setupTemplateItems();
+  setupComponents();
   saveCollection(false);
 }

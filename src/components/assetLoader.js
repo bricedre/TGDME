@@ -3,6 +3,7 @@ const fs = require("fs");
 
 import { currentCollectionIndex } from "./collectionManager.js";
 
+export let currentAssetsList;
 export let assetsLibrary = {};
 export let errorImage;
 
@@ -12,7 +13,7 @@ export function loadAssets(p) {
   let assetsPath =
     rootPath + "/src/decks/" + currentCollectionIndex + "/assets/";
 
-  var currentAssetsList = getFiles(assetsPath);
+  currentAssetsList = getFiles(assetsPath);
   if (currentAssetsList) {
     currentAssetsList.forEach((asset) => {
       let file = asset.split("//")[1];
