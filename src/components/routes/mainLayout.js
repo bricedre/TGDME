@@ -56,7 +56,7 @@ export function setUI() {
     duplicateCollectionBtn.style.display = "none";
 
     addTextComponentBtn.style.display = "none";
-    addStripComponentBtn.style.display = "none";
+    addShapeComponentBtn.style.display = "none";
     addImageComponentBtn.style.display = "none";
 
     renderCollectionBtn.style.display = "none";
@@ -76,7 +76,7 @@ export function setUI() {
     deleteCollectionBtn.style.display = "flex";
     duplicateCollectionBtn.style.display = "flex";
     addTextComponentBtn.style.display = "flex";
-    addStripComponentBtn.style.display = "flex";
+    addShapeComponentBtn.style.display = "flex";
     addImageComponentBtn.style.display = "flex";
     cardCounterDiv.style.display = "flex";
     bottomBar.style.display = "flex";

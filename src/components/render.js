@@ -23,16 +23,18 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
     if (_type === "0") {
       if (componentType == "IMAGE") _img = assetsLibrary[_src];
       else if (componentType == "TEXT") _textToWrite = _src;
-      else if (componentType == "STRIP") _elementsList = _src;
+      else if (componentType == "STRIP")_elementsList = _src.split(",");
     } else if (_type === "1") {
       if (componentType == "IMAGE") _img = assetsLibrary[elementData[_src]];
       else if (componentType == "TEXT") _textToWrite = elementData[_src];
-      else if (componentType == "STRIP") _elementsList = elementData[_src];
+      else if (componentType == "STRIP") {
+        if(elementData[_src]) _elementsList = elementData[_src].split(",");
+      }
     }
 
     if (_elementsList.length > 0) {
       for (let i = 0; i < _elementsList.length; i++) {
-        _imgs.push(assetsLibrary[_elementsList[i]]);
+        if(assetsLibrary[_elementsList[i].trim()]) _imgs.push(assetsLibrary[_elementsList[i].trim()]);
       }
     }
 
@@ -47,11 +49,11 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
     var _size = getActualValue(templateData.size, 5, true);
     var _font = getActualValue(templateData.font, "Verdana", false);
     var _color = getActualValue(templateData.color, "#000000", false);
-    var _spacing_x = getActualValue(templateData.spacing_x, _width, true);
-    var _spacing_y = getActualValue(templateData.spacing_y, _height, true);
+    var _spacing_x = getActualValue(templateData.spacing_x, 0, true);
+    var _spacing_y = getActualValue(templateData.spacing_y, 0, true);
     var _style = getActualValue(templateData.style, "straight", false);
-    var _offset_x = getActualValue(templateData.offset_x, _width / 2, true);
-    var _offset_y = getActualValue(templateData.offset_y, _height / 2, true);
+    var _offset_x = getActualValue(templateData.offset_x, 0, true);
+    var _offset_y = getActualValue(templateData.offset_y, 0, true);
 
     p5.card.push();
     try {

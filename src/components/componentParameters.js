@@ -1,14 +1,92 @@
 export let IMAGE_parameters = [
-  { name: "Informations Générales", type: "spacer" },
+  { name: "<span class='spacerIcon spacerIconCentered'>🪪</span><span>Informations Générales</span>", type: "spacer" },
   {
     name: "Nom du Composant ",
     refValue: "componentName",
     type: "text",
     forced: true,
   },
-  { name: "Image à Afficher", refValue: "src", type: "text" },
+  { name: "Image ou Liste d'Images à Afficher", refValue: "src", type: "text", title: "Si vous désirez créer une chaîne d'images, séparez-les par des virgules" },
   { name: "Déclenchement conditionné", refValue: "trigger", type: "checkbox", forced: true },
-  { name: "Positionnement, Dimensions & Rotation", type: "spacer" },
+
+  { name: "<span class='spacerIcon'>📏</span><span>Positionnement, Dimensions & Rotation</span>", type: "spacer" },
+  { name: "Position Horizontale", refValue: "position_x", type: "text" },
+  { name: "Position Verticale", refValue: "position_y", type: "text" },
+  { name: "Largeur", refValue: "width", type: "text" },
+  { name: "Hauteur", refValue: "height", type: "text" },
+  { name: "Rotation", refValue: "angle", type: "text" },
+  {
+    name: "Alignement",
+    refValue: "anchor",
+    type: "select",
+    options: [
+      { value: "LEFT", label: "GAUCHE" },
+      { value: "CENTER", label: "CENTRE" },
+      { value: "RIGHT", label: "DROITE" },
+    ],
+  },
+  { name: "<span class='spacerIcon'>🎨</span><span>Teinte & Opacité</span>", type: "spacer" },
+  { name: "Filtre de Teinte", refValue: "tint", type: "color" },
+  { name: "Opacité", refValue: "opacity", type: "range" },
+
+  { name: "<span class='spacerIcon'>🔗</span><span>Configuration de chaîne (liste d'images)</span>", type: "spacer" },
+  { name: "Espacement Horizontal", refValue: "spacing_x", type: "text" },
+  { name: "Espacement Vertical", refValue: "spacing_y", type: "text" },
+  {
+    name: "Style de Chaîne",
+    refValue: "style",
+    type: "select",
+    title: "Le style DÉCALÉE permet de placer plus d'images en moins d'espace",
+    options: [
+      { value: "straight", label: "DROITE" },
+      { value: "alternate", label: "DÉCALÉE" },
+    ],
+  },
+  { name: "Décalage Horizontal", refValue: "offset_x", type: "text", title: "Actif uniquement si le style de Chaîne = DÉCALÉE" },
+  { name: "Décalage Vertical", refValue: "offset_y", type: "text", title: "Actif uniquement si le style de Chaîne = DÉCALÉE" },
+];
+
+export let SHAPE_parameters = [
+  { name: "<span class='spacerIcon spacerIconCentered'>🪪</span><span>Informations Générales</span>", type: "spacer" },
+  {
+    name: "Nom du Composant ",
+    refValue: "componentName",
+    type: "text",
+    forced: true,
+  },
+  {
+    name: "Forme à Afficher",
+    refValue: "src",
+    type: "select",
+    options: [
+      { value: "rect", label: "🟧RECTANGLE" },
+      { value: "ellipse", label: "🔵ELLIPSE" },
+      { value: "tri", label: "🗻TRIANGLE" },
+      { value: "triSqr", label: "📐TRIANGLE RECTANGLE" },
+      { value: "", label: "🪁TRAPÈZE" },
+      { value: "", label: "⭐ÉTOILE" },
+      { value: "", label: "💖COEUR" },
+      { value: "", label: "🔢PENTAGONE" },
+      { value: "", label: "🔢HEXAGONE" },
+      { value: "", label: "🔢OCTOGONE" },
+      { value: "", label: "➡️FLÈCHE" },
+      { value: "", label: "✖️CROIX" },
+      { value: "", label: "⭕ANNEAU" },
+      { value: "", label: "👑COURONNE" },
+      { value: "", label: "💧GOUTTE" },
+      { value: "", label: "☁️NUAGE" },
+      { value: "", label: "👤BUSTE" },
+      { value: "", label: "📖LIVRE" },
+      { value: "", label: "🏴DRAPEAU" },
+      { value: "", label: "🛡️BOUCLIER" },
+      { value: "", label: "🌷FLEUR" },
+      { value: "", label: "💎DIAMANT" },
+      { value: "", label: "⚡ÉCLAIR" },
+    ],
+  },
+  { name: "Déclenchement conditionné", refValue: "trigger", type: "checkbox", forced: true },
+
+  { name: "<span class='spacerIcon'>📏</span><span>Positionnement, Dimensions & Rotation</span>", type: "spacer" },
   {
     name: "Ancre",
     refValue: "anchor",
@@ -23,12 +101,16 @@ export let IMAGE_parameters = [
   { name: "Largeur", refValue: "width", type: "text" },
   { name: "Hauteur", refValue: "height", type: "text" },
   { name: "Rotation", refValue: "angle", type: "text" },
-  { name: "Teinte & Opacité", type: "spacer" },
-  { name: "Filtre de Teinte", refValue: "tint", type: "color" },
-  { name: "Opacité", refValue: "opacity", type: "range" },
+
+  { name: "<span class='spacerIcon'>🎨</span><span>Couleurs & Bordure</span>", type: "spacer" },
+  { name: "Couleur de Fond", refValue: "color", type: "color" },
+  { name: "Opacité du Fond", refValue: "opacity", type: "range" },
+  { name: "Couleur de Bordure", refValue: "borderColor", type: "color" },
+  { name: "Opacité de la Bordure", refValue: "borderOpacity", type: "range" },
+  { name: "Épaisseur de la Bordure", refValue: "borderWeight", type: "text" },
 ];
 export let TEXT_parameters = [
-  { name: "Informations Générales", type: "spacer" },
+  { name: "<span class='spacerIcon spacerIconCentered'>🪪</span><span>Informations Générales</span>", type: "spacer" },
   {
     name: "Nom du Composant ",
     refValue: "componentName",
@@ -38,7 +120,7 @@ export let TEXT_parameters = [
   { name: "Texte à Afficher", refValue: "src", type: "text" },
   { name: "Déclenchement conditionné", refValue: "trigger", type: "checkbox", forced: true },
 
-  { name: "Positionnement, Dimensions & Rotation", type: "spacer" },
+  { name: "<span class='spacerIcon'>📏</span><span>Positionnement, Dimensions & Rotation</span>", type: "spacer" },
   { name: "Position Horizontale", refValue: "position_x", type: "text" },
   { name: "Position Verticale", refValue: "position_y", type: "text" },
   { name: "Rotation", refValue: "angle", type: "text" },
@@ -52,49 +134,17 @@ export let TEXT_parameters = [
       { value: "RIGHT", label: "DROITE" },
     ],
   },
-
-  { name: "Aspect Visuelle", type: "spacer" },
+  { name: "<span class='spacerIcon'>🎨</span><span>Aspect Visuel</span>", type: "spacer" },
   { name: "Couleur", refValue: "color", type: "color" },
   { name: "Taille", refValue: "size", type: "text" },
-  { name: "Police d'Écriture", refValue: "font", type: "text" },
+  { name: "Police d'Écriture", refValue: "font", type: "text", title: "Vous pouvez utiliser n'importe quelle police présente sur votre système ou une police chargée dans les Ressources" },
   { name: "Opacité", refValue: "opacity", type: "range" },
-];
-export let STRIP_parameters = [
-  { name: "Informations Générales", type: "spacer" },
-  {
-    name: "Nom du Composant ",
-    refValue: "componentName",
-    type: "text",
-    forced: true,
-  },
-  { name: "Images à Afficher", refValue: "src", type: "text" },
-  { name: "Déclenchement conditionné", refValue: "trigger", type: "checkbox", forced: true },
 
-  { name: "Positionnement, Dimensions & Rotation", type: "spacer" },
-  { name: "Position Horizontale", refValue: "position_x", type: "text" },
-  { name: "Position Verticale", refValue: "position_y", type: "text" },
-  { name: "Rotation", refValue: "angle", type: "text" },
-  {
-    name: "Alignement",
-    refValue: "anchor",
-    type: "select",
-    options: [
-      { value: "LEFT", label: "GAUCHE" },
-      { value: "CENTER", label: "CENTRE" },
-      { value: "RIGHT", label: "DROITE" },
-    ],
-  },
-  { name: "Configuration des Images", type: "spacer" },
-  { name: "Largeur", refValue: "width", type: "text" },
-  { name: "Hauteur", refValue: "height", type: "text" },
-  { name: "Espacement Horizontal", refValue: "spacing_x", type: "text" },
-  { name: "Espacement Vertical", refValue: "spacing_y", type: "text" },
-  { name: "Style de Bandeau", refValue: "style", type: "select",
-  options: [
-    { value: "straight", label: "DROIT" },
-    { value: "alternate", label: "ALTERNÉ" }
-  ], },
+  { name: "<span class='spacerIcon'>☀️</span><span>Ombre Portée</span>", type: "spacer" },
+  { name: "Ombre Portée ?", refValue: "shadow", type: "checkbox", title: "Une légère ombre portée permet de mieux détacher votre texte du fond"},
+  { name: "Couleur", refValue: "shadowColor", type: "color" },
   { name: "Décalage Horizontal", refValue: "offset_x", type: "text" },
   { name: "Décalage Vertical", refValue: "offset_y", type: "text" },
-  
+  { name: "Opacité", refValue: "shadowOpacity", type: "text" },
+  { name: "Flou", refValue: "shadowBlur", type: "text" },
 ];

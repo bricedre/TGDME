@@ -1,7 +1,7 @@
 import { app } from "../../app.js";
-import { addNewImage, addNewStrip, addNewText, currentCollection, saveCollection } from "../collectionManager.js";
+import { addNewImage, addNewShape, addNewText, currentCollection, saveCollection } from "../collectionManager.js";
 import { rootElement } from "./mainLayout.js";
-import { IMAGE_parameters, TEXT_parameters, STRIP_parameters } from "../componentParameters.js";
+import { IMAGE_parameters, TEXT_parameters, SHAPE_parameters } from "../componentParameters.js";
 import { renderCardUsingTemplate } from "../render.js";
 
 //COLLECTION PARAMETERS
@@ -32,7 +32,7 @@ bigNextCardBtn.addEventListener("click", () => {
 
 addImageComponentBtn.addEventListener("click", () => addNewImage());
 addTextComponentBtn.addEventListener("click", () => addNewText());
-addStripComponentBtn.addEventListener("click", () => addNewStrip());
+addShapeComponentBtn.addEventListener("click", () => addNewShape());
 
 export function setupTemplateItems() {
   while (templateItemsDiv.firstChild) {
@@ -53,16 +53,16 @@ export function createNewComponent(item, itemIndex) {
   var parametersToLoad;
   switch (item.component) {
     case "IMAGE":
-      icon = "assets/img.png";
+      icon = "assets/addImageComponent.png";
       parametersToLoad = IMAGE_parameters;
       break;
     case "TEXT":
-      icon = "assets/text.png";
+      icon = "assets/addTextComponent.png";
       parametersToLoad = TEXT_parameters;
       break;
-    case "STRIP":
-      icon = "assets/plus.png";
-      parametersToLoad = STRIP_parameters;
+    case "SHAPE":
+      icon = "assets/addShapeComponent.png";
+      parametersToLoad = SHAPE_parameters;
       break;
   }
 
@@ -72,7 +72,7 @@ export function createNewComponent(item, itemIndex) {
   if (itemIndex > 0) {
     var upElementBtn = document.createElement("img");
     upElementBtn.classList.add("upElementBtn");
-    upElementBtn.src = "./assets/upElement.png";
+    upElementBtn.src = "./assets/moveUp.png";
     upElementBtn.addEventListener("click", (e) => {
       e.preventDefault();
       e.stopPropagation();
@@ -84,7 +84,7 @@ export function createNewComponent(item, itemIndex) {
   if (itemIndex < currentCollection.template.length - 1) {
     var downElementBtn = document.createElement("img");
     downElementBtn.classList.add("downElementBtn");
-    downElementBtn.src = "./assets/downElement.png";
+    downElementBtn.src = "./assets/moveDown.png";
     downElementBtn.addEventListener("click", (e) => {
       e.preventDefault();
       e.stopPropagation();
@@ -95,8 +95,8 @@ export function createNewComponent(item, itemIndex) {
 
   var visibilityBtn = document.createElement("img");
   visibilityBtn.classList.add("visibilityBtn");
-  if (item.isVisible) visibilityBtn.src = "./assets/eye.png";
-  else visibilityBtn.src = "./assets/eyeClosed.png";
+  if (item.isVisible) visibilityBtn.src = "./assets/visibilityOn.png";
+  else visibilityBtn.src = "./assets/visibilityOff.png";
   visibilityBtn.addEventListener("click", (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -143,6 +143,11 @@ export function createNewComponent(item, itemIndex) {
     var parameterName = document.createElement("p");
     parameterName.classList.add("parameterName");
     parameterName.innerHTML = param.name;
+    if(param.title) {
+      parameterName.title = param.title;
+      parameterName.innerHTML += " 🔍"
+    }
+
 
     var parameterInputLine = document.createElement("div");
     parameterInputLine.classList.add("parameterInputLine");
@@ -165,6 +170,7 @@ export function createNewComponent(item, itemIndex) {
     var modeInput = document.createElement("img");
     modeInput.classList.add("modeInput");
 
+
     if (param.type !== "spacer") {
       var currentMode;
       try {
@@ -176,8 +182,8 @@ export function createNewComponent(item, itemIndex) {
 
       modeInput.src =
         currentMode == "0"
-          ? "./assets/arbitrary.png"
-          : "./assets/elementBased.png";
+          ? "./assets/fixedType.png"
+          : "./assets/elementBasedType.png";
       modeInput.title = currentMode == "0" ? "Fixe" : "Basé sur l'élement";
       modeInput.id = inputID;
       modeInput.addEventListener("click", () => {
@@ -191,6 +197,8 @@ export function createNewComponent(item, itemIndex) {
 
     if (param.type !== "spacer") {
       if (param.type === "checkbox") {
+        var oldName = parameterName.innerHTML;
+        var oldTitle = parameterName.title;
         parameterInput.type = param.type;
         parameterInput.checked = item[param.refValue]["value"];
         parameterInput.addEventListener("input", (e) => {
@@ -200,7 +208,8 @@ export function createNewComponent(item, itemIndex) {
         parameterName = document.createElement("label");
         parameterName.setAttribute("for", inputID);
         parameterName.classList.add("parameterName");
-        parameterName.innerHTML = param.name;
+        parameterName.innerHTML = oldName;
+        parameterName.title = oldTitle;
         parameterInputLine.appendChild(parameterInput);
         parameterInputLine.appendChild(parameterName);
         if (!param.forced) parameterInputLine.appendChild(modeInput);
@@ -260,16 +269,16 @@ export function updateTemplateItems() {
     var parametersToLoad;
     switch (item.component) {
       case "IMAGE":
-        icon = "assets/img.png";
+        icon = "assets/addImageComponent.png";
         parametersToLoad = IMAGE_parameters;
         break;
       case "TEXT":
-        icon = "assets/text.png";
+        icon = "assets/addTextComponent.png";
         parametersToLoad = TEXT_parameters;
         break;
-      case "STRIP":
-        icon = "assets/plus.png";
-        parametersToLoad = STRIP_parameters;
+      case "SHAPE":
+        icon = "assets/addShapeComponent.png";
+        parametersToLoad = SHAPE_parameters;
         break;
     }
 
@@ -279,10 +288,10 @@ export function updateTemplateItems() {
       item.componentName.value;
     if (item.isVisible)
       allAccordions[index].querySelector(".visibilityBtn").src =
-        "./assets/eye.png";
+        "./assets/visibilityOn.png";
     else
       allAccordions[index].querySelector(".visibilityBtn").src =
-        "./assets/eyeClosed.png";
+        "./assets/visibilityOff.png";
   });
 
   var allInputs = templateItemsDiv.querySelectorAll("input, select");
@@ -312,8 +321,8 @@ export function updateTemplateItems() {
     }
     input.src =
       currentMode == "0"
-        ? "./assets/arbitrary.png"
-        : "./assets/elementBased.png";
+        ? "./assets/fixedType.png"
+        : "./assets/elementBasedType.png";
     input.title = currentMode == "0" ? "Fixe" : "Basé sur l'élement";
 
     // document.getElementById(inputID).disabled = currentMode === "1";

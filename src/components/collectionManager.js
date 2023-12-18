@@ -13,7 +13,7 @@ import {
 } from "./routes/mainLayout.js";
 
 import { loadAssets } from "./assetLoader.js";
-import { imageComponentTemplate, textComponentTemplate, stripComponentTemplate } from "./componentTemplates.js";
+import { imageComponentTemplate, textComponentTemplate, shapeComponentTemplate } from "./componentTemplates.js";
 import { renderCardUsingTemplate } from "./render.js";
 
 const fs = require("fs").promises;
@@ -239,8 +239,8 @@ export function addNewText(){
   
 }
 
-export function addNewStrip(){
-  currentCollection.template.push(cloneDeep(stripComponentTemplate));
+export function addNewShape(){
+  currentCollection.template.push(cloneDeep(shapeComponentTemplate));
   setupTemplateItems();
   saveCollection(false);
 }

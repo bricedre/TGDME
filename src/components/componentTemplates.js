@@ -1,7 +1,7 @@
-export let imageComponentTemplate = {
+export let shapeComponentTemplate = {
   isVisible: true,
-  component: "IMAGE",
-  componentName: { value: "NOUVELLE IMAGE" },
+  component: "SHAPE",
+  componentName: { value: "NOUVELLE FORME" },
   trigger: { value: "" },
   src: { value: "", type: "0" },
   position_x: { value: "0.5*W", type: "0" },
@@ -9,9 +9,12 @@ export let imageComponentTemplate = {
   width: { value: "W", type: "0" },
   height: { value: "W", type: "0" },
   anchor: { value: "CENTER", type: "0" },
-  tint: { value: "#ffffff", type: "0" },
   angle: { value: "0", type: "0" },
+  color: { value: "#FFFFFF", type: "0" },
   opacity: { value: "100", type: "0" },
+  borderColor: { value: "#000000", type: "0" },
+  borderOpacity: { value: "100", type: "0" },
+  borderWeight: { value: "10", type: "0" },
 };
 
 export let textComponentTemplate = {
@@ -22,18 +25,25 @@ export let textComponentTemplate = {
   src: { value: "texte", type: "0" },
   position_x: { value: "0.5*W", type: "0" },
   position_y: { value: "0.5*H", type: "0" },
-  align: { value: "CENTER", type: "0" },
+  anchor: { value: "CENTER", type: "0" },
   color: { value: "#000000", type: "0" },
   size: { value: "5", type: "0" },
   font: { value: "", type: "0" },
   angle: { value: "0", type: "0" },
   opacity: { value: "100", type: "0" },
+
+  shadow: { value: false, type: "0" },
+  shadowColor: { value: "#000000", type: "0" },
+  shadowOffsetX: { value: "10", type: "0" },
+  shadowOffsetY: { value: "10", type: "0" },
+  shadowOpacity: { value: "100", type: "0" },
+  shadowBlur: { value: "0", type: "0" },
 };
 
-export let stripComponentTemplate = {
+export let imageComponentTemplate = {
   isVisible: true,
-  component: "STRIP",
-  componentName: { value: "NOUVEAU BANDEAU" },
+  component: "IMAGE",
+  componentName: { value: "NOUVELLE IMAGE" },
   trigger: { value: "" },
   src: { value: "", type: "0" },
   position_x: { value: "0.5*W", type: "0" },

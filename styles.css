@@ -296,9 +296,25 @@ input[type="radio"] {
 }
 
 .spacer{
-  color: #0006;
-  font-size: 1rem;
+  color: #68A;
+  font-size: 1.2rem;
   margin-top: 1rem;
+  background: #FFF8;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  
+}
+
+.spacerIcon{
+  font-size: 2rem;
+  translate: 0 -2px;
+}
+
+.spacerIconCentered{
+  translate: 0 -7px;
 }
  
 .firstSpacer{
@@ -308,21 +324,25 @@ input[type="radio"] {
 .parameterInputLine{
   display: flex;
   align-items: center;  
+  gap : 0.5rem;
 }
 
 .parameterInput {
   width: -webkit-fill-available;
   padding: 0.5rem;
   border: none;
-  border-radius: 0.5rem 0 0 0.5rem;
+  border-radius: 0.5rem;
 }
 
 .modeInput{
   width : 2rem;
   cursor: pointer;
   background: #0002;
-  border-radius: 0 0.5rem 0.5rem 0;
+  border-radius: 0.5rem;
   padding: 0.2rem;
+}
+.modeInput:hover{
+  background: #0004;
 }
 
 *:focus {
