@@ -1,10 +1,12 @@
 const { rootPath } = require("electron-root-path");
 const fs = require("fs");
+const fontList = require("font-list");
 
 import { currentCollectionIndex } from "./collectionManager.js";
 import { setupResources } from "./routes/editionScreen.js";
 
 export let currentAssetsList;
+export let allSystemFonts;
 export let assetsLibrary = {};
 export let errorImage;
 
@@ -14,6 +16,7 @@ export function loadAssets(p) {
   assetsLibrary = {};
 
   currentAssetsList = getFiles(assetsPath);
+
   if (currentAssetsList) {
     currentAssetsList.forEach((asset) => {
       let file = asset.split("//")[1];
@@ -66,3 +69,18 @@ function getFiles(dir, files = []) {
   }
   return files;
 }
+
+export async function getFontList() {
+  try {
+    const fonts = await fontList.getFonts();
+    allSystemFonts = fonts.map(font => {
+      return {
+        label: font.replace(/"/g, ""),
+        value: font
+      }
+    });
+  } catch (err) {
+    console.error('Error fetching font list:', err);
+  }
+}
+

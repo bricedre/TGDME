@@ -136,7 +136,7 @@ export let TEXT_parameters = [
   { name: "<span class='spacerIcon'>🎨</span><span>Aspect Visuel</span>", type: "spacer" },
   { name: "Couleur", refValue: "color", type: "color" },
   { name: "Taille", refValue: "size", type: "text" },
-  { name: "Police d'Écriture", refValue: "font", type: "text", title: "Vous pouvez utiliser n'importe quelle police présente sur votre système ou une police chargée dans les Ressources" },
+  { name: "Police d'Écriture", refValue: "font", type: "select", optionRef:"allSystemFonts" },
   { name: "Opacité", refValue: "opacity", type: "range" },
 
   { name: "<span class='spacerIcon'>☀️</span><span>Ombre Portée</span>", type: "spacer" },

@@ -3,7 +3,7 @@ import { addNewImage, addNewShape, addNewText, addNewResource, currentCollection
 import { rootElement } from "./mainLayout.js";
 import { IMAGE_parameters, TEXT_parameters, SHAPE_parameters } from "../componentParameters.js";
 import { renderCardUsingTemplate } from "../render.js";
-import { addAsset, currentAssetsList, removeAsset } from "../assetLoader.js";
+import { addAsset, allSystemFonts, currentAssetsList, removeAsset } from "../assetLoader.js";
 
 //COLLECTION PARAMETERS
 
@@ -322,6 +322,8 @@ export function createNewComponent(item, itemIndex) {
     }
 
     if (param.type !== "spacer") {
+
+      //CHECKBOXES
       if (param.type === "checkbox") {
         var oldName = parameterName.innerHTML;
         var oldTitle = parameterName.title;
@@ -339,15 +341,22 @@ export function createNewComponent(item, itemIndex) {
         parameterInputLine.appendChild(parameterName);
         if (!param.forced) parameterInputLine.appendChild(modeInput);
         parameterSlot.appendChild(parameterInputLine);
-      } else if (param.type === "select") {
+      } 
+      
+       //SELECTS
+      else if (param.type === "select") {
         parameterInput = document.createElement("select");
         parameterInput.classList.add("parameterInput");
         parameterInput.id = inputID;
         parameterInput.addEventListener("input", (e) => {
           currentCollection.template[itemIndex][param.refValue]["value"] = e.target.value;
+          saveCollection(false);
           updateComponents();
         });
-        param.options.forEach((opt) => {
+
+        var refOptionList = (param.optionRef) ? eval(param.optionRef) : param.options;
+
+        refOptionList.forEach((opt) => {
           var option = document.createElement("option");
           option.value = opt.value;
           option.innerHTML = opt.label;

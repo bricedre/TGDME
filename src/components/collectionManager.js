@@ -13,7 +13,7 @@ import {
   setUI,
 } from "./routes/mainLayout.js";
 
-import { loadAssets } from "./assetLoader.js";
+import { getFontList, loadAssets } from "./assetLoader.js";
 import { imageComponentTemplate, textComponentTemplate, shapeComponentTemplate } from "./componentTemplates.js";
 import { renderCardUsingTemplate } from "./render.js";
 
@@ -26,6 +26,7 @@ export let currentCollection;
 
 getDecks();
 openPanel("start");
+getFontList();
 
 export function getDecks() {
   decksAvailable = readdirSync("./src/decks", { withFileTypes: true })
