@@ -17,29 +17,30 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
     var _type = templateData.src.type;
     var _img;
     var _textToWrite;
+    var _shape;
     var _elementsList = [];
     var _imgs = [];
 
     if (_type === "0") {
-      if (componentType == "IMAGE") _img = assetsLibrary[_src];
+      if (componentType == "IMAGE") _elementsList = _src.split(",");
       else if (componentType == "TEXT") _textToWrite = _src;
-      else if (componentType == "STRIP")_elementsList = _src.split(",");
+      else if (componentType == "STRIP") _shape = _src;
     } else if (_type === "1") {
-      if (componentType == "IMAGE") _img = assetsLibrary[elementData[_src]];
+      if (componentType == "SHAPE") _img = assetsLibrary[elementData[_src]];
       else if (componentType == "TEXT") _textToWrite = elementData[_src];
-      else if (componentType == "STRIP") {
-        if(elementData[_src]) _elementsList = elementData[_src].split(",");
+      else if (componentType == "IMAGE") {
+        if (elementData[_src]) _elementsList = elementData[_src].split(",");
       }
     }
 
     if (_elementsList.length > 0) {
       for (let i = 0; i < _elementsList.length; i++) {
-        if(assetsLibrary[_elementsList[i].trim()]) _imgs.push(assetsLibrary[_elementsList[i].trim()]);
+        if (assetsLibrary[_elementsList[i].trim()]) _imgs.push(assetsLibrary[_elementsList[i].trim()]);
       }
     }
 
-    var _position_x = getActualValue(templateData.position_x, 0, true);
-    var _position_y = getActualValue(templateData.position_y, 0, true);
+    var _positionX = getActualValue(templateData.positionX, 0, true);
+    var _positionY = getActualValue(templateData.positionY, 0, true);
     var _width = getActualValue(templateData.width, "W", true);
     var _height = getActualValue(templateData.height, "W", true);
     var _anchor = getActualValue(templateData.anchor, p5.CENTER, true);
@@ -55,14 +56,21 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
     var _offset_x = getActualValue(templateData.offset_x, 0, true);
     var _offset_y = getActualValue(templateData.offset_y, 0, true);
 
+    var _shadow = getActualValue(templateData.shadow, false, false);
+    var _shadowColor = getActualValue(templateData.shadowColor, "#000000", false);
+    var _shadowOpacity = getActualValue(templateData.shadowOpacity, 30, true);
+    var _shadowOffsetX = getActualValue(templateData.shadowOffsetX, 10, true);
+    var _shadowOffsetY = getActualValue(templateData.shadowOffsetY, 10, true);
+    var _shadowBlur = getActualValue(templateData.shadowBlur, 0, true);
+
     p5.card.push();
     try {
       p5.card.angleMode(p5.DEGREES);
-      p5.card.translate(_position_x, _position_y);
+      p5.card.translate(_positionX, _positionY);
       if (_angle !== 0) p5.card.rotate(_angle);
 
-      //! IMAGE
-      if (componentType == "IMAGE") {
+      //! SHAPE
+      if (componentType == "SHAPE") {
         p5.card.imageMode(_anchor);
         p5.card.tint(_tint + Math.round(_opacity * 2.55).toString(16));
         p5.card.image(_img, 0, 0, _width, _height);
@@ -74,20 +82,24 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
         p5.card.textAlign(_anchor, p5.CENTER);
         p5.card.textFont(_font);
         p5.card.textSize(_size * currentCollection.collectionInfo.H * currentCollection.collectionInfo.resolution * 0.02);
+
+        if (_shadow) {
+          p5.card.fill(_shadowColor + Math.round(_shadowOpacity * 2.55).toString(16));
+          p5.card.text(_textToWrite, _shadowOffsetX, _shadowOffsetY);
+        }
+
         p5.card.fill(_color + Math.round(_opacity * 2.55).toString(16));
         p5.card.text(_textToWrite, 0, 0);
       }
 
       //! STRIP
-      else if (componentType == "STRIP") {
+      else if (componentType == "IMAGE") {
         var _totalWidth = (_elementsList.length * Math.min(_width, _spacing_x) + (_elementsList.length - 2) * _spacing_x) / 2;
         var _totalHeight = (_elementsList.length * Math.min(_height, _spacing_y) + (_elementsList.length - 1) * _spacing_y) / 2;
 
         p5.card.imageMode(p5.CENTER);
         for (let i = 0; i < _elementsList.length; i++) {
 
-          console.log(_anchor)
-          
           if (_anchor == p5.CENTER) {
             p5.card.image(
               _imgs[i],
@@ -116,8 +128,6 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
         }
       }
     } catch (e) {
-      console.log(e);
-
       if (componentType == "IMAGE") {
         p5.card.image(errorImage, 0, 0, _width, _height);
       }

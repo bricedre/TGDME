@@ -39,6 +39,12 @@ nav {
   margin: 0 2rem;
 }
 
+.navBtn{
+  width: -webkit-fill-available;
+  margin-top: 0.8rem;
+  border-radius: 0.7rem;
+}
+
 #title {
   flex: 1;
 }
@@ -93,6 +99,7 @@ canvas {
   background-color: #edf6fc;
   border-radius: 1rem;
   position: relative;
+  min-width: 50vw;
 }
 
 .templateBtns,
@@ -224,7 +231,7 @@ button:disabled {
 
 .content {
   backface-visibility: hidden;
-  height: 66vh;
+  height: 94%;
 }
 .content > div {
   display: none;
@@ -243,7 +250,7 @@ button:disabled {
   margin: 0.5rem auto;
 }
 
-.content button {
+.content .accordion {
   margin-top: 1rem;
   width: 100%;
 }
@@ -399,6 +406,37 @@ input[type="radio"] {
   background-color: #cdd6e0;
   translate: 0 -0.5rem;
   border-radius: 0 0 0.3rem 0.3rem;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+.custom-file-upload {
+  padding: 0.5rem 2rem;
+  border-radius: 2vh;
+  border: none;
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+  cursor: pointer;
+  background-color: #d4eeff;
+  transition: all 0.2s ease-in-out;
+  justify-content: center;
+  gap: 1rem;
+  box-shadow: 5px 5px 10px #104d6924;
+  font-family: "Main Font", sans-serif;
+  margin: 0.5rem auto;
+  flex: 1;
+}
+
+.custom-file-upload > img {
+  height: 3rem;
+  rotate: 5deg;
+}
+
+.custom-file-upload:hover {
+  background-color: #63a9d5;
 }
 
 /* SCROLLBAR */

@@ -2,16 +2,16 @@ const { rootPath } = require("electron-root-path");
 const fs = require("fs");
 
 import { currentCollectionIndex } from "./collectionManager.js";
+import { setupResources } from "./routes/editionScreen.js";
 
 export let currentAssetsList;
 export let assetsLibrary = {};
 export let errorImage;
 
-export function loadAssets(p) {
-  assetsLibrary = {};
 
-  let assetsPath =
-    rootPath + "/src/decks/" + currentCollectionIndex + "/assets/";
+export function loadAssets(p) {
+  let assetsPath = rootPath + "/src/decks/" + currentCollectionIndex + "/assets/";
+  assetsLibrary = {};
 
   currentAssetsList = getFiles(assetsPath);
   if (currentAssetsList) {
@@ -23,12 +23,30 @@ export function loadAssets(p) {
       if (extension === "jpg" || extension === "png") {
         let img = p.loadImage(asset);
         assetsLibrary[fileName] = img;
-      } else if (extension === "ttf" || extension === "otf")
-        assetsLibrary[fileName] = p.loadFont(asset);
+      } else if (extension === "ttf" || extension === "otf") assetsLibrary[fileName] = p.loadFont(asset);
     });
   }
 
   errorImage = p.loadImage(rootPath + "/assets/imageError.png");
+
+  setupResources();
+}
+
+export function addAsset(newAsset) {
+  let assetsPath = rootPath + "/src/decks/" + currentCollectionIndex + "/assets/";
+  fs.copyFile(newAsset.path, assetsPath+newAsset.name, (err) => {
+    if (err) {
+      console.log("Error Found:", err);
+    }
+  });
+}
+
+export function removeAsset(assetToDelete) {
+  fs.unlink(assetToDelete, (err) => {
+    if (err) {
+      console.log("Error Found:", err);
+    }
+  });
 }
 
 function getFiles(dir, files = []) {

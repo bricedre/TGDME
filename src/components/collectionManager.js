@@ -228,6 +228,10 @@ export function setupCollectionDimensions() {
     ((coll.pageHeight - coll.H * coll.rowCount) / 2) * coll.resolution;
 }
 
+export function addNewResource(){
+  console.log("resource ajoutée");
+}
+
 export function addNewImage(){
   currentCollection.template.push(cloneDeep(imageComponentTemplate));
   setupComponents();

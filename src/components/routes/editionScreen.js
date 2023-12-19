@@ -1,9 +1,9 @@
 import { app } from "../../app.js";
-import { addNewImage, addNewShape, addNewText, currentCollection, saveCollection } from "../collectionManager.js";
+import { addNewImage, addNewShape, addNewText, addNewResource, currentCollection, saveCollection } from "../collectionManager.js";
 import { rootElement } from "./mainLayout.js";
 import { IMAGE_parameters, TEXT_parameters, SHAPE_parameters } from "../componentParameters.js";
 import { renderCardUsingTemplate } from "../render.js";
-import { currentAssetsList } from "../assetLoader.js";
+import { addAsset, currentAssetsList, removeAsset } from "../assetLoader.js";
 
 //COLLECTION PARAMETERS
 
@@ -15,9 +15,19 @@ prevCardBtn.addEventListener("click", () => goToOtherCard(-1));
 nextCardBtn.addEventListener("click", () => goToOtherCard(1));
 bigNextCardBtn.addEventListener("click", () => goToOtherCard(10));
 
+// addResourceBtn.addEventListener("click", () => addNewResource());
+
 addImageComponentBtn.addEventListener("click", () => addNewImage());
 addShapeComponentBtn.addEventListener("click", () => addNewShape());
 addTextComponentBtn.addEventListener("click", () => addNewText());
+
+newResourceInput.addEventListener('change', function(e) {
+  if (e.target.files[0]) {
+    addAsset(e.target.files[0]);
+    setTimeout(saveCollection(true), 500);
+  }
+});
+
 
 /*        
 GLOBAL
@@ -27,7 +37,7 @@ export function updateCardCounter(currentIndex) {
   //INDEX
   if (currentCollection.elements.length > 0) {
     cardCounterDivLabel.innerHTML =
-      "Élément #" +
+      "Élément " +
       (currentIndex + 1) +
       " sur " +
       currentCollection.elements.length +
@@ -108,10 +118,7 @@ export function setupResources() {
     ressItemsDiv.removeChild(ressItemsDiv.lastChild);
   }
 
-  console.log(currentAssetsList);
-
   currentAssetsList.forEach((item, itemIndex) => {
-    console.log("hello");
     createNewResource(item, itemIndex);
   });
 }
@@ -131,16 +138,30 @@ export function createNewResource(item, itemIndex) {
   switch (extension) {
     case "jpg":
       case "png":
-      icon = "assets/addImageComponent.png";
+      icon = "assets/imgResource.png";
       break;
 
     case "ttf":
     case "otf":
-      icon = "assets/addTextComponent.png";
+      icon = "assets/fontResource.png";
       break;
   }
 
   itemAccordion.innerHTML = "<img src='" + icon + "'><span>" + fileName + "</span>";
+  itemAccordion.addEventListener("click", () => {
+    navigator.clipboard.writeText(fileName);
+  })
+
+  var deleteCollectionBtn = document.createElement("img");
+  deleteCollectionBtn.classList.add("deleteCollectionBtn");
+  deleteCollectionBtn.src = "./assets/delete.png";
+  deleteCollectionBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    removeAsset(currentAssetsList[itemAccordion.id]);
+    setTimeout(saveCollection(true), 500);
+  });
+  itemAccordion.appendChild(deleteCollectionBtn);
 
   ressItemsDiv.appendChild(itemAccordion);
   ressItemsDiv.appendChild(emptyDiv);

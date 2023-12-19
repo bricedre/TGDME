@@ -131,10 +131,12 @@
 
               <button id="duplicateCollectionBtn" class="navBtn">
                 DUPLIQUER LA COLLECTION
+                <img src="./assets/duplicateCollection.png">
               </button>
 
               <button id="deleteCollectionBtn" class="navBtn" title="Attention ! Cette action est irréversible !">
                 SUPPRIMER LA COLLECTION
+                <img src="./assets/deleteCollection.png">
               </button>
 
             </div>
@@ -142,10 +144,11 @@
             <div id="contentRessDiv">
               <div id="ressItemsDiv"></div>
               <div class="ressBtns">
-                <button title="Ajouter une Ressource" id="addResourceBtn" class="navBtn">
+                <label class="custom-file-upload">
+                  <input id="newResourceInput" type="file" accept=".png,.jpg,.ttf,.otf"/>
                   AJOUTER RESSOURCE
-                  <img src="./assets/addImageComponent.png">
-                </button>
+                  <img src="./assets/addNewResource.png">
+                </label>
               </div>
             </div>
         
