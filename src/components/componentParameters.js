@@ -29,8 +29,18 @@ export let IMAGE_parameters = [
   { name: "Opacité", refValue: "opacity", type: "range" },
 
   { name: "<span class='spacerIcon'>🔗</span><span>Configuration de chaîne (liste d'images)</span>", type: "spacer" },
-  { name: "Espacement Horizontal", refValue: "spacing_x", type: "text" },
-  { name: "Espacement Vertical", refValue: "spacing_y", type: "text" },
+  {
+    name: "Alignement",
+    refValue: "listAnchor",
+    type: "select",
+    options: [
+      { value: "LEFT", label: "GAUCHE" },
+      { value: "CENTER", label: "CENTRE" },
+      { value: "RIGHT", label: "DROITE" },
+    ],
+  },
+  { name: "Espacement Horizontal", refValue: "spacingX", type: "text" },
+  { name: "Espacement Vertical", refValue: "spacingY", type: "text" },
   {
     name: "Style de Chaîne",
     refValue: "style",
@@ -41,8 +51,8 @@ export let IMAGE_parameters = [
       { value: "alternate", label: "DÉCALÉE" },
     ],
   },
-  { name: "Décalage Horizontal", refValue: "offset_x", type: "text", title: "Actif uniquement si Style de Chaîne = DÉCALÉE" },
-  { name: "Décalage Vertical", refValue: "offset_y", type: "text", title: "Actif uniquement si Style de Chaîne = DÉCALÉE" },
+  { name: "Décalage Horizontal", refValue: "offsetX", type: "text", title: "Actif uniquement si Style de Chaîne = DÉCALÉE" },
+  { name: "Décalage Vertical", refValue: "offsetY", type: "text", title: "Actif uniquement si Style de Chaîne = DÉCALÉE" },
 ];
 
 export let SHAPE_parameters = [

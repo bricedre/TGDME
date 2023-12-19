@@ -1,5 +1,5 @@
 import { app } from "../../app.js";
-import { addNewImage, addNewShape, addNewText, addNewResource, currentCollection, saveCollection } from "../collectionManager.js";
+import { addNewImage, addNewShape, addNewText, currentCollection, saveCollection } from "../collectionManager.js";
 import { rootElement } from "./mainLayout.js";
 import { IMAGE_parameters, TEXT_parameters, SHAPE_parameters } from "../componentParameters.js";
 import { renderCardUsingTemplate } from "../render.js";
@@ -9,13 +9,19 @@ import { addAsset, allSystemFonts, currentAssetsList, removeAsset } from "../ass
 
 renderCollectionBtn.addEventListener("click", () => triggerGeneration(app));
 
-generateCollectionBtn.addEventListener("click", () => saveCollection(false));
+generateCollectionBtn.addEventListener("click", () => {
+  saveCollection(false);
+  generateCollectionBtn.style.animation = "0.5s beyblade";
+})
+
+generateCollectionBtn.addEventListener("animationend", () => {
+  generateCollectionBtn.style.animation = "none";
+});
 bigPrevCardBtn.addEventListener("click", () => goToOtherCard(-10));
 prevCardBtn.addEventListener("click", () => goToOtherCard(-1));
 nextCardBtn.addEventListener("click", () => goToOtherCard(1));
 bigNextCardBtn.addEventListener("click", () => goToOtherCard(10));
 
-// addResourceBtn.addEventListener("click", () => addNewResource());
 
 addImageComponentBtn.addEventListener("click", () => addNewImage());
 addShapeComponentBtn.addEventListener("click", () => addNewShape());
@@ -24,7 +30,6 @@ addTextComponentBtn.addEventListener("click", () => addNewText());
 newResourceInput.addEventListener('change', function(e) {
   if (e.target.files[0]) {
     addAsset(e.target.files[0]);
-    setTimeout(saveCollection(true), 500);
   }
 });
 
@@ -133,35 +138,21 @@ export function createNewResource(item, itemIndex) {
   let file = item.split("//")[1];
   let fileName = file.split(".")[0];
   let extension = file.split(".")[1];
-  var icon;
 
-  switch (extension) {
-    case "jpg":
-      case "png":
-      icon = "assets/imgResource.png";
-      break;
-
-    case "ttf":
-    case "otf":
-      icon = "assets/fontResource.png";
-      break;
-  }
-
-  itemAccordion.innerHTML = "<img src='" + icon + "'><span>" + fileName + "</span>";
+  itemAccordion.innerHTML = "<img src='assets/imgResource.png'><span>" + fileName + "</span>";
   itemAccordion.addEventListener("click", () => {
     navigator.clipboard.writeText(fileName);
   })
 
-  var deleteCollectionBtn = document.createElement("img");
-  deleteCollectionBtn.classList.add("deleteCollectionBtn");
-  deleteCollectionBtn.src = "./assets/delete.png";
-  deleteCollectionBtn.addEventListener("click", (e) => {
+  var deleteResourceBtn = document.createElement("img");
+  deleteResourceBtn.classList.add("deleteResourceBtn");
+  deleteResourceBtn.src = "./assets/delete.png";
+  deleteResourceBtn.addEventListener("click", (e) => {
     e.preventDefault();
     e.stopPropagation();
     removeAsset(currentAssetsList[itemAccordion.id]);
-    setTimeout(saveCollection(true), 500);
   });
-  itemAccordion.appendChild(deleteCollectionBtn);
+  itemAccordion.appendChild(deleteResourceBtn);
 
   ressItemsDiv.appendChild(itemAccordion);
   ressItemsDiv.appendChild(emptyDiv);
@@ -237,7 +228,7 @@ export function createNewComponent(item, itemIndex) {
     e.preventDefault();
     e.stopPropagation();
     item.isVisible = !item.isVisible;
-    saveCollection(false);
+    generateCollectionBtn.click();
     updateComponents();
   });
   itemAccordion.appendChild(visibilityBtn);
@@ -249,7 +240,7 @@ export function createNewComponent(item, itemIndex) {
     e.preventDefault();
     e.stopPropagation();
     currentCollection.template.splice(e.target.parentNode.id, 1);
-    saveCollection(false);
+    generateCollectionBtn.click();
     setupComponents();
   });
   itemAccordion.appendChild(deleteCollectionBtn);
@@ -467,7 +458,7 @@ export function moveComponent(currentIndex, delta) {
 
   setTimeout(() => {
     setupComponents();
-    saveCollection(false);
+    generateCollectionBtn.click();
   }, 200);
 }
 

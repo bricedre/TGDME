@@ -1,11 +1,10 @@
 import { app } from "../../app.js";
-import { currentCollection, currentCollectionIndex, saveCollection, setCurrentCollectionIndex } from "../collectionManager.js";
+import { currentCollection, currentCollectionIndex, setCurrentCollectionIndex } from "../collectionManager.js";
 import { checkOtherInputs, updateCardCounter, updateComponents } from "./editionScreen.js";
 
 const bottomBar = document.querySelector(".bottomBar");
 
 export const rootElement = document.querySelector(":root");
-
 
 homeBtn.addEventListener("click", () => {
   setCurrentCollectionIndex(-1);
@@ -14,7 +13,7 @@ homeBtn.addEventListener("click", () => {
 
 document.addEventListener("keyup", function (event) {
   if (event.key === "Enter") {
-    saveCollection(false);
+    generateCollectionBtn.click();
   } else if (event.key === "F1") {
     document.getElementById("tabConfigInput").checked = true;
   } else if (event.key === "F2") {
@@ -40,7 +39,7 @@ allInputs.forEach((input) => {
 
 allSelects.forEach((select) => {
   select.addEventListener("change", (e) => {
-    saveCollection(false);
+    generateCollectionBtn.click();
     checkOtherInputs(e.target.id, e.target.value);
   });
 });
@@ -48,7 +47,7 @@ allSelects.forEach((select) => {
 export function setUI() {
   //MENU
   if (currentCollectionIndex == -1) {
-    mainTitleDiv.innerHTML = "L'USINE À PROTOS";
+    mainTitleDiv.innerHTML = "LA CABANE À PROTOS";
     tutorialBtn.style.display = "flex";
     newCollectionBtn.style.display = "flex";
     loadCollectionBtn.style.display = "flex";
@@ -57,7 +56,7 @@ export function setUI() {
     renderCollectionBtn.style.display = "none";
     deleteCollectionBtn.style.display = "none";
     duplicateCollectionBtn.style.display = "none";
-    // addResourceBtn.style.display = "none";
+    archiveCollectionBtn.style.display = "none";
     addTextComponentBtn.style.display = "none";
     addShapeComponentBtn.style.display = "none";
     addImageComponentBtn.style.display = "none";
@@ -75,7 +74,7 @@ export function setUI() {
     renderCollectionBtn.style.display = "flex";
     deleteCollectionBtn.style.display = "flex";
     duplicateCollectionBtn.style.display = "flex";
-    // addResourceBtn.style.display = "flex";
+    archiveCollectionBtn.style.display = "flex";
     addTextComponentBtn.style.display = "flex";
     addShapeComponentBtn.style.display = "flex";
     addImageComponentBtn.style.display = "flex";

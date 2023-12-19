@@ -2,14 +2,13 @@ const { rootPath } = require("electron-root-path");
 const fs = require("fs");
 const fontList = require("font-list");
 
-import { currentCollectionIndex } from "./collectionManager.js";
+import { currentCollectionIndex, saveCollection } from "./collectionManager.js";
 import { setupResources } from "./routes/editionScreen.js";
 
 export let currentAssetsList;
 export let allSystemFonts;
 export let assetsLibrary = {};
 export let errorImage;
-
 
 export function loadAssets(p) {
   let assetsPath = rootPath + "/src/decks/" + currentCollectionIndex + "/assets/";
@@ -26,7 +25,7 @@ export function loadAssets(p) {
       if (extension === "jpg" || extension === "png") {
         let img = p.loadImage(asset);
         assetsLibrary[fileName] = img;
-      } else if (extension === "ttf" || extension === "otf") assetsLibrary[fileName] = p.loadFont(asset);
+      }
     });
   }
 
@@ -37,7 +36,9 @@ export function loadAssets(p) {
 
 export function addAsset(newAsset) {
   let assetsPath = rootPath + "/src/decks/" + currentCollectionIndex + "/assets/";
-  fs.copyFile(newAsset.path, assetsPath+newAsset.name, (err) => {
+  fs.copyFile(newAsset.path, assetsPath + newAsset.name, (err) => {
+    saveCollection(true);
+    generateCollectionBtn.click();
     if (err) {
       console.log("Error Found:", err);
     }
@@ -46,6 +47,8 @@ export function addAsset(newAsset) {
 
 export function removeAsset(assetToDelete) {
   fs.unlink(assetToDelete, (err) => {
+    saveCollection(true);
+    generateCollectionBtn.click();
     if (err) {
       console.log("Error Found:", err);
     }
@@ -73,14 +76,13 @@ function getFiles(dir, files = []) {
 export async function getFontList() {
   try {
     const fonts = await fontList.getFonts();
-    allSystemFonts = fonts.map(font => {
+    allSystemFonts = fonts.map((font) => {
       return {
         label: font.replace(/"/g, ""),
-        value: font
-      }
+        value: font,
+      };
     });
   } catch (err) {
-    console.error('Error fetching font list:', err);
+    console.error("Error fetching font list:", err);
   }
 }
-

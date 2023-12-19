@@ -50,11 +50,12 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
     var _size = getActualValue(templateData.size, 5, true);
     var _font = getActualValue(templateData.font, "Verdana", false);
     var _color = getActualValue(templateData.color, "#000000", false);
-    var _spacing_x = getActualValue(templateData.spacing_x, 0, true);
-    var _spacing_y = getActualValue(templateData.spacing_y, 0, true);
+    var _listAnchor = getActualValue(templateData.listAnchor, p5.CENTER, true);
+    var _spacingX = getActualValue(templateData.spacingX, 0, true);
+    var _spacingY = getActualValue(templateData.spacingY, 0, true);
     var _style = getActualValue(templateData.style, "straight", false);
-    var _offset_x = getActualValue(templateData.offset_x, 0, true);
-    var _offset_y = getActualValue(templateData.offset_y, 0, true);
+    var _offsetX = getActualValue(templateData.offsetX, 0, true);
+    var _offsetY = getActualValue(templateData.offsetY, 0, true);
 
     var _shadow = getActualValue(templateData.shadow, false, false);
     var _shadowColor = getActualValue(templateData.shadowColor, "#000000", false);
@@ -94,33 +95,34 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
 
       //! STRIP
       else if (componentType == "IMAGE") {
-        var _totalWidth = (_elementsList.length * Math.min(_width, _spacing_x) + (_elementsList.length - 2) * _spacing_x) / 2;
-        var _totalHeight = (_elementsList.length * Math.min(_height, _spacing_y) + (_elementsList.length - 1) * _spacing_y) / 2;
+        var _totalWidth = (_elementsList.length * Math.min(_width, _spacingX) + (_elementsList.length - 2) * _spacingX) / 2;
+        var _totalHeight = (_elementsList.length * Math.min(_height, _spacingY) + (_elementsList.length - 1) * _spacingY) / 2;
 
-        p5.card.imageMode(p5.CENTER);
+        p5.card.imageMode(_anchor);
+        p5.card.tint(_tint + Math.round(_opacity * 2.55).toString(16));
         for (let i = 0; i < _elementsList.length; i++) {
 
-          if (_anchor == p5.CENTER) {
+          if (_listAnchor == p5.CENTER) {
             p5.card.image(
               _imgs[i],
-              _elementsList.length > 1 ? (_spacing_x > 0 ? i * _spacing_x - _totalWidth / 2 : 0) + (_style == "alternate" ? (i % 2 == 0 ? _offset_x : -_offset_x) : 0) : 0,
-              _elementsList.length > 1 ? (_spacing_y > 0 ? i * _spacing_y - _totalHeight / 2 : 0) + (_style == "alternate" ? (i % 2 == 0 ? _offset_y : -_offset_y) : 0) : 0,
+              _elementsList.length > 1 ? (_spacingX > 0 ? i * _spacingX - _totalWidth / 2 : 0) + (_style == "alternate" ? (i % 2 == 0 ? _offsetX : -_offsetX) : 0) : 0,
+              _elementsList.length > 1 ? (_spacingY > 0 ? i * _spacingY - _totalHeight / 2 : 0) + (_style == "alternate" ? (i % 2 == 0 ? _offsetY : -_offsetY) : 0) : 0,
               _width,
               _height
             );
-          } else if (_anchor == p5.LEFT) {
+          } else if (_listAnchor == p5.LEFT) {
             p5.card.image(
               _imgs[i],
-              _elementsList.length > 1 ? i * _spacing_x + (_style == "alternate" ? (i % 2 == 0 ? _offset_x : -_offset_x) : 0) : 0,
-              _elementsList.length > 1 ? i * _spacing_y + (_style == "alternate" ? (i % 2 == 0 ? _offset_y : -_offset_y) : 0) : 0,
+              _elementsList.length > 1 ? i * _spacingX + (_style == "alternate" ? (i % 2 == 0 ? _offsetX : -_offsetX) : 0) : 0,
+              _elementsList.length > 1 ? i * _spacingY + (_style == "alternate" ? (i % 2 == 0 ? _offsetY : -_offsetY) : 0) : 0,
               _width,
               _height
             );
-          } else if (_anchor == p5.CENTER.RIGHT) {
+          } else if (_listAnchor == p5.CENTER.RIGHT) {
             p5.card.image(
               _imgs[i],
-              _elementsList.length > 1 ? (_spacing_x > 0 ? i * _spacing_x - _totalWidth : 0) + (_style == "alternate" ? (i % 2 == 0 ? _offset_x : -_offset_x) : 0) : 0,
-              _elementsList.length > 1 ? (_spacing_y > 0 ? i * _spacing_y - _totalHeight : 0) + (_style == "alternate" ? (i % 2 == 0 ? _offset_y : -_offset_y) : 0) : 0,
+              _elementsList.length > 1 ? (_spacingX > 0 ? i * _spacingX - _totalWidth : 0) + (_style == "alternate" ? (i % 2 == 0 ? _offsetX : -_offsetX) : 0) : 0,
+              _elementsList.length > 1 ? (_spacingY > 0 ? i * _spacingY - _totalHeight : 0) + (_style == "alternate" ? (i % 2 == 0 ? _offsetY : -_offsetY) : 0) : 0,
               _width,
               _height
             );

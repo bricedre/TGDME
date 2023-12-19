@@ -5,6 +5,11 @@
 
 :root {
   --cardAngle: 2deg;
+  --mainColor : #77c9f2;
+  --mainBtnColor : #d4eeff;
+  --mainColorDark : #2d94c7;
+  --mainColorLight : #eaf8ff;
+  --panelBG : #ededed;
 }
 
 * {
@@ -26,7 +31,7 @@ body {
 }
 
 nav {
-  background-color: #90c4e5;
+  background-color: var(--mainColor);
   min-height: 10vh;
   font-size: xx-large;
   display: flex;
@@ -96,7 +101,7 @@ canvas {
 }
 
 #editionPanelDiv {
-  background-color: #edf6fc;
+  background-color: var(--panelBG);
   border-radius: 1rem;
   position: relative;
   min-width: 50vw;
@@ -120,7 +125,7 @@ button {
   align-items: center;
   font-size: 1rem;
   cursor: pointer;
-  background-color: #d4eeff;
+  background-color: var(--mainBtnColor);
   transition: all 0.2s ease-in-out;
   justify-content: center;
   gap: 1rem;
@@ -134,7 +139,7 @@ button > img {
 }
 
 button:hover {
-  background-color: #63a9d5;
+  background-color: var(--mainColor);
 }
 
 button:disabled {
@@ -171,19 +176,43 @@ button:disabled {
   height: 100%;
 }
 
+.cardBtn:hover{
+  background-color: var(--mainColorLight);
+}
+
+.cardBtn:disabled {
+  background-color: #fff5;
+  cursor: default;
+}
+
 #homeBtn {
   display: flex;
   padding: 0.5rem;
   border-radius: 50%;
 }
 
+#homeBtn:hover{
+  background-color: var(--mainColorLight);
+}
+
 #generateCollectionBtn {
-  padding: 0.5rem;
+  background-color: transparent;
+  padding: 0;
   border-radius: 50%;
   position: absolute;
   right: 0;
   top: 0;
   translate: 20% -20%;
+  box-shadow: none;
+  filter: drop-shadow(5px 5px 10px #104d6924);
+}
+
+#generateCollectionBtn:hover {
+  background-color: transparent;
+}
+
+#generateCollectionBtn > img{
+  height: 4rem;
 }
 
 #deleteCollectionBtn {
@@ -196,7 +225,7 @@ button:disabled {
 }
 
 .bottomBar {
-  background-color: #90c4e5;
+  background-color: var(--mainColor);
   min-height: 10vh;
   display: none;
   align-items: center;
@@ -268,12 +297,12 @@ input[type="radio"] {
   font-size: 0.8rem;
 }
 .tabs > label:hover {
-  color: #90c4e5;
+  color: var(--mainColor);
   cursor: pointer;
 }
 .tabs > input:checked + label {
   color: white;
-  background-color: #63a9d5;
+  background-color: var(--mainColorDark);
   border-radius: 0.7rem;
 }
 
@@ -436,7 +465,7 @@ input[type="file"] {
 }
 
 .custom-file-upload:hover {
-  background-color: #63a9d5;
+  background-color: var(--mainColor);
 }
 
 /* SCROLLBAR */
@@ -455,4 +484,13 @@ input[type="file"] {
   background: #63a9d5;
   border-radius: 10px;
   border: 6px solid #edf6fc;
+}
+
+@keyframes beyblade{
+  0% {
+    rotate : 0;
+  }
+  100%{
+    rotate : 360deg;
+  }
 }
