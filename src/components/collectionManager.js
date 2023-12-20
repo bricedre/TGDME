@@ -5,6 +5,7 @@ import {
   checkOtherInputs,
   populateEditionFields,
   setupComponents,
+  setupElements,
   setupResources,
   updateComponents,
 } from "./routes/editionScreen.js";
@@ -68,6 +69,7 @@ function setCurrentCollection(value) {
     checkOtherInputs(pageFormatSelect.id, pageFormatSelect.value);
     setupResources();
     setupComponents();
+    setupElements();
     updateComponents();
   }, 500);
 }

@@ -1,7 +1,7 @@
 import { app } from "../../app.js";
 import { addNewImage, addNewShape, addNewText, currentCollection, saveCollection } from "../collectionManager.js";
 import { rootElement } from "./mainLayout.js";
-import { IMAGE_parameters, TEXT_parameters, SHAPE_parameters } from "../componentParameters.js";
+import { IMAGE_parameters, TEXT_parameters, SHAPE_parameters, ELEMENT_parameters } from "../componentParameters.js";
 import { renderCardUsingTemplate } from "../render.js";
 import { addAsset, allSystemFonts, currentAssetsList, removeAsset } from "../assetLoader.js";
 
@@ -12,7 +12,7 @@ renderCollectionBtn.addEventListener("click", () => triggerGeneration(app));
 generateCollectionBtn.addEventListener("click", () => {
   saveCollection(false);
   generateCollectionBtn.style.animation = "0.5s beyblade";
-})
+});
 
 generateCollectionBtn.addEventListener("animationend", () => {
   generateCollectionBtn.style.animation = "none";
@@ -22,17 +22,15 @@ prevCardBtn.addEventListener("click", () => goToOtherCard(-1));
 nextCardBtn.addEventListener("click", () => goToOtherCard(1));
 bigNextCardBtn.addEventListener("click", () => goToOtherCard(10));
 
-
 addImageComponentBtn.addEventListener("click", () => addNewImage());
 addShapeComponentBtn.addEventListener("click", () => addNewShape());
 addTextComponentBtn.addEventListener("click", () => addNewText());
 
-newResourceInput.addEventListener('change', function(e) {
+newResourceInput.addEventListener("change", function (e) {
   if (e.target.files[0]) {
     addAsset(e.target.files[0]);
   }
 });
-
 
 /*        
 GLOBAL
@@ -133,16 +131,15 @@ export function createNewResource(item, itemIndex) {
   var emptyDiv = document.createElement("div");
   itemAccordion.id = itemIndex;
   itemAccordion.classList.add("accordion");
-  
 
   let file = item.split("//")[1];
   let fileName = file.split(".")[0];
   let extension = file.split(".")[1];
 
-  itemAccordion.innerHTML = "<img src='assets/imgResource.png'><span>" + fileName + "</span>";
+  itemAccordion.innerHTML = "<img src='assets/imgResource.png'><span title='Cliquez pour copier le nom de la ressource'>" + fileName + "</span>";
   itemAccordion.addEventListener("click", () => {
     navigator.clipboard.writeText(fileName);
-  })
+  });
 
   var deleteResourceBtn = document.createElement("img");
   deleteResourceBtn.classList.add("deleteResourceBtn");
@@ -233,17 +230,17 @@ export function createNewComponent(item, itemIndex) {
   });
   itemAccordion.appendChild(visibilityBtn);
 
-  var deleteCollectionBtn = document.createElement("img");
-  deleteCollectionBtn.classList.add("deleteCollectionBtn");
-  deleteCollectionBtn.src = "./assets/delete.png";
-  deleteCollectionBtn.addEventListener("click", (e) => {
+  var deleteComponentBtn = document.createElement("img");
+  deleteComponentBtn.classList.add("deleteComponentBtn");
+  deleteComponentBtn.src = "./assets/delete.png";
+  deleteComponentBtn.addEventListener("click", (e) => {
     e.preventDefault();
     e.stopPropagation();
     currentCollection.template.splice(e.target.parentNode.id, 1);
     generateCollectionBtn.click();
     setupComponents();
   });
-  itemAccordion.appendChild(deleteCollectionBtn);
+  itemAccordion.appendChild(deleteComponentBtn);
 
   itemAccordion.addEventListener("click", () => {
     var panel = itemAccordion.nextElementSibling;
@@ -313,7 +310,6 @@ export function createNewComponent(item, itemIndex) {
     }
 
     if (param.type !== "spacer") {
-
       //CHECKBOXES
       if (param.type === "checkbox") {
         var oldName = parameterName.innerHTML;
@@ -332,23 +328,24 @@ export function createNewComponent(item, itemIndex) {
         parameterInputLine.appendChild(parameterName);
         if (!param.forced) parameterInputLine.appendChild(modeInput);
         parameterSlot.appendChild(parameterInputLine);
-      } 
-      
-       //SELECTS
+      }
+
+      //SELECTS
       else if (param.type === "select") {
         parameterInput = document.createElement("select");
         parameterInput.classList.add("parameterInput");
         parameterInput.id = inputID;
         parameterInput.addEventListener("input", (e) => {
           currentCollection.template[itemIndex][param.refValue]["value"] = e.target.value;
-          saveCollection(false);
+          generateCollectionBtn.click();
           updateComponents();
         });
 
-        var refOptionList = (param.optionRef) ? eval(param.optionRef) : param.options;
+        var refOptionList = param.optionRef ? eval(param.optionRef) : param.options;
 
         refOptionList.forEach((opt) => {
           var option = document.createElement("option");
+          if (param.optionRef) option.style.fontFamily = opt.value;
           option.value = opt.value;
           option.innerHTML = opt.label;
           parameterInput.appendChild(option);
@@ -475,4 +472,129 @@ export function setupElements() {
   });
 }
 
-export function createNewElement(item, itemIndex) {}
+export function createNewElement(item, itemIndex) {
+  var itemAccordion = document.createElement("button");
+  itemAccordion.id = itemIndex;
+  itemAccordion.classList.add("accordion");
+
+  itemAccordion.innerHTML = "<img src='assets/element.png'><span>Élément " + (itemIndex + 1) + "</span>";
+
+  var deleteResourceBtn = document.createElement("img");
+  deleteResourceBtn.classList.add("deleteResourceBtn");
+  deleteResourceBtn.src = "./assets/delete.png";
+  deleteResourceBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    // removeAsset(currentAssetsList[itemAccordion.id]);
+  });
+  itemAccordion.appendChild(deleteResourceBtn);
+
+  itemAccordion.addEventListener("click", () => {
+    var panel = itemAccordion.nextElementSibling;
+    if (itemAccordion.classList.contains("active")) {
+      panel.style.maxHeight = "0";
+      panel.style.marginBottom = "0rem";
+      panel.style.padding = "0rem";
+    } else {
+      panel.style.maxHeight = "calc(2rem + " + panel.scrollHeight + "px)";
+      panel.style.marginBottom = "1rem";
+      panel.style.padding = "1rem";
+    }
+
+    itemAccordion.classList.toggle("active");
+  });
+
+  var itemPanel = document.createElement("div");
+  itemPanel.classList.add("itemPanel");
+
+  ELEMENT_parameters.forEach((param) => {
+    var parameterSlot = document.createElement("div");
+    parameterSlot.classList.add("parameterSlot");
+
+    var parameterName = document.createElement("p");
+    parameterName.classList.add("parameterName");
+    parameterName.innerHTML = param.name;
+
+    var parameterInputLine = document.createElement("div");
+    parameterInputLine.classList.add("parameterInputLine");
+
+    var parameterInput = document.createElement("input");
+    var inputID = itemIndex + "-" + param.name;
+    parameterInput.id = inputID;
+    // parameterInput.addEventListener("input", (e) => {
+    //   try {
+    //     currentCollection.template[itemIndex][param.refValue]["value"] = e.target.value;
+    //   } catch {
+    //     currentCollection.template[itemIndex][param.refValue] = {
+    //       value: e.target.value,
+    //       type: "0",
+    //     };
+    //   }
+    // });
+
+    //CHECKBOXES
+    if (param.type === "checkbox") {
+      var oldName = parameterName.innerHTML;
+      parameterInput.type = param.type;
+      try{
+        parameterInput.checked = item[param.refValue]["value"];
+      }
+      catch(e){
+        parameterInput.checked = false;
+      }
+      // parameterInput.addEventListener("input", (e) => {
+      //   currentCollection.template[itemIndex][param.refValue]["value"] = e.target.checked;
+      // });
+      parameterName = document.createElement("label");
+      parameterName.setAttribute("for", inputID);
+      parameterName.classList.add("parameterName");
+      parameterName.innerHTML = oldName;
+      parameterInputLine.appendChild(parameterInput);
+      parameterInputLine.appendChild(parameterName);
+      parameterSlot.appendChild(parameterInputLine);
+    }
+
+    //SELECTS
+    else if (param.type === "select") {
+      parameterInput = document.createElement("select");
+      parameterInput.classList.add("parameterInput");
+      parameterInput.id = inputID;
+      // parameterInput.addEventListener("input", (e) => {
+      //   currentCollection.template[itemIndex][param.refValue]["value"] = e.target.value;
+      //   generateCollectionBtn.click();
+      //   updateComponents();
+      // });
+
+      // var refOptionList = param.optionRef ? eval(param.optionRef) : param.options;
+
+      // refOptionList.forEach((opt) => {
+      //   var option = document.createElement("option");
+      //   if (param.optionRef) option.style.fontFamily = opt.value;
+      //   option.value = opt.value;
+      //   option.innerHTML = opt.label;
+      //   parameterInput.appendChild(option);
+      // });
+      parameterInput.value = item[param.refValue]["value"];
+      parameterSlot.appendChild(parameterName);
+      parameterInputLine.appendChild(parameterInput);
+      parameterSlot.appendChild(parameterInputLine);
+    } else {
+      parameterInput.classList.add("parameterInput");
+      if (param.type === "color") parameterInput.style.padding = "0.2rem";
+      parameterInput.type = param.type;
+      try {
+        parameterInput.value = item[param.refValue]["value"];
+      } catch (e) {
+        parameterInput.value = "";
+      }
+      parameterSlot.appendChild(parameterName);
+      parameterInputLine.appendChild(parameterInput);
+      parameterSlot.appendChild(parameterInputLine);
+    }
+
+    itemPanel.appendChild(parameterSlot);
+  });
+
+  elementItemsDiv.appendChild(itemAccordion);
+  elementItemsDiv.appendChild(itemPanel);
+}

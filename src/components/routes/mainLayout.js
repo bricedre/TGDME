@@ -60,6 +60,7 @@ export function setUI() {
     addTextComponentBtn.style.display = "none";
     addShapeComponentBtn.style.display = "none";
     addImageComponentBtn.style.display = "none";
+    addNewElementBtn.style.display = "none";
     renderCollectionBtn.style.display = "none";
     cardCounterDiv.style.display = "none";
     canvasDiv.style.display = "none";
@@ -78,6 +79,7 @@ export function setUI() {
     addTextComponentBtn.style.display = "flex";
     addShapeComponentBtn.style.display = "flex";
     addImageComponentBtn.style.display = "flex";
+    addNewElementBtn.style.display = "flex";
     cardCounterDiv.style.display = "flex";
     bottomBar.style.display = "flex";
     canvasDiv.style.display = "flex";

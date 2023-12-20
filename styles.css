@@ -8,6 +8,7 @@
   --mainColor : #77c9f2;
   --mainBtnColor : #d4eeff;
   --mainColorDark : #2d94c7;
+  --mainColorShadows : #00496e70;
   --mainColorLight : #eaf8ff;
   --panelBG : #ededed;
 }
@@ -136,6 +137,7 @@ button {
 button > img {
   height: 3rem;
   rotate: 5deg;
+  filter : drop-shadow(2px 2px 2px var(--mainColorShadows));
 }
 
 button:hover {
@@ -268,14 +270,16 @@ button:disabled {
 }
 
 #contentTemplateDiv,
-#contentRessDiv {
+#contentRessDiv,
+#contentElementsDiv {
   display: none;
   flex-direction: column;
   height: 100%;
 }
 
 #contentTemplateDiv button,
-#contentRessDiv button {
+#contentRessDiv button,
+#contentElementsDiv button {
   margin: 0.5rem auto;
 }
 
@@ -388,7 +392,8 @@ input[type="radio"] {
 }
 
 #templateItemsDiv,
-#ressItemsDiv {
+#ressItemsDiv,
+#elementItemsDiv {
   overflow-y: auto;
   flex: 1;
 
@@ -413,14 +418,21 @@ input[type="radio"] {
 }
 
 .accordion.active {
-  background-color: #90c4e5;
+  background-color: var(--mainColor);
   border-radius: 0.3rem 0.3rem 0 0;
 }
 
 .accordion > img {
-  width: 1.2rem;
-  height: 1.2rem;
+aspect-ratio: 1;
+  height: 1.8rem;
   rotate: 0deg;
+  transition: 0.3s;
+}
+
+.upElementBtn:hover, .downElementBtn:hover, .visibilityBtn:hover, .deleteComponentBtn:hover,
+.deleteResourceBtn:hover
+{
+  scale : 1.5;
 }
 
 .accordion > span {
@@ -432,7 +444,7 @@ input[type="radio"] {
   overflow: hidden;
   max-height: 0;
   transition: all 0.2s ease-out;
-  background-color: #cdd6e0;
+  background-color: #dfe3e7;
   translate: 0 -0.5rem;
   border-radius: 0 0 0.3rem 0.3rem;
 }
@@ -483,7 +495,7 @@ input[type="file"] {
 ::-webkit-scrollbar-thumb {
   background: #63a9d5;
   border-radius: 10px;
-  border: 6px solid #edf6fc;
+  border: 6px solid var(--panelBG);
 }
 
 @keyframes beyblade{

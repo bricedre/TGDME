@@ -146,14 +146,27 @@ export let TEXT_parameters = [
   { name: "<span class='spacerIcon'>🎨</span><span>Aspect Visuel</span>", type: "spacer" },
   { name: "Couleur", refValue: "color", type: "color" },
   { name: "Taille", refValue: "size", type: "text" },
-  { name: "Police d'Écriture", refValue: "font", type: "select", optionRef:"allSystemFonts" },
+  { name: "Police d'Écriture", refValue: "font", type: "select", optionRef: "allSystemFonts" },
   { name: "Opacité", refValue: "opacity", type: "range" },
 
   { name: "<span class='spacerIcon'>☀️</span><span>Ombre Portée</span>", type: "spacer" },
-  { name: "Ombre Portée ?", refValue: "shadow", type: "checkbox", title: "Une légère ombre portée permet de mieux détacher votre texte du fond"},
+  { name: "Ombre Portée ?", refValue: "shadow", type: "checkbox", title: "Une légère ombre portée permet de mieux détacher votre texte du fond" },
   { name: "Couleur", refValue: "shadowColor", type: "color" },
   { name: "Décalage Horizontal", refValue: "shadowOffsetX", type: "text" },
   { name: "Décalage Vertical", refValue: "shadowOffsetY", type: "text" },
   { name: "Opacité", refValue: "shadowOpacity", type: "range" },
   { name: "Flou", refValue: "shadowBlur", type: "text" },
+];
+
+export let ELEMENT_parameters = [
+  {
+    name: "Position Horizontale",
+    value: "L*0.2",
+    type: "text",
+  },
+  {
+    name: "Déclenchement conditionné de Cout Effet",
+    value: true,
+    type: "checkbox",
+  }
 ];

@@ -12,7 +12,9 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
 
   // Render only if trigger is empty OR equal to good value
   if (templateData.trigger.value == "" || elementData[templateData.trigger.value]) {
-    var _src = getActualValue(templateData.src, "", false);
+    var _src = getActualValue(templateData.src, elementIndex, "", false);
+
+    _src = _src.replace("INDEX", elementIndex.toString());
 
     var _type = templateData.src.type;
     var _img;
@@ -39,30 +41,30 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
       }
     }
 
-    var _positionX = getActualValue(templateData.positionX, 0, true);
-    var _positionY = getActualValue(templateData.positionY, 0, true);
-    var _width = getActualValue(templateData.width, "W", true);
-    var _height = getActualValue(templateData.height, "W", true);
-    var _anchor = getActualValue(templateData.anchor, p5.CENTER, true);
-    var _angle = getActualValue(templateData.angle, 0, true);
-    var _tint = getActualValue(templateData.tint, "#FFFFFF", false);
-    var _opacity = getActualValue(templateData.opacity, 100, true);
-    var _size = getActualValue(templateData.size, 5, true);
-    var _font = getActualValue(templateData.font, "Verdana", false);
-    var _color = getActualValue(templateData.color, "#000000", false);
-    var _listAnchor = getActualValue(templateData.listAnchor, p5.CENTER, true);
-    var _spacingX = getActualValue(templateData.spacingX, 0, true);
-    var _spacingY = getActualValue(templateData.spacingY, 0, true);
-    var _style = getActualValue(templateData.style, "straight", false);
-    var _offsetX = getActualValue(templateData.offsetX, 0, true);
-    var _offsetY = getActualValue(templateData.offsetY, 0, true);
+    var _positionX = getActualValue(templateData.positionX, elementIndex, 0, true);
+    var _positionY = getActualValue(templateData.positionY, elementIndex, 0, true);
+    var _width = getActualValue(templateData.width, elementIndex, "W", true);
+    var _height = getActualValue(templateData.height, elementIndex, "W", true);
+    var _anchor = getActualValue(templateData.anchor, elementIndex, p5.CENTER, true);
+    var _angle = getActualValue(templateData.angle, elementIndex, 0, true);
+    var _tint = getActualValue(templateData.tint, elementIndex, "#FFFFFF", false);
+    var _opacity = getActualValue(templateData.opacity, elementIndex, 100, true);
+    var _size = getActualValue(templateData.size, elementIndex, 5, true);
+    var _font = getActualValue(templateData.font, elementIndex, "Verdana", false);
+    var _color = getActualValue(templateData.color, elementIndex, "#000000", false);
+    var _listAnchor = getActualValue(templateData.listAnchor, elementIndex, p5.CENTER, true);
+    var _spacingX = getActualValue(templateData.spacingX, elementIndex, 0, true);
+    var _spacingY = getActualValue(templateData.spacingY, elementIndex, 0, true);
+    var _style = getActualValue(templateData.style, elementIndex, "straight", false);
+    var _offsetX = getActualValue(templateData.offsetX, elementIndex, 0, true);
+    var _offsetY = getActualValue(templateData.offsetY, elementIndex, 0, true);
 
-    var _shadow = getActualValue(templateData.shadow, false, false);
-    var _shadowColor = getActualValue(templateData.shadowColor, "#000000", false);
-    var _shadowOpacity = getActualValue(templateData.shadowOpacity, 30, true);
-    var _shadowOffsetX = getActualValue(templateData.shadowOffsetX, 10, true);
-    var _shadowOffsetY = getActualValue(templateData.shadowOffsetY, 10, true);
-    var _shadowBlur = getActualValue(templateData.shadowBlur, 0, true);
+    var _shadow = getActualValue(templateData.shadow, elementIndex, false, false);
+    var _shadowColor = getActualValue(templateData.shadowColor, elementIndex, "#000000", false);
+    var _shadowOpacity = getActualValue(templateData.shadowOpacity, elementIndex, 30, true);
+    var _shadowOffsetX = getActualValue(templateData.shadowOffsetX, elementIndex, 10, true);
+    var _shadowOffsetY = getActualValue(templateData.shadowOffsetY, elementIndex, 10, true);
+    var _shadowBlur = getActualValue(templateData.shadowBlur, elementIndex, 0, true);
 
     p5.card.push();
     try {
@@ -101,7 +103,6 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
         p5.card.imageMode(_anchor);
         p5.card.tint(_tint + Math.round(_opacity * 2.55).toString(16));
         for (let i = 0; i < _elementsList.length; i++) {
-
           if (_listAnchor == p5.CENTER) {
             p5.card.image(
               _imgs[i],
@@ -138,10 +139,13 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
   }
 }
 
-function getActualValue(refValue, dft, ev) {
+function getActualValue(refValue, index, dft, ev) {
   let currentCollectionInfo = currentCollection.collectionInfo;
   var W = currentCollectionInfo.W * currentCollectionInfo.resolution;
+  var L = currentCollectionInfo.W * currentCollectionInfo.resolution;
   var H = currentCollectionInfo.H * currentCollectionInfo.resolution;
+  var INDEX = index;
+
   var CENTER = app.CENTER;
   var CORNER = app.CORNER;
   var LEFT = app.LEFT;
@@ -149,8 +153,13 @@ function getActualValue(refValue, dft, ev) {
 
   var finalValue;
   if (refValue) {
-    if (ev) finalValue = eval(refValue.value);
-    else finalValue = refValue.value;
+    if (ev) {
+      try {
+        finalValue = eval(refValue.value);
+      } catch (e) {
+        finalValue = null;
+      }
+    } else finalValue = refValue.value;
   } else finalValue == null;
   return finalValue ? finalValue : dft;
 }
