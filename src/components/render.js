@@ -2,6 +2,7 @@ import { currentCollection } from "./collectionManager.js";
 import { generatePDF } from "./pdf.js";
 import { app } from "../app.js";
 import { assetsLibrary, errorImage } from "./assetLoader.js";
+import { IMAGE_parameters, TEXT_parameters, SHAPE_parameters } from "./componentParameters.js";
 
 export function renderComponent(p5, componentType, componentIndex, elementIndex) {
   let currentElements = currentCollection.elements;
@@ -12,28 +13,19 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
 
   // Render only if trigger is empty OR equal to good value
   if (templateData.trigger.value == "" || elementData[templateData.trigger.value]) {
-    var _src = getActualValue(templateData.src, elementIndex, "", false);
+    var _src = getActualValue(templateData.src, componentIndex, elementIndex, "", false);
 
     _src = _src.replace("INDEX", elementIndex.toString());
 
-    var _type = templateData.src.type;
     var _img;
     var _textToWrite;
     var _shape;
     var _elementsList = [];
     var _imgs = [];
 
-    if (_type === "0") {
-      if (componentType == "IMAGE") _elementsList = _src.split(",");
-      else if (componentType == "TEXT") _textToWrite = _src;
-      else if (componentType == "STRIP") _shape = _src;
-    } else if (_type === "1") {
-      if (componentType == "SHAPE") _img = assetsLibrary[elementData[_src]];
-      else if (componentType == "TEXT") _textToWrite = elementData[_src];
-      else if (componentType == "IMAGE") {
-        if (elementData[_src]) _elementsList = elementData[_src].split(",");
-      }
-    }
+    if (componentType == "IMAGE") _elementsList = _src.split(",");
+    else if (componentType == "TEXT") _textToWrite = _src;
+    else if (componentType == "STRIP") _shape = _src;
 
     if (_elementsList.length > 0) {
       for (let i = 0; i < _elementsList.length; i++) {
@@ -41,30 +33,30 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
       }
     }
 
-    var _positionX = getActualValue(templateData.positionX, elementIndex, 0, true);
-    var _positionY = getActualValue(templateData.positionY, elementIndex, 0, true);
-    var _width = getActualValue(templateData.width, elementIndex, "W", true);
-    var _height = getActualValue(templateData.height, elementIndex, "W", true);
-    var _anchor = getActualValue(templateData.anchor, elementIndex, p5.CENTER, true);
-    var _angle = getActualValue(templateData.angle, elementIndex, 0, true);
-    var _tint = getActualValue(templateData.tint, elementIndex, "#FFFFFF", false);
-    var _opacity = getActualValue(templateData.opacity, elementIndex, 100, true);
-    var _size = getActualValue(templateData.size, elementIndex, 5, true);
-    var _font = getActualValue(templateData.font, elementIndex, "Verdana", false);
-    var _color = getActualValue(templateData.color, elementIndex, "#000000", false);
-    var _listAnchor = getActualValue(templateData.listAnchor, elementIndex, p5.CENTER, true);
-    var _spacingX = getActualValue(templateData.spacingX, elementIndex, 0, true);
-    var _spacingY = getActualValue(templateData.spacingY, elementIndex, 0, true);
-    var _style = getActualValue(templateData.style, elementIndex, "straight", false);
-    var _offsetX = getActualValue(templateData.offsetX, elementIndex, 0, true);
-    var _offsetY = getActualValue(templateData.offsetY, elementIndex, 0, true);
+    var _positionX = getActualValue(templateData.positionX, componentIndex, elementIndex, 0, true);
+    var _positionY = getActualValue(templateData.positionY, componentIndex, elementIndex, 0, true);
+    var _width = getActualValue(templateData.width, componentIndex, elementIndex, "W", true);
+    var _height = getActualValue(templateData.height, componentIndex, elementIndex, "W", true);
+    var _anchor = getActualValue(templateData.anchor, componentIndex, elementIndex, p5.CENTER, true);
+    var _angle = getActualValue(templateData.angle, componentIndex, elementIndex, 0, true);
+    var _tint = getActualValue(templateData.tint, componentIndex, elementIndex, "#FFFFFF", false);
+    var _opacity = getActualValue(templateData.opacity, componentIndex, elementIndex, 100, true);
+    var _size = getActualValue(templateData.size, componentIndex, elementIndex, 5, true);
+    var _font = getActualValue(templateData.font, componentIndex, elementIndex, "Verdana", false);
+    var _color = getActualValue(templateData.color, componentIndex, elementIndex, "#000000", false);
+    var _listAnchor = getActualValue(templateData.listAnchor, componentIndex, elementIndex, p5.CENTER, true);
+    var _spacingX = getActualValue(templateData.spacingX, componentIndex, elementIndex, 0, true);
+    var _spacingY = getActualValue(templateData.spacingY, componentIndex, elementIndex, 0, true);
+    var _style = getActualValue(templateData.style, componentIndex, elementIndex, "straight", false);
+    var _offsetX = getActualValue(templateData.offsetX, componentIndex, elementIndex, 0, true);
+    var _offsetY = getActualValue(templateData.offsetY, componentIndex, elementIndex, 0, true);
 
-    var _shadow = getActualValue(templateData.shadow, elementIndex, false, false);
-    var _shadowColor = getActualValue(templateData.shadowColor, elementIndex, "#000000", false);
-    var _shadowOpacity = getActualValue(templateData.shadowOpacity, elementIndex, 30, true);
-    var _shadowOffsetX = getActualValue(templateData.shadowOffsetX, elementIndex, 10, true);
-    var _shadowOffsetY = getActualValue(templateData.shadowOffsetY, elementIndex, 10, true);
-    var _shadowBlur = getActualValue(templateData.shadowBlur, elementIndex, 0, true);
+    var _shadow = getActualValue(templateData.shadow, componentIndex, elementIndex, false, false);
+    var _shadowColor = getActualValue(templateData.shadowColor, componentIndex, elementIndex, "#000000", false);
+    var _shadowOpacity = getActualValue(templateData.shadowOpacity, componentIndex, elementIndex, 30, true);
+    var _shadowOffsetX = getActualValue(templateData.shadowOffsetX, componentIndex, elementIndex, 10, true);
+    var _shadowOffsetY = getActualValue(templateData.shadowOffsetY, componentIndex, elementIndex, 10, true);
+    var _shadowBlur = getActualValue(templateData.shadowBlur, componentIndex, elementIndex, 0, true);
 
     p5.card.push();
     try {
@@ -139,28 +131,38 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
   }
 }
 
-function getActualValue(refValue, index, dft, ev) {
+function getActualValue(refValue, componentIndex, elementIndex, dft, ev) {
   let currentCollectionInfo = currentCollection.collectionInfo;
   var W = currentCollectionInfo.W * currentCollectionInfo.resolution;
   var L = currentCollectionInfo.W * currentCollectionInfo.resolution;
   var H = currentCollectionInfo.H * currentCollectionInfo.resolution;
-  var INDEX = index;
+  var INDEX = elementIndex;
 
   var CENTER = app.CENTER;
   var CORNER = app.CORNER;
   var LEFT = app.LEFT;
   var RIGHT = app.RIGHT;
 
+  var parameterType = currentCollection.template[componentIndex].component;
+  var parametersLoaded = eval(parameterType + "_parameters").filter((item) => item.type != "spacer");
+  var parameterName = parametersLoaded[elementIndex + 2].name;
+  var componentName = currentCollection.template[componentIndex].componentName.value;
+  var elementBasedName = parameterName + " de " + componentName;
+  var elementBasedValue = currentCollection.elements[elementIndex][elementBasedName];
+
   var finalValue;
   if (refValue) {
     if (ev) {
       try {
-        finalValue = eval(refValue.value);
+        finalValue = eval(refValue.type == "1" ? elementBasedValue : refValue.value);
       } catch (e) {
         finalValue = null;
       }
-    } else finalValue = refValue.value;
+    } else {
+      finalValue = refValue.type == "1" ?elementBasedValue:refValue.value;
+    }
   } else finalValue == null;
+
   return finalValue ? finalValue : dft;
 }
 

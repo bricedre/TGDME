@@ -260,6 +260,7 @@ export function createNewComponent(item, itemIndex) {
     generateCollectionBtn.click();
     setupComponents();
     setupElements();
+    populateElements();
   });
   itemAccordion.appendChild(deleteComponentBtn);
 
@@ -312,6 +313,7 @@ export function createNewComponent(item, itemIndex) {
       if(param.refValue === "componentName") {
         populateComponents();
         setupElements();
+        populateElements();
       }
     });
 
@@ -337,6 +339,7 @@ export function createNewComponent(item, itemIndex) {
         generateCollectionBtn.click();
         populateComponents();
         setupElements();
+        populateElements();
       });
     }
 
