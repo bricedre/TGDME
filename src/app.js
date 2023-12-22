@@ -49,6 +49,14 @@ const sketch = (p) => {
       (window.innerHeight * 0.6 * W) / H,
       window.innerHeight * 0.6
     );
+
+    var canvases = document.querySelectorAll("canvas");
+    canvases.forEach((canvas, index) => {
+      if(index != 0){
+        canvas.remove();
+      }
+    })
+
     p.page = p.createGraphics(pageWidth, pageHeight);
     p.card = p.createGraphics(W, H);
   };

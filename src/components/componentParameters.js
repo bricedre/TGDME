@@ -158,15 +158,8 @@ export let TEXT_parameters = [
   { name: "Flou", refValue: "shadowBlur", type: "text" },
 ];
 
-export let ELEMENT_parameters = [
-  {
-    name: "Position Horizontale",
-    value: "L*0.2",
-    type: "text",
-  },
-  {
-    name: "Déclenchement conditionné de Cout Effet",
-    value: true,
-    type: "checkbox",
-  }
-];
+export function resetElementParameters() {
+  ELEMENT_parameters = [];
+}
+
+export let ELEMENT_parameters = [];

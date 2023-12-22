@@ -1,6 +1,6 @@
 import { app } from "../../app.js";
 import { currentCollection, currentCollectionIndex, setCurrentCollectionIndex } from "../collectionManager.js";
-import { checkOtherInputs, updateCardCounter, updateComponents } from "./editionScreen.js";
+import { checkOtherInputs, updateCardCounter, populateComponents } from "./editionScreen.js";
 
 const bottomBar = document.querySelector(".bottomBar");
 
@@ -32,7 +32,7 @@ const allSelects = document.querySelectorAll("select");
 
 allInputs.forEach((input) => {
   input.addEventListener("input", (e) => {
-    updateComponents();
+    populateComponents();
     checkOtherInputs(e.target.id, e.target.value);
   });
 });
@@ -61,6 +61,8 @@ export function setUI() {
     addShapeComponentBtn.style.display = "none";
     addImageComponentBtn.style.display = "none";
     addNewElementBtn.style.display = "none";
+    checkAllBtn.style.display = "none";
+    wizardFillBtn.style.display = "none";
     renderCollectionBtn.style.display = "none";
     cardCounterDiv.style.display = "none";
     canvasDiv.style.display = "none";
@@ -80,6 +82,8 @@ export function setUI() {
     addShapeComponentBtn.style.display = "flex";
     addImageComponentBtn.style.display = "flex";
     addNewElementBtn.style.display = "flex";
+    wizardFillBtn.style.display = "flex";
+    checkAllBtn.style.display = "flex";
     cardCounterDiv.style.display = "flex";
     bottomBar.style.display = "flex";
     canvasDiv.style.display = "flex";

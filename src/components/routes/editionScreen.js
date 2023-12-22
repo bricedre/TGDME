@@ -1,7 +1,7 @@
 import { app } from "../../app.js";
 import { addNewImage, addNewShape, addNewText, currentCollection, saveCollection } from "../collectionManager.js";
 import { rootElement } from "./mainLayout.js";
-import { IMAGE_parameters, TEXT_parameters, SHAPE_parameters, ELEMENT_parameters } from "../componentParameters.js";
+import { IMAGE_parameters, TEXT_parameters, SHAPE_parameters, ELEMENT_parameters, resetElementParameters } from "../componentParameters.js";
 import { renderCardUsingTemplate } from "../render.js";
 import { addAsset, allSystemFonts, currentAssetsList, removeAsset } from "../assetLoader.js";
 
@@ -45,7 +45,8 @@ export function updateCardCounter(currentIndex) {
       " sur " +
       currentCollection.elements.length +
       " - " +
-      (currentCollection.elements[currentIndex].quantity ? currentCollection.elements[currentIndex].quantity + " copies" : "1 copie");
+      currentCollection.elements[currentIndex].quantity +
+      (currentCollection.elements[currentIndex].quantity > 1 ? " copies" : " copie");
   } else {
     cardCounterDivLabel.innerHTML = "PAS DE CARTE À AFFICHER";
   }
@@ -121,9 +122,17 @@ export function setupResources() {
     ressItemsDiv.removeChild(ressItemsDiv.lastChild);
   }
 
-  currentAssetsList.forEach((item, itemIndex) => {
-    createNewResource(item, itemIndex);
-  });
+  if (currentAssetsList.length > 0) {
+    currentAssetsList.forEach((item, itemIndex) => {
+      createNewResource(item, itemIndex);
+    });
+  } else {
+    var noResourceText = document.createElement("div");
+    noResourceText.classList.add("noStuffDiv");
+    noResourceText.innerHTML = "Aucune Ressource dans votre Collection<br><br><br><br>Cliquez sur le bouton en bas pour en ajouter une";
+
+    ressItemsDiv.appendChild(noResourceText);
+  }
 }
 
 export function createNewResource(item, itemIndex) {
@@ -164,9 +173,20 @@ export function setupComponents() {
     templateItemsDiv.removeChild(templateItemsDiv.lastChild);
   }
 
-  currentCollection.template.forEach((item, itemIndex) => {
-    createNewComponent(item, itemIndex);
-  });
+  if (currentCollection.template.length > 0) {
+    templateItemsDiv.style.display = "block";
+
+    currentCollection.template.forEach((item, itemIndex) => {
+      createNewComponent(item, itemIndex);
+    });
+  } else {
+    templateItemsDiv.style.display = "flex";
+    var noResourceText = document.createElement("div");
+    noResourceText.classList.add("noStuffDiv");
+    noResourceText.innerHTML = "Aucun Composant dans votre Modèle<br><br><br><br>Cliquez sur un des boutons en bas pour en ajouter un";
+
+    templateItemsDiv.appendChild(noResourceText);
+  }
 }
 
 export function createNewComponent(item, itemIndex) {
@@ -226,7 +246,7 @@ export function createNewComponent(item, itemIndex) {
     e.stopPropagation();
     item.isVisible = !item.isVisible;
     generateCollectionBtn.click();
-    updateComponents();
+    populateComponents();
   });
   itemAccordion.appendChild(visibilityBtn);
 
@@ -239,6 +259,7 @@ export function createNewComponent(item, itemIndex) {
     currentCollection.template.splice(e.target.parentNode.id, 1);
     generateCollectionBtn.click();
     setupComponents();
+    setupElements();
   });
   itemAccordion.appendChild(deleteComponentBtn);
 
@@ -289,6 +310,7 @@ export function createNewComponent(item, itemIndex) {
       }
     });
 
+
     var modeInput = document.createElement("img");
     modeInput.classList.add("modeInput");
 
@@ -303,9 +325,13 @@ export function createNewComponent(item, itemIndex) {
       modeInput.src = currentMode == "0" ? "./assets/fixedType.png" : "./assets/elementBasedType.png";
       modeInput.title = currentMode == "0" ? "Fixe" : "Basé sur l'élement";
       modeInput.id = inputID;
+      if(paramIndex > 2) parameterInput.disabled = currentMode == "0" ? false : true;
       modeInput.addEventListener("click", () => {
-        currentCollection.template[itemIndex][param.refValue]["type"] = currentCollection.template[itemIndex][param.refValue]["type"] == "0" ? "1" : "0";
-        updateComponents();
+        var typeOfParameter = currentCollection.template[itemIndex][param.refValue]["type"];
+        currentCollection.template[itemIndex][param.refValue]["type"] = typeOfParameter == "0" ? "1" : "0";
+        generateCollectionBtn.click();
+        populateComponents();
+        setupElements();
       });
     }
 
@@ -318,6 +344,8 @@ export function createNewComponent(item, itemIndex) {
         parameterInput.checked = item[param.refValue]["value"];
         parameterInput.addEventListener("input", (e) => {
           currentCollection.template[itemIndex][param.refValue]["value"] = e.target.checked;
+          generateCollectionBtn.click();
+          setupElements();
         });
         parameterName = document.createElement("label");
         parameterName.setAttribute("for", inputID);
@@ -338,7 +366,8 @@ export function createNewComponent(item, itemIndex) {
         parameterInput.addEventListener("input", (e) => {
           currentCollection.template[itemIndex][param.refValue]["value"] = e.target.value;
           generateCollectionBtn.click();
-          updateComponents();
+          populateComponents();
+          setupElements();
         });
 
         var refOptionList = param.optionRef ? eval(param.optionRef) : param.options;
@@ -383,7 +412,7 @@ export function createNewComponent(item, itemIndex) {
   templateItemsDiv.appendChild(itemPanel);
 }
 
-export function updateComponents() {
+export function populateComponents() {
   var allAccordions = templateItemsDiv.querySelectorAll(".accordion");
   currentCollection.template.forEach((item, index) => {
     var icon;
@@ -411,14 +440,29 @@ export function updateComponents() {
   });
 
   var allInputs = templateItemsDiv.querySelectorAll("input, select");
-  allInputs.forEach((input) => {
+  resetElementParameters();
+
+  allInputs.forEach((input, index) => {
     var inputID = input.id;
     var inputIndex = inputID.split("-")[0];
     var inputRefValue = inputID.split("-")[1];
     try {
       input.value = currentCollection.template[inputIndex][inputRefValue]["value"];
+      if(index > 1) input.disabled = currentCollection.template[inputIndex][inputRefValue]["type"] == "0" ? false : true;
     } catch (e) {
       input.value = 0;
+    }
+
+    var parameterType = currentCollection.template[inputIndex].component;
+    var parametersLoaded = eval(parameterType + "_parameters").filter((item) => item.type != "spacer");
+    var parameter = parametersLoaded[index];
+
+    if (currentCollection.template[inputIndex][inputRefValue].type === "1") {
+      ELEMENT_parameters.push({
+        name: parameter.name + " de " + currentCollection.template[inputIndex]["componentName"].value,
+        value: null,
+        type: parameter.type,
+      });
     }
   });
 
@@ -435,8 +479,6 @@ export function updateComponents() {
     }
     input.src = currentMode == "0" ? "./assets/fixedType.png" : "./assets/elementBasedType.png";
     input.title = currentMode == "0" ? "Fixe" : "Basé sur l'élement";
-
-    // document.getElementById(inputID).disabled = currentMode === "1";
   });
 }
 
@@ -467,12 +509,50 @@ export function setupElements() {
     elementItemsDiv.removeChild(elementItemsDiv.lastChild);
   }
 
-  currentCollection.elements.forEach((item, itemIndex) => {
-    createNewElement(item, itemIndex);
-  });
+  if (currentCollection.elements.length > 0) {
+    elementItemsDiv.style.display = "block";
+    currentCollection.elements.forEach((item, itemIndex) => {
+      createNewElement(item, itemIndex);
+    });
+  } else {
+    elementItemsDiv.style.display = "flex";
+    var noResourceText = document.createElement("div");
+    noResourceText.classList.add("noStuffDiv");
+    noResourceText.innerHTML = "Aucun Élément dans votre Collection<br><br><br><br>Cliquez sur le bouton en bas pour en ajouter un";
+
+    elementItemsDiv.appendChild(noResourceText);
+  }
 }
 
 export function createNewElement(item, itemIndex) {
+  var itemWrapper = document.createElement("div");
+  itemWrapper.classList.add("elementItemWrapper");
+
+  var toPrintCheckBoxLabel = document.createElement("label");
+  toPrintCheckBoxLabel.classList.add("checkboxContainer");
+  toPrintCheckBoxLabel.innerHTML = "<input type='checkbox' checked='checked'><span class='checkmark'></span>";
+  toPrintCheckBoxLabel.addEventListener("click", (e) => {
+    currentCollection.elements[itemIndex]["toPrint"] = e.target.checked;
+    generateCollectionBtn.click();
+  });
+
+  itemWrapper.appendChild(toPrintCheckBoxLabel);
+
+  var qtyInput = document.createElement("input");
+  qtyInput.classList.add("qtyInput");
+  qtyInput.type = "text";
+  qtyInput.value = currentCollection.elements[itemIndex]["quantity"];
+  qtyInput.addEventListener("input", (e) => {
+    currentCollection.elements[itemIndex]["quantity"] = parseInt(e.target.value);
+  });
+
+  var allQuantities = elementItemsDiv.querySelectorAll(".qtyInput");
+  allQuantities.forEach((input, index) => {
+    input.value = currentCollection.elements[index]["quantity"];
+  });
+
+  itemWrapper.appendChild(qtyInput);
+
   var itemAccordion = document.createElement("button");
   itemAccordion.id = itemIndex;
   itemAccordion.classList.add("accordion");
@@ -490,7 +570,7 @@ export function createNewElement(item, itemIndex) {
   itemAccordion.appendChild(deleteResourceBtn);
 
   itemAccordion.addEventListener("click", () => {
-    var panel = itemAccordion.nextElementSibling;
+    var panel = itemAccordion.parentNode.nextElementSibling;
     if (itemAccordion.classList.contains("active")) {
       panel.style.maxHeight = "0";
       panel.style.marginBottom = "0rem";
@@ -506,95 +586,126 @@ export function createNewElement(item, itemIndex) {
 
   var itemPanel = document.createElement("div");
   itemPanel.classList.add("itemPanel");
+  itemPanel.classList.add("elementItemPanel");
 
-  ELEMENT_parameters.forEach((param) => {
-    var parameterSlot = document.createElement("div");
-    parameterSlot.classList.add("parameterSlot");
+  if (ELEMENT_parameters.length > 0) {
+    ELEMENT_parameters.forEach((param, paramIndex) => {
+      var parameterSlot = document.createElement("div");
+      parameterSlot.classList.add("parameterSlot");
 
-    var parameterName = document.createElement("p");
-    parameterName.classList.add("parameterName");
-    parameterName.innerHTML = param.name;
-
-    var parameterInputLine = document.createElement("div");
-    parameterInputLine.classList.add("parameterInputLine");
-
-    var parameterInput = document.createElement("input");
-    var inputID = itemIndex + "-" + param.name;
-    parameterInput.id = inputID;
-    // parameterInput.addEventListener("input", (e) => {
-    //   try {
-    //     currentCollection.template[itemIndex][param.refValue]["value"] = e.target.value;
-    //   } catch {
-    //     currentCollection.template[itemIndex][param.refValue] = {
-    //       value: e.target.value,
-    //       type: "0",
-    //     };
-    //   }
-    // });
-
-    //CHECKBOXES
-    if (param.type === "checkbox") {
-      var oldName = parameterName.innerHTML;
-      parameterInput.type = param.type;
-      try{
-        parameterInput.checked = item[param.refValue]["value"];
-      }
-      catch(e){
-        parameterInput.checked = false;
-      }
-      // parameterInput.addEventListener("input", (e) => {
-      //   currentCollection.template[itemIndex][param.refValue]["value"] = e.target.checked;
-      // });
-      parameterName = document.createElement("label");
-      parameterName.setAttribute("for", inputID);
+      var parameterName = document.createElement("p");
       parameterName.classList.add("parameterName");
-      parameterName.innerHTML = oldName;
-      parameterInputLine.appendChild(parameterInput);
-      parameterInputLine.appendChild(parameterName);
-      parameterSlot.appendChild(parameterInputLine);
-    }
+      parameterName.innerHTML = param.name;
 
-    //SELECTS
-    else if (param.type === "select") {
-      parameterInput = document.createElement("select");
-      parameterInput.classList.add("parameterInput");
+      var parameterInputLine = document.createElement("div");
+      parameterInputLine.classList.add("parameterInputLine");
+
+      var parameterInput = document.createElement("input");
+      var inputID = itemIndex + "-" + param.name;
       parameterInput.id = inputID;
-      // parameterInput.addEventListener("input", (e) => {
-      //   currentCollection.template[itemIndex][param.refValue]["value"] = e.target.value;
-      //   generateCollectionBtn.click();
-      //   updateComponents();
-      // });
+      parameterInput.addEventListener("input", (e) => {
+        try {
+          currentCollection.elements[itemIndex][param.name] = e.target.value;
+        } catch {}
+      });
 
-      // var refOptionList = param.optionRef ? eval(param.optionRef) : param.options;
+      if (param.type !== "spacer") {
+        //CHECKBOXES
+        if (param.type === "checkbox") {
+          var oldName = parameterName.innerHTML;
+          parameterInput.type = param.type;
+          try {
+            parameterInput.checked = item[param.name];
+          } catch (e) {
+            parameterInput.checked = false;
+          }
+          parameterInput.addEventListener("input", (e) => {
+            currentCollection.elements[itemIndex][param.name] = e.target.checked;
+            generateCollectionBtn.click();
+            setupElements();
+          });
+          parameterName = document.createElement("label");
+          parameterName.setAttribute("for", inputID);
+          parameterName.classList.add("parameterName");
+          parameterName.innerHTML = oldName;
+          parameterInputLine.appendChild(parameterInput);
+          parameterInputLine.appendChild(parameterName);
+          parameterSlot.appendChild(parameterInputLine);
+        }
 
-      // refOptionList.forEach((opt) => {
-      //   var option = document.createElement("option");
-      //   if (param.optionRef) option.style.fontFamily = opt.value;
-      //   option.value = opt.value;
-      //   option.innerHTML = opt.label;
-      //   parameterInput.appendChild(option);
-      // });
-      parameterInput.value = item[param.refValue]["value"];
-      parameterSlot.appendChild(parameterName);
-      parameterInputLine.appendChild(parameterInput);
-      parameterSlot.appendChild(parameterInputLine);
-    } else {
-      parameterInput.classList.add("parameterInput");
-      if (param.type === "color") parameterInput.style.padding = "0.2rem";
-      parameterInput.type = param.type;
-      try {
-        parameterInput.value = item[param.refValue]["value"];
-      } catch (e) {
-        parameterInput.value = "";
+        //SELECTS
+        else if (param.type === "select") {
+          parameterInput = document.createElement("select");
+          parameterInput.classList.add("parameterInput");
+          parameterInput.id = inputID;
+          // parameterInput.addEventListener("input", (e) => {
+          //   currentCollection.template[itemIndex][param.refValue]["value"] = e.target.value;
+          //   generateCollectionBtn.click();
+          //   populateComponents();
+          // });
+
+          // var refOptionList = param.optionRef ? eval(param.optionRef) : param.options;
+
+          // refOptionList.forEach((opt) => {
+          //   var option = document.createElement("option");
+          //   if (param.optionRef) option.style.fontFamily = opt.value;
+          //   option.value = opt.value;
+          //   option.innerHTML = opt.label;
+          //   parameterInput.appendChild(option);
+          // });
+          parameterInput.value = item[param.refValue]["value"];
+          parameterSlot.appendChild(parameterName);
+          parameterInputLine.appendChild(parameterInput);
+          parameterSlot.appendChild(parameterInputLine);
+        } else {
+          parameterInput.classList.add("parameterInput");
+          if (param.type === "color") parameterInput.style.padding = "0.2rem";
+          parameterInput.type = param.type;
+          try {
+            parameterInput.value = item[param.refValue]["value"];
+          } catch (e) {
+            parameterInput.value = "";
+          }
+          parameterSlot.appendChild(parameterName);
+          parameterInputLine.appendChild(parameterInput);
+          parameterSlot.appendChild(parameterInputLine);
+        }
+      } else {
+        parameterName.classList.add("spacer");
+        if (paramIndex == 0) parameterName.classList.add("firstSpacer");
+        parameterSlot.appendChild(parameterName);
       }
-      parameterSlot.appendChild(parameterName);
-      parameterInputLine.appendChild(parameterInput);
-      parameterSlot.appendChild(parameterInputLine);
-    }
 
-    itemPanel.appendChild(parameterSlot);
+      itemPanel.appendChild(parameterSlot);
+    });
+  } else {
+    var noResourceText = document.createElement("div");
+    noResourceText.classList.add("noStuffDiv");
+    noResourceText.innerHTML = "Aucun Paramètre basé sur l'Élément dans le Modèle";
+
+    itemPanel.appendChild(noResourceText);
+  }
+
+  itemWrapper.appendChild(itemAccordion);
+  elementItemsDiv.appendChild(itemWrapper);
+  elementItemsDiv.appendChild(itemPanel);
+}
+
+export function populateElements() {
+  var allInputs = elementItemsDiv.querySelectorAll("input, select");
+  allInputs.forEach((input) => {
+    var inputID = input.id;
+    var inputIndex = inputID.split("-")[0];
+    var inputRefValue = inputID.split("-")[1];
+    try {
+      input.value = currentCollection.elements[inputIndex][inputRefValue];
+    } catch (e) {
+      input.value = 0;
+    }
   });
 
-  elementItemsDiv.appendChild(itemAccordion);
-  elementItemsDiv.appendChild(itemPanel);
+  var allQuantities = elementItemsDiv.querySelectorAll(".qtyInput");
+  allQuantities.forEach((input, index) => {
+    input.value = currentCollection.elements[index]["quantity"];
+  });
 }

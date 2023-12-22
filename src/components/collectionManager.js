@@ -7,7 +7,8 @@ import {
   setupComponents,
   setupElements,
   setupResources,
-  updateComponents,
+  populateComponents,
+  populateElements,
 } from "./routes/editionScreen.js";
 import {
   openPanel,
@@ -69,8 +70,9 @@ function setCurrentCollection(value) {
     checkOtherInputs(pageFormatSelect.id, pageFormatSelect.value);
     setupResources();
     setupComponents();
+    populateComponents();
     setupElements();
-    updateComponents();
+    populateElements();
   }, 500);
 }
 
@@ -113,7 +115,8 @@ export function saveCollection(refreshAssets) {
 
   setupCollectionDimensions();
   populateEditionFields();
-  updateComponents();
+  populateComponents();
+  populateElements();
 
   //SAVE CURRENT DECK IN FOLDER
   var deckToSave = JSON.stringify(currentCollection);

@@ -12,6 +12,9 @@
       "pageHeight" : 100
     },
     "template": [],
-    "elements": []
+    "elements": [{
+      "quantity": 1,
+      "toPrint": true
+    }]
   }
   
