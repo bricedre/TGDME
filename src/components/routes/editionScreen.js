@@ -308,6 +308,11 @@ export function createNewComponent(item, itemIndex) {
           type: "0",
         };
       }
+
+      if(param.refValue === "componentName") {
+        populateComponents();
+        setupElements();
+      }
     });
 
 
@@ -345,7 +350,6 @@ export function createNewComponent(item, itemIndex) {
         parameterInput.addEventListener("input", (e) => {
           currentCollection.template[itemIndex][param.refValue]["value"] = e.target.checked;
           generateCollectionBtn.click();
-          setupElements();
         });
         parameterName = document.createElement("label");
         parameterName.setAttribute("for", inputID);
@@ -367,7 +371,6 @@ export function createNewComponent(item, itemIndex) {
           currentCollection.template[itemIndex][param.refValue]["value"] = e.target.value;
           generateCollectionBtn.click();
           populateComponents();
-          setupElements();
         });
 
         var refOptionList = param.optionRef ? eval(param.optionRef) : param.options;
@@ -622,7 +625,6 @@ export function createNewElement(item, itemIndex) {
           parameterInput.addEventListener("input", (e) => {
             currentCollection.elements[itemIndex][param.name] = e.target.checked;
             generateCollectionBtn.click();
-            setupElements();
           });
           parameterName = document.createElement("label");
           parameterName.setAttribute("for", inputID);
