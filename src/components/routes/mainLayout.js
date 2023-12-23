@@ -1,5 +1,5 @@
 import { app } from "../../app.js";
-import { currentCollection, currentCollectionIndex, setCurrentCollectionIndex } from "../collectionManager.js";
+import { currentCollection, currentCollectionUID, setCurrentCollection } from "../collectionManager.js";
 import { checkOtherInputs, updateCardCounter, populateComponents } from "./editionScreen.js";
 
 const bottomBar = document.querySelector(".bottomBar");
@@ -7,7 +7,7 @@ const bottomBar = document.querySelector(".bottomBar");
 export const rootElement = document.querySelector(":root");
 
 homeBtn.addEventListener("click", () => {
-  setCurrentCollectionIndex(-1);
+  setCurrentCollection(-1);
   openPanel("start");
 });
 
@@ -46,7 +46,7 @@ allSelects.forEach((select) => {
 
 export function setUI() {
   //MENU
-  if (currentCollectionIndex == -1) {
+  if (currentCollectionUID == -1) {
     mainTitleDiv.innerHTML = "LA CABANE À PROTOS";
     tutorialBtn.style.display = "flex";
     newCollectionBtn.style.display = "flex";
@@ -71,7 +71,7 @@ export function setUI() {
 
   //EDITION
   else {
-    mainTitleDiv.innerHTML = currentCollection?.collectionInfo.deckName;
+    mainTitleDiv.innerHTML = currentCollection?.collectionInfo.collectionName;
     homeBtn.style.display = "flex";
     generateCollectionBtn.style.display = "flex";
     renderCollectionBtn.style.display = "flex";

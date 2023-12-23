@@ -2,7 +2,7 @@
 
 const p5 = require("p5");
 
-import { currentCollection, currentCollectionIndex } from "./components/collectionManager.js";
+import { currentCollection, currentCollectionUID } from "./components/collectionManager.js";
 import { generatePages, renderCardUsingTemplate } from "./components/render.js";
 import { setUI } from "./components/routes/mainLayout.js";
 import { setupMenu } from "./components/routes/menuScreen.js";
@@ -25,7 +25,7 @@ const sketch = (p) => {
 
   p.draw = () => {
     if (!p.generateMode) {
-      if (currentCollectionIndex !== -1) {
+      if (currentCollectionUID !== -1) {
         p.image(p.card, 0, 0, p.width, p.height);
       }
     } else {

@@ -2,7 +2,7 @@ const { rootPath } = require("electron-root-path");
 const fs = require("fs");
 const fontList = require("font-list");
 
-import { currentCollectionIndex, saveCollection } from "./collectionManager.js";
+import { currentCollectionUID, saveCollection } from "./collectionManager.js";
 import { setupResources } from "./routes/editionScreen.js";
 
 export let currentAssetsList;
@@ -11,7 +11,7 @@ export let assetsLibrary = {};
 export let errorImage;
 
 export function loadAssets(p) {
-  let assetsPath = rootPath + "/src/decks/" + currentCollectionIndex + "/assets/";
+  let assetsPath = rootPath + "/src/collections/" + currentCollectionUID + "/assets/";
   assetsLibrary = {};
 
   currentAssetsList = getFiles(assetsPath);
@@ -35,7 +35,7 @@ export function loadAssets(p) {
 }
 
 export function addAsset(newAsset) {
-  let assetsPath = rootPath + "/src/decks/" + currentCollectionIndex + "/assets/";
+  let assetsPath = rootPath + "/src/collections/" + currentCollectionUID + "/assets/";
   fs.copyFile(newAsset.path, assetsPath + newAsset.name, (err) => {
     saveCollection(true);
     generateCollectionBtn.click();

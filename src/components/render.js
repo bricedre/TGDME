@@ -73,6 +73,7 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
 
       //! TEXT
       else if (componentType == "TEXT") {
+        
         p5.card.noStroke();
         p5.card.textAlign(_anchor, p5.CENTER);
         p5.card.textFont(_font);
@@ -143,9 +144,11 @@ function getActualValue(refValue, componentIndex, elementIndex, dft, ev) {
   var LEFT = app.LEFT;
   var RIGHT = app.RIGHT;
 
+  console.log(componentIndex, elementIndex)
+
   var parameterType = currentCollection.template[componentIndex].component;
   var parametersLoaded = eval(parameterType + "_parameters").filter((item) => item.type != "spacer");
-  var parameterName = parametersLoaded[elementIndex + 2].name;
+  var parameterName = parametersLoaded[componentIndex+1].name;
   var componentName = currentCollection.template[componentIndex].componentName.value;
   var elementBasedName = parameterName + " de " + componentName;
   var elementBasedValue = currentCollection.elements[elementIndex][elementBasedName];
@@ -154,12 +157,25 @@ function getActualValue(refValue, componentIndex, elementIndex, dft, ev) {
   if (refValue) {
     if (ev) {
       try {
-        finalValue = eval(refValue.type == "1" ? elementBasedValue : refValue.value);
+        
+        if( refValue.type == "1"){
+          console.log(parameterName, componentName);
+          finalValue = eval(elementBasedValue);
+        }
+        else{
+          finalValue = eval(refValue.value);
+        }
       } catch (e) {
         finalValue = null;
       }
     } else {
-      finalValue = refValue.type == "1" ?elementBasedValue:refValue.value;
+      if( refValue.type == "1"){
+        console.log(parametersLoaded);
+        finalValue = elementBasedValue;
+      }
+      else{
+        finalValue = refValue.value;
+      }
     }
   } else finalValue == null;
 

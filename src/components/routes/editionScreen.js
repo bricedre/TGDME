@@ -72,7 +72,7 @@ export function goToOtherCard(delta) {
 }
 
 export function populateEditionFields() {
-  collectionNameInput.value = currentCollection.collectionInfo.deckName;
+  collectionNameInput.value = currentCollection.collectionInfo.collectionName;
   elementFormatSelect.value = currentCollection.collectionInfo.elementFormat;
   elementWidthInput.value = currentCollection.collectionInfo.W;
   elementHeightInput.value = currentCollection.collectionInfo.H;
@@ -310,13 +310,12 @@ export function createNewComponent(item, itemIndex) {
         };
       }
 
-      if(param.refValue === "componentName") {
+      if (param.refValue === "componentName") {
         populateComponents();
         setupElements();
         populateElements();
       }
     });
-
 
     var modeInput = document.createElement("img");
     modeInput.classList.add("modeInput");
@@ -332,7 +331,7 @@ export function createNewComponent(item, itemIndex) {
       modeInput.src = currentMode == "0" ? "./assets/fixedType.png" : "./assets/elementBasedType.png";
       modeInput.title = currentMode == "0" ? "Fixe" : "Basé sur l'élement";
       modeInput.id = inputID;
-      if(paramIndex > 2) parameterInput.disabled = currentMode == "0" ? false : true;
+      if (paramIndex > 2) parameterInput.disabled = currentMode == "0" ? false : true;
       modeInput.addEventListener("click", () => {
         var typeOfParameter = currentCollection.template[itemIndex][param.refValue]["type"];
         currentCollection.template[itemIndex][param.refValue]["type"] = typeOfParameter == "0" ? "1" : "0";
@@ -419,7 +418,9 @@ export function createNewComponent(item, itemIndex) {
 }
 
 export function populateComponents() {
+  
   var allAccordions = templateItemsDiv.querySelectorAll(".accordion");
+  
   currentCollection.template.forEach((item, index) => {
     var icon;
     var parametersToLoad;
@@ -443,33 +444,36 @@ export function populateComponents() {
     allAccordions[index].querySelector("span").innerHTML = item.componentName.value;
     if (item.isVisible) allAccordions[index].querySelector(".visibilityBtn").src = "./assets/visibilityOn.png";
     else allAccordions[index].querySelector(".visibilityBtn").src = "./assets/visibilityOff.png";
-  });
 
-  var allInputs = templateItemsDiv.querySelectorAll("input, select");
-  resetElementParameters();
+    resetElementParameters();
+    allAccordions.forEach((acc, accIndex) => {
+      
+      var accInputs = acc.nextElementSibling.querySelectorAll("input, select");
 
-  allInputs.forEach((input, index) => {
-    var inputID = input.id;
-    var inputIndex = inputID.split("-")[0];
-    var inputRefValue = inputID.split("-")[1];
-    try {
-      input.value = currentCollection.template[inputIndex][inputRefValue]["value"];
-      if(index > 1) input.disabled = currentCollection.template[inputIndex][inputRefValue]["type"] == "0" ? false : true;
-    } catch (e) {
-      input.value = 0;
-    }
+      accInputs.forEach((input, inputIndex) => {
+        
+        var inputRefValue = input.id.split("-")[1];
 
-    var parameterType = currentCollection.template[inputIndex].component;
-    var parametersLoaded = eval(parameterType + "_parameters").filter((item) => item.type != "spacer");
-    var parameter = parametersLoaded[index];
+        try {
+          input.value = currentCollection.template[accIndex][inputRefValue]["value"];
+          if (inputIndex > 1) input.disabled = currentCollection.template[accIndex][inputRefValue]["type"] == "0" ? false : true;
+        } catch (e) {
+          input.value = 0;
+        }
 
-    if (currentCollection.template[inputIndex][inputRefValue].type === "1") {
-      ELEMENT_parameters.push({
-        name: parameter.name + " de " + currentCollection.template[inputIndex]["componentName"].value,
-        value: null,
-        type: parameter.type,
+        var parameterType = currentCollection.template[accIndex].component;
+        var parametersLoaded = eval(parameterType + "_parameters").filter((item) => item.type != "spacer");
+        var parameter = parametersLoaded[inputIndex];
+
+        if (currentCollection.template[accIndex][inputRefValue].type === "1") {
+          ELEMENT_parameters.push({
+            name: parameter.name + " de " + currentCollection.template[accIndex]["componentName"].value,
+            value: null,
+            type: parameter.type,
+          });
+        }
       });
-    }
+    });
   });
 
   var allModeBtns = templateItemsDiv.querySelectorAll(".modeInput");

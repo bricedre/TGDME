@@ -1,4 +1,5 @@
 export let shapeComponentTemplate = {
+  UID:0,
   isVisible: true,
   component: "SHAPE",
   componentName: { value: "NOUVELLE FORME" },
@@ -18,6 +19,7 @@ export let shapeComponentTemplate = {
 };
 
 export let textComponentTemplate = {
+  UID:0,
   isVisible: true,
   component: "TEXT",
   componentName: { value: "NOUVEAU TEXTE" },
@@ -41,6 +43,7 @@ export let textComponentTemplate = {
 };
 
 export let imageComponentTemplate = {
+  UID:0,
   isVisible: true,
   component: "IMAGE",
   componentName: { value: "NOUVELLE IMAGE" },
@@ -51,6 +54,7 @@ export let imageComponentTemplate = {
   width: { value: "100", type: "0" },
   height: { value: "100", type: "0" },
   anchor: { value: "CENTER", type: "0" },
+  opacity: { value: "100", type: "0" },
   tint: { value: "#ffffff", type: "0" },
   angle: { value: "0", type: "0" },
   listAnchor: { value: "CENTER", type: "0" },

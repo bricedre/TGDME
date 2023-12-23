@@ -1,6 +1,7 @@
 {
     "collectionInfo": {
-      "deckName": "Nouvelle Collection",
+      "UID":0,
+      "collectionName": "Nouvelle Collection",
       "resolution": 60,
       "elementFormat": "pokerCard",
       "pageFormat": "A4",
@@ -13,6 +14,7 @@
     },
     "template": [],
     "elements": [{
+      "UID":0,
       "quantity": 1,
       "toPrint": true
     }]

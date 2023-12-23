@@ -7,7 +7,7 @@ let pageGeneration;
 export function generatePDF(pages) {
 
   var coll = currentCollection.collectionInfo;
-  var deckName = coll.deckName;
+  var collectionName = coll.collectionName;
 
   pageGeneration = new jsPDF("p", "px", [coll.pageWidth*coll.resolution, coll.pageHeight*coll.resolution], true);
   pages.forEach((page, index) => {
@@ -16,6 +16,6 @@ export function generatePDF(pages) {
     pageGeneration.addImage(page.canvas, "JPEG", 0, 0, coll.pageWidth*coll.resolution, coll.pageHeight*coll.resolution, "", "FAST");
   });
   
-  pageGeneration.save(deckName+".pdf");
+  pageGeneration.save(collectionName+".pdf");
 
 }
