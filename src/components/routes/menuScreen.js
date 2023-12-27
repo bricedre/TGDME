@@ -9,15 +9,5 @@ export function setupMenu() {
   newCollectionBtn.addEventListener("click", () => createNewCollection());
 
   loadCollectionBtn.addEventListener("click", () => openPanel("loading"));
-
-  archivedCollectionsContainer.addEventListener("click", () => {
-    if (archivedCollectionsContainer.classList.contains("active")) {
-      archivedCollectionsContainer.style.maxHeight = "3.2rem";
-    } else {
-      archivedCollectionsContainer.style.maxHeight = "calc(2rem + " + archivedCollectionsContainer.scrollHeight + "px)";
-
-    }
-
-    archivedCollectionsContainer.classList.toggle("active");
-  });
+  
 }

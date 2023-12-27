@@ -4,12 +4,16 @@
    justify-content: space-evenly;
  }
 
- #loadingPanelDiv {}
+ #loadingPanelDiv {
+  display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    justify-content: start;
+ }
 
  #archivedCollectionsContainer {
    background: #eee;
    padding: 1rem;
-   margin-top: 3rem;
    border-radius: 1rem;
    max-height: 3.2rem;
    overflow: hidden;
@@ -22,9 +26,9 @@
    display: grid;
    grid-template-columns: repeat(5, 1fr);
    height: fit-content;
-   margin-top: 1rem;
    gap: 0.5rem;
    min-height: 6vh;
+   width: 100%;
  }
 
 

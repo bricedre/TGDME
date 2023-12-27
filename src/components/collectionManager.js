@@ -30,6 +30,83 @@ export function getCollections() {
     const data = await fs.readFile("./src/collections/" + collection + "/collection.json");
     collectionsAvailable[index] = JSON.parse(data);
   });
+
+  setTimeout(() => {
+
+    loadingPanelDiv.innerHTML = "";
+
+    // Collections to show
+    if (collectionsAvailable.length > 0) {
+
+      var activeCollections = collectionsAvailable.filter(col => !col.collectionInfo.archived)
+      var archivedCollections = collectionsAvailable.filter(col => col.collectionInfo.archived)
+
+      if (activeCollections.length > 0) {
+        var activeCol = document.createElement("div");
+        activeCol.id = "activeCollectionsDiv";
+        loadingPanelDiv.appendChild(activeCol);
+
+        activeCollections.forEach((collection) => {
+          var btnElement = document.createElement("button");
+          btnElement.classList.add("deckBtn");
+          btnElement.innerHTML = collection.collectionInfo.collectionName;
+          btnElement.addEventListener("click", (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            setCurrentCollection(collection.collectionInfo.UID);
+          });
+
+          activeCol.appendChild(btnElement);
+        });
+      }
+
+      if (archivedCollections.length > 0) {
+
+        var archivedColContainer = document.createElement("div");
+        archivedColContainer.id = "archivedCollectionsContainer";
+        archivedColContainer.addEventListener("click", () => {
+          if (archivedColContainer.classList.contains("active")) {
+            archivedColContainer.style.maxHeight = "3.2rem";
+          } else {
+            archivedColContainer.style.maxHeight = "calc(2rem + " + archivedColContainer.scrollHeight + "px)";
+
+          }
+
+          archivedColContainer.classList.toggle("active");
+        });
+        archivedColContainer.innerHTML = "Collections Archivées";
+        loadingPanelDiv.appendChild(archivedColContainer);
+
+        var archivedCol = document.createElement("div");
+        archivedCol.id = "archivedCollectionsDiv";
+        archivedColContainer.appendChild(archivedCol);
+
+        archivedCollections.forEach((collection) => {
+          var btnElement = document.createElement("button");
+          btnElement.classList.add("deckBtn");
+          btnElement.innerHTML = collection.collectionInfo.collectionName;
+          btnElement.addEventListener("click", (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            setCurrentCollection(collection.collectionInfo.UID);
+          });
+
+          archivedCol.appendChild(btnElement);
+        });
+      }
+
+
+    }
+
+    //No Collections to show
+    else {
+      var noResourceText = document.createElement("div");
+      noResourceText.classList.add("noStuffDiv");
+      noResourceText.innerHTML = "Aucune Collection dans votre Bibliothèque<br><br><br><br>Retournez sur la page d'accueil pour en créer une";
+
+      loadingPanelDiv.appendChild(noResourceText);
+    }
+  }, 500);
 }
 
 export function setCurrentCollection(collectionUID) {
@@ -93,7 +170,7 @@ export function deleteCurrentCollection() {
       openPanel("start");
     })
     .catch((e) => console.log(e));
-    
+
 }
 
 export function duplicateCollection() {
@@ -115,15 +192,17 @@ export function duplicateCollection() {
         }
       });
       setCurrentCollection(newUID);
+      getCollections();
     }, 500);
   }
 }
 
-export function archiveCollection(){
+export function archiveCollection() {
   currentCollection.collectionInfo.archived = !currentCollection.collectionInfo.archived;
   saveCollection(false);
   setCurrentCollection(-1);
-  openPanel("loading");
+  setTimeout(() => getCollections(), 300);
+  setTimeout(() => openPanel("loading"), 1000);
 }
 
 export function saveCollection(refreshAssets) {
@@ -170,7 +249,6 @@ export function saveCollection(refreshAssets) {
 
   setTimeout(() => {
     renderCardUsingTemplate(app, app.currentIndex, currentCollection.collectionInfo.visualGuide);
-    setUI();
   }, 500);
 }
 
