@@ -10,6 +10,8 @@ import { renderCardUsingTemplate } from "./render.js";
 
 const fs = require("fs").promises;
 const { existsSync, mkdirSync, copyFileSync, readdirSync } = require("fs");
+const rimraf = require("rimraf");
+const fsExtra = require("fs-extra");
 
 export let collectionsAvailable;
 export let currentCollectionUID = -1;
@@ -30,11 +32,10 @@ export function getCollections() {
   });
 }
 
-
 export function setCurrentCollection(collectionUID) {
   currentCollectionUID = collectionUID;
   if (currentCollectionUID != -1) {
-    currentCollection = collectionsAvailable.filter(coll => coll.collectionInfo.UID == collectionUID)[0];
+    currentCollection = collectionsAvailable.filter((coll) => coll.collectionInfo.UID == collectionUID)[0];
 
     var coll = currentCollection.collectionInfo;
 
@@ -62,7 +63,6 @@ export function setCurrentCollection(collectionUID) {
 export function createNewCollection() {
   const newUID = collectionsAvailable.length == 0 ? 0 : collectionsAvailable[collectionsAvailable.length - 1].collectionInfo.UID + 1;
   var dir = "./src/collections/" + newUID;
-  console.log(newUID);
 
   if (!existsSync(dir)) {
     mkdirSync(dir);
@@ -72,6 +72,7 @@ export function createNewCollection() {
 
     setTimeout(() => {
       collectionsAvailable[collectionsAvailable.length - 1].collectionInfo.UID = newUID;
+      collectionsAvailable[collectionsAvailable.length - 1].collectionInfo.collectionName = "Nouvelle Collection N°" + (newUID + 1);
       var deckToSave = JSON.stringify(collectionsAvailable[collectionsAvailable.length - 1]);
       fs.writeFile("./src/collections/" + newUID + "/collection.json", deckToSave, (err) => {
         if (err) {
@@ -81,6 +82,48 @@ export function createNewCollection() {
       setCurrentCollection(newUID);
     }, 500);
   }
+}
+
+export function deleteCurrentCollection() {
+  rimraf
+    .rimraf("./src/collections/" + currentCollectionUID)
+    .then(() => {
+      setCurrentCollection(-1);
+      getCollections();
+      openPanel("start");
+    })
+    .catch((e) => console.log(e));
+    
+}
+
+export function duplicateCollection() {
+  const newUID = collectionsAvailable.length == 0 ? 0 : collectionsAvailable[collectionsAvailable.length - 1].collectionInfo.UID + 1;
+  var dir = "./src/collections/" + newUID;
+
+  if (!existsSync(dir)) {
+    fsExtra.copy("./src/collections/" + currentCollectionUID, "./src/collections/" + newUID);
+    getCollections();
+
+    setTimeout(() => {
+      //MODS
+      collectionsAvailable[collectionsAvailable.length - 1].collectionInfo.UID = newUID;
+      collectionsAvailable[collectionsAvailable.length - 1].collectionInfo.collectionName = "Copie de " + currentCollection.collectionInfo.collectionName;
+      var deckToSave = JSON.stringify(collectionsAvailable[collectionsAvailable.length - 1]);
+      fs.writeFile("./src/collections/" + newUID + "/collection.json", deckToSave, (err) => {
+        if (err) {
+          console.error(err);
+        }
+      });
+      setCurrentCollection(newUID);
+    }, 500);
+  }
+}
+
+export function archiveCollection(){
+  currentCollection.collectionInfo.archived = !currentCollection.collectionInfo.archived;
+  saveCollection(false);
+  setCurrentCollection(-1);
+  openPanel("loading");
 }
 
 export function saveCollection(refreshAssets) {
@@ -108,7 +151,7 @@ export function saveCollection(refreshAssets) {
 
   //SAVE CURRENT DECK IN FOLDER
   var deckToSave = JSON.stringify(currentCollection);
-  fs.writeFile("./src/decks/" + currentCollectionUID + "/deck.json", deckToSave, (err) => {
+  fs.writeFile("./src/collections/" + currentCollectionUID + "/collection.json", deckToSave, (err) => {
     if (err) {
       console.error(err);
     }

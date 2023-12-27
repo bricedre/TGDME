@@ -144,8 +144,6 @@ function getActualValue(refValue, componentIndex, elementIndex, dft, ev) {
   var LEFT = app.LEFT;
   var RIGHT = app.RIGHT;
 
-  console.log(componentIndex, elementIndex)
-
   var parameterType = currentCollection.template[componentIndex].component;
   var parametersLoaded = eval(parameterType + "_parameters").filter((item) => item.type != "spacer");
   var parameterName = parametersLoaded[componentIndex+1].name;
@@ -159,7 +157,6 @@ function getActualValue(refValue, componentIndex, elementIndex, dft, ev) {
       try {
         
         if( refValue.type == "1"){
-          console.log(parameterName, componentName);
           finalValue = eval(elementBasedValue);
         }
         else{
@@ -170,7 +167,6 @@ function getActualValue(refValue, componentIndex, elementIndex, dft, ev) {
       }
     } else {
       if( refValue.type == "1"){
-        console.log(parametersLoaded);
         finalValue = elementBasedValue;
       }
       else{

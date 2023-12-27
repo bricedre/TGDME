@@ -1,11 +1,15 @@
 import { app } from "../../app.js";
-import { addNewImage, addNewShape, addNewText, currentCollection, saveCollection } from "../collectionManager.js";
+import { addNewImage, addNewShape, addNewText, archiveCollection, currentCollection, deleteCurrentCollection, duplicateCollection, saveCollection } from "../collectionManager.js";
 import { rootElement } from "./mainLayout.js";
 import { IMAGE_parameters, TEXT_parameters, SHAPE_parameters, ELEMENT_parameters, resetElementParameters } from "../componentParameters.js";
 import { renderCardUsingTemplate } from "../render.js";
 import { addAsset, allSystemFonts, currentAssetsList, removeAsset } from "../assetLoader.js";
 
 //COLLECTION PARAMETERS
+
+duplicateCollectionBtn.addEventListener("click", () => duplicateCollection());
+archiveCollectionBtn.addEventListener("click", () => archiveCollection());
+deleteCollectionBtn.addEventListener("click", () => deleteCurrentCollection());
 
 renderCollectionBtn.addEventListener("click", () => triggerGeneration(app));
 
@@ -17,6 +21,7 @@ generateCollectionBtn.addEventListener("click", () => {
 generateCollectionBtn.addEventListener("animationend", () => {
   generateCollectionBtn.style.animation = "none";
 });
+
 bigPrevCardBtn.addEventListener("click", () => goToOtherCard(-10));
 prevCardBtn.addEventListener("click", () => goToOtherCard(-1));
 nextCardBtn.addEventListener("click", () => goToOtherCard(1));

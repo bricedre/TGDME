@@ -97,8 +97,27 @@ canvas {
 }
 
 #loadingPanelDiv {
+}
+
+#archivedCollectionsContainer {
+  background: #eee;
+  padding: 1rem;
+  margin-top: 3rem;
+  border-radius: 1rem;
+  max-height: 3.2rem;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+#activeCollectionsDiv,
+#archivedCollectionsDiv {
+  display: grid;
   grid-template-columns: repeat(5, 1fr);
   height: fit-content;
+  margin-top: 1rem;
+  gap: 0.5rem;
+  min-height: 6vh;
 }
 
 #editionPanelDiv {
@@ -618,7 +637,7 @@ input[type="file"] {
   transform: rotate(45deg);
 }
 
-.noStuffDiv{
+.noStuffDiv {
   text-align: center;
   color: #0007;
   margin: auto;

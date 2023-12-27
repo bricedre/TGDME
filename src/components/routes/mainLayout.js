@@ -1,5 +1,5 @@
 import { app } from "../../app.js";
-import { currentCollection, currentCollectionUID, setCurrentCollection } from "../collectionManager.js";
+import { collectionsAvailable, currentCollection, currentCollectionUID, getCollections, setCurrentCollection } from "../collectionManager.js";
 import { checkOtherInputs, updateCardCounter, populateComponents } from "./editionScreen.js";
 
 const bottomBar = document.querySelector(".bottomBar");
@@ -8,6 +8,7 @@ export const rootElement = document.querySelector(":root");
 
 homeBtn.addEventListener("click", () => {
   setCurrentCollection(-1);
+  getCollections();
   openPanel("start");
 });
 
@@ -78,6 +79,9 @@ export function setUI() {
     deleteCollectionBtn.style.display = "flex";
     duplicateCollectionBtn.style.display = "flex";
     archiveCollectionBtn.style.display = "flex";
+    archiveCollectionBtn.innerHTML = currentCollection.collectionInfo.archived
+      ? "DÉSARCHIVER LA COLLECTION<img src='./assets/archiveCollection.png'>"
+      : "ARCHIVER LA COLLECTION<img src='./assets/archiveCollection.png'>";
     addTextComponentBtn.style.display = "flex";
     addShapeComponentBtn.style.display = "flex";
     addImageComponentBtn.style.display = "flex";
@@ -97,23 +101,65 @@ export function setUI() {
 }
 
 export function openPanel(panelName) {
-  startPanelDiv.style.display = "none";
-  loadingPanelDiv.style.display = "none";
-  editionPanelDiv.style.display = "none";
-
   switch (panelName) {
     case "start":
+      loadingPanelDiv.style.display = "none";
+      editionPanelDiv.style.display = "none";
       startPanelDiv.style.display = "flex";
+      setUI();
       break;
 
     case "loading":
-      loadingPanelDiv.style.display = "grid";
+      getCollections();
+
+      setTimeout(() => {
+        mainTitleDiv.innerHTML = "BIBLIOTHÈQUE DE COLLECTIONS";
+
+        while (activeCollectionsDiv.firstChild) {
+          activeCollectionsDiv.removeChild(activeCollectionsDiv.lastChild);
+        }
+
+        while (archivedCollectionsDiv.firstChild) {
+          archivedCollectionsDiv.removeChild(archivedCollectionsDiv.lastChild);
+        }
+
+        if (collectionsAvailable.length > 0) {
+          collectionsAvailable.forEach((collection) => {
+            var btnElement = document.createElement("button");
+            btnElement.classList.add("deckBtn");
+            btnElement.innerHTML = collection.collectionInfo.collectionName;
+            btnElement.addEventListener("click", (e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              setCurrentCollection(collection.collectionInfo.UID);
+            });
+
+            if (!collection.collectionInfo.archived) activeCollectionsDiv.appendChild(btnElement);
+            else archivedCollectionsDiv.appendChild(btnElement);
+          });
+        } else {
+          loadingPanelDiv.style.display = "flex";
+          var noResourceText = document.createElement("div");
+          noResourceText.classList.add("noStuffDiv");
+          noResourceText.innerHTML = "Aucune Collection dans votre Bibliothèque<br><br><br><br>Retournez sur la page d'accueil pour en créer une";
+
+          loadingPanelDiv.appendChild(noResourceText);
+        }
+
+        startPanelDiv.style.display = "none";
+        editionPanelDiv.style.display = "none";
+        loadingPanelDiv.style.display = "block";
+
+        setUI();
+      }, 500);
+      
       break;
 
     case "edition":
       editionPanelDiv.style.display = "flex";
+      loadingPanelDiv.style.display = "none";
+      startPanelDiv.style.display = "none";
+      setUI();
       break;
   }
-
-  setUI();
 }
