@@ -8,6 +8,7 @@ export const rootElement = document.querySelector(":root");
 
 homeBtn.addEventListener("click", () => {
   setCurrentCollection(-1);
+  getCollections();
   openPanel("start");
 });
 
@@ -65,7 +66,7 @@ export function setUI() {
       addImageComponentBtn, addNewElementBtn, checkAllBtn, wizardFillBtn, renderCollectionBtn,
       cardCounterDiv, canvasDiv, bottomBar];
     elementsToHide = [tutorialBtn, newCollectionBtn, loadCollectionBtn];
-    updateCardCounter(app.currentIndex);
+    updateCardCounter();
   }
 
   elementsToDisplay.forEach(el => el.style.display = "flex");

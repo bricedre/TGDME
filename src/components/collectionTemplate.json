@@ -11,13 +11,12 @@
       "W" : 100,
       "H" : 100,
       "pageWidth" : 100,
-      "pageHeight" : 100
+      "pageHeight" : 100,
+      "lastComponentIndex" : 0,
+      "lastElementIndex" : 0
+
     },
     "template": [],
-    "elements": [{
-      "UID":0,
-      "quantity": 1,
-      "toPrint": true
-    }]
+    "elements": []
   }
   

@@ -64,3 +64,9 @@ export let imageComponentTemplate = {
   offsetX: { value: "100", type: "0" },
   offsetY: { value: "0", type: "0" },
 };
+
+export let elementTemplate = {
+    "UID":0,
+    "quantity": 1,
+    "toPrint": true
+  };

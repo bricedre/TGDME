@@ -1,5 +1,5 @@
 import { app } from "../../app.js";
-import { addNewImage, addNewShape, addNewText, archiveCollection, currentCollection, deleteCurrentCollection, duplicateCollection, saveCollection } from "../collectionManager.js";
+import { addNewElement, addNewImage, addNewShape, addNewText, archiveCollection, currentCollection, deleteCurrentCollection, duplicateCollection, saveCollection } from "../collectionManager.js";
 import { rootElement } from "./mainLayout.js";
 import { IMAGE_parameters, TEXT_parameters, SHAPE_parameters, ELEMENT_parameters, resetElementParameters } from "../componentParameters.js";
 import { renderCardUsingTemplate } from "../render.js";
@@ -31,6 +31,8 @@ addImageComponentBtn.addEventListener("click", () => addNewImage());
 addShapeComponentBtn.addEventListener("click", () => addNewShape());
 addTextComponentBtn.addEventListener("click", () => addNewText());
 
+addNewElementBtn.addEventListener("click", () => addNewElement());
+
 newResourceInput.addEventListener("change", function (e) {
   if (e.target.files[0]) {
     addAsset(e.target.files[0]);
@@ -41,9 +43,13 @@ newResourceInput.addEventListener("change", function (e) {
 GLOBAL
 */
 
-export function updateCardCounter(currentIndex) {
+export function updateCardCounter() {
+
+  var currentIndex = app.currentIndex;
+
   //INDEX
   if (currentCollection.elements.length > 0) {
+
     cardCounterDivLabel.innerHTML =
       "Élément " +
       (currentIndex + 1) +
@@ -56,28 +62,35 @@ export function updateCardCounter(currentIndex) {
     cardCounterDivLabel.innerHTML = "PAS DE CARTE À AFFICHER";
   }
 
-  if (app.currentIndex != 0) prevCardBtn.disabled = false;
-  else prevCardBtn.disabled = true;
+  if (app.currentIndex != 0) {
+    prevCardBtn.disabled = false;
+    bigPrevCardBtn.disabled = false;
+  }
+  else {
+    prevCardBtn.disabled = true;
+    bigPrevCardBtn.disabled = true;
+  }
 
-  if (currentCollection.elements.length > 0 && app.currentIndex != currentCollection.elements.length - 1) nextCardBtn.disabled = false;
-  else nextCardBtn.disabled = true;
-
-  if (app.currentIndex < 10) bigPrevCardBtn.disabled = true;
-  else bigPrevCardBtn.disabled = false;
-
-  if (app.currentIndex > currentCollection.elements.length - 10) bigNextCardBtn.disabled = true;
-  else bigNextCardBtn.disabled = false;
+  if (currentCollection.elements.length > 0 && app.currentIndex != currentCollection.elements.length - 1) {
+    nextCardBtn.disabled = false;
+    bigNextCardBtn.disabled = false;
+  }
+  else {
+    nextCardBtn.disabled = true;
+    bigNextCardBtn.disabled = true;
+  }
 }
 
 export function goToOtherCard(delta) {
   app.currentIndex = Math.min(Math.max(parseInt(app.currentIndex + delta), 0), currentCollection.elements.length - 1);
   renderCardUsingTemplate(app, app.currentIndex, currentCollection.collectionInfo.visualGuide);
-  updateCardCounter(app.currentIndex);
+  updateCardCounter();
   rootElement.style.setProperty("--cardAngle", 3 - app.random() * 6 + "deg");
 }
 
 export function populateEditionFields() {
   collectionNameInput.value = currentCollection.collectionInfo.collectionName;
+  mainTitleDiv.innerHTML = currentCollection?.collectionInfo.collectionName;
   elementFormatSelect.value = currentCollection.collectionInfo.elementFormat;
   elementWidthInput.value = currentCollection.collectionInfo.W;
   elementHeightInput.value = currentCollection.collectionInfo.H;
@@ -261,6 +274,7 @@ export function createNewComponent(item, itemIndex) {
   deleteComponentBtn.addEventListener("click", (e) => {
     e.preventDefault();
     e.stopPropagation();
+    console.log("del comp");
     currentCollection.template.splice(e.target.parentNode.id, 1);
     generateCollectionBtn.click();
     setupComponents();
@@ -316,6 +330,7 @@ export function createNewComponent(item, itemIndex) {
       }
 
       if (param.refValue === "componentName") {
+        console.log("comp title");
         populateComponents();
         setupElements();
         populateElements();
@@ -338,6 +353,7 @@ export function createNewComponent(item, itemIndex) {
       modeInput.id = inputID;
       if (paramIndex > 2) parameterInput.disabled = currentMode == "0" ? false : true;
       modeInput.addEventListener("click", () => {
+        console.log("change mod");
         var typeOfParameter = currentCollection.template[itemIndex][param.refValue]["type"];
         currentCollection.template[itemIndex][param.refValue]["type"] = typeOfParameter == "0" ? "1" : "0";
         generateCollectionBtn.click();
@@ -423,9 +439,9 @@ export function createNewComponent(item, itemIndex) {
 }
 
 export function populateComponents() {
-  
+
   var allAccordions = templateItemsDiv.querySelectorAll(".accordion");
-  
+
   currentCollection.template.forEach((item, index) => {
     var icon;
     var parametersToLoad;
@@ -452,11 +468,11 @@ export function populateComponents() {
 
     resetElementParameters();
     allAccordions.forEach((acc, accIndex) => {
-      
+
       var accInputs = acc.nextElementSibling.querySelectorAll("input, select");
 
       accInputs.forEach((input, inputIndex) => {
-        
+
         var inputRefValue = input.id.split("-")[1];
 
         try {
@@ -537,6 +553,8 @@ export function setupElements() {
 
     elementItemsDiv.appendChild(noResourceText);
   }
+
+  updateCardCounter();
 }
 
 export function createNewElement(item, itemIndex) {
@@ -574,15 +592,18 @@ export function createNewElement(item, itemIndex) {
 
   itemAccordion.innerHTML = "<img src='assets/element.png'><span>Élément " + (itemIndex + 1) + "</span>";
 
-  var deleteResourceBtn = document.createElement("img");
-  deleteResourceBtn.classList.add("deleteResourceBtn");
-  deleteResourceBtn.src = "./assets/delete.png";
-  deleteResourceBtn.addEventListener("click", (e) => {
+  var deleteElementBtn = document.createElement("img");
+  deleteElementBtn.classList.add("deleteElementBtn");
+  deleteElementBtn.src = "./assets/delete.png";
+  deleteElementBtn.addEventListener("click", (e) => {
+    console.log("del elem");
     e.preventDefault();
     e.stopPropagation();
-    // removeAsset(currentAssetsList[itemAccordion.id]);
+    currentCollection.elements.splice(e.target.parentNode.id, 1);
+    generateCollectionBtn.click();
   });
-  itemAccordion.appendChild(deleteResourceBtn);
+  itemAccordion.appendChild(deleteElementBtn);
+
 
   itemAccordion.addEventListener("click", () => {
     var panel = itemAccordion.parentNode.nextElementSibling;
@@ -621,7 +642,7 @@ export function createNewElement(item, itemIndex) {
       parameterInput.addEventListener("input", (e) => {
         try {
           currentCollection.elements[itemIndex][param.name] = e.target.value;
-        } catch {}
+        } catch { }
       });
 
       if (param.type !== "spacer") {
@@ -720,6 +741,7 @@ export function populateElements() {
 
   var allQuantities = elementItemsDiv.querySelectorAll(".qtyInput");
   allQuantities.forEach((input, index) => {
+    console.log(currentCollection.elements[index])
     input.value = currentCollection.elements[index]["quantity"];
   });
 }

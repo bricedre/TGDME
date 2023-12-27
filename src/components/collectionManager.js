@@ -1,11 +1,11 @@
 const cloneDeep = require("lodash/cloneDeep");
 
 import { app } from "../app.js";
-import { checkOtherInputs, populateEditionFields, setupComponents, setupElements, setupResources, populateComponents, populateElements } from "./routes/editionScreen.js";
+import { checkOtherInputs, populateEditionFields, setupComponents, setupElements, setupResources, populateComponents, populateElements, updateCardCounter } from "./routes/editionScreen.js";
 import { openPanel, setUI } from "./routes/mainLayout.js";
 
 import { getFontList, loadAssets } from "./assetLoader.js";
-import { imageComponentTemplate, textComponentTemplate, shapeComponentTemplate } from "./componentTemplates.js";
+import { imageComponentTemplate, textComponentTemplate, shapeComponentTemplate, elementTemplate } from "./templates.js";
 import { renderCardUsingTemplate } from "./render.js";
 
 const fs = require("fs").promises;
@@ -122,6 +122,7 @@ export function setCurrentCollection(collectionUID) {
     app.setupCanvas(coll.W * coll.resolution, coll.H * coll.resolution, coll.pageWidth * coll.resolution, coll.pageHeight * coll.resolution);
 
     setTimeout(() => {
+      console.log("set coll");
       renderCardUsingTemplate(app, app.currentIndex, currentCollection.collectionInfo.visualGuide);
       setUI();
       openPanel("edition");
@@ -157,6 +158,7 @@ export function createNewCollection() {
         }
       });
       setCurrentCollection(newUID);
+      addNewElement();
     }, 500);
   }
 }
@@ -223,6 +225,7 @@ export function saveCollection(refreshAssets) {
   coll.collectionInfo.resolution = Math.max(1, pageResolutionInput.value);
   coll.collectionInfo.cuttingHelp = cuttingHelpInput.checked;
 
+  console.log("save");
   setupCollectionDimensions();
   populateEditionFields();
   populateComponents();
@@ -339,18 +342,31 @@ export function setupCollectionDimensions() {
 
 export function addNewImage() {
   currentCollection.template.push(cloneDeep(imageComponentTemplate));
-  setupComponents();
-  generateCollectionBtn.click();
+  updateComponent();
 }
 
 export function addNewText() {
   currentCollection.template.push(cloneDeep(textComponentTemplate));
-  setupComponents();
-  generateCollectionBtn.click();
+  updateComponent();
 }
 
 export function addNewShape() {
   currentCollection.template.push(cloneDeep(shapeComponentTemplate));
+  updateComponent();
+}
+
+function updateComponent(){
+  currentCollection.template[currentCollection.template.length-1].UID = currentCollection.collectionInfo.lastComponentIndex;
+  currentCollection.collectionInfo.lastComponentIndex++;
   setupComponents();
+  generateCollectionBtn.click();
+}
+
+export function addNewElement() {
+  console.log("coucou")
+  currentCollection.elements.push(cloneDeep(elementTemplate));
+  currentCollection.elements[currentCollection.elements.length-1].UID = currentCollection.collectionInfo.lastElementIndex;
+  currentCollection.collectionInfo.lastElementIndex++;
+  setupElements();
   generateCollectionBtn.click();
 }
