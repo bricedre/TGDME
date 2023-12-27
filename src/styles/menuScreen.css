@@ -1,0 +1,69 @@
+ #startPanelDiv {
+   display: flex;
+   flex-direction: row;
+   justify-content: space-evenly;
+ }
+
+ #loadingPanelDiv {}
+
+ #archivedCollectionsContainer {
+   background: #eee;
+   padding: 1rem;
+   margin-top: 3rem;
+   border-radius: 1rem;
+   max-height: 3.2rem;
+   overflow: hidden;
+   cursor: pointer;
+   transition: all 0.3s ease-in-out;
+ }
+
+ #activeCollectionsDiv,
+ #archivedCollectionsDiv {
+   display: grid;
+   grid-template-columns: repeat(5, 1fr);
+   height: fit-content;
+   margin-top: 1rem;
+   gap: 0.5rem;
+   min-height: 6vh;
+ }
+
+
+
+ .homePageBtn {
+   font-size: 1.8rem;
+   position: relative;
+   aspect-ratio: 2;
+   width: 29vw;
+ }
+
+ .homePageBtn>.imgContainer {
+   position: absolute;
+   bottom: 86%;
+   background: #77c7ff;
+   border-radius: 50%;
+   padding: 1rem;
+   border: 10px white solid;
+   display: grid;
+   place-items: center;
+ }
+
+ .imgContainer>img {
+   height: 4rem;
+   rotate: 5deg;
+ }
+
+ .deckBtn {
+   display: flex;
+   height: 100%;
+ }
+
+
+ #homeBtn {
+   display: flex;
+   padding: 0.5rem;
+   border-radius: 50%;
+ }
+
+ #homeBtn:hover {
+   background: var(--mainColorLight);
+ }
