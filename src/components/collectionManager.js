@@ -2,7 +2,7 @@ const cloneDeep = require("lodash/cloneDeep");
 
 import { app } from "../app.js";
 import { checkOtherInputs, populateEditionFields, setupComponents, setupElements, setupResources, populateComponents, populateElements, updateCardCounter } from "./routes/editionScreen.js";
-import { openPanel, setUI } from "./routes/mainLayout.js";
+import { openPanel } from "./routes/mainLayout.js";
 
 import { getFontList, loadAssets } from "./assetLoader.js";
 import { imageComponentTemplate, textComponentTemplate, shapeComponentTemplate, elementTemplate } from "./templates.js";
@@ -124,7 +124,6 @@ export function setCurrentCollection(collectionUID) {
     setTimeout(() => {
       console.log("set coll");
       renderCardUsingTemplate(app, app.currentIndex, currentCollection.collectionInfo.visualGuide);
-      setUI();
       openPanel("edition");
       populateEditionFields();
       checkOtherInputs(elementFormatSelect.id, elementFormatSelect.value);
@@ -363,7 +362,6 @@ function updateComponent(){
 }
 
 export function addNewElement() {
-  console.log("coucou")
   currentCollection.elements.push(cloneDeep(elementTemplate));
   currentCollection.elements[currentCollection.elements.length-1].UID = currentCollection.collectionInfo.lastElementIndex;
   currentCollection.collectionInfo.lastElementIndex++;

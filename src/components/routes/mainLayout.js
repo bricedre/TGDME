@@ -45,62 +45,32 @@ allSelects.forEach((select) => {
   });
 });
 
-export function setUI() {
-
-  var elementsToDisplay;
-  var elementsToHide;
-
-  //MENU
-  if (currentCollectionUID == -1) {
-    elementsToDisplay = [tutorialBtn, newCollectionBtn, loadCollectionBtn];
-    elementsToHide = [generateCollectionBtn, renderCollectionBtn, deleteCollectionBtn,
-      duplicateCollectionBtn, archiveCollectionBtn, addTextComponentBtn, addShapeComponentBtn,
-      addImageComponentBtn, addNewElementBtn, checkAllBtn, wizardFillBtn, renderCollectionBtn,
-      cardCounterDiv, canvasDiv, bottomBar];
-  }
-
-  //EDITION
-  else {
-    elementsToDisplay = [generateCollectionBtn, renderCollectionBtn, deleteCollectionBtn,
-      duplicateCollectionBtn, archiveCollectionBtn, addTextComponentBtn, addShapeComponentBtn,
-      addImageComponentBtn, addNewElementBtn, checkAllBtn, wizardFillBtn, renderCollectionBtn,
-      cardCounterDiv, canvasDiv, bottomBar];
-    elementsToHide = [tutorialBtn, newCollectionBtn, loadCollectionBtn];
-    updateCardCounter();
-  }
-
-  elementsToDisplay.forEach(el => el.style.display = "flex");
-  elementsToHide.forEach(el => el.style.display = "none");
-}
-
 export function openPanel(panelName) {
   switch (panelName) {
     case "start":
+      startPanelDiv.style.display = "flex";
       loadingPanelDiv.style.display = "none";
       editionPanelDiv.style.display = "none";
-      startPanelDiv.style.display = "flex";
-
-      setUI();
+      bottomBarDiv.style.display = "none";
       mainTitleDiv.innerHTML = "LA CABANE À PROTOS";
 
       break;
 
     case "loading":
       startPanelDiv.style.display = "none";
-      editionPanelDiv.style.display = "none";
       loadingPanelDiv.style.display = "flex";
-
-      setUI();
+      editionPanelDiv.style.display = "none";
+      bottomBarDiv.style.display = "none";
       mainTitleDiv.innerHTML = "BIBLIOTHÈQUE DE COLLECTIONS";
-
       break;
 
     case "edition":
-      editionPanelDiv.style.display = "flex";
-      loadingPanelDiv.style.display = "none";
       startPanelDiv.style.display = "none";
+      loadingPanelDiv.style.display = "none";
+      editionPanelDiv.style.display = "flex";
+      bottomBarDiv.style.display = "flex";
 
-      setUI();
+      updateCardCounter();
       mainTitleDiv.innerHTML = currentCollection?.collectionInfo.collectionName;
       archiveCollectionBtn.innerHTML = currentCollection.collectionInfo.archived
         ? "DÉSARCHIVER LA COLLECTION<img src='./assets/archiveCollection.png'>"

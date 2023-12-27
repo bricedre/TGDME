@@ -87,7 +87,7 @@ button {
   padding: 0.5rem 2rem;
   border-radius: 2vh;
   border: none;
-  display: none;
+  display: flex;
   align-items: center;
   font-size: 1rem;
   cursor: pointer;
@@ -115,12 +115,7 @@ button:disabled {
 }
 
 
-
-
-
-
-
-.bottomBar {
+#bottomBarDiv {
   background: linear-gradient(-90deg, var(--mainColor), #34b3ff);
   min-height: 10vh;
   display: none;

@@ -48,11 +48,12 @@
     </div>
     <div id="editionPanelDiv" class="panel">
 
-      <button id="generateCollectionBtn" title="Re-générer la Collection (Entrée)" class="generateCollectionBtn">
-        <img src="./assets/reload.png" alt="add symbol" />
-      </button>
+      
 
       <div class="tabs">
+        <button id="generateCollectionBtn" title="Re-générer la Collection (Entrée)" class="generateCollectionBtn">
+          <img src="./assets/reload.png" alt="add symbol" />
+        </button>
         <input id="tabConfigInput" type="radio" name="tabs" checked>
         <label for="tabConfigInput"
           title="Configuration générale de la Collection et des Élements (F1)">Configuration</label>
@@ -258,15 +259,17 @@
         </div>
 
       </div>
+
+      <div id="canvasDiv">
+        <main></main>
+      </div>
     </div>
 
-    <div id="canvasDiv" class="panel">
-      <main></main>
-    </div>
+   
 
   </div>
 
-  <div class="bottomBar">
+  <div id="bottomBarDiv">
     <div id="cardCounterDiv">
       
       <div id="cardCounterDivBtns">

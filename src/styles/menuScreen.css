@@ -19,6 +19,7 @@
    overflow: hidden;
    cursor: pointer;
    transition: all 0.3s ease-in-out;
+   width: 100%;
  }
 
  #activeCollectionsDiv,
@@ -26,12 +27,14 @@
    display: grid;
    grid-template-columns: repeat(5, 1fr);
    height: fit-content;
-   gap: 0.5rem;
+   gap: 1rem;
    min-height: 6vh;
    width: 100%;
  }
 
-
+#archivedCollectionsDiv{
+  margin-top: 1rem;
+}
 
  .homePageBtn {
    font-size: 1.8rem;

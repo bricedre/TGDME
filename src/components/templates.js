@@ -33,7 +33,6 @@ export let textComponentTemplate = {
   font: { value: "", type: "0" },
   angle: { value: "0", type: "0" },
   opacity: { value: "100", type: "0" },
-
   shadow: { value: false, type: "0" },
   shadowColor: { value: "#000000", type: "0" },
   shadowOffsetX: { value: "10", type: "0" },

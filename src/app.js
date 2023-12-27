@@ -4,7 +4,6 @@ const p5 = require("p5");
 
 import { currentCollection, currentCollectionUID } from "./components/collectionManager.js";
 import { generatePages, renderCardUsingTemplate } from "./components/render.js";
-import { setUI } from "./components/routes/mainLayout.js";
 import { setupMenu } from "./components/routes/menuScreen.js";
 
 const sketch = (p) => {
@@ -19,7 +18,6 @@ const sketch = (p) => {
     p.page.imageMode(p.CORNER);
     p.card.imageMode(p.CENTER);
 
-    setUI();
     setupMenu();
   };
 

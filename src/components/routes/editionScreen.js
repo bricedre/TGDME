@@ -209,7 +209,7 @@ export function setupComponents() {
 
 export function createNewComponent(item, itemIndex) {
   var itemAccordion = document.createElement("button");
-  itemAccordion.id = itemIndex;
+  itemAccordion.id = item.UID;
   itemAccordion.classList.add("accordion");
 
   var icon;
@@ -317,7 +317,7 @@ export function createNewComponent(item, itemIndex) {
     parameterInputLine.classList.add("parameterInputLine");
 
     var parameterInput = document.createElement("input");
-    var inputID = itemIndex + "-" + param.refValue;
+    var inputID = item.UID + "-" + param.refValue;
     parameterInput.id = inputID;
     parameterInput.addEventListener("input", (e) => {
       try {
@@ -587,7 +587,7 @@ export function createNewElement(item, itemIndex) {
   itemWrapper.appendChild(qtyInput);
 
   var itemAccordion = document.createElement("button");
-  itemAccordion.id = itemIndex;
+  itemAccordion.id = item.UID;
   itemAccordion.classList.add("accordion");
 
   itemAccordion.innerHTML = "<img src='assets/element.png'><span>Élément " + (itemIndex + 1) + "</span>";
@@ -637,7 +637,7 @@ export function createNewElement(item, itemIndex) {
       parameterInputLine.classList.add("parameterInputLine");
 
       var parameterInput = document.createElement("input");
-      var inputID = itemIndex + "-" + param.name;
+      var inputID = item.UID + "-" + param.name;
       parameterInput.id = inputID;
       parameterInput.addEventListener("input", (e) => {
         try {
@@ -741,7 +741,6 @@ export function populateElements() {
 
   var allQuantities = elementItemsDiv.querySelectorAll(".qtyInput");
   allQuantities.forEach((input, index) => {
-    console.log(currentCollection.elements[index])
     input.value = currentCollection.elements[index]["quantity"];
   });
 }
