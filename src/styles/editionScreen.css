@@ -54,7 +54,8 @@ canvas {
 }
 
 #generateCollectionBtn:hover {
-  background-color: transparent;
+  background: transparent;
+  scale: 1.3;
 }
 
 #generateCollectionBtn>img {

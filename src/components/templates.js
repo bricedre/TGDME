@@ -65,7 +65,7 @@ export let imageComponentTemplate = {
 };
 
 export let elementTemplate = {
-    "UID":0,
-    "quantity": 1,
-    "toPrint": true
+    UID:0,
+    quantity: 1,
+    toPrint: true
   };

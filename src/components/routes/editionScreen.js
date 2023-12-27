@@ -274,12 +274,11 @@ export function createNewComponent(item, itemIndex) {
   deleteComponentBtn.addEventListener("click", (e) => {
     e.preventDefault();
     e.stopPropagation();
-    console.log("del comp");
-    currentCollection.template.splice(e.target.parentNode.id, 1);
-    generateCollectionBtn.click();
+    var componentToDelete = currentCollection.template.filter(el => el.UID == e.target.parentNode.id)[0];
+    currentCollection.template.splice(currentCollection.template.indexOf(componentToDelete), 1);
     setupComponents();
     setupElements();
-    populateElements();
+    generateCollectionBtn.click();
   });
   itemAccordion.appendChild(deleteComponentBtn);
 
@@ -563,10 +562,16 @@ export function createNewElement(item, itemIndex) {
 
   var toPrintCheckBoxLabel = document.createElement("label");
   toPrintCheckBoxLabel.classList.add("checkboxContainer");
-  toPrintCheckBoxLabel.innerHTML = "<input type='checkbox' checked='checked'><span class='checkmark'></span>";
+  toPrintCheckBoxLabel.innerHTML = "<input type='checkbox'><span class='checkmark'></span>";
+  var printInput = toPrintCheckBoxLabel.firstChild;
+  printInput.checked = currentCollection.elements[itemIndex]["toPrint"];
   toPrintCheckBoxLabel.addEventListener("click", (e) => {
-    currentCollection.elements[itemIndex]["toPrint"] = e.target.checked;
-    generateCollectionBtn.click();
+    // e.preventDefault();
+    // e.stopPropagation();
+    var elementToEdit = currentCollection.elements.filter(el => el.UID == e.target.parentNode.nextElementSibling.nextElementSibling.id)[0];
+    console.log(elementToEdit, e.target.parentNode.firstChild.checked)
+    elementToEdit["toPrint"] = e.target.parentNode.firstChild.checked;
+    saveCollection(false);
   });
 
   itemWrapper.appendChild(toPrintCheckBoxLabel);
@@ -577,11 +582,6 @@ export function createNewElement(item, itemIndex) {
   qtyInput.value = currentCollection.elements[itemIndex]["quantity"];
   qtyInput.addEventListener("input", (e) => {
     currentCollection.elements[itemIndex]["quantity"] = parseInt(e.target.value);
-  });
-
-  var allQuantities = elementItemsDiv.querySelectorAll(".qtyInput");
-  allQuantities.forEach((input, index) => {
-    input.value = currentCollection.elements[index]["quantity"];
   });
 
   itemWrapper.appendChild(qtyInput);
@@ -599,7 +599,9 @@ export function createNewElement(item, itemIndex) {
     console.log("del elem");
     e.preventDefault();
     e.stopPropagation();
-    currentCollection.elements.splice(e.target.parentNode.id, 1);
+    var elementToDelete = currentCollection.elements.filter(el => el.UID == e.target.parentNode.id)[0];
+    currentCollection.elements.splice(currentCollection.elements.indexOf(elementToDelete), 1);
+    setupElements();
     generateCollectionBtn.click();
   });
   itemAccordion.appendChild(deleteElementBtn);
@@ -740,6 +742,7 @@ export function populateElements() {
   });
 
   var allQuantities = elementItemsDiv.querySelectorAll(".qtyInput");
+  console.log(allQuantities.length);
   allQuantities.forEach((input, index) => {
     input.value = currentCollection.elements[index]["quantity"];
   });
