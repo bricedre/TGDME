@@ -7,7 +7,7 @@ export let IMAGE_parameters = [
     type: "text",
     forced: true,
   },
-  { name: "Image ou Liste d'Images à Afficher", refValue: "src", type: "text", title: "Si vous désirez créer une chaîne d'images, séparez-les par des virgules" },
+  { name: "Source", refValue: "src", type: "text", title: "Image ou liste d'images à afficher. Si vous désirez créer une chaîne d'images, séparez-les par des virgules" },
 
   { name: "<span class='spacerIcon'>📏</span><span>Positionnement, Dimensions & Rotation</span>", type: "spacer" },
   { name: "Position Horizontale", refValue: "positionX", type: "text" },
@@ -16,7 +16,7 @@ export let IMAGE_parameters = [
   { name: "Hauteur", refValue: "height", type: "text" },
   { name: "Rotation", refValue: "angle", type: "text" },
   {
-    name: "Alignement",
+    name: "Ancre",
     refValue: "anchor",
     type: "select",
     options: [
@@ -30,7 +30,7 @@ export let IMAGE_parameters = [
 
   { name: "<span class='spacerIcon'>🔗</span><span>Configuration de chaîne (liste d'images)</span>", type: "spacer" },
   {
-    name: "Alignement",
+    name: "Alignement de Chaîne",
     refValue: "listAnchor",
     type: "select",
     options: [
@@ -65,9 +65,10 @@ export let SHAPE_parameters = [
     forced: true,
   },
   {
-    name: "Forme à Afficher",
+    name: "Source",
     refValue: "src",
     type: "select",
+    title: "Forme à Afficher",
     options: [
       { value: "ring", label: "⭕ANNEAU" },
       { value: "shield", label: "🛡️BOUCLIER" },

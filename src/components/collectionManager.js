@@ -22,6 +22,7 @@ openPanel("start");
 getFontList();
 
 export function getCollections() {
+  console.log("FN : Récupération des Collections")
   collectionsAvailable = readdirSync("./src/collections", { withFileTypes: true })
     .filter((dirent) => dirent.isDirectory())
     .map((dirent) => dirent.name);
@@ -110,6 +111,7 @@ export function getCollections() {
 }
 
 export function setCurrentCollection(collectionUID) {
+  console.log("FN : Définition Collection actuelle")
   currentCollectionUID = collectionUID;
   if (currentCollectionUID != -1) {
     currentCollection = collectionsAvailable.filter((coll) => coll.collectionInfo.UID == collectionUID)[0];
@@ -118,12 +120,12 @@ export function setCurrentCollection(collectionUID) {
 
     loadAssets(app);
     setupCollectionDimensions();
+    
 
     app.setupCanvas(coll.W * coll.resolution, coll.H * coll.resolution, coll.pageWidth * coll.resolution, coll.pageHeight * coll.resolution);
 
     setTimeout(() => {
-      console.log("set coll");
-      renderCardUsingTemplate(app, app.currentIndex, currentCollection.collectionInfo.visualGuide);
+      app.currentIndex = 0;
       openPanel("edition");
       populateEditionFields();
       checkOtherInputs(elementFormatSelect.id, elementFormatSelect.value);
@@ -133,6 +135,7 @@ export function setCurrentCollection(collectionUID) {
       populateComponents();
       setupElements();
       populateElements();
+      renderCardUsingTemplate(app, app.currentIndex, currentCollection.collectionInfo.visualGuide);
     }, 500);
   }
 }
@@ -207,6 +210,7 @@ export function archiveCollection() {
 }
 
 export function saveCollection(refreshAssets) {
+  console.log("FN : sauvegarde Collection");
   var coll = currentCollection;
 
   //ALTER THE DATA TO CURRENT DECK
@@ -223,12 +227,11 @@ export function saveCollection(refreshAssets) {
   coll.collectionInfo.pageOrientation = pageOrientationSelect.value;
   coll.collectionInfo.resolution = Math.max(1, pageResolutionInput.value);
   coll.collectionInfo.cuttingHelp = cuttingHelpInput.checked;
-
-  console.log("save");
+  
   setupCollectionDimensions();
   populateEditionFields();
-  populateComponents();
-  populateElements();
+  // populateComponents();
+  // populateElements();
 
   //SAVE CURRENT DECK IN FOLDER
   var deckToSave = JSON.stringify(currentCollection);
@@ -366,5 +369,6 @@ export function addNewElement() {
   currentCollection.elements[currentCollection.elements.length-1].UID = currentCollection.collectionInfo.lastElementIndex;
   currentCollection.collectionInfo.lastElementIndex++;
   setupElements();
+  populateElements();
   generateCollectionBtn.click();
 }

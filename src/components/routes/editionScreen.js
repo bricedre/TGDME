@@ -44,12 +44,10 @@ GLOBAL
 */
 
 export function updateCardCounter() {
-
   var currentIndex = app.currentIndex;
 
   //INDEX
   if (currentCollection.elements.length > 0) {
-
     cardCounterDivLabel.innerHTML =
       "Élément " +
       (currentIndex + 1) +
@@ -65,8 +63,7 @@ export function updateCardCounter() {
   if (app.currentIndex != 0) {
     prevCardBtn.disabled = false;
     bigPrevCardBtn.disabled = false;
-  }
-  else {
+  } else {
     prevCardBtn.disabled = true;
     bigPrevCardBtn.disabled = true;
   }
@@ -74,8 +71,7 @@ export function updateCardCounter() {
   if (currentCollection.elements.length > 0 && app.currentIndex != currentCollection.elements.length - 1) {
     nextCardBtn.disabled = false;
     bigNextCardBtn.disabled = false;
-  }
-  else {
+  } else {
     nextCardBtn.disabled = true;
     bigNextCardBtn.disabled = true;
   }
@@ -187,6 +183,7 @@ TEMPLATE
 */
 
 export function setupComponents() {
+  console.log("FN : Setup des Composants")
   while (templateItemsDiv.firstChild) {
     templateItemsDiv.removeChild(templateItemsDiv.lastChild);
   }
@@ -274,7 +271,7 @@ export function createNewComponent(item, itemIndex) {
   deleteComponentBtn.addEventListener("click", (e) => {
     e.preventDefault();
     e.stopPropagation();
-    var componentToDelete = currentCollection.template.filter(el => el.UID == e.target.parentNode.id)[0];
+    var componentToDelete = currentCollection.template.filter((el) => el.UID == e.target.parentNode.id)[0];
     currentCollection.template.splice(currentCollection.template.indexOf(componentToDelete), 1);
     setupComponents();
     setupElements();
@@ -352,7 +349,6 @@ export function createNewComponent(item, itemIndex) {
       modeInput.id = inputID;
       if (paramIndex > 2) parameterInput.disabled = currentMode == "0" ? false : true;
       modeInput.addEventListener("click", () => {
-        console.log("change mod");
         var typeOfParameter = currentCollection.template[itemIndex][param.refValue]["type"];
         currentCollection.template[itemIndex][param.refValue]["type"] = typeOfParameter == "0" ? "1" : "0";
         generateCollectionBtn.click();
@@ -438,7 +434,7 @@ export function createNewComponent(item, itemIndex) {
 }
 
 export function populateComponents() {
-
+  console.log("FN : Population des Composants")
   var allAccordions = templateItemsDiv.querySelectorAll(".accordion");
 
   currentCollection.template.forEach((item, index) => {
@@ -467,11 +463,9 @@ export function populateComponents() {
 
     resetElementParameters();
     allAccordions.forEach((acc, accIndex) => {
-
       var accInputs = acc.nextElementSibling.querySelectorAll("input, select");
 
       accInputs.forEach((input, inputIndex) => {
-
         var inputRefValue = input.id.split("-")[1];
 
         try {
@@ -487,7 +481,8 @@ export function populateComponents() {
 
         if (currentCollection.template[accIndex][inputRefValue].type === "1") {
           ELEMENT_parameters.push({
-            name: parameter.name + " de " + currentCollection.template[accIndex]["componentName"].value,
+            component: currentCollection.template[accIndex],
+            parameter: parameter,
             value: null,
             type: parameter.type,
           });
@@ -535,6 +530,7 @@ export function moveComponent(currentIndex, delta) {
 ELEMENTS
 */
 export function setupElements() {
+  console.log("FN : Setup des Elements")
   while (elementItemsDiv.firstChild) {
     elementItemsDiv.removeChild(elementItemsDiv.lastChild);
   }
@@ -568,8 +564,7 @@ export function createNewElement(item, itemIndex) {
   toPrintCheckBoxLabel.addEventListener("click", (e) => {
     // e.preventDefault();
     // e.stopPropagation();
-    var elementToEdit = currentCollection.elements.filter(el => el.UID == e.target.parentNode.nextElementSibling.nextElementSibling.id)[0];
-    console.log(elementToEdit, e.target.parentNode.firstChild.checked)
+    var elementToEdit = currentCollection.elements.filter((el) => el.UID == e.target.parentNode.nextElementSibling.nextElementSibling.id)[0];
     elementToEdit["toPrint"] = e.target.parentNode.firstChild.checked;
     saveCollection(false);
   });
@@ -596,16 +591,14 @@ export function createNewElement(item, itemIndex) {
   deleteElementBtn.classList.add("deleteElementBtn");
   deleteElementBtn.src = "./assets/delete.png";
   deleteElementBtn.addEventListener("click", (e) => {
-    console.log("del elem");
     e.preventDefault();
     e.stopPropagation();
-    var elementToDelete = currentCollection.elements.filter(el => el.UID == e.target.parentNode.id)[0];
+    var elementToDelete = currentCollection.elements.filter((el) => el.UID == e.target.parentNode.id)[0];
     currentCollection.elements.splice(currentCollection.elements.indexOf(elementToDelete), 1);
     setupElements();
     generateCollectionBtn.click();
   });
   itemAccordion.appendChild(deleteElementBtn);
-
 
   itemAccordion.addEventListener("click", () => {
     var panel = itemAccordion.parentNode.nextElementSibling;
@@ -633,18 +626,19 @@ export function createNewElement(item, itemIndex) {
 
       var parameterName = document.createElement("p");
       parameterName.classList.add("parameterName");
-      parameterName.innerHTML = param.name;
+      parameterName.innerHTML = param.parameter.name + " de " + param.component.componentName.value;
 
       var parameterInputLine = document.createElement("div");
       parameterInputLine.classList.add("parameterInputLine");
 
       var parameterInput = document.createElement("input");
-      var inputID = item.UID + "-" + param.name;
+      var inputID = paramIndex;
       parameterInput.id = inputID;
       parameterInput.addEventListener("input", (e) => {
-        try {
-          currentCollection.elements[itemIndex][param.name] = e.target.value;
-        } catch { }
+        if (!currentCollection.elements[itemIndex][inputID]) {
+          currentCollection.elements[itemIndex][inputID] = {};
+        }
+        currentCollection.elements[itemIndex][param.component.UID][param.parameter.refValue] = e.target.value;
       });
 
       if (param.type !== "spacer") {
@@ -707,10 +701,6 @@ export function createNewElement(item, itemIndex) {
           parameterInputLine.appendChild(parameterInput);
           parameterSlot.appendChild(parameterInputLine);
         }
-      } else {
-        parameterName.classList.add("spacer");
-        if (paramIndex == 0) parameterName.classList.add("firstSpacer");
-        parameterSlot.appendChild(parameterName);
       }
 
       itemPanel.appendChild(parameterSlot);
@@ -729,21 +719,27 @@ export function createNewElement(item, itemIndex) {
 }
 
 export function populateElements() {
-  var allInputs = elementItemsDiv.querySelectorAll("input, select");
-  allInputs.forEach((input) => {
-    var inputID = input.id;
-    var inputIndex = inputID.split("-")[0];
-    var inputRefValue = inputID.split("-")[1];
-    try {
-      input.value = currentCollection.elements[inputIndex][inputRefValue];
-    } catch (e) {
-      input.value = 0;
-    }
-  });
+  console.log("FN : population des Elements")
+  var allElementAccordions = elementItemsDiv.querySelectorAll(".accordion");
+  
 
-  var allQuantities = elementItemsDiv.querySelectorAll(".qtyInput");
-  console.log(allQuantities.length);
-  allQuantities.forEach((input, index) => {
-    input.value = currentCollection.elements[index]["quantity"];
+  allElementAccordions.forEach((acc, accIndex) => {
+    var allInputs = acc.parentNode.nextElementSibling.querySelectorAll(".parameterInput");
+
+    allInputs.forEach((input, inputIndex) => {
+      var componentParent = ELEMENT_parameters[inputIndex].component.UID;
+      var parameterRefValue = ELEMENT_parameters[inputIndex].parameter.refValue;
+
+      try {
+        input.value = currentCollection.elements[accIndex][componentParent][parameterRefValue];
+      } catch (e) {
+        input.value = 0;
+      }
+    });
+
+    var allQuantities = elementItemsDiv.querySelectorAll(".qtyInput");
+    allQuantities.forEach((input, index) => {
+      input.value = currentCollection.elements[index]["quantity"];
+    });
   });
 }

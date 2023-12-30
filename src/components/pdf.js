@@ -5,6 +5,7 @@ const { jsPDF } = require("jspdf");
 let pageGeneration;
 
 export function generatePDF(pages) {
+  console.log("FN : Génération PDF")
 
   var coll = currentCollection.collectionInfo;
   var collectionName = coll.collectionName;

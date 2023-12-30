@@ -11,6 +11,7 @@ export let assetsLibrary = {};
 export let errorImage;
 
 export function loadAssets(p) {
+  console.log("FN : Chargement des Assets")
   let assetsPath = rootPath + "/src/collections/" + currentCollectionUID + "/assets/";
   assetsLibrary = {};
 
