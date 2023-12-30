@@ -38,7 +38,7 @@ export function loadAssets(p) {
 export function addAsset(newAsset) {
   let assetsPath = rootPath + "/src/collections/" + currentCollectionUID + "/assets/";
   fs.copyFile(newAsset.path, assetsPath + newAsset.name, (err) => {
-    saveCollection(true);
+    saveCollection(true, true);
     generateCollectionBtn.click();
     if (err) {
       console.log("Error Found:", err);
@@ -48,7 +48,7 @@ export function addAsset(newAsset) {
 
 export function removeAsset(assetToDelete) {
   fs.unlink(assetToDelete, (err) => {
-    saveCollection(true);
+    saveCollection(true, true);
     generateCollectionBtn.click();
     if (err) {
       console.log("Error Found:", err);

@@ -14,7 +14,7 @@ deleteCollectionBtn.addEventListener("click", () => deleteCurrentCollection());
 renderCollectionBtn.addEventListener("click", () => triggerGeneration(app));
 
 generateCollectionBtn.addEventListener("click", () => {
-  saveCollection(false);
+  saveCollection(false, true);
   generateCollectionBtn.style.animation = "0.5s beyblade";
 });
 
@@ -183,7 +183,7 @@ TEMPLATE
 */
 
 export function setupComponents() {
-  console.log("FN : Setup des Composants")
+  console.log("FN : Setup des Composants");
   while (templateItemsDiv.firstChild) {
     templateItemsDiv.removeChild(templateItemsDiv.lastChild);
   }
@@ -275,6 +275,8 @@ export function createNewComponent(item, itemIndex) {
     currentCollection.template.splice(currentCollection.template.indexOf(componentToDelete), 1);
     setupComponents();
     setupElements();
+    populateElements();
+
     generateCollectionBtn.click();
   });
   itemAccordion.appendChild(deleteComponentBtn);
@@ -325,12 +327,9 @@ export function createNewComponent(item, itemIndex) {
         };
       }
 
-      if (param.refValue === "componentName") {
-        console.log("comp title");
-        populateComponents();
-        setupElements();
-        populateElements();
-      }
+      populateComponents();
+      setupElements();
+      populateElements();
     });
 
     var modeInput = document.createElement("img");
@@ -434,7 +433,7 @@ export function createNewComponent(item, itemIndex) {
 }
 
 export function populateComponents() {
-  console.log("FN : Population des Composants")
+  console.log("FN : Population des Composants");
   var allAccordions = templateItemsDiv.querySelectorAll(".accordion");
 
   currentCollection.template.forEach((item, index) => {
@@ -530,7 +529,7 @@ export function moveComponent(currentIndex, delta) {
 ELEMENTS
 */
 export function setupElements() {
-  console.log("FN : Setup des Elements")
+  console.log("FN : Setup des Elements");
   while (elementItemsDiv.firstChild) {
     elementItemsDiv.removeChild(elementItemsDiv.lastChild);
   }
@@ -558,15 +557,23 @@ export function createNewElement(item, itemIndex) {
 
   var toPrintCheckBoxLabel = document.createElement("label");
   toPrintCheckBoxLabel.classList.add("checkboxContainer");
-  toPrintCheckBoxLabel.innerHTML = "<input type='checkbox'><span class='checkmark'></span>";
+  toPrintCheckBoxLabel.innerHTML = "<input type='checkbox'>";
   var printInput = toPrintCheckBoxLabel.firstChild;
   printInput.checked = currentCollection.elements[itemIndex]["toPrint"];
+
+  var checkMarkElement = document.createElement("span");
+  checkMarkElement.classList.add("checkmark");
+  toPrintCheckBoxLabel.appendChild(checkMarkElement);
+
   toPrintCheckBoxLabel.addEventListener("click", (e) => {
-    // e.preventDefault();
-    // e.stopPropagation();
-    var elementToEdit = currentCollection.elements.filter((el) => el.UID == e.target.parentNode.nextElementSibling.nextElementSibling.id)[0];
-    elementToEdit["toPrint"] = e.target.parentNode.firstChild.checked;
-    saveCollection(false);
+    e.preventDefault();
+    e.stopPropagation();
+    if (e.target == checkMarkElement) {
+      var elementToEdit = currentCollection.elements.filter((el) => el.UID == e.target.parentNode.nextElementSibling.nextElementSibling.id)[0];
+      elementToEdit["toPrint"] = !e.target.parentNode.firstChild.checked;
+      saveCollection(false, false);
+      populateElements();
+    }
   });
 
   itemWrapper.appendChild(toPrintCheckBoxLabel);
@@ -595,6 +602,7 @@ export function createNewElement(item, itemIndex) {
     e.stopPropagation();
     var elementToDelete = currentCollection.elements.filter((el) => el.UID == e.target.parentNode.id)[0];
     currentCollection.elements.splice(currentCollection.elements.indexOf(elementToDelete), 1);
+    app.currentIndex = Math.max(Math.min(app.currentIndex, currentCollection.elements.length - 1), 0);
     setupElements();
     generateCollectionBtn.click();
   });
@@ -635,8 +643,8 @@ export function createNewElement(item, itemIndex) {
       var inputID = paramIndex;
       parameterInput.id = inputID;
       parameterInput.addEventListener("input", (e) => {
-        if (!currentCollection.elements[itemIndex][inputID]) {
-          currentCollection.elements[itemIndex][inputID] = {};
+        if (!currentCollection.elements[itemIndex][param.component.UID]) {
+          currentCollection.elements[itemIndex][param.component.UID] = {};
         }
         currentCollection.elements[itemIndex][param.component.UID][param.parameter.refValue] = e.target.value;
       });
@@ -719,27 +727,27 @@ export function createNewElement(item, itemIndex) {
 }
 
 export function populateElements() {
-  console.log("FN : population des Elements")
-  var allElementAccordions = elementItemsDiv.querySelectorAll(".accordion");
-  
+  console.log("FN : population des Elements");
+  var allElementWrappers = elementItemsDiv.querySelectorAll(".elementItemWrapper");
 
-  allElementAccordions.forEach((acc, accIndex) => {
-    var allInputs = acc.parentNode.nextElementSibling.querySelectorAll(".parameterInput");
+  allElementWrappers.forEach((wrap, wrapIndex) => {
+    var toPrintInput = wrap.querySelector("input[type='checkbox']");
+    toPrintInput.checked = currentCollection.elements[wrapIndex]["toPrint"];
 
+    var quantityInput = wrap.querySelector(".qtyInput");
+    quantityInput.value = currentCollection.elements[wrapIndex]["quantity"];
+
+    var allInputs = wrap.nextElementSibling.querySelectorAll(".parameterInput");
     allInputs.forEach((input, inputIndex) => {
       var componentParent = ELEMENT_parameters[inputIndex].component.UID;
       var parameterRefValue = ELEMENT_parameters[inputIndex].parameter.refValue;
 
       try {
-        input.value = currentCollection.elements[accIndex][componentParent][parameterRefValue];
+        if (currentCollection.elements[wrapIndex][componentParent][parameterRefValue]) input.value = currentCollection.elements[wrapIndex][componentParent][parameterRefValue];
+        else input.value = "";
       } catch (e) {
-        input.value = 0;
+        input.value = "";
       }
-    });
-
-    var allQuantities = elementItemsDiv.querySelectorAll(".qtyInput");
-    allQuantities.forEach((input, index) => {
-      input.value = currentCollection.elements[index]["quantity"];
     });
   });
 }

@@ -203,13 +203,13 @@ export function duplicateCollection() {
 
 export function archiveCollection() {
   currentCollection.collectionInfo.archived = !currentCollection.collectionInfo.archived;
-  saveCollection(false);
+  saveCollection(false, false);
   setCurrentCollection(-1);
   setTimeout(() => getCollections(), 300);
   setTimeout(() => openPanel("loading"), 1000);
 }
 
-export function saveCollection(refreshAssets) {
+export function saveCollection(refreshAssets, reRenderCard) {
   console.log("FN : sauvegarde Collection");
   var coll = currentCollection;
 
@@ -245,16 +245,18 @@ export function saveCollection(refreshAssets) {
   //RELOAD DECK
   if (refreshAssets) loadAssets(app);
 
-  app.resizeExistingCanvas(
-    coll.collectionInfo.W * coll.collectionInfo.resolution,
-    coll.collectionInfo.H * coll.collectionInfo.resolution,
-    coll.collectionInfo.pageWidth * coll.collectionInfo.resolution,
-    coll.collectionInfo.pageHeight * coll.collectionInfo.resolution
-  );
+  if(reRenderCard){
+    setTimeout(() => {
+      app.resizeExistingCanvas(
+        coll.collectionInfo.W * coll.collectionInfo.resolution,
+        coll.collectionInfo.H * coll.collectionInfo.resolution,
+        coll.collectionInfo.pageWidth * coll.collectionInfo.resolution,
+        coll.collectionInfo.pageHeight * coll.collectionInfo.resolution
+      );
 
-  setTimeout(() => {
-    renderCardUsingTemplate(app, app.currentIndex, currentCollection.collectionInfo.visualGuide);
-  }, 500);
+      renderCardUsingTemplate(app, app.currentIndex, currentCollection.collectionInfo.visualGuide);
+    }, 500);
+  }
 }
 
 export function setupCollectionDimensions() {
@@ -368,7 +370,9 @@ export function addNewElement() {
   currentCollection.elements.push(cloneDeep(elementTemplate));
   currentCollection.elements[currentCollection.elements.length-1].UID = currentCollection.collectionInfo.lastElementIndex;
   currentCollection.collectionInfo.lastElementIndex++;
+  
   setupElements();
   populateElements();
   generateCollectionBtn.click();
+  updateCardCounter();
 }
