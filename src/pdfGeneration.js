@@ -1,11 +1,10 @@
-import { currentCollection } from "./collectionManager.js";
+import { currentCollection } from "./collection/collectionManager.js";
 
 const { jsPDF } = require("jspdf");
 
 let pageGeneration;
 
 export function generatePDF(pages) {
-  console.log("FN : Génération PDF")
 
   var coll = currentCollection.collectionInfo;
   var collectionName = coll.collectionName;

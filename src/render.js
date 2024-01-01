@@ -1,11 +1,10 @@
-import { currentCollection } from "./collectionManager.js";
-import { generatePDF } from "./pdf.js";
-import { app } from "../app.js";
-import { assetsLibrary, errorImage } from "./assetLoader.js";
-import { IMAGE_parameters, TEXT_parameters, SHAPE_parameters, ELEMENT_parameters } from "./componentParameters.js";
+import { currentCollection } from "./collection/collectionManager.js";
+import { generatePDF } from "./pdfGeneration.js";
+import { app } from "./app.js";
+import { assetsLibrary, errorImage } from "./assets/assetLoader.js";
+import { IMAGE_parameters, TEXT_parameters, SHAPE_parameters, ELEMENT_parameters } from "./template/componentParameters.js";
 
 export function renderComponent(p5, componentType, componentIndex, elementIndex) {
-  console.log("FN : Rendu Composant");
   let currentElements = currentCollection.elements;
   let currentTemplate = currentCollection.template;
 
@@ -216,7 +215,6 @@ export function generatePages(p5) {
 }
 
 export function renderCardUsingTemplate(p, elementIndex, guide) {
-  console.log("FN : render card");
 
   //WHITE BG BY DEFAULT
   p.card.background(255);

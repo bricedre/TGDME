@@ -1,9 +1,9 @@
-import { app } from "../../app.js";
-import { addNewElement, addNewImage, addNewShape, addNewText, archiveCollection, currentCollection, deleteCurrentCollection, duplicateCollection, saveCollection } from "../collectionManager.js";
+import { app } from "../app.js";
+import { addNewElement, addNewImage, addNewShape, addNewText, archiveCollection, currentCollection, deleteCurrentCollection, duplicateCollection, saveCollection } from "../collection/collectionManager.js";
 import { rootElement } from "./mainLayout.js";
-import { IMAGE_parameters, TEXT_parameters, SHAPE_parameters, ELEMENT_parameters, resetElementParameters } from "../componentParameters.js";
+import { IMAGE_parameters, TEXT_parameters, SHAPE_parameters, ELEMENT_parameters, resetElementParameters } from "../template/componentParameters.js";
 import { renderCardUsingTemplate } from "../render.js";
-import { addAsset, allSystemFonts, currentAssetsList, removeAsset } from "../assetLoader.js";
+import { addAsset, allSystemFonts, currentAssetsList, removeAsset } from "../assets/assetLoader.js";
 
 //COLLECTION PARAMETERS
 
@@ -183,7 +183,6 @@ TEMPLATE
 */
 
 export function setupComponents() {
-  console.log("FN : Setup des Composants");
   while (templateItemsDiv.firstChild) {
     templateItemsDiv.removeChild(templateItemsDiv.lastChild);
   }
@@ -433,7 +432,6 @@ export function createNewComponent(item, itemIndex) {
 }
 
 export function populateComponents() {
-  console.log("FN : Population des Composants");
   var allAccordions = templateItemsDiv.querySelectorAll(".accordion");
 
   currentCollection.template.forEach((item, index) => {
@@ -529,7 +527,6 @@ export function moveComponent(currentIndex, delta) {
 ELEMENTS
 */
 export function setupElements() {
-  console.log("FN : Setup des Elements");
   while (elementItemsDiv.firstChild) {
     elementItemsDiv.removeChild(elementItemsDiv.lastChild);
   }
@@ -727,7 +724,6 @@ export function createNewElement(item, itemIndex) {
 }
 
 export function populateElements() {
-  console.log("FN : population des Elements");
   var allElementWrappers = elementItemsDiv.querySelectorAll(".elementItemWrapper");
 
   allElementWrappers.forEach((wrap, wrapIndex) => {

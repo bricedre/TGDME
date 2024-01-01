@@ -1,12 +1,12 @@
 const cloneDeep = require("lodash/cloneDeep");
 
 import { app } from "../app.js";
-import { checkOtherInputs, populateEditionFields, setupComponents, setupElements, setupResources, populateComponents, populateElements, updateCardCounter } from "./routes/editionScreen.js";
-import { openPanel } from "./routes/mainLayout.js";
+import { checkOtherInputs, populateEditionFields, setupComponents, setupElements, setupResources, populateComponents, populateElements, updateCardCounter } from "../screens/editionScreen.js";
+import { openPanel } from "../screens/mainLayout.js";
 
-import { getFontList, loadAssets } from "./assetLoader.js";
-import { imageComponentTemplate, textComponentTemplate, shapeComponentTemplate, elementTemplate } from "./templates.js";
-import { renderCardUsingTemplate } from "./render.js";
+import { getFontList, loadAssets } from "../assets/assetLoader.js";
+import { imageComponentTemplate, textComponentTemplate, shapeComponentTemplate, elementTemplate } from "../templates.js";
+import { renderCardUsingTemplate } from "../render.js";
 
 const fs = require("fs").promises;
 const { existsSync, mkdirSync, copyFileSync, readdirSync } = require("fs");
@@ -22,7 +22,6 @@ openPanel("start");
 getFontList();
 
 export function getCollections() {
-  console.log("FN : Récupération des Collections")
   collectionsAvailable = readdirSync("./src/collections", { withFileTypes: true })
     .filter((dirent) => dirent.isDirectory())
     .map((dirent) => dirent.name);
@@ -111,7 +110,6 @@ export function getCollections() {
 }
 
 export function setCurrentCollection(collectionUID) {
-  console.log("FN : Définition Collection actuelle")
   currentCollectionUID = collectionUID;
   if (currentCollectionUID != -1) {
     currentCollection = collectionsAvailable.filter((coll) => coll.collectionInfo.UID == collectionUID)[0];
@@ -210,7 +208,6 @@ export function archiveCollection() {
 }
 
 export function saveCollection(refreshAssets, reRenderCard) {
-  console.log("FN : sauvegarde Collection");
   var coll = currentCollection;
 
   //ALTER THE DATA TO CURRENT DECK

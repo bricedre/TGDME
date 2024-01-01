@@ -1,4 +1,4 @@
-import { createNewCollection} from "../collectionManager.js";
+import { createNewCollection} from "../collection/collectionManager.js";
 import { openPanel } from "./mainLayout.js";
 
 export function setupMenu() {

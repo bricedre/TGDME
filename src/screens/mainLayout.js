@@ -1,5 +1,5 @@
-import { app } from "../../app.js";
-import { currentCollection, currentCollectionUID, getCollections, setCurrentCollection } from "../collectionManager.js";
+import { app } from "../app.js";
+import { currentCollection, currentCollectionUID, getCollections, setCurrentCollection } from "../collection/collectionManager.js";
 import { checkOtherInputs, updateCardCounter, populateComponents } from "./editionScreen.js";
 
 const bottomBar = document.querySelector(".bottomBar");

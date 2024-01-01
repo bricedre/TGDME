@@ -2,8 +2,8 @@ const { rootPath } = require("electron-root-path");
 const fs = require("fs");
 const fontList = require("font-list");
 
-import { currentCollectionUID, saveCollection } from "./collectionManager.js";
-import { setupResources } from "./routes/editionScreen.js";
+import { currentCollectionUID, saveCollection } from "../collection/collectionManager.js";
+import { setupResources } from "../screens/editionScreen.js";
 
 export let currentAssetsList;
 export let allSystemFonts;
@@ -11,7 +11,6 @@ export let assetsLibrary = {};
 export let errorImage;
 
 export function loadAssets(p) {
-  console.log("FN : Chargement des Assets")
   let assetsPath = rootPath + "/src/collections/" + currentCollectionUID + "/assets/";
   assetsLibrary = {};
 
