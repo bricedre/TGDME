@@ -1,12 +1,15 @@
 const cloneDeep = require("lodash/cloneDeep");
 
 import { app } from "../app.js";
-import { checkOtherInputs, populateEditionFields, setupComponents, setupElements, setupResources, populateComponents, populateElements, updateCardCounter } from "../screens/editionScreen.js";
+import { checkOtherInputs, populateEditionFields, updateCardCounter } from "../screens/editionScreen.js";
 import { openPanel } from "../screens/mainLayout.js";
 
 import { getFontList, loadAssets } from "../assets/assetLoader.js";
 import { imageComponentTemplate, textComponentTemplate, shapeComponentTemplate, elementTemplate } from "../templates.js";
 import { renderCardUsingTemplate } from "../render.js";
+import { setupResources } from "../assets/resourceFunctions.js";
+import { populateComponents, setupComponents } from "../template/componentsFunctions.js";
+import { populateElements, setupElements } from "../elements/elementFunctions.js";
 
 const fs = require("fs").promises;
 const { existsSync, mkdirSync, copyFileSync, readdirSync } = require("fs");
@@ -343,20 +346,20 @@ export function setupCollectionDimensions() {
 
 export function addNewImage() {
   currentCollection.template.push(cloneDeep(imageComponentTemplate));
-  updateComponent();
+  assignUIDToNewComponent();
 }
 
 export function addNewText() {
   currentCollection.template.push(cloneDeep(textComponentTemplate));
-  updateComponent();
+  assignUIDToNewComponent();
 }
 
 export function addNewShape() {
   currentCollection.template.push(cloneDeep(shapeComponentTemplate));
-  updateComponent();
+  assignUIDToNewComponent();
 }
 
-function updateComponent(){
+function assignUIDToNewComponent(){
   currentCollection.template[currentCollection.template.length-1].UID = currentCollection.collectionInfo.lastComponentIndex;
   currentCollection.collectionInfo.lastComponentIndex++;
   setupComponents();

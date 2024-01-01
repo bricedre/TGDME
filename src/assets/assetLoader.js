@@ -3,7 +3,7 @@ const fs = require("fs");
 const fontList = require("font-list");
 
 import { currentCollectionUID, saveCollection } from "../collection/collectionManager.js";
-import { setupResources } from "../screens/editionScreen.js";
+import { setupResources } from "./resourceFunctions.js";
 
 export let currentAssetsList;
 export let allSystemFonts;

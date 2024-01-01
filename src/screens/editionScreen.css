@@ -71,6 +71,16 @@ canvas {
   background: #800;
 }
 
+.itemLabel{
+  white-space: nowrap;
+}
+
+.uidTag{
+  color: #0005;
+  font-size: 0.8rem;
+  width: -webkit-fill-available;
+}
+
 
 #cardCounterDiv {
   display: flex;
@@ -294,10 +304,6 @@ input[type="radio"] {
 .deleteComponentBtn:hover,
 .deleteResourceBtn:hover {
   scale: 1.5;
-}
-
-.accordion>span {
-  width: -webkit-fill-available;
 }
 
 .itemPanel {

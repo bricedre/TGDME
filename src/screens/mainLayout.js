@@ -1,6 +1,6 @@
-import { app } from "../app.js";
-import { currentCollection, currentCollectionUID, getCollections, setCurrentCollection } from "../collection/collectionManager.js";
-import { checkOtherInputs, updateCardCounter, populateComponents } from "./editionScreen.js";
+import { currentCollection, getCollections, setCurrentCollection } from "../collection/collectionManager.js";
+import { checkOtherInputs, updateCardCounter } from "./editionScreen.js";
+import { populateComponents } from "../template/componentsFunctions.js";
 
 const bottomBar = document.querySelector(".bottomBar");
 
