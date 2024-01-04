@@ -4,7 +4,7 @@ import { app } from "./app.js";
 import { assetsLibrary, errorImage } from "./assets/assetLoader.js";
 import { IMAGE_parameters, TEXT_parameters, SHAPE_parameters, ELEMENT_parameters } from "./template/componentParameters.js";
 
-//FUTURE IDEES : 
+//FUTURE IDEES :
 /*
 
 Générer le fichier .csv du template actuel pour servir de base
@@ -50,6 +50,7 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
     var _width = getActualValue(componentData.width, "width", componentData, elementData, elementIndex, "W", true);
     var _height = getActualValue(componentData.height, "height", componentData, elementData, elementIndex, "W", true);
     var _anchor = getActualValue(componentData.anchor, "anchor", componentData, elementData, elementIndex, p5.CENTER, true);
+    var _mirror = getActualValue(componentData.mirror, "mirror", componentData, elementData, elementIndex, "none", false);
     var _angle = getActualValue(componentData.angle, "angle", componentData, elementData, elementIndex, 0, true);
     var _tint = getActualValue(componentData.tint, "tint", componentData, elementData, elementIndex, "#FFFFFF", false);
     var _opacity = getActualValue(componentData.opacity, "opacity", componentData, elementData, elementIndex, 100, true);
@@ -74,304 +75,367 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
     var _shadowOffsetY = getActualValue(componentData.shadowOffsetY, "shadowOffsetY", componentData, elementData, elementIndex, 10, true);
     var _shadowBlur = getActualValue(componentData.shadowBlur, "shadowBlur", componentData, elementData, elementIndex, 0, true);
 
-    p5.card.push();
     try {
       p5.card.angleMode(p5.DEGREES);
-      p5.card.translate(_positionX, _positionY);
-      if (_angle !== 0) p5.card.rotate(_angle);
 
-      //! SHAPE
-      if (componentType == "SHAPE") {
-        console.log(_shape);
-        p5.card.fill(_color + Math.round(_opacity * 2.55).toString(16));
-        p5.card.stroke(_borderColor + Math.round(_borderOpacity * 2.55).toString(16));
-        p5.card.strokeWeight(_borderWeight);
-        p5.card.strokeJoin(p5.ROUND);
-        if (_anchor === p5.CENTER) p5.card.translate(-_width / 2, -_height / 2);
+      var totalCopies = 1;
+      var W = currentCollection.collectionInfo.W * currentCollection.collectionInfo.resolution;
+      var H = currentCollection.collectionInfo.H * currentCollection.collectionInfo.resolution;
+      if (_mirror == "hori") totalCopies = 2;
+      if (_mirror == "corners") totalCopies = 4;
 
-        switch (_shape) {
-          case "ring":
-            p5.card.translate(_width / 2, _height / 2);
-            p5.card.noStroke();
-            p5.card.beginShape();
-            for (var i = 0; i < 61; i++) {
-              p5.card.vertex(Math.cos((i / 60) * Math.PI * 2) * _width * 0.5, Math.sin((i / 60) * Math.PI * 2) * _height * 0.5);
-            }
-            for (var i = 0; i < 61; i++) {
-              p5.card.vertex(Math.cos((i / 60) * Math.PI * 2) * _width * 0.2, -Math.sin((i / 60) * Math.PI * 2) * _height * 0.2);
-            }
-            p5.card.endShape(p5.CLOSE);
-            p5.card.stroke(_borderColor + Math.round(_borderOpacity * 2.55).toString(16));
-            p5.card.noFill();
-            p5.card.ellipse(0, 0, _width, _height);
-            p5.card.ellipse(0, 0, _width * 0.4, _height * 0.4);
+      for (let copy = 0; copy < totalCopies; copy++) {
+        p5.card.push();
+        p5.card.translate(_positionX, _positionY);
 
-            break;
-          case "shield":
-            p5.card.beginShape();
-            p5.card.vertex(0, 0);
-            p5.card.vertex(0, _height * 0.2);
-            p5.card.bezierVertex(_width * 0, _height * 0.9, _width * 0, _height * 0.8, _width * 0.5, _height);
-            p5.card.bezierVertex(_width, _height * 0.8, _width, _height * 0.9, _width, 0);
-            p5.card.endShape(p5.CLOSE);
-            break;
-          case "avatar":
-            p5.card.ellipse(_width * 0.5, _height * 0.15, _width * 0.4, _height * 0.4);
-            p5.card.beginShape();
-            p5.card.vertex(_width * 0.2, _height);
-            p5.card.vertex(_width * 0.2, _height * 0.7);
-            p5.card.bezierVertex(_width * 0.2, _height * 0.25, _width * 0.8, _height * 0.25, _width * 0.8, _height * 0.7);
-            p5.card.vertex(_width * 0.8, _height);
-            p5.card.endShape(p5.CLOSE);
-            break;
-          case "heart":
-            p5.card.beginShape();
-            p5.card.vertex(_width * 0.5, _height * 0.25);
-            p5.card.bezierVertex(_width * 0.8, _height * -0.1, _width * 1.2, _height * 0.3, _width * 0.9, _height * 0.6);
-            p5.card.vertex(_width * 0.5, _height);
-            p5.card.vertex(_width * 0.1, _height * 0.6);
-            p5.card.bezierVertex(-_width * 0.2, _height * 0.3, _width * 0.2, _height * -0.1, _width * 0.5, _height * 0.25);
-            p5.card.endShape(p5.CLOSE);
-            break;
-          case "crown":
-            p5.card.beginShape();
-            p5.card.vertex(_width * 0.1, _height * 0.7);
-            p5.card.vertex(_width * 0, _height * 0.2);
-            p5.card.vertex(_width * 0.33, _height * 0.4);
-            p5.card.vertex(_width * 0.5, _height * 0.2);
-            p5.card.vertex(_width * 0.66, _height * 0.4);
-            p5.card.vertex(_width * 1, _height * 0.2);
-            p5.card.vertex(_width * 0.9, _height * 0.7);
-            p5.card.endShape(p5.CLOSE);
-            break;
-          case "cross":
-            p5.card.beginShape();
-            p5.card.vertex(_width * 0.33, 0);
-            p5.card.vertex(_width * 0.66, 0);
-            p5.card.vertex(_width * 0.66, _height * 0.33);
-            p5.card.vertex(_width * 1, _height * 0.33);
-            p5.card.vertex(_width * 1, _height * 0.66);
-            p5.card.vertex(_width * 0.66, _height * 0.66);
-            p5.card.vertex(_width * 0.66, _height * 1);
-            p5.card.vertex(_width * 0.33, _height * 1);
-            p5.card.vertex(_width * 0.33, _height * 0.66);
-            p5.card.vertex(_width * 0, _height * 0.66);
-            p5.card.vertex(_width * 0, _height * 0.33);
-            p5.card.vertex(_width * 0.33, _height * 0.33);
-            p5.card.endShape(p5.CLOSE);
-            break;
-          case "diam":
-            p5.card.beginShape();
-            p5.card.vertex(_width * 0.5, _height);
-            p5.card.vertex(0, _height * 0.5);
-            p5.card.vertex(_width * 0.3, _height * 0.25);
-            p5.card.vertex(_width * 0.7, _height * 0.25);
-            p5.card.vertex(_width, _height * 0.5);
-            p5.card.endShape(p5.CLOSE);
-            break;
-          case "flag":
-            p5.card.beginShape();
-            p5.card.vertex(0, _height * 0.1);
-            p5.card.bezierVertex(_width * 0.33, _height * -0.2, _width * 0.66, _height * 0.4, _width, _height * 0.1);
-            p5.card.vertex(_width, _height * 0.9);
-            p5.card.bezierVertex(_width * 0.66, _height * 1.2, _width * 0.33, _height * 0.6, 0, _height * 0.9);
-
-            p5.card.endShape(p5.CLOSE);
-            break;
-          case "bolt":
-            p5.card.beginShape();
-            p5.card.vertex(_width * 0.2, _height * 0.7);
-            p5.card.vertex(_width * 0.5, _height * 0);
-            p5.card.vertex(_width * 0.5, _height * 0.4);
-            p5.card.vertex(_width * 0.8, _height * 0.3);
-            p5.card.vertex(_width * 0.5, _height * 1);
-            p5.card.vertex(_width * 0.5, _height * 0.6);
-            p5.card.endShape(p5.CLOSE);
-            break;
-          case "star":
-            var branches = 5;
-            p5.card.beginShape();
-            p5.card.translate(_width / 2, _height / 2);
-            for (var i = 0; i < branches * 2; i++) {
-              var radiusX = _width * 0.3 + (i % 2) * _width * 0.25;
-              var radiusY = _height * 0.3 + (i % 2) * _height * 0.25;
-              p5.card.vertex(Math.cos(Math.PI / (branches * 2) + (i / branches) * Math.PI) * radiusX, Math.sin(Math.PI / (branches * 2) + (i / branches) * Math.PI) * radiusY);
-            }
-            p5.card.endShape(p5.CLOSE);
-            break;
-          case "ellipse":
-            p5.card.beginShape();
-            p5.card.translate(_width / 2, _height / 2);
-            p5.card.ellipse(0, 0, _width, _height);
-            p5.card.endShape(p5.CLOSE);
-            break;
-          case "arrow":
-            p5.card.beginShape();
-            p5.card.vertex(_width * 0.5, _height * 0.2);
-            p5.card.vertex(_width * 0.5, _height * 0);
-            p5.card.vertex(_width, _height * 0.5);
-            p5.card.vertex(_width * 0.5, _height);
-            p5.card.vertex(_width * 0.5, _height * 0.8);
-            p5.card.vertex(_width * 0, _height * 0.8);
-            p5.card.vertex(_width * 0, _height * 0.2);
-
-            p5.card.endShape(p5.CLOSE);
-            break;
-          case "flower":
-            p5.card.translate(_width / 2, _height / 2);
-            p5.card.beginShape();
-            p5.card.vertex(Math.cos(Math.PI / 2 + (0 * Math.PI) / 2.5) * _width * 0.2, Math.sin(Math.PI / 2 + (0 * Math.PI) / 2.5) * _height * 0.2);
-            for (var i = 0; i < 5; i++) {
-              var anchor1 = [Math.cos(Math.PI / 2 + (i * Math.PI) / 2.5) * _width * 0.8, Math.sin(Math.PI / 2 + (i * Math.PI) / 2.5) * _height * 0.8];
-              var anchor2 = [Math.cos(Math.PI / 2 + ((i + 1) * Math.PI) / 2.5) * _width * 0.8, Math.sin(Math.PI / 2 + ((i + 1) * Math.PI) / 2.5) * _height * 0.8];
-              var nextPoint = [Math.cos(Math.PI / 2 + ((i + 1) * Math.PI) / 2.5) * _width * 0.2, Math.sin(Math.PI / 2 + ((i + 1) * Math.PI) / 2.5) * _height * 0.2];
-              p5.card.bezierVertex(anchor1[0], anchor1[1], anchor2[0], anchor2[1], nextPoint[0], nextPoint[1]);
-            }
-            p5.card.endShape(p5.CLOSE);
-            break;
-          case "drop":
-            p5.card.beginShape();
-            p5.card.vertex(_width * 0.5, 0);
-            p5.card.vertex(_width * 0.8, _height * 0.5);
-            p5.card.bezierVertex(_width * 1.2, _height * 1.3, _width * -0.2, _height * 1.3, _width * 0.2, _height * 0.5);
-            p5.card.endShape(p5.CLOSE);
-            break;
-          case "hexa":
-            var branches = 6;
-            p5.card.beginShape();
-            p5.card.translate(_width / 2, _height / 2);
-            for (var i = 0; i < branches; i++) {
-              p5.card.vertex(Math.cos((i / branches) * Math.PI * 2) * _width * 0.5, Math.sin((i / branches) * Math.PI * 2) * _height * 0.5);
-            }
-            p5.card.endShape(p5.CLOSE);
-            break;
-          case "book":
-            p5.card.beginShape();
-            p5.card.vertex(_width*0, _height*0.1);
-            p5.card.bezierVertex(_width*0.25, _height*0, _width*0.25, _height*0, _width*0.5, _height*0.1);
-            p5.card.bezierVertex(_width*0.75, _height*0, _width*0.75, _height*0, _width*1, _height*0.1);
-            p5.card.vertex(_width*1, _height*1);
-            p5.card.bezierVertex(_width*0.75, _height*0.9, _width*0.75, _height*0.9, _width*0.5, _height*1);
-            p5.card.bezierVertex(_width*0.25, _height*0.9, _width*0.25, _height*0.9, _width*0, _height*1);
-            p5.card.endShape(p5.CLOSE);
-            break;
-          case "cloud":
-            p5.card.beginShape();
-            p5.card.vertex(_width*0.3, _height*0.8);
-            p5.card.bezierVertex(_width*-0.08, _height*0.8, _width*-0.1, _height*0.4, _width*0.2, _height*0.35);
-            p5.card.bezierVertex(_width*0.2, _height*0.1, _width*0.55, _height*0.1, _width*0.6, _height*0.3);
-            p5.card.bezierVertex(_width*0.7, _height*0.2, _width*0.85, _height*0.3, _width*0.83, _height*0.4);
-            p5.card.bezierVertex(_width*1.1, _height*0.4, _width*1.05, _height*0.8, _width*0.75, _height*0.8);
-            p5.card.endShape(p5.CLOSE);
-            break;
-          case "octo":
-            var branches = 8;
-            p5.card.beginShape();
-            p5.card.translate(_width / 2, _height / 2);
-            for (var i = 0; i < branches; i++) {
-              p5.card.vertex(Math.cos(Math.PI / 8 + (i / branches) * Math.PI * 2) * _width * 0.5, Math.sin(Math.PI / 8 + (i / branches) * Math.PI * 2) * _height * 0.5);
-            }
-            p5.card.endShape(p5.CLOSE);
-            break;
-          case "pent":
-            var branches = 5;
-            p5.card.beginShape();
-            p5.card.translate(_width / 2, _height / 2);
-            for (var i = 0; i < branches; i++) {
-              p5.card.vertex(Math.cos(Math.PI * 1.1 + (i / branches) * Math.PI * 2) * _width * 0.5, Math.sin(Math.PI * 1.1 + (i / branches) * Math.PI * 2) * _height * 0.5);
-            }
-            p5.card.endShape(p5.CLOSE);
-            break;
-          case "loz":
-            p5.card.beginShape();
-            p5.card.vertex(_width * 0.5, 0);
-            p5.card.vertex(_width, _height * 0.5);
-            p5.card.vertex(_width * 0.5, _height);
-            p5.card.vertex(0, _height * 0.5);
-            p5.card.endShape(p5.CLOSE);
-            break;
-          case "tri":
-            p5.card.beginShape();
-            p5.card.vertex(0, _height);
-            p5.card.vertex(_width * 0.5, 0);
-            p5.card.vertex(_width, _height);
-            p5.card.endShape(p5.CLOSE);
-            break;
-          case "triSqr":
-            p5.card.beginShape();
-            p5.card.vertex(0, 0);
-            p5.card.vertex(_width, 0);
-            p5.card.vertex(0, _height);
-            p5.card.endShape(p5.CLOSE);
-            break;
-          case "rect":
-            p5.card.beginShape();
-            p5.card.rect(0, 0, _width, _height);
-            p5.card.endShape(p5.CLOSE);
-            break;
-
-          case "rectRounded":
-            p5.card.beginShape();
-            p5.card.rect(0, 0, _width, _height, _height * 0.1);
-            p5.card.endShape(p5.CLOSE);
-            break;
-
-          default:
-            // Handle the case where the element value doesn't match any of the cases
-            break;
-        }
-      }
-
-      //! TEXT
-      else if (componentType == "TEXT") {
-        p5.card.noStroke();
-        p5.card.textAlign(_anchor, p5.CENTER);
-        p5.card.textFont(_font);
-        p5.card.textSize(_size * currentCollection.collectionInfo.H * currentCollection.collectionInfo.resolution * 0.02);
-
-        if (_shadow) {
-          p5.card.fill(_shadowColor + Math.round(_shadowOpacity * 2.55).toString(16));
-          p5.card.text(_textToWrite, _shadowOffsetX, _shadowOffsetY);
+        if ((copy == 1 && _mirror == "hori") || (copy == 1 && _mirror == "corners")) p5.card.translate((W / 2 - _positionX) * 2, 0);
+        else if (copy == 2 && _mirror == "corners") {
+          p5.card.translate((W / 2 - _positionX) * 2, 0);
+          p5.card.translate(0, (H / 2 - _positionY) * 2);
+          p5.card.rotate(180);
+        } else if (copy == 3 && _mirror == "corners") {
+          p5.card.translate(0, (H / 2 - _positionY) * 2);
+          p5.card.rotate(180);
         }
 
-        p5.card.fill(_color + Math.round(_opacity * 2.55).toString(16));
-        p5.card.text(_textToWrite, 0, 0);
-      }
+        if (_angle !== 0) p5.card.rotate(_angle);
 
-      //! IMAGE / STRIP
-      else if (componentType == "IMAGE") {
-        var _totalWidth = (_elementsList.length * Math.min(_width, _spacingX) + (_elementsList.length - 2) * _spacingX) / 2;
-        var _totalHeight = (_elementsList.length * Math.min(_height, _spacingY) + (_elementsList.length - 1) * _spacingY) / 2;
+        //! SHAPE
+        if (componentType == "SHAPE") {
+          var passes = 1;
+          if (_shadow) passes = 2;
+          p5.card.strokeJoin(p5.ROUND);
 
-        p5.card.imageMode(_anchor);
-        p5.card.tint(_tint + Math.round(_opacity * 2.55).toString(16));
-        for (let i = 0; i < _elementsList.length; i++) {
-          if (_listAnchor == p5.CENTER) {
-            p5.card.image(
-              _imgs[i],
-              _elementsList.length > 1 ? (_spacingX > 0 ? i * _spacingX - _totalWidth / 2 : 0) + (_style == "alternate" ? (i % 2 == 0 ? _offsetX : -_offsetX) : 0) : 0,
-              _elementsList.length > 1 ? (_spacingY > 0 ? i * _spacingY - _totalHeight / 2 : 0) + (_style == "alternate" ? (i % 2 == 0 ? _offsetY : -_offsetY) : 0) : 0,
-              _width,
-              _height
-            );
-          } else if (_listAnchor == p5.LEFT) {
-            p5.card.image(
-              _imgs[i],
-              _elementsList.length > 1 ? i * _spacingX + (_style == "alternate" ? (i % 2 == 0 ? _offsetX : -_offsetX) : 0) : 0,
-              _elementsList.length > 1 ? i * _spacingY + (_style == "alternate" ? (i % 2 == 0 ? _offsetY : -_offsetY) : 0) : 0,
-              _width,
-              _height
-            );
-          } else if (_listAnchor == p5.CENTER.RIGHT) {
-            p5.card.image(
-              _imgs[i],
-              _elementsList.length > 1 ? (_spacingX > 0 ? i * _spacingX - _totalWidth : 0) + (_style == "alternate" ? (i % 2 == 0 ? _offsetX : -_offsetX) : 0) : 0,
-              _elementsList.length > 1 ? (_spacingY > 0 ? i * _spacingY - _totalHeight : 0) + (_style == "alternate" ? (i % 2 == 0 ? _offsetY : -_offsetY) : 0) : 0,
-              _width,
-              _height
-            );
+          for (var pass = 0; pass < passes; pass++) {
+            if (pass == 0) {
+              if (_anchor === p5.CENTER) p5.card.translate(-_width / 2, -_height / 2);
+              if (_shadow) {
+                p5.card.fill(_shadowColor + Math.round(_shadowOpacity * 2.55).toString(16));
+                p5.card.noStroke();
+                p5.card.translate(_shadowOffsetX, _shadowOffsetY);
+              } else {
+                p5.card.fill(_color + Math.round(_opacity * 2.55).toString(16));
+                p5.card.stroke(_borderColor + Math.round(_borderOpacity * 2.55).toString(16));
+                if (_borderWeight != 0) p5.card.strokeWeight(_borderWeight);
+                else p5.card.noStroke();
+              }
+            }
+            else{
+              p5.card.fill(_color + Math.round(_opacity * 2.55).toString(16));
+                p5.card.stroke(_borderColor + Math.round(_borderOpacity * 2.55).toString(16));
+                if (_borderWeight != 0) p5.card.strokeWeight(_borderWeight);
+                else p5.card.noStroke();
+            }
+
+            switch (_shape) {
+              case "ring":
+                p5.card.translate(_width / 2, _height / 2);
+                p5.card.noStroke();
+                p5.card.beginShape();
+                for (var i = 0; i < 61; i++) {
+                  p5.card.vertex(Math.cos((i / 60) * Math.PI * 2) * _width * 0.5, Math.sin((i / 60) * Math.PI * 2) * _height * 0.5);
+                }
+                for (var i = 0; i < 61; i++) {
+                  p5.card.vertex(Math.cos((i / 60) * Math.PI * 2) * _width * 0.2, -Math.sin((i / 60) * Math.PI * 2) * _height * 0.2);
+                }
+                p5.card.endShape(p5.CLOSE);
+                p5.card.stroke(_borderColor + Math.round(_borderOpacity * 2.55).toString(16));
+                if (_borderWeight != 0) p5.card.strokeWeight(_borderWeight);
+                else p5.card.noStroke();
+                p5.card.noFill();
+                p5.card.ellipse(0, 0, _width, _height);
+                p5.card.ellipse(0, 0, _width * 0.4, _height * 0.4);
+
+                break;
+              case "shield":
+                p5.card.beginShape();
+                p5.card.vertex(0, 0);
+                p5.card.vertex(0, _height * 0.2);
+                p5.card.bezierVertex(_width * 0, _height * 0.9, _width * 0, _height * 0.8, _width * 0.5, _height);
+                p5.card.bezierVertex(_width, _height * 0.8, _width, _height * 0.9, _width, 0);
+                p5.card.endShape(p5.CLOSE);
+                break;
+              case "avatar":
+                p5.card.ellipse(_width * 0.5, _height * 0.15, _width * 0.4, _height * 0.4);
+                p5.card.beginShape();
+                p5.card.vertex(_width * 0.2, _height);
+                p5.card.vertex(_width * 0.2, _height * 0.7);
+                p5.card.bezierVertex(_width * 0.2, _height * 0.25, _width * 0.8, _height * 0.25, _width * 0.8, _height * 0.7);
+                p5.card.vertex(_width * 0.8, _height);
+                p5.card.endShape(p5.CLOSE);
+                break;
+              case "heart":
+                p5.card.beginShape();
+                p5.card.vertex(_width * 0.5, _height * 0.25);
+                p5.card.bezierVertex(_width * 0.8, _height * -0.1, _width * 1.2, _height * 0.3, _width * 0.9, _height * 0.6);
+                p5.card.vertex(_width * 0.5, _height);
+                p5.card.vertex(_width * 0.1, _height * 0.6);
+                p5.card.bezierVertex(-_width * 0.2, _height * 0.3, _width * 0.2, _height * -0.1, _width * 0.5, _height * 0.25);
+                p5.card.endShape(p5.CLOSE);
+                break;
+              case "crown":
+                p5.card.beginShape();
+                p5.card.vertex(_width * 0.1, _height * 0.7);
+                p5.card.vertex(_width * 0, _height * 0.2);
+                p5.card.vertex(_width * 0.33, _height * 0.4);
+                p5.card.vertex(_width * 0.5, _height * 0.2);
+                p5.card.vertex(_width * 0.66, _height * 0.4);
+                p5.card.vertex(_width * 1, _height * 0.2);
+                p5.card.vertex(_width * 0.9, _height * 0.7);
+                p5.card.endShape(p5.CLOSE);
+                break;
+              case "cross":
+                p5.card.beginShape();
+                p5.card.vertex(_width * 0.33, 0);
+                p5.card.vertex(_width * 0.66, 0);
+                p5.card.vertex(_width * 0.66, _height * 0.33);
+                p5.card.vertex(_width * 1, _height * 0.33);
+                p5.card.vertex(_width * 1, _height * 0.66);
+                p5.card.vertex(_width * 0.66, _height * 0.66);
+                p5.card.vertex(_width * 0.66, _height * 1);
+                p5.card.vertex(_width * 0.33, _height * 1);
+                p5.card.vertex(_width * 0.33, _height * 0.66);
+                p5.card.vertex(_width * 0, _height * 0.66);
+                p5.card.vertex(_width * 0, _height * 0.33);
+                p5.card.vertex(_width * 0.33, _height * 0.33);
+                p5.card.endShape(p5.CLOSE);
+                break;
+              case "diam":
+                p5.card.beginShape();
+                p5.card.vertex(_width * 0.5, _height);
+                p5.card.vertex(0, _height * 0.5);
+                p5.card.vertex(_width * 0.3, _height * 0.25);
+                p5.card.vertex(_width * 0.7, _height * 0.25);
+                p5.card.vertex(_width, _height * 0.5);
+                p5.card.endShape(p5.CLOSE);
+                break;
+              case "flag":
+                p5.card.beginShape();
+                p5.card.vertex(0, _height * 0.1);
+                p5.card.bezierVertex(_width * 0.33, _height * -0.2, _width * 0.66, _height * 0.4, _width, _height * 0.1);
+                p5.card.vertex(_width, _height * 0.9);
+                p5.card.bezierVertex(_width * 0.66, _height * 1.2, _width * 0.33, _height * 0.6, 0, _height * 0.9);
+
+                p5.card.endShape(p5.CLOSE);
+                break;
+              case "bolt":
+                p5.card.beginShape();
+                p5.card.vertex(_width * 0.2, _height * 0.7);
+                p5.card.vertex(_width * 0.5, _height * 0);
+                p5.card.vertex(_width * 0.5, _height * 0.4);
+                p5.card.vertex(_width * 0.8, _height * 0.3);
+                p5.card.vertex(_width * 0.5, _height * 1);
+                p5.card.vertex(_width * 0.5, _height * 0.6);
+                p5.card.endShape(p5.CLOSE);
+                break;
+              case "star":
+                var branches = 5;
+                p5.card.beginShape();
+                p5.card.translate(_width / 2, _height / 2);
+                for (var i = 0; i < branches * 2; i++) {
+                  var radiusX = _width * 0.3 + (i % 2) * _width * 0.25;
+                  var radiusY = _height * 0.3 + (i % 2) * _height * 0.25;
+                  p5.card.vertex(Math.cos(Math.PI / (branches * 2) + (i / branches) * Math.PI) * radiusX, Math.sin(Math.PI / (branches * 2) + (i / branches) * Math.PI) * radiusY);
+                }
+                p5.card.endShape(p5.CLOSE);
+                break;
+              case "ellipse":
+                p5.card.beginShape();
+                p5.card.translate(_width / 2, _height / 2);
+                p5.card.ellipse(0, 0, _width, _height);
+                p5.card.endShape(p5.CLOSE);
+                break;
+              case "arrow":
+                p5.card.beginShape();
+                p5.card.vertex(_width * 0.5, _height * 0.2);
+                p5.card.vertex(_width * 0.5, _height * 0);
+                p5.card.vertex(_width, _height * 0.5);
+                p5.card.vertex(_width * 0.5, _height);
+                p5.card.vertex(_width * 0.5, _height * 0.8);
+                p5.card.vertex(_width * 0, _height * 0.8);
+                p5.card.vertex(_width * 0, _height * 0.2);
+
+                p5.card.endShape(p5.CLOSE);
+                break;
+              case "flower":
+                p5.card.translate(_width / 2, _height / 2);
+                p5.card.beginShape();
+                p5.card.vertex(Math.cos(Math.PI / 2 + (0 * Math.PI) / 2.5) * _width * 0.2, Math.sin(Math.PI / 2 + (0 * Math.PI) / 2.5) * _height * 0.2);
+                for (var i = 0; i < 5; i++) {
+                  var anchor1 = [Math.cos(Math.PI / 2 + (i * Math.PI) / 2.5) * _width * 0.8, Math.sin(Math.PI / 2 + (i * Math.PI) / 2.5) * _height * 0.8];
+                  var anchor2 = [Math.cos(Math.PI / 2 + ((i + 1) * Math.PI) / 2.5) * _width * 0.8, Math.sin(Math.PI / 2 + ((i + 1) * Math.PI) / 2.5) * _height * 0.8];
+                  var nextPoint = [Math.cos(Math.PI / 2 + ((i + 1) * Math.PI) / 2.5) * _width * 0.2, Math.sin(Math.PI / 2 + ((i + 1) * Math.PI) / 2.5) * _height * 0.2];
+                  p5.card.bezierVertex(anchor1[0], anchor1[1], anchor2[0], anchor2[1], nextPoint[0], nextPoint[1]);
+                }
+                p5.card.endShape(p5.CLOSE);
+                break;
+              case "drop":
+                p5.card.beginShape();
+                p5.card.vertex(_width * 0.5, 0);
+                p5.card.vertex(_width * 0.8, _height * 0.5);
+                p5.card.bezierVertex(_width * 1.2, _height * 1.3, _width * -0.2, _height * 1.3, _width * 0.2, _height * 0.5);
+                p5.card.endShape(p5.CLOSE);
+                break;
+              case "hexa":
+                var branches = 6;
+                p5.card.beginShape();
+                p5.card.translate(_width / 2, _height / 2);
+                for (var i = 0; i < branches; i++) {
+                  p5.card.vertex(Math.cos((i / branches) * Math.PI * 2) * _width * 0.5, Math.sin((i / branches) * Math.PI * 2) * _height * 0.5);
+                }
+                p5.card.endShape(p5.CLOSE);
+                break;
+              case "book":
+                p5.card.beginShape();
+                p5.card.vertex(_width * 0, _height * 0.1);
+                p5.card.bezierVertex(_width * 0.25, _height * 0, _width * 0.25, _height * 0, _width * 0.5, _height * 0.1);
+                p5.card.bezierVertex(_width * 0.75, _height * 0, _width * 0.75, _height * 0, _width * 1, _height * 0.1);
+                p5.card.vertex(_width * 1, _height * 1);
+                p5.card.bezierVertex(_width * 0.75, _height * 0.9, _width * 0.75, _height * 0.9, _width * 0.5, _height * 1);
+                p5.card.bezierVertex(_width * 0.25, _height * 0.9, _width * 0.25, _height * 0.9, _width * 0, _height * 1);
+                p5.card.endShape(p5.CLOSE);
+                break;
+              case "cloud":
+                p5.card.beginShape();
+                p5.card.vertex(_width * 0.3, _height * 0.8);
+                p5.card.bezierVertex(_width * -0.08, _height * 0.8, _width * -0.1, _height * 0.4, _width * 0.2, _height * 0.35);
+                p5.card.bezierVertex(_width * 0.2, _height * 0.1, _width * 0.55, _height * 0.1, _width * 0.6, _height * 0.3);
+                p5.card.bezierVertex(_width * 0.7, _height * 0.2, _width * 0.85, _height * 0.3, _width * 0.83, _height * 0.4);
+                p5.card.bezierVertex(_width * 1.1, _height * 0.4, _width * 1.05, _height * 0.8, _width * 0.75, _height * 0.8);
+                p5.card.endShape(p5.CLOSE);
+                break;
+              case "octo":
+                var branches = 8;
+                p5.card.beginShape();
+                p5.card.translate(_width / 2, _height / 2);
+                for (var i = 0; i < branches; i++) {
+                  p5.card.vertex(Math.cos(Math.PI / 8 + (i / branches) * Math.PI * 2) * _width * 0.5, Math.sin(Math.PI / 8 + (i / branches) * Math.PI * 2) * _height * 0.5);
+                }
+                p5.card.endShape(p5.CLOSE);
+                break;
+              case "pent":
+                var branches = 5;
+                p5.card.beginShape();
+                p5.card.translate(_width / 2, _height / 2);
+                for (var i = 0; i < branches; i++) {
+                  p5.card.vertex(Math.cos(Math.PI * 1.1 + (i / branches) * Math.PI * 2) * _width * 0.5, Math.sin(Math.PI * 1.1 + (i / branches) * Math.PI * 2) * _height * 0.5);
+                }
+                p5.card.endShape(p5.CLOSE);
+                break;
+              case "loz":
+                p5.card.beginShape();
+                p5.card.vertex(_width * 0.5, 0);
+                p5.card.vertex(_width, _height * 0.5);
+                p5.card.vertex(_width * 0.5, _height);
+                p5.card.vertex(0, _height * 0.5);
+                p5.card.endShape(p5.CLOSE);
+                break;
+              case "tri":
+                p5.card.beginShape();
+                p5.card.vertex(0, _height);
+                p5.card.vertex(_width * 0.5, 0);
+                p5.card.vertex(_width, _height);
+                p5.card.endShape(p5.CLOSE);
+                break;
+              case "triSqr":
+                p5.card.beginShape();
+                p5.card.vertex(0, 0);
+                p5.card.vertex(_width, 0);
+                p5.card.vertex(0, _height);
+                p5.card.endShape(p5.CLOSE);
+                break;
+              case "rect":
+                p5.card.beginShape();
+                p5.card.rect(0, 0, _width, _height);
+                p5.card.endShape(p5.CLOSE);
+                break;
+              case "rectRounded":
+                p5.card.beginShape();
+                p5.card.rect(0, 0, _width, _height, _height * 0.1);
+                p5.card.endShape(p5.CLOSE);
+                break;
+
+              default:
+                // Handle the case where the element value doesn't match any of the cases
+                break;
+            }
+
+            if (pass == 0 && _shadow) {
+              console.log("coucou3");
+              p5.card.translate(-_shadowOffsetX, -_shadowOffsetY);
+            }
           }
         }
+
+        //! TEXT
+        else if (componentType == "TEXT") {
+          p5.card.noStroke();
+          p5.card.textAlign(_anchor, p5.CENTER);
+          p5.card.textFont(_font);
+          p5.card.textSize(_size * currentCollection.collectionInfo.H * currentCollection.collectionInfo.resolution * 0.02);
+
+          if (_shadow) {
+            p5.card.fill(_shadowColor + Math.round(_shadowOpacity * 2.55).toString(16));
+            p5.card.text(_textToWrite, _shadowOffsetX, _shadowOffsetY);
+          }
+
+          p5.card.fill(_color + Math.round(_opacity * 2.55).toString(16));
+          p5.card.text(_textToWrite, 0, 0);
+        }
+
+        //! IMAGE / STRIP
+        else if (componentType == "IMAGE") {
+          var _totalWidth = (_elementsList.length * Math.min(_width, _spacingX) + (_elementsList.length - 2) * _spacingX) / 2;
+          var _totalHeight = (_elementsList.length * Math.min(_height, _spacingY) + (_elementsList.length - 1) * _spacingY) / 2;
+
+          p5.card.imageMode(_anchor);
+
+          var passes = 1;
+          if (_shadow) passes = 2;
+
+          for (let i = 0; i < _elementsList.length; i++) {
+            for (var pass = 0; pass < passes; pass++) {
+              if (pass == 0 && _shadow) {
+                p5.card.tint(_shadowColor + Math.round(_shadowOpacity * 2.55).toString(16));
+                p5.card.translate(_shadowOffsetX, _shadowOffsetY);
+              } else {
+                p5.card.tint(_tint + Math.round(_opacity * 2.55).toString(16));
+              }
+
+              if (_listAnchor == p5.CENTER) {
+                p5.card.image(
+                  _imgs[i],
+                  _elementsList.length > 1 ? (_spacingX > 0 ? i * _spacingX - _totalWidth / 2 : 0) + (_style == "alternate" ? (i % 2 == 0 ? _offsetX : -_offsetX) : 0) : 0,
+                  _elementsList.length > 1 ? (_spacingY > 0 ? i * _spacingY - _totalHeight / 2 : 0) + (_style == "alternate" ? (i % 2 == 0 ? _offsetY : -_offsetY) : 0) : 0,
+                  _width,
+                  _height
+                );
+              } else if (_listAnchor == p5.LEFT) {
+                p5.card.image(
+                  _imgs[i],
+                  _elementsList.length > 1 ? i * _spacingX + (_style == "alternate" ? (i % 2 == 0 ? _offsetX : -_offsetX) : 0) : 0,
+                  _elementsList.length > 1 ? i * _spacingY + (_style == "alternate" ? (i % 2 == 0 ? _offsetY : -_offsetY) : 0) : 0,
+                  _width,
+                  _height
+                );
+              } else if (_listAnchor == p5.CENTER.RIGHT) {
+                p5.card.image(
+                  _imgs[i],
+                  _elementsList.length > 1 ? (_spacingX > 0 ? i * _spacingX - _totalWidth : 0) + (_style == "alternate" ? (i % 2 == 0 ? _offsetX : -_offsetX) : 0) : 0,
+                  _elementsList.length > 1 ? (_spacingY > 0 ? i * _spacingY - _totalHeight : 0) + (_style == "alternate" ? (i % 2 == 0 ? _offsetY : -_offsetY) : 0) : 0,
+                  _width,
+                  _height
+                );
+              }
+
+              if (pass == 0 && _shadow) {
+                p5.card.translate(-_shadowOffsetX, -_shadowOffsetY);
+              }
+            }
+          }
+        }
+
+        p5.card.pop();
       }
     } catch (e) {
       console.log(e);
@@ -379,7 +443,6 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
         p5.card.image(errorImage, 0, 0, _width, _height);
       }
     }
-    p5.card.pop();
   }
 }
 

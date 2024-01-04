@@ -188,7 +188,12 @@ export function createNewComponent(item, itemIndex) {
         var oldName = parameterName.innerHTML;
         var oldTitle = parameterName.title;
         parameterInput.type = param.type;
-        parameterInput.checked = item[param.refValue]["value"];
+        if(item[param.refValue]){
+          parameterInput.checked = item[param.refValue]["value"];
+        }
+        else{
+          parameterInput.checked = false;
+        }
         parameterInput.addEventListener("input", (e) => {
           currentCollection.template[itemIndex][param.refValue]["value"] = e.target.checked;
           generateCollectionBtn.click();
@@ -210,7 +215,11 @@ export function createNewComponent(item, itemIndex) {
         parameterInput.classList.add("parameterInput");
         parameterInput.id = inputID;
         parameterInput.addEventListener("input", (e) => {
-          currentCollection.template[itemIndex][param.refValue]["value"] = e.target.value;
+          if(currentCollection.template[itemIndex][param.refValue]) currentCollection.template[itemIndex][param.refValue]["value"] = e.target.value;
+          else currentCollection.template[itemIndex][param.refValue] =  {
+            "value" : e.target.value,
+            "type" : "0"
+          }
           generateCollectionBtn.click();
           populateComponents();
         });
@@ -224,7 +233,9 @@ export function createNewComponent(item, itemIndex) {
           option.innerHTML = opt.label;
           parameterInput.appendChild(option);
         });
-        parameterInput.value = item[param.refValue]["value"];
+
+        if(item[param.refValue]) parameterInput.value = item[param.refValue]["value"];
+        else parameterInput.value = "";
 
         parameterSlot.appendChild(parameterName);
         parameterInputLine.appendChild(parameterInput);
