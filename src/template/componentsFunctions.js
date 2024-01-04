@@ -1,4 +1,4 @@
-import { setupElements } from "../elements/elementFunctions.js";
+import { populateElements, setupElements } from "../elements/elementFunctions.js";
 import { IMAGE_parameters, TEXT_parameters, SHAPE_parameters, ELEMENT_parameters, resetElementParameters } from "../template/componentParameters.js";
 import { currentCollection } from "../collection/collectionManager.js";
 import { allSystemFonts } from "../assets/assetLoader.js";

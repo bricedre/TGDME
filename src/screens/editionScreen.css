@@ -302,7 +302,8 @@ input[type="radio"] {
 .downElementBtn:hover,
 .visibilityBtn:hover,
 .deleteComponentBtn:hover,
-.deleteResourceBtn:hover {
+.deleteResourceBtn:hover,
+.deleteElementBtn:hover{
   scale: 1.5;
 }
 
