@@ -15,7 +15,9 @@ canvas {
 
 .templateBtns,
 .ressBtns,
-.elementBtns {
+.elementBtns,
+.collBtns,
+.printBtns {
   display: flex;
   gap: 1rem;
 }
@@ -117,14 +119,18 @@ canvas {
   padding: 1rem;
 }
 
+#contentConfigDiv,
+#contentPrintingDiv,
 #contentTemplateDiv,
 #contentRessDiv,
-#contentElementsDiv {
+#contentElementsDiv{
   display: none;
   flex-direction: column;
   height: 100%;
 }
 
+#contentConfigDiv button,
+#contentPrintingDiv button,
 #contentTemplateDiv button,
 #contentRessDiv button,
 #contentElementsDiv button {
@@ -165,14 +171,15 @@ input[type="radio"] {
 }
 
 #tabConfigInput:checked~.content #contentConfigDiv,
-#tabPrintingInput:checked~.content #contentPrintingDiv {
-  display: block;
-}
-
+#tabPrintingInput:checked~.content #contentPrintingDiv,
 #tabTemplateInput:checked~.content #contentTemplateDiv,
 #tabElementsInput:checked~.content #contentElementsDiv,
 #tabRessInput:checked~.content #contentRessDiv {
   display: flex;
+}
+
+.separator{
+  flex : 1;
 }
 
 /* TABS CONTENT */

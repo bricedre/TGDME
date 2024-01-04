@@ -11,7 +11,7 @@ export let assetsLibrary = {};
 export let errorImage;
 
 export function loadAssets(p) {
-  let assetsPath = rootPath + "/src/collections/" + currentCollectionUID + "/assets/";
+  let assetsPath = rootPath + "/collections/" + currentCollectionUID + "/assets/";
   assetsLibrary = {};
 
   currentAssetsList = getFiles(assetsPath);

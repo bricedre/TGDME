@@ -10,6 +10,7 @@ import { renderCardUsingTemplate } from "../render.js";
 import { setupResources } from "../assets/resourceFunctions.js";
 import { populateComponents, setupComponents } from "../template/componentsFunctions.js";
 import { populateElements, setupElements } from "../elements/elementFunctions.js";
+const { rootPath } = require("electron-root-path");
 
 const fs = require("fs").promises;
 const { existsSync, mkdirSync, copyFileSync, readdirSync } = require("fs");
@@ -25,12 +26,12 @@ openPanel("start");
 getFontList();
 
 export function getCollections() {
-  collectionsAvailable = readdirSync("./src/collections", { withFileTypes: true })
+  collectionsAvailable = readdirSync(rootPath+"/collections", { withFileTypes: true })
     .filter((dirent) => dirent.isDirectory())
     .map((dirent) => dirent.name);
 
   collectionsAvailable.forEach(async (collection, index) => {
-    const data = await fs.readFile("./src/collections/" + collection + "/collection.json");
+    const data = await fs.readFile(rootPath+"/collections/" + collection + "/collection.json");
     collectionsAvailable[index] = JSON.parse(data);
   });
 
@@ -77,7 +78,7 @@ export function getCollections() {
 
           archivedColContainer.classList.toggle("active");
         });
-        archivedColContainer.innerHTML = "Collections Archivées";
+        archivedColContainer.innerHTML = "<img src='"+rootPath+"/assets/archiveCollection.png'> Collections Archivées";
         loadingPanelDiv.appendChild(archivedColContainer);
 
         var archivedCol = document.createElement("div");
@@ -143,19 +144,22 @@ export function setCurrentCollection(collectionUID) {
 
 export function createNewCollection() {
   const newUID = collectionsAvailable.length == 0 ? 0 : collectionsAvailable[collectionsAvailable.length - 1].collectionInfo.UID + 1;
-  var dir = "./src/collections/" + newUID;
+  var dir = rootPath+"/collections/" + newUID;
+
+  const collectionTemplatePath = rootPath+"/src/collection/collectionTemplate.json";
+
 
   if (!existsSync(dir)) {
     mkdirSync(dir);
     mkdirSync(dir + "/assets");
-    copyFileSync("./src/components/collectionTemplate.json", "./src/collections/" + newUID + "/collection.json");
+    copyFileSync(collectionTemplatePath, rootPath+"/collections/" + newUID + "/collection.json");
     getCollections();
 
     setTimeout(() => {
       collectionsAvailable[collectionsAvailable.length - 1].collectionInfo.UID = newUID;
       collectionsAvailable[collectionsAvailable.length - 1].collectionInfo.collectionName = "Nouvelle Collection N°" + (newUID + 1);
       var deckToSave = JSON.stringify(collectionsAvailable[collectionsAvailable.length - 1]);
-      fs.writeFile("./src/collections/" + newUID + "/collection.json", deckToSave, (err) => {
+      fs.writeFile(rootPath+"/collections/" + newUID + "/collection.json", deckToSave, (err) => {
         if (err) {
           console.error(err);
         }
@@ -235,7 +239,7 @@ export function saveCollection(refreshAssets, reRenderCard) {
 
   //SAVE CURRENT DECK IN FOLDER
   var deckToSave = JSON.stringify(currentCollection);
-  fs.writeFile("./src/collections/" + currentCollectionUID + "/collection.json", deckToSave, (err) => {
+  fs.writeFile(rootPath+"/collections/" + currentCollectionUID + "/collection.json", deckToSave, (err) => {
     if (err) {
       console.error(err);
     }

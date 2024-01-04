@@ -138,20 +138,24 @@
               </select>
             </div>
 
-            <button id="duplicateCollectionBtn" class="navBtn">
-              DUPLIQUER LA COLLECTION
+            <div class="separator"></div>
+
+            <div class="collBtns">
+            <button id="duplicateCollectionBtn" class="navBtn" title="Créer une copie de la collection actuelle">
+              DUPLIQUER
               <img src="./assets/duplicateCollection.png">
             </button>
 
-            <button id="archiveCollectionBtn" class="navBtn">
-              ARCHIVER LA COLLECTION
+            <button id="archiveCollectionBtn" class="navBtn" title="Archiver (c.-à-d. cacher dans la Bibliothèque) la collection actuelle">
+              ARCHIVER
               <img src="./assets/archiveCollection.png">
             </button>
 
             <button id="deleteCollectionBtn" class="navBtn" title="Attention ! Cette action est irréversible !">
-              SUPPRIMER LA COLLECTION
+              SUPPRIMER
               <img src="./assets/deleteCollection.png">
             </button>
+            </div>
 
           </div>
 
@@ -181,6 +185,10 @@
                 AJOUTER
                 <img src="./assets/addTextComponent.png">
               </button>
+              <button title="Créer un fichier .csv à partir du modèle actuel" id="generateCSVBtn" class="navBtn">
+                GÉNÉRER .CSV
+                <img src="./assets/csv.png">
+              </button>
             </div>
           </div>
 
@@ -199,7 +207,8 @@
                 COCHER / DÉCOCHER TOUT
                 <img src="./assets/checkAllBtn.png">
               </button>
-              <button title="Remplir les paramètres grâce à un fichier .csv" id="wizardFillBtn" class="navBtn">
+              
+              <button title="Créer des éléments automatiquement et en remplir les paramètres grâce à un fichier .csv" id="wizardFillBtn" class="navBtn">
                 REMPLIR PAR .CSV
                 <img src="./assets/wizardFillBtn.png">
               </button>
@@ -251,10 +260,14 @@
               <label class="parameterName" for="cuttingHelpInput">Aide à la Découpe 🔍</label>
             </div>
 
-            <button id="renderCollectionBtn" class="navBtn">
-              GÉNÉRER
-              <img src="./assets/print.png">
-            </button>
+            <div class="separator"></div>
+
+            <div class="printBtns">
+              <button id="renderCollectionBtn" class="navBtn">
+                GÉNÉRER
+                <img src="./assets/print.png">
+              </button>
+            </div>
           </div>
         </div>
 

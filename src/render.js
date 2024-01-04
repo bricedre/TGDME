@@ -4,6 +4,19 @@ import { app } from "./app.js";
 import { assetsLibrary, errorImage } from "./assets/assetLoader.js";
 import { IMAGE_parameters, TEXT_parameters, SHAPE_parameters, ELEMENT_parameters } from "./template/componentParameters.js";
 
+//FUTURE IDEES : 
+/*
+
+Générer le fichier .csv du template actuel pour servir de base
+Masque d'image
+miroir : H V HV R
+Autres formes : ligne, sablier, arbre, coche
+ombre portée généralisée
+liste sur les icones
+icone dans texte
+
+*/
+
 export function renderComponent(p5, componentType, componentIndex, elementIndex) {
   let currentElements = currentCollection.elements;
   let currentTemplate = currentCollection.template;
@@ -103,12 +116,12 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
             p5.card.endShape(p5.CLOSE);
             break;
           case "avatar":
-            p5.card.ellipse(_width * 0.5, _height * 0.15, _width * 0.3, _height * 0.3);
+            p5.card.ellipse(_width * 0.5, _height * 0.15, _width * 0.4, _height * 0.4);
             p5.card.beginShape();
-            p5.card.vertex(_width * 0.25, _height);
-            p5.card.vertex(_width * 0.25, _height * 0.6);
-            p5.card.bezierVertex(_width * 0.25, _height * 0.25, _width * 0.75, _height * 0.25, _width * 0.75, _height * 0.6);
-            p5.card.vertex(_width * 0.75, _height);
+            p5.card.vertex(_width * 0.2, _height);
+            p5.card.vertex(_width * 0.2, _height * 0.7);
+            p5.card.bezierVertex(_width * 0.2, _height * 0.25, _width * 0.8, _height * 0.25, _width * 0.8, _height * 0.7);
+            p5.card.vertex(_width * 0.8, _height);
             p5.card.endShape(p5.CLOSE);
             break;
           case "heart":
@@ -220,7 +233,7 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
             p5.card.beginShape();
             p5.card.vertex(_width * 0.5, 0);
             p5.card.vertex(_width * 0.8, _height * 0.5);
-            p5.card.bezierVertex(_width * 1.2, _height * 1.2, _width * -0.2, _height * 1.2, _width * 0.2, _height * 0.5);
+            p5.card.bezierVertex(_width * 1.2, _height * 1.3, _width * -0.2, _height * 1.3, _width * 0.2, _height * 0.5);
             p5.card.endShape(p5.CLOSE);
             break;
           case "hexa":

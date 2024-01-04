@@ -73,8 +73,8 @@ export function openPanel(panelName) {
       updateCardCounter();
       mainTitleDiv.innerHTML = currentCollection?.collectionInfo.collectionName;
       archiveCollectionBtn.innerHTML = currentCollection.collectionInfo.archived
-        ? "DÉSARCHIVER LA COLLECTION<img src='./assets/archiveCollection.png'>"
-        : "ARCHIVER LA COLLECTION<img src='./assets/archiveCollection.png'>";
+        ? "DÉSARCHIVER<img src='./assets/archiveCollection.png'>"
+        : "ARCHIVER<img src='./assets/archiveCollection.png'>";
       break;
   }
 }
