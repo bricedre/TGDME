@@ -75,6 +75,10 @@
    border-radius: 50%;
  }
 
+ #homeBtn>img{
+  height: 3rem;
+ }
+
  #homeBtn:hover {
    background: var(--mainColorLight);
  }

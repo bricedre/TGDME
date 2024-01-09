@@ -100,7 +100,7 @@ button {
 }
 
 button>img {
-  height: 3rem;
+  height: 2rem;
   rotate: 5deg;
   filter: drop-shadow(2px 2px 2px var(--mainColorShadows));
 }
@@ -224,5 +224,5 @@ button:disabled {
 .noStuffDiv {
   text-align: center;
   color: #0007;
-  margin: auto;
+  margin: 5rem auto;
 }

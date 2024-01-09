@@ -30,8 +30,6 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
 
     _src = _src.replace("INDEX", elementIndex.toString());
 
-    console.log(componentData.src, _src);
-
     var _textToWrite;
     var _shape;
     var _elementsList = [];

@@ -2,7 +2,7 @@
   "collectionInfo": {
     "archived": false,
     "UID": 0,
-    "collectionName": "",
+    "collectionName": "name",
     "resolution": 60,
     "elementFormat": "pokerCard",
     "pageFormat": "A4",
@@ -17,5 +17,5 @@
     "lastAssetIndex" : 0
   },
   "template": [],
-  "elements": []
+  "elements": [{ "UID": 0, "quantity": 1, "toPrint": true }]
 }

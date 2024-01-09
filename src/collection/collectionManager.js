@@ -26,24 +26,26 @@ openPanel("start");
 getFontList();
 
 export function getCollections() {
-  collectionsAvailable = readdirSync(rootPath+"/collections", { withFileTypes: true })
+  collectionsAvailable = readdirSync(rootPath + "/collections", { withFileTypes: true })
     .filter((dirent) => dirent.isDirectory())
     .map((dirent) => dirent.name);
 
+  collectionsAvailable = collectionsAvailable.sort((a, b) => {
+    return parseInt(a, 10) - parseInt(b, 10);
+  });
+
   collectionsAvailable.forEach(async (collection, index) => {
-    const data = await fs.readFile(rootPath+"/collections/" + collection + "/collection.json");
+    const data = await fs.readFile(rootPath + "/collections/" + collection + "/collection.json");
     collectionsAvailable[index] = JSON.parse(data);
   });
 
   setTimeout(() => {
-
     loadingPanelDiv.innerHTML = "";
 
     // Collections to show
     if (collectionsAvailable.length > 0) {
-
-      var activeCollections = collectionsAvailable.filter(col => !col.collectionInfo.archived)
-      var archivedCollections = collectionsAvailable.filter(col => col.collectionInfo.archived)
+      var activeCollections = collectionsAvailable.filter((col) => !col.collectionInfo.archived);
+      var archivedCollections = collectionsAvailable.filter((col) => col.collectionInfo.archived);
 
       if (activeCollections.length > 0) {
         var activeCol = document.createElement("div");
@@ -65,7 +67,6 @@ export function getCollections() {
       }
 
       if (archivedCollections.length > 0) {
-
         var archivedColContainer = document.createElement("div");
         archivedColContainer.id = "archivedCollectionsContainer";
         archivedColContainer.addEventListener("click", () => {
@@ -73,12 +74,11 @@ export function getCollections() {
             archivedColContainer.style.maxHeight = "3.2rem";
           } else {
             archivedColContainer.style.maxHeight = "calc(2rem + " + archivedColContainer.scrollHeight + "px)";
-
           }
 
           archivedColContainer.classList.toggle("active");
         });
-        archivedColContainer.innerHTML = "<img src='"+rootPath+"/assets/archiveCollection.png'> Collections Archivées";
+        archivedColContainer.innerHTML = "<img src='" + rootPath + "/assets/archiveCollection.png'> Collections Archivées";
         loadingPanelDiv.appendChild(archivedColContainer);
 
         var archivedCol = document.createElement("div");
@@ -98,8 +98,6 @@ export function getCollections() {
           archivedCol.appendChild(btnElement);
         });
       }
-
-
     }
 
     //No Collections to show
@@ -122,7 +120,6 @@ export function setCurrentCollection(collectionUID) {
 
     loadAssets(app);
     setupCollectionDimensions();
-    
 
     app.setupCanvas(coll.W * coll.resolution, coll.H * coll.resolution, coll.pageWidth * coll.resolution, coll.pageHeight * coll.resolution);
 
@@ -144,28 +141,28 @@ export function setCurrentCollection(collectionUID) {
 
 export function createNewCollection() {
   const newUID = collectionsAvailable.length == 0 ? 0 : collectionsAvailable[collectionsAvailable.length - 1].collectionInfo.UID + 1;
-  var dir = rootPath+"/collections/" + newUID;
+  console.log(collectionsAvailable);
+  var dir = rootPath + "/collections/" + newUID;
 
-  const collectionTemplatePath = rootPath+"/src/collection/collectionTemplate.json";
-
+  const collectionTemplatePath = rootPath + "/src/collection/collectionTemplate.json";
 
   if (!existsSync(dir)) {
     mkdirSync(dir);
     mkdirSync(dir + "/assets");
-    copyFileSync(collectionTemplatePath, rootPath+"/collections/" + newUID + "/collection.json");
+    copyFileSync(collectionTemplatePath, rootPath + "/collections/" + newUID + "/collection.json");
     getCollections();
 
     setTimeout(() => {
       collectionsAvailable[collectionsAvailable.length - 1].collectionInfo.UID = newUID;
       collectionsAvailable[collectionsAvailable.length - 1].collectionInfo.collectionName = "Nouvelle Collection N°" + (newUID + 1);
+      // collectionsAvailable[collectionsAvailable.length - 1].collectionInfo.collectionName = "Coucou";
       var deckToSave = JSON.stringify(collectionsAvailable[collectionsAvailable.length - 1]);
-      fs.writeFile(rootPath+"/collections/" + newUID + "/collection.json", deckToSave, (err) => {
+      fs.writeFile(rootPath + "/collections/" + newUID + "/collection.json", deckToSave, (err) => {
         if (err) {
           console.error(err);
         }
       });
       setCurrentCollection(newUID);
-      addNewElement();
     }, 500);
   }
 }
@@ -179,7 +176,6 @@ export function deleteCurrentCollection() {
       openPanel("start");
     })
     .catch((e) => console.log(e));
-
 }
 
 export function duplicateCollection() {
@@ -231,7 +227,7 @@ export function saveCollection(refreshAssets, reRenderCard) {
   coll.collectionInfo.pageOrientation = pageOrientationSelect.value;
   coll.collectionInfo.resolution = Math.max(1, pageResolutionInput.value);
   coll.collectionInfo.cuttingHelp = cuttingHelpInput.checked;
-  
+
   setupCollectionDimensions();
   populateEditionFields();
   // populateComponents();
@@ -239,7 +235,7 @@ export function saveCollection(refreshAssets, reRenderCard) {
 
   //SAVE CURRENT DECK IN FOLDER
   var deckToSave = JSON.stringify(currentCollection);
-  fs.writeFile(rootPath+"/collections/" + currentCollectionUID + "/collection.json", deckToSave, (err) => {
+  fs.writeFile(rootPath + "/collections/" + currentCollectionUID + "/collection.json", deckToSave, (err) => {
     if (err) {
       console.error(err);
     }
@@ -249,7 +245,7 @@ export function saveCollection(refreshAssets, reRenderCard) {
   //RELOAD DECK
   if (refreshAssets) loadAssets(app);
 
-  if(reRenderCard){
+  if (reRenderCard) {
     setTimeout(() => {
       app.resizeExistingCanvas(
         coll.collectionInfo.W * coll.collectionInfo.resolution,
@@ -363,8 +359,8 @@ export function addNewShape() {
   assignUIDToNewComponent();
 }
 
-function assignUIDToNewComponent(){
-  currentCollection.template[currentCollection.template.length-1].UID = currentCollection.collectionInfo.lastComponentIndex;
+function assignUIDToNewComponent() {
+  currentCollection.template[currentCollection.template.length - 1].UID = currentCollection.collectionInfo.lastComponentIndex;
   currentCollection.collectionInfo.lastComponentIndex++;
   setupComponents();
   generateCollectionBtn.click();
@@ -372,9 +368,9 @@ function assignUIDToNewComponent(){
 
 export function addNewElement() {
   currentCollection.elements.push(cloneDeep(elementTemplate));
-  currentCollection.elements[currentCollection.elements.length-1].UID = currentCollection.collectionInfo.lastElementIndex;
+  currentCollection.elements[currentCollection.elements.length - 1].UID = currentCollection.collectionInfo.lastElementIndex;
   currentCollection.collectionInfo.lastElementIndex++;
-  
+
   setupElements();
   populateElements();
   generateCollectionBtn.click();
