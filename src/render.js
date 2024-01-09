@@ -30,6 +30,8 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
 
     _src = _src.replace("INDEX", elementIndex.toString());
 
+    console.log(componentData.src, _src);
+
     var _textToWrite;
     var _shape;
     var _elementsList = [];
@@ -361,7 +363,6 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
             }
 
             if (pass == 0 && _shadow) {
-              console.log("coucou3");
               p5.card.translate(-_shadowOffsetX, -_shadowOffsetY);
             }
           }
@@ -471,7 +472,7 @@ function getActualValue(refValue, refValueName, componentData, elementData, elem
     } else {
       try {
         if (refValue.type == "1") {
-          finalValue = currentCollection.elements[app.currentIndex][componentData.UID][refValueName];
+          finalValue = currentCollection.elements[elementIndex][componentData.UID][refValueName];
         } else {
           finalValue = refValue.value;
         }
@@ -506,14 +507,16 @@ export function generatePages(p5) {
   currentCollection.elements.forEach((card) => {
     if (card.quantity) {
       for (let i = 0; i < card.quantity; i++) _allCardsIndices.push(currentElementIndex);
-    } else {
-      _allCardsIndices.push(currentElementIndex);
     }
     currentElementIndex++;
   });
 
+
   for (let i = 0; i < _allCardsIndices.length; i++) {
     var elementIndex = _allCardsIndices[i];
+
+    console.log(elementIndex, currentCollection.elements[elementIndex]);
+    
     if (i % (colCount * rowCount) == 0) {
       currentPage = p5.createGraphics(pageWidth, pageHeight);
       currentPage.background(255);
@@ -523,6 +526,7 @@ export function generatePages(p5) {
 
     if (i % (colCount * rowCount) == colCount * rowCount - 1 || i === _allCardsIndices.length - 1) {
       pages.push(currentPage);
+      
     }
   }
 
@@ -532,6 +536,7 @@ export function generatePages(p5) {
 export function renderCardUsingTemplate(p, elementIndex, guide) {
   //WHITE BG BY DEFAULT
   p.card.background(255);
+  
 
   //COLLECTION WITH ELEMENTS
   if (currentCollection.elements.length > 0) {

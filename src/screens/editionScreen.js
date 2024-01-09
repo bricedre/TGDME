@@ -2,7 +2,7 @@ import { app } from "../app.js";
 import { addNewElement, addNewImage, addNewShape, addNewText, archiveCollection, currentCollection, deleteCurrentCollection, duplicateCollection, saveCollection } from "../collection/collectionManager.js";
 import { rootElement } from "./mainLayout.js";
 
-import { renderCardUsingTemplate } from "../render.js";
+import { renderCardUsingTemplate, triggerGeneration } from "../render.js";
 import { addAsset, allSystemFonts, currentAssetsList, removeAsset } from "../assets/assetLoader.js";
 import { setupComponents } from "../template/componentsFunctions.js";
 

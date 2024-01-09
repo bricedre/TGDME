@@ -4,12 +4,11 @@ canvas {
   z-index: 1;
 }
 
-
 #editionPanelDiv {
   flex-direction: row;
 }
 
-#canvasDiv{
+#canvasDiv {
   padding: 4rem;
 }
 
@@ -41,8 +40,6 @@ canvas {
   cursor: default;
 }
 
-
-
 #generateCollectionBtn {
   background-color: transparent;
   padding: 0;
@@ -60,7 +57,7 @@ canvas {
   scale: 1.3;
 }
 
-#generateCollectionBtn>img {
+#generateCollectionBtn > img {
   height: 4rem;
 }
 
@@ -73,16 +70,15 @@ canvas {
   background: #800;
 }
 
-.itemLabel{
+.itemLabel {
   white-space: nowrap;
 }
 
-.uidTag{
+.uidTag {
   color: #0005;
   font-size: 0.8rem;
   width: -webkit-fill-available;
 }
-
 
 #cardCounterDiv {
   display: flex;
@@ -114,7 +110,7 @@ canvas {
   height: 94%;
 }
 
-.content>div {
+.content > div {
   display: none;
   padding: 1rem;
 }
@@ -123,7 +119,7 @@ canvas {
 #contentPrintingDiv,
 #contentTemplateDiv,
 #contentRessDiv,
-#contentElementsDiv{
+#contentElementsDiv {
   display: none;
   flex-direction: column;
   height: 100%;
@@ -146,7 +142,7 @@ input[type="radio"] {
   display: none;
 }
 
-.tabs>label {
+.tabs > label {
   display: inline-block;
   padding: 0.5rem;
   text-align: center;
@@ -155,31 +151,31 @@ input[type="radio"] {
   font-size: 0.8rem;
 }
 
-.tabs>label:hover {
+.tabs > label:hover {
   color: var(--mainColor);
   cursor: pointer;
 }
 
-.tabs>input:checked+label {
+.tabs > input:checked + label {
   color: white;
   background-color: var(--mainColorDark);
   border-radius: 0.7rem;
 }
 
-#tabConfigInput+label {
+#tabConfigInput + label {
   margin: 1rem 0 0 1rem;
 }
 
-#tabConfigInput:checked~.content #contentConfigDiv,
-#tabPrintingInput:checked~.content #contentPrintingDiv,
-#tabTemplateInput:checked~.content #contentTemplateDiv,
-#tabElementsInput:checked~.content #contentElementsDiv,
-#tabRessInput:checked~.content #contentRessDiv {
+#tabConfigInput:checked ~ .content #contentConfigDiv,
+#tabPrintingInput:checked ~ .content #contentPrintingDiv,
+#tabTemplateInput:checked ~ .content #contentTemplateDiv,
+#tabElementsInput:checked ~ .content #contentElementsDiv,
+#tabRessInput:checked ~ .content #contentRessDiv {
   display: flex;
 }
 
-.separator{
-  flex : 1;
+.separator {
+  flex: 1;
 }
 
 /* TABS CONTENT */
@@ -253,12 +249,13 @@ input[type="radio"] {
 #ressItemsDiv,
 #elementItemsDiv {
   overflow-y: auto;
-  flex: 1;
 }
 
 #ressItemsDiv {
   display: flex;
-  flex-direction: column;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding: 1rem 0;
 }
 
 /* ACCORDION */
@@ -268,13 +265,13 @@ input[type="radio"] {
   gap: 0.5rem;
 }
 
-.elementItemWrapper>input,
-.elementItemWrapper>.checkboxContainer {
+.elementItemWrapper > input,
+.elementItemWrapper > .checkboxContainer {
   margin: 0.5rem auto;
   width: 3.5rem;
 }
 
-.elementItemWrapper>.qtyInput {
+.elementItemWrapper > .qtyInput {
   font-size: 1rem;
   font-family: "Main Font";
   border: none;
@@ -298,7 +295,7 @@ input[type="radio"] {
   border-radius: 0.3rem 0.3rem 0 0;
 }
 
-.accordion>img {
+.accordion > img {
   aspect-ratio: 1;
   height: 1.8rem;
   rotate: 0deg;
@@ -310,7 +307,8 @@ input[type="radio"] {
 .visibilityBtn:hover,
 .deleteComponentBtn:hover,
 .deleteResourceBtn:hover,
-.deleteElementBtn:hover{
+.deleteElementBtn:hover,
+.uidTagCorner:hover {
   scale: 1.5;
 }
 
@@ -350,7 +348,7 @@ input[type="file"] {
   flex: 1;
 }
 
-.custom-file-upload>img {
+.custom-file-upload > img {
   height: 3rem;
   rotate: 5deg;
 }
@@ -369,12 +367,11 @@ input[type="file"] {
   gap: 0.5rem;
 }
 
-.elementsHeaderDiv>img {
+.elementsHeaderDiv > img {
   aspect-ratio: 1;
   height: 3.2rem;
   padding: 0.3rem;
 }
-
 
 @keyframes beyblade {
   0% {
@@ -384,4 +381,51 @@ input[type="file"] {
   100% {
     rotate: 360deg;
   }
+}
+
+.assetContainer {
+  position: relative;
+  height: 9rem;
+  aspect-ratio: 1;
+  margin: 0 !important;
+  background-color: #fff;
+  border-radius: 2vh;
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+  justify-content: center;
+  box-shadow: 5px 5px 10px #104d6924;
+  font-family: "Main Font", sans-serif;
+}
+
+.assetContainer > img {
+  height: 100%;
+  rotate: 0deg;
+}
+
+.deleteResourceBtn {
+  position: absolute;
+  height: 2rem !important;
+  right: 2%;
+  bottom: 2%;
+  transition: 0.3s;
+  border-radius: 20% 20% 50% 20%;
+  background-color: var(--mainColor);
+  padding: 0.2rem;
+  cursor: pointer;
+}
+
+.uidTagCorner {
+  position: absolute;
+  height: 2rem !important;
+  aspect-ratio: 1;
+  left: 2%;
+  top: 2%;
+  transition: 0.3s;
+  border-radius: 50% 20% 20% 20%;
+  background-color: var(--mainColor);
+  padding: 0.2rem;
+  color: #164a63;
+  text-align: center;
+  cursor: pointer;
 }

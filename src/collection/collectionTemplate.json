@@ -13,7 +13,8 @@
     "pageWidth": 100,
     "pageHeight": 100,
     "lastComponentIndex": 0,
-    "lastElementIndex": 0
+    "lastElementIndex": 0,
+    "lastAssetIndex" : 0
   },
   "template": [],
   "elements": []

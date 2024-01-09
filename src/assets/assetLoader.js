@@ -2,7 +2,7 @@ const { rootPath } = require("electron-root-path");
 const fs = require("fs");
 const fontList = require("font-list");
 
-import { currentCollectionUID, saveCollection } from "../collection/collectionManager.js";
+import { currentCollection, currentCollectionUID, saveCollection } from "../collection/collectionManager.js";
 import { setupResources } from "./resourceFunctions.js";
 
 export let currentAssetsList;
@@ -22,10 +22,8 @@ export function loadAssets(p) {
       let fileName = file.split(".")[0];
       let extension = file.split(".")[1];
 
-      if (extension === "jpg" || extension === "png") {
-        let img = p.loadImage(asset);
-        assetsLibrary[fileName] = img;
-      }
+      let img = p.loadImage(asset);
+      assetsLibrary[fileName] = img;
     });
   }
 
@@ -35,8 +33,12 @@ export function loadAssets(p) {
 }
 
 export function addAsset(newAsset) {
-  let assetsPath = rootPath + "/src/collections/" + currentCollectionUID + "/assets/";
-  fs.copyFile(newAsset.path, assetsPath + newAsset.name, (err) => {
+  let assetsPath = rootPath + "/collections/" + currentCollectionUID + "/assets/";
+  let assetUID = currentCollection.collectionInfo.lastAssetIndex;
+  let extension = newAsset.name.split(".")[1];
+  console.log(assetsPath + assetUID + "."+extension);
+  currentCollection.collectionInfo.lastAssetIndex++;
+  fs.copyFile(newAsset.path, assetsPath + assetUID + "."+extension, (err) => {
     saveCollection(true, true);
     generateCollectionBtn.click();
     if (err) {
