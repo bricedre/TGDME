@@ -16,12 +16,14 @@ export function loadAssets(p) {
 
   currentAssetsList = getFiles(assetsPath);
 
+  currentAssetsList = currentAssetsList.sort((a, b) => {
+    return parseInt(a.split("//")[1], 10) - parseInt(b.split("//")[1], 10);
+  });
+
   if (currentAssetsList) {
     currentAssetsList.forEach((asset) => {
       let file = asset.split("//")[1];
       let fileName = file.split(".")[0];
-      let extension = file.split(".")[1];
-
       let img = p.loadImage(asset);
       assetsLibrary[fileName] = img;
     });

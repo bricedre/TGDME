@@ -9,6 +9,7 @@ export function setupResources() {
     }
   
     if (currentAssetsList.length > 0) {
+
       currentAssetsList.forEach((item, itemIndex) => {
         createNewResource(item, itemIndex);
       });

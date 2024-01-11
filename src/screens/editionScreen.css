@@ -409,9 +409,10 @@ input[type="file"] {
   bottom: 2%;
   transition: 0.3s;
   border-radius: 50%;
-  background-color: var(--mainColor);
+  background-color: #ffffffbd;
   padding: 0.2rem;
   cursor: pointer;
+  border: 3px solid white;
 }
 
 .uidTagCorner {
@@ -422,11 +423,12 @@ input[type="file"] {
   top: 2%;
   transition: 0.3s;
   border-radius: 50%;
-  background-color: var(--mainColor);
+  background-color: #ffffffbd;
   padding: 0.2rem;
   color: #164a63;
   text-align: center;
   cursor: pointer;
+  border: 3px solid white;
 }
 
 .deleteResourceBtn:hover,
