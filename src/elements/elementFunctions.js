@@ -3,26 +3,39 @@ import { currentCollection, saveCollection } from "../collection/collectionManag
 import { ELEMENT_parameters } from "../template/componentParameters.js";
 import { updateCardCounter } from "../screens/editionScreen.js";
 
+const gridjs = require("gridjs");
+// import "gridjs/dist/theme/mermaid.css";
+
 export function setupElements() {
-    while (elementItemsDiv.firstChild) {
-      elementItemsDiv.removeChild(elementItemsDiv.lastChild);
-    }
+    // while (elementItemsDiv.firstChild) {
+    //   elementItemsDiv.removeChild(elementItemsDiv.lastChild);
+    // }
   
-    if (currentCollection.elements.length > 0) {
-      elementItemsDiv.style.display = "block";
-      currentCollection.elements.forEach((item, itemIndex) => {
-        createNewElement(item, itemIndex);
-      });
-    } else {
-      elementItemsDiv.style.display = "flex";
-      var noResourceText = document.createElement("div");
-      noResourceText.classList.add("noStuffDiv");
-      noResourceText.innerHTML = "Aucun Élément dans votre Collection<br><br><br><br>Cliquez sur le bouton en bas pour en ajouter un";
+    // if (currentCollection.elements.length > 0) {
+    //   elementItemsDiv.style.display = "block";
+    //   currentCollection.elements.forEach((item, itemIndex) => {
+    //     createNewElement(item, itemIndex);
+    //   });
+    // } else {
+    //   elementItemsDiv.style.display = "flex";
+    //   var noResourceText = document.createElement("div");
+    //   noResourceText.classList.add("noStuffDiv");
+    //   noResourceText.innerHTML = "Aucun Élément dans votre Collection<br><br><br><br>Cliquez sur le bouton en bas pour en ajouter un";
   
-      elementItemsDiv.appendChild(noResourceText);
-    }
+    //   elementItemsDiv.appendChild(noResourceText);
+    // }
   
     updateCardCounter();
+
+    new gridjs.Grid({
+      data: [
+        ["John", "john@example.com", "(353) 01 222 3333"],
+        ["Mark", "mark@gmail.com", "(01) 22 888 4444"],
+        ["Eoin", "eoin@gmail.com", "0097 22 654 00033"],
+        ["Sarah", "sarahcdd@gmail.com", "+322 876 1233"],
+        ["Afshin", "afshin@mail.com", "(353) 22 87 8356"]
+      ]
+    }).render(document.getElementById("elementItemsDiv"));
   }
   
   export function createNewElement(item, itemIndex) {
