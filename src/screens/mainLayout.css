@@ -106,7 +106,7 @@ button>img {
 }
 
 button:hover {
-  background: linear-gradient(-90deg, var(--mainColor), #34b3ff);
+  background: var(--mainColor);
 }
 
 button:disabled {

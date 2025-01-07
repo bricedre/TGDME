@@ -489,3 +489,21 @@ caption {
   transition: 0.3s;
   cursor: pointer;
 }
+
+.addEntryBtn, .addValueBtn{
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+  background-color: var(--mainColorLight);
+}
+
+.addEntryBtn:hover, .addValueBtn:hover{
+  background-color: var(--mainColor);
+}
+
+.deleteCell img{
+  height: 2rem;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+

@@ -80,7 +80,6 @@ export let imageComponentTemplate = {
 };
 
 export let elementTemplate = {
-    UID:0,
-    quantity: 1,
-    toPrint: true
+    headers : ["valeur"],
+    data : [[""]]
   };

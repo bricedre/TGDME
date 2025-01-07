@@ -5,11 +5,17 @@ import { populateComponents } from "../template/componentsFunctions.js";
 const bottomBar = document.querySelector(".bottomBar");
 
 export const rootElement = document.querySelector(":root");
+let currentPanel = "start";
 
 homeBtn.addEventListener("click", () => {
   setCurrentCollection(-1);
   getCollections();
-  openPanel("start");
+
+  if (currentPanel == "edition") {
+    openPanel("loading");
+  } else {
+    openPanel("start");
+  }
 });
 
 document.addEventListener("keyup", function (event) {
@@ -51,6 +57,7 @@ export function openPanel(panelName) {
       editionPanelDiv.style.display = "none";
       bottomBarDiv.style.display = "none";
       mainTitleDiv.innerHTML = "LA CABANE À PROTOS";
+      homeIcon.src = "./assets/home.png";
 
       break;
 
@@ -60,6 +67,7 @@ export function openPanel(panelName) {
       editionPanelDiv.style.display = "none";
       bottomBarDiv.style.display = "none";
       mainTitleDiv.innerHTML = "BIBLIOTHÈQUE DE COLLECTIONS";
+      homeIcon.src = "./assets/home.png";
       break;
 
     case "edition":
@@ -67,12 +75,17 @@ export function openPanel(panelName) {
       loadingPanelDiv.style.display = "none";
       editionPanelDiv.style.display = "flex";
       bottomBarDiv.style.display = "flex";
+      homeIcon.src = "./assets/loadCollectionBtn.png";
+
+      //Go back to Config all the time
+      let firstRadio = document.querySelector(".tabs input");
+      firstRadio.checked = true;
 
       updateCardCounter();
       mainTitleDiv.innerHTML = currentCollection?.collectionInfo.collectionName;
-      archiveCollectionBtn.innerHTML = currentCollection.collectionInfo.archived
-        ? "DÉSARCHIVER<img src='./assets/archiveCollection.png'>"
-        : "ARCHIVER<img src='./assets/archiveCollection.png'>";
+      archiveCollectionBtn.innerHTML = currentCollection.collectionInfo.archived ? "DÉSARCHIVER<img src='./assets/archiveCollection.png'>" : "ARCHIVER<img src='./assets/archiveCollection.png'>";
       break;
   }
+
+  currentPanel = panelName;
 }

@@ -7,7 +7,6 @@ const gridjs = require("gridjs");
 // import "gridjs/dist/theme/mermaid.css";
 
 export function setupElements() {
-
   //Delete all content
   while (contentElementsDiv.firstChild) {
     contentElementsDiv.removeChild(contentElementsDiv.lastChild);
@@ -18,31 +17,33 @@ export function setupElements() {
   let dataTable = document.createElement("table");
 
   let tableCaption = document.createElement("caption");
-  tableCaption.innerHTML = `${currentCollection.elements.data.length} éléments dans les données`;
+  tableCaption.innerHTML = `${currentCollection.elements.data.length} entrée${currentCollection.elements.data.length > 1 ? "s" : ""} dans les données`;
   dataTable.appendChild(tableCaption);
 
   //TABLE HEADER
   let headersRow = document.createElement("tr");
-  headersRow.innerHTML = `<th class="actionsHeader">ACTIONS</th>`;
+  headersRow.innerHTML = `<th class="actionsHeader void"></th>`;
 
   currentCollection.elements.headers.forEach((hd, hdIndex) => {
-
     let hdCell = document.createElement("th");
     hdCell.setAttribute("contenteditable", "true");
     hdCell.innerHTML = hd;
 
     hdCell.addEventListener("input", (e) => {
       currentCollection.elements.headers[hdIndex] = e.target.innerHTML;
-    })
+    });
 
     headersRow.appendChild(hdCell);
-
-  })
+  });
 
   //Add header cell
-  let addCell = document.createElement("td");
-  addCell.innerHTML = "AJOUTER";
-  headersRow.appendChild(addCell);
+  let addValueBtn = document.createElement("td");
+  addValueBtn.innerHTML = "AJOUTER VALEUR";
+  addValueBtn.classList.add("addValueBtn");
+  addValueBtn.addEventListener("click", () => {
+    addNewValue();
+  });
+  headersRow.appendChild(addValueBtn);
 
   dataTable.appendChild(headersRow);
 
@@ -52,14 +53,14 @@ export function setupElements() {
 
     //ACTION CELLS
     let actionsCell = document.createElement("td");
-    actionsCell.classList.add("actionsCell");
+    actionsCell.classList.add("actionsCell", "void");
 
     if (elIndex > 0) {
       var upElementBtn = document.createElement("img");
       upElementBtn.classList.add("upElementBtn");
       upElementBtn.src = "./assets/moveUp.png";
       upElementBtn.addEventListener("click", (e) => {
-        console.log("MOVE UP")
+        moveEntry(elIndex, -1);
       });
       actionsCell.appendChild(upElementBtn);
     }
@@ -69,7 +70,7 @@ export function setupElements() {
       downElementBtn.classList.add("downElementBtn");
       downElementBtn.src = "./assets/moveDown.png";
       downElementBtn.addEventListener("click", (e) => {
-        console.log("MOVE DOWN")
+        moveEntry(elIndex, 1);
       });
       actionsCell.appendChild(downElementBtn);
     }
@@ -78,7 +79,7 @@ export function setupElements() {
     duplicateElementBtn.classList.add("deleteComponentBtn");
     duplicateElementBtn.src = "./assets/qty.png";
     duplicateElementBtn.addEventListener("click", (e) => {
-      console.log("DUPLICATE")
+      duplicateEntry(elIndex);
     });
     actionsCell.appendChild(duplicateElementBtn);
 
@@ -86,7 +87,7 @@ export function setupElements() {
     deleteComponentBtn.classList.add("deleteComponentBtn");
     deleteComponentBtn.src = "./assets/delete.png";
     deleteComponentBtn.addEventListener("click", (e) => {
-      console.log("DELETE")
+      deleteEntry(elIndex);
     });
     actionsCell.appendChild(deleteComponentBtn);
 
@@ -99,21 +100,88 @@ export function setupElements() {
 
       elCell.addEventListener("input", (e) => {
         currentCollection.elements.data[elIndex][paramIndex] = e.target.innerHTML;
-      })
+      });
 
       elRow.appendChild(elCell);
-    })
+    });
 
     dataTable.appendChild(elRow);
+  });
 
-  })
+  //DELETE ROW
+  let deleteRow = document.createElement("tr");
 
-  //LAST ROW
-  let lastRow = document.createElement("tr");
-  lastRow.innerHTML += `<td class="void"></td><td colspan="${currentCollection.elements.headers.length}">AJOUTER ELEMENT</td>`;
-  dataTable.appendChild(lastRow);
+  let addEntryBtn = document.createElement("td");
+  addEntryBtn.classList.add("addEntryBtn");
+  addEntryBtn.innerHTML = "AJOUTER NOUVELLE ENTRÉE";
+  addEntryBtn.addEventListener("click", () => {
+    addNewEntry();
+  });
+  deleteRow.appendChild(addEntryBtn);
+
+  currentCollection.elements.headers.forEach((value, index) => {
+    let deleteValueCell = document.createElement("td");
+    deleteValueCell.classList.add("void", "deleteCell");
+
+    var deleteValueBtn = document.createElement("img");
+    deleteValueBtn.classList.add("deleteComponentBtn");
+    deleteValueBtn.src = "./assets/delete.png";
+    deleteValueBtn.addEventListener("click", (e) => {
+      deleteValue(index);
+    });
+    deleteValueCell.appendChild(deleteValueBtn);
+    deleteRow.appendChild(deleteValueCell);
+  });
+
+  dataTable.appendChild(deleteRow);
 
   contentElementsDiv.appendChild(dataTable);
+}
+
+function addNewEntry() {
+  let nextEntryIndex = currentCollection.elements.data.length;
+  currentCollection.elements.data.push([]);
+  currentCollection.elements.headers.forEach((header) => {
+    currentCollection.elements.data[nextEntryIndex].push("");
+  });
+  setupElements();
+}
+
+function addNewValue() {
+  let nextValueIndex = currentCollection.elements.headers.length;
+  console.log(nextValueIndex);
+  currentCollection.elements.headers.push("valeur");
+  currentCollection.elements.data.forEach((dataSet) => {
+    dataSet[nextValueIndex] = "";
+  });
+  setupElements();
+}
+
+function deleteEntry(index) {
+  currentCollection.elements.data.splice(index, 1);
+  setupElements();
+}
+
+function deleteValue(index) {
+  currentCollection.elements.headers.splice(index, 1);
+  currentCollection.elements.data.forEach((dataSet) => {
+    dataSet.splice(index, 1);
+  });
+  setupElements();
+}
+
+function duplicateEntry(index){
+  let duplicatedEntry = [...currentCollection.elements.data[index]];
+  currentCollection.elements.data.splice(index, 0, duplicatedEntry);
+  setupElements();
+}
+
+function moveEntry(index, dep){
+  let entryA = [...currentCollection.elements.data[index]];
+  let entryB = [...currentCollection.elements.data[index+dep]];
+  currentCollection.elements.data[index] = entryB;
+  currentCollection.elements.data[index+dep] = entryA;
+  setupElements();
 }
 
 // export function createNewElement(item, itemIndex) {

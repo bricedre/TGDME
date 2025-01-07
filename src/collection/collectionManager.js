@@ -115,7 +115,7 @@ export function setCurrentCollection(collectionUID) {
   currentCollectionUID = collectionUID;
   if (currentCollectionUID != -1) {
     currentCollection = collectionsAvailable.filter((coll) => coll.collectionInfo.UID == collectionUID)[0];
-
+    
     var coll = currentCollection.collectionInfo;
 
     loadAssets(app);
@@ -210,22 +210,22 @@ export function archiveCollection() {
 }
 
 export function saveCollection(refreshAssets, reRenderCard) {
-  var coll = currentCollection;
+  var collInfo = currentCollection.collectionInfo;
 
   //ALTER THE DATA TO CURRENT DECK
-  coll.collectionInfo.collectionName = collectionNameInput.value;
-  coll.collectionInfo.elementFormat = elementFormatSelect.value;
-  coll.collectionInfo.W = elementWidthInput.value;
-  coll.collectionInfo.H = elementHeightInput.value;
-  coll.collectionInfo.visualGuide = visualGuideSelect.value;
+  collInfo.collectionName = collectionNameInput.value;
+  collInfo.elementFormat = elementFormatSelect.value;
+  collInfo.W = elementWidthInput.value;
+  collInfo.H = elementHeightInput.value;
+  collInfo.visualGuide = visualGuideSelect.value;
 
-  coll.collectionInfo.pageFormat = pageFormatSelect.value;
-  coll.collectionInfo.pageWidth = pageWidthInput.value;
-  coll.collectionInfo.pageHeight = pageHeightInput.value;
+  collInfo.pageFormat = pageFormatSelect.value;
+  collInfo.pageWidth = pageWidthInput.value;
+  collInfo.pageHeight = pageHeightInput.value;
 
-  coll.collectionInfo.pageOrientation = pageOrientationSelect.value;
-  coll.collectionInfo.resolution = Math.max(1, pageResolutionInput.value);
-  coll.collectionInfo.cuttingHelp = cuttingHelpInput.checked;
+  collInfo.pageOrientation = pageOrientationSelect.value;
+  collInfo.resolution = Math.max(1, pageResolutionInput.value);
+  collInfo.cuttingHelp = cuttingHelpInput.checked;
 
   setupCollectionDimensions();
   populateEditionFields();
@@ -245,13 +245,13 @@ export function saveCollection(refreshAssets, reRenderCard) {
   if (reRenderCard) {
     setTimeout(() => {
       app.resizeExistingCanvas(
-        coll.collectionInfo.W * coll.collectionInfo.resolution,
-        coll.collectionInfo.H * coll.collectionInfo.resolution,
-        coll.collectionInfo.pageWidth * coll.collectionInfo.resolution,
-        coll.collectionInfo.pageHeight * coll.collectionInfo.resolution
+        collInfo.W * collInfo.resolution,
+        collInfo.H * collInfo.resolution,
+        collInfo.pageWidth * collInfo.resolution,
+        collInfo.pageHeight * collInfo.resolution
       );
 
-      renderCardUsingTemplate(app, app.currentIndex, currentCollection.collectionInfo.visualGuide);
+      renderCardUsingTemplate(app, app.currentIndex, collInfo.visualGuide);
     }, 500);
   }
 }

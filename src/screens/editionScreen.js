@@ -44,15 +44,8 @@ export function updateCardCounter() {
   var currentIndex = app.currentIndex;
 
   //INDEX
-  if (currentCollection.elements.length > 0) {
-    cardCounterDivLabel.innerHTML =
-      "Élément " +
-      (currentIndex + 1) +
-      " sur " +
-      currentCollection.elements.length +
-      " - " +
-      currentCollection.elements[currentIndex].quantity +
-      (currentCollection.elements[currentIndex].quantity > 1 ? " copies" : " copie");
+  if (currentCollection.elements.data.length > 0) {
+    cardCounterDivLabel.innerHTML = `Élément ${currentIndex + 1} sur ${currentCollection.elements.data.length}`;
   } else {
     cardCounterDivLabel.innerHTML = "PAS DE CARTE À AFFICHER";
   }
@@ -65,7 +58,7 @@ export function updateCardCounter() {
     bigPrevCardBtn.disabled = true;
   }
 
-  if (currentCollection.elements.length > 0 && app.currentIndex != currentCollection.elements.length - 1) {
+  if (currentCollection.elements.data.length > 0 && app.currentIndex != currentCollection.elements.data.length - 1) {
     nextCardBtn.disabled = false;
     bigNextCardBtn.disabled = false;
   } else {
@@ -75,7 +68,7 @@ export function updateCardCounter() {
 }
 
 export function goToOtherCard(delta) {
-  app.currentIndex = Math.min(Math.max(parseInt(app.currentIndex + delta), 0), currentCollection.elements.length - 1);
+  app.currentIndex = Math.min(Math.max(parseInt(app.currentIndex + delta), 0), currentCollection.elements.data.length - 1);
   renderCardUsingTemplate(app, app.currentIndex, currentCollection.collectionInfo.visualGuide);
   updateCardCounter();
   rootElement.style.setProperty("--cardAngle", 3 - app.random() * 6 + "deg");
