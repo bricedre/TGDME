@@ -16,7 +16,7 @@ export function setupResources() {
     } else {
       var noResourceText = document.createElement("div");
       noResourceText.classList.add("noStuffDiv");
-      noResourceText.innerHTML = "Aucune Ressource dans votre Collection<br><br><br><br>Cliquez sur le bouton en bas pour en ajouter une";
+      noResourceText.innerHTML = "Aucune Ressource dans votre Collection";
   
       ressItemsDiv.appendChild(noResourceText);
     }

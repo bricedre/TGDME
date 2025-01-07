@@ -435,3 +435,57 @@ input[type="file"] {
 .uidTagCorner:hover {
   scale: 1.2;
 }
+
+table {
+  font-size: 0.8rem;
+  width: 100%;
+  font-family: "Main Font", sans-serif;
+  border-spacing: 5px;
+  table-layout: fixed ;
+}
+
+th,
+td {
+  padding: 8px 10px;
+  border-radius: 0.7rem;
+}
+
+th{
+  background-color: var(--mainColorDark);
+  color: #fff;
+}
+
+th.actionsHeader{
+  background: transparent;
+  color: black;
+}
+
+td {
+  text-align: center;
+  background: white;
+}
+
+td.void{
+  background: transparent;
+}
+
+caption {
+  caption-side: bottom;
+  padding: 10px;
+  opacity: 0.7;
+}
+
+.lastRow{
+  column-span : 100%;
+}
+
+.actionsCell{
+  display: flex;
+  justify-content: center;
+}
+
+.actionsCell img{
+  height: 2rem;
+  transition: 0.3s;
+  cursor: pointer;
+}

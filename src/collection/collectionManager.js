@@ -9,7 +9,7 @@ import { imageComponentTemplate, textComponentTemplate, shapeComponentTemplate, 
 import { renderCardUsingTemplate } from "../render.js";
 import { setupResources } from "../assets/resourceFunctions.js";
 import { populateComponents, setupComponents } from "../template/componentsFunctions.js";
-import { populateElements, setupElements } from "../elements/elementFunctions.js";
+import { setupElements } from "../elements/elementFunctions.js";
 const { rootPath } = require("electron-root-path");
 
 const fs = require("fs").promises;
@@ -133,7 +133,6 @@ export function setCurrentCollection(collectionUID) {
       setupComponents();
       populateComponents();
       setupElements();
-      populateElements();
       renderCardUsingTemplate(app, app.currentIndex, currentCollection.collectionInfo.visualGuide);
     }, 500);
   }
@@ -230,8 +229,6 @@ export function saveCollection(refreshAssets, reRenderCard) {
 
   setupCollectionDimensions();
   populateEditionFields();
-  // populateComponents();
-  // populateElements();
 
   //SAVE CURRENT DECK IN FOLDER
   var deckToSave = JSON.stringify(currentCollection);
@@ -372,7 +369,6 @@ export function addNewElement() {
   currentCollection.collectionInfo.lastElementIndex++;
 
   setupElements();
-  populateElements();
   generateCollectionBtn.click();
   updateCardCounter();
 }

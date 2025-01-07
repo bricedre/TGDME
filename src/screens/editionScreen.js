@@ -12,8 +12,6 @@ duplicateCollectionBtn.addEventListener("click", () => duplicateCollection());
 archiveCollectionBtn.addEventListener("click", () => archiveCollection());
 deleteCollectionBtn.addEventListener("click", () => deleteCurrentCollection());
 
-renderCollectionBtn.addEventListener("click", () => triggerGeneration(app));
-
 generateCollectionBtn.addEventListener("click", () => {
   saveCollection(false, true);
   generateCollectionBtn.style.animation = "0.5s beyblade";
@@ -31,8 +29,6 @@ bigNextCardBtn.addEventListener("click", () => goToOtherCard(10));
 addImageComponentBtn.addEventListener("click", () => addNewImage());
 addShapeComponentBtn.addEventListener("click", () => addNewShape());
 addTextComponentBtn.addEventListener("click", () => addNewText());
-
-addNewElementBtn.addEventListener("click", () => addNewElement());
 
 newResourceInput.addEventListener("change", function (e) {
   if (e.target.files[0]) {

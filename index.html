@@ -66,9 +66,6 @@
         <span>></span>
         <input id="tabElementsInput" type="radio" name="tabs">
         <label for="tabElementsInput" title="Modification des Données (F4)">Données</label>
-        <span>></span>
-        <input id="tabPrintingInput" type="radio" name="tabs">
-        <label for="tabPrintingInput" title="Paramètres d'Impression (F5)">Impression</label>
 
         <div class="content">
           <div id="contentConfigDiv">
@@ -185,34 +182,11 @@
                 AJOUTER
                 <img src="./assets/addTextComponent.png">
               </button>
-              <button title="Créer un fichier .csv à partir du modèle actuel" id="generateCSVBtn" class="navBtn">
-                GÉNÉRER .CSV
-                <img src="./assets/csv.png">
-              </button>
             </div>
           </div>
 
           <div id="contentElementsDiv">
-            <div class="elementsHeaderDiv">
-              <img src='./assets/toPrint.png' title='À imprimer ?'>
-              <img src='./assets/qty.png' title='Quantité'>
-            </div>
-            <div id="elementItemsDiv"></div>
-            <div class="elementBtns">
-              <button title="Ajouter un Nouvel Élément" id="addNewElementBtn" class="navBtn">
-                AJOUTER
-                <img src="./assets/element.png">
-              </button>
-              <button title="Cocher/Décocher tous les Éléments pour Impression" id="checkAllBtn" class="navBtn">
-                COCHER / DÉCOCHER TOUT
-                <img src="./assets/checkAllBtn.png">
-              </button>
-              
-              <button title="Créer des éléments automatiquement et en remplir les paramètres grâce à un fichier .csv" id="wizardFillBtn" class="navBtn">
-                REMPLIR PAR .CSV
-                <img src="./assets/wizardFillBtn.png">
-              </button>
-            </div>
+            <!-- <div id="elementItemsDiv"></div> -->
           </div>
 
           <div id="contentPrintingDiv">
@@ -258,15 +232,6 @@
               title="L'Aide à la Découpe est une simple bordure semi-transparente mise autour des élements afin de guider la découpe une fois imprimés">
               <input type="checkbox" id="cuttingHelpInput" name="cuttingHelpInput" />
               <label class="parameterName" for="cuttingHelpInput">Aide à la Découpe 🔍</label>
-            </div>
-
-            <div class="separator"></div>
-
-            <div class="printBtns">
-              <button id="renderCollectionBtn" class="navBtn">
-                GÉNÉRER
-                <img src="./assets/print.png">
-              </button>
             </div>
           </div>
         </div>

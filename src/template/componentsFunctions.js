@@ -1,4 +1,4 @@
-import { populateElements, setupElements } from "../elements/elementFunctions.js";
+import { setupElements } from "../elements/elementFunctions.js";
 import { IMAGE_parameters, TEXT_parameters, SHAPE_parameters, ELEMENT_parameters, resetElementParameters } from "../template/componentParameters.js";
 import { currentCollection } from "../collection/collectionManager.js";
 import { allSystemFonts } from "../assets/assetLoader.js";
@@ -19,7 +19,7 @@ export function setupComponents() {
     templateItemsDiv.style.display = "flex";
     var noResourceText = document.createElement("div");
     noResourceText.classList.add("noStuffDiv");
-    noResourceText.innerHTML = "Aucun Composant dans votre Modèle<br><br><br><br>Cliquez sur un des boutons en bas pour en ajouter un";
+    noResourceText.innerHTML = "Aucun Composant dans votre Modèle";
 
     templateItemsDiv.appendChild(noResourceText);
   }
@@ -100,7 +100,6 @@ export function createNewComponent(item, itemIndex) {
     currentCollection.template.splice(currentCollection.template.indexOf(componentToDelete), 1);
     setupComponents();
     setupElements();
-    populateElements();
 
     generateCollectionBtn.click();
   });
@@ -154,7 +153,6 @@ export function createNewComponent(item, itemIndex) {
 
       populateComponents();
       setupElements();
-      populateElements();
     });
 
     var modeInput = document.createElement("img");
@@ -178,7 +176,6 @@ export function createNewComponent(item, itemIndex) {
         generateCollectionBtn.click();
         populateComponents();
         setupElements();
-        populateElements();
       });
     }
 

@@ -23,8 +23,6 @@ document.addEventListener("keyup", function (event) {
     document.getElementById("tabTemplateInput").checked = true;
   } else if (event.key === "F4") {
     document.getElementById("tabElementsInput").checked = true;
-  } else if (event.key === "F5") {
-    document.getElementById("tabPrintingInput").checked = true;
   }
 });
 
