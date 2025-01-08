@@ -47,7 +47,7 @@ export function createNewComponent(item, itemIndex) {
       break;
   }
 
-  itemAccordion.innerHTML = "<img src='" + icon + "'><span class='itemLabel'>" + item.componentName.value + "</span><span class='uidTag'>(#"+item.UID+")<span>";
+  itemAccordion.innerHTML = "<img src='" + icon + "'><span class='itemLabel'>" + item.componentName.value + "</span><span class='uidTag'>(#" + item.UID + ")<span>";
 
   if (itemIndex > 0) {
     var upElementBtn = document.createElement("img");
@@ -77,7 +77,7 @@ export function createNewComponent(item, itemIndex) {
 
   var visibilityBtn = document.createElement("img");
   visibilityBtn.classList.add("visibilityBtn");
-  visibilityBtn.title= "Afficher/Cacher";
+  visibilityBtn.title = "Afficher/Cacher";
   if (item.isVisible) visibilityBtn.src = "./assets/visibilityOn.png";
   else visibilityBtn.src = "./assets/visibilityOff.png";
   visibilityBtn.addEventListener("click", (e) => {
@@ -139,7 +139,7 @@ export function createNewComponent(item, itemIndex) {
     parameterInputLine.classList.add("parameterInputLine");
 
     var parameterInput = document.createElement("input");
-    var inputID = item.UID + "-" + param.refValue;
+    var inputID = itemIndex + "-" + param.refValue;
     parameterInput.id = inputID;
     parameterInput.addEventListener("input", (e) => {
       try {
@@ -152,7 +152,6 @@ export function createNewComponent(item, itemIndex) {
       }
 
       populateComponents();
-      setupElements();
     });
 
     var modeInput = document.createElement("img");
@@ -169,13 +168,14 @@ export function createNewComponent(item, itemIndex) {
       modeInput.src = currentMode == "0" ? "./assets/fixedType.png" : "./assets/elementBasedType.png";
       modeInput.title = currentMode == "0" ? "Fixe" : "Basé sur l'élement";
       modeInput.id = inputID;
-      if (paramIndex > 2) parameterInput.disabled = currentMode == "0" ? false : true;
+      // if (paramIndex > 2) parameterInput.disabled = currentMode == "0" ? false : true;
       modeInput.addEventListener("click", () => {
         var typeOfParameter = currentCollection.template[itemIndex][param.refValue]["type"];
         currentCollection.template[itemIndex][param.refValue]["type"] = typeOfParameter == "0" ? "1" : "0";
+        modeInput.src = currentMode == "0" ? "./assets/fixedType.png" : "./assets/elementBasedType.png";
+        modeInput.title = currentMode == "0" ? "Fixe" : "Basé sur l'élement";
         generateCollectionBtn.click();
         populateComponents();
-        setupElements();
       });
     }
 
@@ -185,10 +185,9 @@ export function createNewComponent(item, itemIndex) {
         var oldName = parameterName.innerHTML;
         var oldTitle = parameterName.title;
         parameterInput.type = param.type;
-        if(item[param.refValue]){
+        if (item[param.refValue]) {
           parameterInput.checked = item[param.refValue]["value"];
-        }
-        else{
+        } else {
           parameterInput.checked = false;
         }
         parameterInput.addEventListener("input", (e) => {
@@ -212,11 +211,12 @@ export function createNewComponent(item, itemIndex) {
         parameterInput.classList.add("parameterInput");
         parameterInput.id = inputID;
         parameterInput.addEventListener("input", (e) => {
-          if(currentCollection.template[itemIndex][param.refValue]) currentCollection.template[itemIndex][param.refValue]["value"] = e.target.value;
-          else currentCollection.template[itemIndex][param.refValue] =  {
-            "value" : e.target.value,
-            "type" : "0"
-          }
+          if (currentCollection.template[itemIndex][param.refValue]) currentCollection.template[itemIndex][param.refValue]["value"] = e.target.value;
+          else
+            currentCollection.template[itemIndex][param.refValue] = {
+              value: e.target.value,
+              type: "0",
+            };
           generateCollectionBtn.click();
           populateComponents();
         });
@@ -231,7 +231,7 @@ export function createNewComponent(item, itemIndex) {
           parameterInput.appendChild(option);
         });
 
-        if(item[param.refValue]) parameterInput.value = item[param.refValue]["value"];
+        if (item[param.refValue]) parameterInput.value = item[param.refValue]["value"];
         else parameterInput.value = "";
 
         parameterSlot.appendChild(parameterName);
@@ -301,7 +301,6 @@ export function populateComponents() {
 
         try {
           input.value = currentCollection.template[accIndex][inputRefValue]["value"];
-          if (inputIndex > 1) input.disabled = currentCollection.template[accIndex][inputRefValue]["type"] == "0" ? false : true;
         } catch (e) {
           input.value = 0;
         }
@@ -323,7 +322,7 @@ export function populateComponents() {
   });
 
   var allModeBtns = templateItemsDiv.querySelectorAll(".modeInput");
-  allModeBtns.forEach((input) => {
+  allModeBtns.forEach(input => {
     var inputID = input.id;
     var inputIndex = inputID.split("-")[0];
     var inputRefValue = inputID.split("-")[1];

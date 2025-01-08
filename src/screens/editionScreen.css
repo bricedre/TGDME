@@ -436,12 +436,14 @@ input[type="file"] {
   scale: 1.2;
 }
 
+#contentElementsDiv{
+ background-color: red;
+}
+
 table {
   font-size: 0.8rem;
-  width: 100%;
   font-family: "Main Font", sans-serif;
   border-spacing: 5px;
-  table-layout: fixed ;
 }
 
 th,
@@ -453,19 +455,16 @@ td {
 th{
   background-color: var(--mainColorDark);
   color: #fff;
-}
-
-th.actionsHeader{
-  background: transparent;
-  color: black;
+  width: 8rem;
 }
 
 td {
   text-align: center;
   background: white;
+  width: 8rem;
 }
 
-td.void{
+td.void, th.void{
   background: transparent;
 }
 

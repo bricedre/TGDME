@@ -87,6 +87,7 @@ export let SHAPE_parameters = [
     refValue: "src",
     type: "select",
     title: "Forme à Afficher",
+    forced: true,
     options: [
       { value: "ring", label: "⭕ANNEAU" },
       { value: "tree", label: "🌳ARBRE" },
@@ -120,15 +121,16 @@ export let SHAPE_parameters = [
   },
 
   { name: "<span class='spacerIcon'>📏</span><span>Positionnement, Dimensions & Rotation</span>", type: "spacer" },
-  { name: "Position Horizontale", refValue: "positionX", type: "text" },
-  { name: "Position Verticale", refValue: "positionY", type: "text" },
-  { name: "Largeur", refValue: "width", type: "text" },
-  { name: "Hauteur", refValue: "height", type: "text" },
-  { name: "Rotation", refValue: "angle", type: "text" },
+  { name: "Position Horizontale", refValue: "positionX", forced: true, type: "text" },
+  { name: "Position Verticale", refValue: "positionY", forced: true, type: "text" },
+  { name: "Largeur", refValue: "width", forced: true, type: "text" },
+  { name: "Hauteur", refValue: "height", forced: true, type: "text" },
+  { name: "Rotation", refValue: "angle", forced: true, type: "text" },
   {
     name: "Ancre",
     refValue: "anchor",
     type: "select",
+    forced: true,
     options: [
       { value: "CENTER", label: "CENTRE" },
       { value: "CORNER", label: "COIN SUPÉRIEUR GAUCHE" },
@@ -138,6 +140,7 @@ export let SHAPE_parameters = [
     name: "Copies sans Rotation",
     refValue: "mirror",
     type: "select",
+    forced: true,
     options: [
       { value: "none", label: "AUCUNE" },
       { value: "hori", label: "GAUCHE / DROITE" },
@@ -146,19 +149,19 @@ export let SHAPE_parameters = [
   },
 
   { name: "<span class='spacerIcon'>🎨</span><span>Couleurs & Bordure</span>", type: "spacer" },
-  { name: "Couleur de Fond", refValue: "color", type: "color" },
-  { name: "Opacité du Fond", refValue: "opacity", type: "range" },
-  { name: "Couleur de Bordure", refValue: "borderColor", type: "color" },
-  { name: "Opacité de la Bordure", refValue: "borderOpacity", type: "range" },
-  { name: "Épaisseur de la Bordure", refValue: "borderWeight", type: "text" },
+  { name: "Couleur de Fond", refValue: "color", forced: true, type: "color" },
+  { name: "Opacité du Fond", refValue: "opacity", forced: true, type: "range" },
+  { name: "Couleur de Bordure", refValue: "borderColor", forced: true, type: "color" },
+  { name: "Opacité de la Bordure", refValue: "borderOpacity", forced: true, type: "range" },
+  { name: "Épaisseur de la Bordure", refValue: "borderWeight", forced: true, type: "text" },
 
   { name: "<span class='spacerIcon'>☀️</span><span>Ombre Portée</span>", type: "spacer" },
-  { name: "Ombre Portée ?", refValue: "shadow", type: "checkbox", title: "Une légère ombre portée permet de mieux détacher votre texte du fond" },
-  { name: "Couleur", refValue: "shadowColor", type: "color" },
-  { name: "Décalage Horizontal", refValue: "shadowOffsetX", type: "text" },
-  { name: "Décalage Vertical", refValue: "shadowOffsetY", type: "text" },
-  { name: "Opacité", refValue: "shadowOpacity", type: "range" },
-  { name: "Flou", refValue: "shadowBlur", type: "text" },
+  { name: "Ombre Portée ?", refValue: "shadow", forced: true, type: "checkbox", title: "Une légère ombre portée permet de mieux détacher votre texte du fond" },
+  { name: "Couleur", refValue: "shadowColor", forced: true, type: "color" },
+  { name: "Décalage Horizontal", refValue: "shadowOffsetX", forced: true, type: "text" },
+  { name: "Décalage Vertical", refValue: "shadowOffsetY", forced: true, type: "text" },
+  { name: "Opacité", refValue: "shadowOpacity", forced: true, type: "range" },
+  { name: "Flou", refValue: "shadowBlur", forced: true, type: "text" },
 ];
 export let TEXT_parameters = [
   { name: "<span class='spacerIcon spacerIconCentered'>🪪</span><span>Informations Générales</span>", type: "spacer" },

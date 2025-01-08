@@ -22,7 +22,15 @@ export function setupElements() {
 
   //TABLE HEADER
   let headersRow = document.createElement("tr");
-  headersRow.innerHTML = `<th class="actionsHeader void"></th>`;
+
+  //Add header cell
+  let addValueBtn = document.createElement("td");
+  addValueBtn.innerHTML = "AJOUTER VALEUR";
+  addValueBtn.classList.add("addValueBtn", 'actionsCell');
+  addValueBtn.addEventListener("click", () => {
+    addNewValue();
+  });
+  headersRow.appendChild(addValueBtn);
 
   currentCollection.elements.headers.forEach((hd, hdIndex) => {
     let hdCell = document.createElement("th");
@@ -35,15 +43,6 @@ export function setupElements() {
 
     headersRow.appendChild(hdCell);
   });
-
-  //Add header cell
-  let addValueBtn = document.createElement("td");
-  addValueBtn.innerHTML = "AJOUTER VALEUR";
-  addValueBtn.classList.add("addValueBtn");
-  addValueBtn.addEventListener("click", () => {
-    addNewValue();
-  });
-  headersRow.appendChild(addValueBtn);
 
   dataTable.appendChild(headersRow);
 
@@ -112,7 +111,7 @@ export function setupElements() {
   let deleteRow = document.createElement("tr");
 
   let addEntryBtn = document.createElement("td");
-  addEntryBtn.classList.add("addEntryBtn");
+  addEntryBtn.classList.add("addEntryBtn", "actionsCell");
   addEntryBtn.innerHTML = "AJOUTER NOUVELLE ENTRÉE";
   addEntryBtn.addEventListener("click", () => {
     addNewEntry();
@@ -170,17 +169,17 @@ function deleteValue(index) {
   setupElements();
 }
 
-function duplicateEntry(index){
+function duplicateEntry(index) {
   let duplicatedEntry = [...currentCollection.elements.data[index]];
   currentCollection.elements.data.splice(index, 0, duplicatedEntry);
   setupElements();
 }
 
-function moveEntry(index, dep){
+function moveEntry(index, dep) {
   let entryA = [...currentCollection.elements.data[index]];
-  let entryB = [...currentCollection.elements.data[index+dep]];
+  let entryB = [...currentCollection.elements.data[index + dep]];
   currentCollection.elements.data[index] = entryB;
-  currentCollection.elements.data[index+dep] = entryA;
+  currentCollection.elements.data[index + dep] = entryA;
   setupElements();
 }
 
