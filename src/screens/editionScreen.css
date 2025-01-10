@@ -248,7 +248,8 @@ input[type="radio"] {
 #templateItemsDiv,
 #ressItemsDiv,
 #elementItemsDiv {
-  overflow-y: auto;
+  overflow-y: scroll;
+  padding-left: 1rem;
 }
 
 #ressItemsDiv {
@@ -437,19 +438,30 @@ input[type="file"] {
 }
 
 #contentElementsDiv{
- background-color: red;
+  display: block !important;
+  overflow: auto;
+  height: 94%;
+  margin-top: 1rem;
 }
 
 table {
   font-size: 0.8rem;
   font-family: "Main Font", sans-serif;
   border-spacing: 5px;
+  table-layout: fixed;
+
+}
+
+thead{
+  position: sticky;
+  top: 0;
 }
 
 th,
 td {
   padding: 8px 10px;
   border-radius: 0.7rem;
+  min-width: 8rem;
 }
 
 th{
@@ -504,5 +516,38 @@ caption {
   transition: 0.3s;
   cursor: pointer;
 }
+
+.tableWrapper {
+  overflow: auto;
+  max-height: 500px; /* Ajustez selon vos besoins */
+}
+
+.dataTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.dataTable th, .dataTable td {
+  padding: 8px;
+}
+
+.sticky-header {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+.sticky-col {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+}
+
+.actionButtons {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
+}
+
 
 

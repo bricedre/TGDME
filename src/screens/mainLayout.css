@@ -28,12 +28,12 @@ body {
 }
 
 nav {
-  background: linear-gradient(-90deg, var(--mainColor), #34b3ff);
+  background: linear-gradient(90deg, var(--mainColor), var(--mainColorDark));
   min-height: 10vh;
   font-size: xx-large;
   display: flex;
   align-items: center;
-  padding: 0 1rem;
+  padding: 0 0.5rem;
   box-shadow: 0 0 20px #0005;
   gap: 2rem;
   border-radius: 0 0 2.5rem 2.5rem;

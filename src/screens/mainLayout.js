@@ -5,17 +5,18 @@ import { populateComponents } from "../template/componentsFunctions.js";
 const bottomBar = document.querySelector(".bottomBar");
 
 export const rootElement = document.querySelector(":root");
+
+let lastPanel = "start";
 let currentPanel = "start";
 
 homeBtn.addEventListener("click", () => {
   setCurrentCollection(-1);
   getCollections();
 
-  if (currentPanel == "edition") {
-    openPanel("loading");
-  } else {
-    openPanel("start");
+  if (currentPanel != "start") {
+    openPanel(lastPanel);
   }
+
 });
 
 document.addEventListener("keyup", function (event) {
@@ -87,5 +88,8 @@ export function openPanel(panelName) {
       break;
   }
 
+  lastPanel = currentPanel;
   currentPanel = panelName;
+
+  console.log(lastPanel, currentPanel)
 }

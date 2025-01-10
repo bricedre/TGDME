@@ -16,6 +16,8 @@ const fs = require("fs").promises;
 const { existsSync, mkdirSync, copyFileSync, readdirSync } = require("fs");
 const rimraf = require("rimraf");
 const fsExtra = require("fs-extra");
+// const fs = require('fs');
+const XLSX = require('xlsx');
 
 export let collectionsAvailable;
 export let currentCollectionUID = -1;
@@ -30,16 +32,40 @@ export function getCollections() {
     .filter((dirent) => dirent.isDirectory())
     .map((dirent) => dirent.name);
 
-  collectionsAvailable = collectionsAvailable.sort((a, b) => {
-    return parseInt(a, 10) - parseInt(b, 10);
-  });
-
   collectionsAvailable.forEach(async (collection, index) => {
     const data = await fs.readFile(rootPath + "/collections/" + collection + "/collection.json");
     collectionsAvailable[index] = JSON.parse(data);
   });
 
   setTimeout(() => {
+    //HOMEPAGE QUICK ACCESS
+    loadCollectionsPanel.innerHTML = "";
+    collectionsAvailable = collectionsAvailable.sort((a, b) => {
+      return b.collectionInfo.lastSavingTime - a.collectionInfo.lastSavingTime;
+    });
+
+    collectionsAvailable.forEach((collection, index) => {
+      if (index < 5) {
+        var btnElement = document.createElement("button");
+        btnElement.classList.add("deckBtn");
+        btnElement.innerHTML = collection.collectionInfo.collectionName;
+        btnElement.addEventListener("click", (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          setCurrentCollection(collection.collectionInfo.UID);
+        });
+
+        loadCollectionsPanel.appendChild(btnElement);
+      }
+    });
+
+    //ACTIONS
+    var collectionsPanelActions = document.createElement("div");
+    collectionsPanelActions.classList.add("collectionsPanelActions");
+
+    loadCollectionsPanel.appendChild(collectionsPanelActions);
+
+    //LOADING PAGE ACCESS
     loadingPanelDiv.innerHTML = "";
 
     // Collections to show
@@ -115,7 +141,7 @@ export function setCurrentCollection(collectionUID) {
   currentCollectionUID = collectionUID;
   if (currentCollectionUID != -1) {
     currentCollection = collectionsAvailable.filter((coll) => coll.collectionInfo.UID == collectionUID)[0];
-    
+
     var coll = currentCollection.collectionInfo;
 
     loadAssets(app);
@@ -150,6 +176,25 @@ export function createNewCollection() {
     mkdirSync(dir + "/assets");
     copyFileSync(collectionTemplatePath, rootPath + "/collections/" + newUID + "/collection.json");
     getCollections();
+
+
+    //CREATE DATA EXCEL SHEET
+    const headers = []; // No headers initially
+    const data = []; // No data initially
+
+    const worksheetData = [headers, ...data];
+    const worksheet = XLSX.utils.aoa_to_sheet(worksheetData);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Data");
+
+    // Create the file in the specified collection folder
+    const filePath = `${dir}/data.xlsx`;
+
+    // Write the file to the file system
+    const excelBuffer = XLSX.write(workbook, { bookType: "xlsx", type: "array" });
+    fs.writeFileSync(filePath, Buffer.from(excelBuffer));
+
+
 
     setTimeout(() => {
       collectionsAvailable[collectionsAvailable.length - 1].collectionInfo.UID = newUID;
@@ -227,6 +272,8 @@ export function saveCollection(refreshAssets, reRenderCard) {
   collInfo.resolution = Math.max(1, pageResolutionInput.value);
   collInfo.cuttingHelp = cuttingHelpInput.checked;
 
+  collInfo.lastSavingTime = Date.now();
+
   setupCollectionDimensions();
   populateEditionFields();
 
@@ -244,12 +291,7 @@ export function saveCollection(refreshAssets, reRenderCard) {
 
   if (reRenderCard) {
     setTimeout(() => {
-      app.resizeExistingCanvas(
-        collInfo.W * collInfo.resolution,
-        collInfo.H * collInfo.resolution,
-        collInfo.pageWidth * collInfo.resolution,
-        collInfo.pageHeight * collInfo.resolution
-      );
+      app.resizeExistingCanvas(collInfo.W * collInfo.resolution, collInfo.H * collInfo.resolution, collInfo.pageWidth * collInfo.resolution, collInfo.pageHeight * collInfo.resolution);
 
       renderCardUsingTemplate(app, app.currentIndex, collInfo.visualGuide);
     }, 500);

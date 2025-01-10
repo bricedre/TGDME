@@ -19,36 +19,39 @@
     <button id="homeBtn" class="homeBtn">
       <img id="homeIcon" src="./assets/home.png" alt="home btn" />
     </button>
-    <div id="mainTitleDiv"></div>
+    <div id="mainTitleDiv">LA CABANE À PROTOS</div>
   </nav>
 
   <div class="viewer">
     <div id="startPanelDiv" class="panel">
+
       <!-- <button class="homePageBtn" id="tutorialBtn">
         <div class="imgContainer">
           <img src="./assets/tutorialBtn.png" alt="add symbol" />
         </div>
-        <p>APPRENDRE À UTILISER LA CABANE À PROTOS</p>
+        <p>TUTORIEL</p>
       </button> -->
-      <button class="homePageBtn" id="newCollectionBtn">
+
+      <div class="homePagePanel" id="loadCollectionsPanel">
         <div class="imgContainer">
           <img src="./assets/newCollectionBtn.png" alt="add symbol" />
         </div>
-        <p>CRÉER UNE NOUVELLE COLLECTION</p>
-      </button>
-      <button class="homePageBtn" id="loadCollectionBtn">
+        <p class="panelTitle">COLLECTIONS D'ÉLÉMENTS</p>
+      </div>
+      <div class="homePagePanel" id="loadPagesPanel">
         <div class="imgContainer">
           <img src="./assets/loadCollectionBtn.png" alt="add symbol" />
         </div>
-        <p>OUVRIR UNE COLLECTION DÉJÀ CRÉÉE</p>
-      </button>
-    </div>
-    <div id="loadingPanelDiv" class="panel">
-      
-    </div>
-    <div id="editionPanelDiv" class="panel">
+        <p class="panelTitle">DISPOSITIONS DE PAGES</p>
+      </div>
 
-      
+    </div>
+
+    <div id="loadingPanelDiv" class="panel">
+    </div>
+
+
+    <div id="editionPanelDiv" class="panel">
 
       <div class="tabs">
         <button id="generateCollectionBtn" title="Re-générer la Collection (Entrée)" class="generateCollectionBtn">

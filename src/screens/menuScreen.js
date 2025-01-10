@@ -6,8 +6,8 @@ export function setupMenu() {
   //   window.open(`https://www.youtube.com/watch?v=vODPa1l_9q8&list=PLk03fyx-610aRbuL8wsF-e9e5T8pKYDCJ`);
   // });
 
-  newCollectionBtn.addEventListener("click", () => createNewCollection());
+  // newCollectionBtn.addEventListener("click", () => createNewCollection());
 
-  loadCollectionBtn.addEventListener("click", () => openPanel("loading"));
+  // loadCollectionsBtn.addEventListener("click", () => openPanel("loading"));
   
 }
