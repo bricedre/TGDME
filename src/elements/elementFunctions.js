@@ -7,6 +7,19 @@ const XLSX = require("xlsx");
 const { exec } = require("child_process");
 
 export function updateDataView() {
+  const elementItemsDiv = $("#elementItemsDiv");
+  elementItemsDiv.empty();
+
+  if(currentCollection.elements.headers.length > 0){
+
+    currentCollection.elements.headers.forEach((header, index) => {
+      elementItemsDiv.append($("<p></p>").text(`${header} : ${currentCollection.elements.data[app.currentIndex][index]}`));
+    });
+  }
+  else{
+    elementItemsDiv.append($("<p></p>").text("Aucune donnée disponible").addClass("noStuffDiv"));
+  }
+
   updateElementsCounter();
 }
 

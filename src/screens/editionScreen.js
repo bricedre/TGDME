@@ -5,7 +5,7 @@ import { rootElement } from "./mainLayout.js";
 import { renderCardUsingTemplate, triggerGeneration } from "../render.js";
 import { addAsset, allSystemFonts, currentAssetsList, removeAsset } from "../assets/assetLoader.js";
 import { setupComponents } from "../template/componentsFunctions.js";
-import { checkForFileUpdate, openExcelFile } from "../elements/elementFunctions.js";
+import { checkForFileUpdate, openExcelFile, updateDataView } from "../elements/elementFunctions.js";
 
 const $ = require("jquery");
 
@@ -79,6 +79,7 @@ export function goToOtherCard(delta) {
   app.currentIndex = Math.min(Math.max(parseInt(app.currentIndex + delta), 0), currentCollection.elements.data.length - 1);
   renderCardUsingTemplate(app, app.currentIndex, currentCollection.collectionInfo.visualGuide);
   updateElementsCounter();
+  updateDataView();
   rootElement.style.setProperty("--cardAngle", 3 - app.random() * 6 + "deg");
 }
 
