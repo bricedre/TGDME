@@ -12,11 +12,7 @@ canvas {
   padding: 4rem;
 }
 
-.templateBtns,
-.ressBtns,
-.elementBtns,
-.collBtns,
-.printBtns {
+.btnContainer {
   display: flex;
   gap: 1rem;
 }
@@ -174,10 +170,6 @@ input[type="radio"] {
   display: flex;
 }
 
-.separator {
-  flex: 1;
-}
-
 /* TABS CONTENT */
 
 .parameterSlot {
@@ -245,11 +237,10 @@ input[type="radio"] {
   outline: 3px solid #63a9d588;
 }
 
-#templateItemsDiv,
-#ressItemsDiv,
-#elementItemsDiv {
+.mainContent {
   overflow-y: scroll;
   padding-left: 1rem;
+  flex: 1;
 }
 
 #ressItemsDiv {
@@ -348,7 +339,7 @@ input[type="file"] {
 }
 
 .custom-file-upload > img {
-  height: 3rem;
+  height: 2rem;
   rotate: 5deg;
 }
 
@@ -436,118 +427,3 @@ input[type="file"] {
 .uidTagCorner:hover {
   scale: 1.2;
 }
-
-#contentElementsDiv{
-  display: block !important;
-  overflow: auto;
-  height: 94%;
-  margin-top: 1rem;
-}
-
-table {
-  font-size: 0.8rem;
-  font-family: "Main Font", sans-serif;
-  border-spacing: 5px;
-  table-layout: fixed;
-
-}
-
-thead{
-  position: sticky;
-  top: 0;
-}
-
-th,
-td {
-  padding: 8px 10px;
-  border-radius: 0.7rem;
-  min-width: 8rem;
-}
-
-th{
-  background-color: var(--mainColorDark);
-  color: #fff;
-  width: 8rem;
-}
-
-td {
-  text-align: center;
-  background: white;
-  width: 8rem;
-}
-
-td.void, th.void{
-  background: transparent;
-}
-
-caption {
-  caption-side: bottom;
-  padding: 10px;
-  opacity: 0.7;
-}
-
-.lastRow{
-  column-span : 100%;
-}
-
-.actionsCell{
-  display: flex;
-  justify-content: center;
-}
-
-.actionsCell img{
-  height: 2rem;
-  transition: 0.3s;
-  cursor: pointer;
-}
-
-.addEntryBtn, .addValueBtn{
-  transition: all 0.2s ease-in-out;
-  cursor: pointer;
-  background-color: var(--mainColorLight);
-}
-
-.addEntryBtn:hover, .addValueBtn:hover{
-  background-color: var(--mainColor);
-}
-
-.deleteCell img{
-  height: 2rem;
-  transition: 0.3s;
-  cursor: pointer;
-}
-
-.tableWrapper {
-  overflow: auto;
-  max-height: 500px; /* Ajustez selon vos besoins */
-}
-
-.dataTable {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.dataTable th, .dataTable td {
-  padding: 8px;
-}
-
-.sticky-header {
-  position: sticky;
-  top: 0;
-  z-index: 2;
-}
-
-.sticky-col {
-  position: sticky;
-  left: 0;
-  z-index: 1;
-}
-
-.actionButtons {
-  margin-top: 10px;
-  display: flex;
-  gap: 10px;
-}
-
-
-

@@ -1,4 +1,4 @@
-import { setupElements } from "../elements/elementFunctions.js";
+import { updateDataView } from "../elements/elementFunctions.js";
 import { IMAGE_parameters, TEXT_parameters, SHAPE_parameters, ELEMENT_parameters, resetElementParameters } from "../template/componentParameters.js";
 import { currentCollection } from "../collection/collectionManager.js";
 import { allSystemFonts } from "../assets/assetLoader.js";
@@ -99,7 +99,7 @@ export function createNewComponent(item, itemIndex) {
     var componentToDelete = currentCollection.template.filter((el) => el.UID == e.target.parentNode.id)[0];
     currentCollection.template.splice(currentCollection.template.indexOf(componentToDelete), 1);
     setupComponents();
-    setupElements();
+    updateDataView();
 
     generateCollectionBtn.click();
   });

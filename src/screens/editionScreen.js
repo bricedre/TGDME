@@ -1,46 +1,54 @@
 import { app } from "../app.js";
-import { addNewElement, addNewImage, addNewShape, addNewText, archiveCollection, currentCollection, deleteCurrentCollection, duplicateCollection, saveCollection } from "../collection/collectionManager.js";
+import { addNewImage, addNewShape, addNewText, archiveCollection, currentCollection, deleteCurrentCollection, duplicateCollection, saveCollection } from "../collection/collectionManager.js";
 import { rootElement } from "./mainLayout.js";
 
 import { renderCardUsingTemplate, triggerGeneration } from "../render.js";
 import { addAsset, allSystemFonts, currentAssetsList, removeAsset } from "../assets/assetLoader.js";
 import { setupComponents } from "../template/componentsFunctions.js";
+import { checkForFileUpdate, openExcelFile } from "../elements/elementFunctions.js";
 
-//COLLECTION PARAMETERS
+const $ = require("jquery");
 
-duplicateCollectionBtn.addEventListener("click", () => duplicateCollection());
-archiveCollectionBtn.addEventListener("click", () => archiveCollection());
-deleteCollectionBtn.addEventListener("click", () => deleteCurrentCollection());
+//GENERAL BUTTONS
+$("#generateCollectionBtn")
+  .on("click", () => {
+    saveCollection(false, true);
+    $("#generateCollectionBtn").css("animation", "0.5s beyblade");
+  })
+  .on("animationend", () => {
+    $("#generateCollectionBtn").css("animation", "none");
+  });
 
-generateCollectionBtn.addEventListener("click", () => {
-  saveCollection(false, true);
-  generateCollectionBtn.style.animation = "0.5s beyblade";
-});
+$("#bigPrevCardBtn").on("click", () => goToOtherCard(-10));
+$("#prevCardBtn").on("click", () => goToOtherCard(-1));
+$("#nextCardBtn").on("click", () => goToOtherCard(1));
+$("#bigNextCardBtn").on("click", () => goToOtherCard(10));
 
-generateCollectionBtn.addEventListener("animationend", () => {
-  generateCollectionBtn.style.animation = "none";
-});
+//TABS BUTTONS
+$("#duplicateCollectionBtn").on("click", () => duplicateCollection());
+$("#archiveCollectionBtn").on("click", () => archiveCollection());
+$("#deleteCollectionBtn").on("click", () => deleteCurrentCollection());
 
-bigPrevCardBtn.addEventListener("click", () => goToOtherCard(-10));
-prevCardBtn.addEventListener("click", () => goToOtherCard(-1));
-nextCardBtn.addEventListener("click", () => goToOtherCard(1));
-bigNextCardBtn.addEventListener("click", () => goToOtherCard(10));
-
-addImageComponentBtn.addEventListener("click", () => addNewImage());
-addShapeComponentBtn.addEventListener("click", () => addNewShape());
-addTextComponentBtn.addEventListener("click", () => addNewText());
-
-newResourceInput.addEventListener("change", function (e) {
+$("#newResourceInput").on("change", (e) => {
   if (e.target.files[0]) {
     addAsset(e.target.files[0]);
   }
 });
 
+$("#addImageComponentBtn").on("click", () => addNewImage());
+$("#addShapeComponentBtn").on("click", () => addNewShape());
+$("#addTextComponentBtn").on("click", () => addNewText());
+
+$("#modifyDataBtn").on("click", () => openExcelFile());
+$("#updateDataBtn").on("click", () => checkForFileUpdate());
+
+
+
 /*        
 GLOBAL
 */
 
-export function updateCardCounter() {
+export function updateElementsCounter() {
   var currentIndex = app.currentIndex;
 
   //INDEX
@@ -70,7 +78,7 @@ export function updateCardCounter() {
 export function goToOtherCard(delta) {
   app.currentIndex = Math.min(Math.max(parseInt(app.currentIndex + delta), 0), currentCollection.elements.data.length - 1);
   renderCardUsingTemplate(app, app.currentIndex, currentCollection.collectionInfo.visualGuide);
-  updateCardCounter();
+  updateElementsCounter();
   rootElement.style.setProperty("--cardAngle", 3 - app.random() * 6 + "deg");
 }
 
@@ -82,12 +90,12 @@ export function populateEditionFields() {
   elementHeightInput.value = currentCollection.collectionInfo.H;
   visualGuideSelect.value = currentCollection.collectionInfo.visualGuide;
 
-  pageFormatSelect.value = currentCollection.collectionInfo.pageFormat;
-  pageOrientationSelect.value = currentCollection.collectionInfo.pageOrientation;
-  pageWidthInput.value = currentCollection.collectionInfo.pageWidth;
-  pageHeightInput.value = currentCollection.collectionInfo.pageHeight;
-  pageResolutionInput.value = currentCollection.collectionInfo.resolution;
-  cuttingHelpInput.value = currentCollection.collectionInfo.cuttingHelp;
+  // pageFormatSelect.value = currentCollection.collectionInfo.pageFormat;
+  // pageOrientationSelect.value = currentCollection.collectionInfo.pageOrientation;
+  // pageWidthInput.value = currentCollection.collectionInfo.pageWidth;
+  // pageHeightInput.value = currentCollection.collectionInfo.pageHeight;
+  // pageResolutionInput.value = currentCollection.collectionInfo.resolution;
+  // cuttingHelpInput.value = currentCollection.collectionInfo.cuttingHelp;
 }
 
 export function checkOtherInputs(eventTargetId, eventTargetValue) {
@@ -136,8 +144,3 @@ export function moveComponent(currentIndex, delta) {
     generateCollectionBtn.click();
   }, 200);
 }
-
-/*        
-ELEMENTS
-*/
-

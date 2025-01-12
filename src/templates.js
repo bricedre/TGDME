@@ -78,8 +78,3 @@ export let imageComponentTemplate = {
   shadowOpacity: { value: "100", type: "0" },
   shadowBlur: { value: "0", type: "0" },
 };
-
-export let elementTemplate = {
-    headers : ["valeur"],
-    data : [[""]]
-  };

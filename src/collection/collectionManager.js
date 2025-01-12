@@ -1,15 +1,15 @@
 const cloneDeep = require("lodash/cloneDeep");
 
 import { app } from "../app.js";
-import { checkOtherInputs, populateEditionFields, updateCardCounter } from "../screens/editionScreen.js";
+import { checkOtherInputs, populateEditionFields, updateElementsCounter } from "../screens/editionScreen.js";
 import { openPanel } from "../screens/mainLayout.js";
 
 import { getFontList, loadAssets } from "../assets/assetLoader.js";
-import { imageComponentTemplate, textComponentTemplate, shapeComponentTemplate, elementTemplate } from "../templates.js";
+import { imageComponentTemplate, textComponentTemplate, shapeComponentTemplate } from "../templates.js";
 import { renderCardUsingTemplate } from "../render.js";
 import { setupResources } from "../assets/resourceFunctions.js";
 import { populateComponents, setupComponents } from "../template/componentsFunctions.js";
-import { setupElements } from "../elements/elementFunctions.js";
+import { updateDataView } from "../elements/elementFunctions.js";
 const { rootPath } = require("electron-root-path");
 
 const fs = require("fs").promises;
@@ -17,7 +17,8 @@ const { existsSync, mkdirSync, copyFileSync, readdirSync } = require("fs");
 const rimraf = require("rimraf");
 const fsExtra = require("fs-extra");
 // const fs = require('fs');
-const XLSX = require('xlsx');
+const XLSX = require("xlsx");
+const $ = require("jquery");
 
 export let collectionsAvailable;
 export let currentCollectionUID = -1;
@@ -39,31 +40,45 @@ export function getCollections() {
 
   setTimeout(() => {
     //HOMEPAGE QUICK ACCESS
-    loadCollectionsPanel.innerHTML = "";
+    const loadCollectionsPanel = $("#loadCollectionsPanel");
+    loadCollectionsPanel.empty();
+
+    //Elements
+    const panelImageContainer = $("<div></div>").addClass("imgContainer");
+    const panelImage = $("<img>").attr("src", "./assets/newCollectionBtn.png");
+    panelImageContainer.append(panelImage);
+    const panelHeader = $("<div></div>").addClass("panelHeader");
+    const panelHeaderTitle = $("<div></div>").text("COLLECTIONS D'ÉLÉMENTS");
+    const panelHeaderBtn = $("<button></button>")
+      .addClass("panelHeaderBtn")
+      .text("TOUT VOIR")
+      .on("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        openPanel("loading");
+      });
+    panelHeader.append(panelHeaderTitle, panelHeaderBtn);
+    loadCollectionsPanel.append(panelImageContainer, panelHeader);
+
     collectionsAvailable = collectionsAvailable.sort((a, b) => {
       return b.collectionInfo.lastSavingTime - a.collectionInfo.lastSavingTime;
     });
 
     collectionsAvailable.forEach((collection, index) => {
       if (index < 5) {
-        var btnElement = document.createElement("button");
-        btnElement.classList.add("deckBtn");
-        btnElement.innerHTML = collection.collectionInfo.collectionName;
-        btnElement.addEventListener("click", (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          setCurrentCollection(collection.collectionInfo.UID);
-        });
+        const btnElement = $("<button></button>")
+          .addClass("homePageBtn")
+          .text(collection.collectionInfo.collectionName)
+          .on("click", (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            setCurrentCollection(collection.collectionInfo.UID);
+            
+          });
 
-        loadCollectionsPanel.appendChild(btnElement);
+        loadCollectionsPanel.append(btnElement);
       }
     });
-
-    //ACTIONS
-    var collectionsPanelActions = document.createElement("div");
-    collectionsPanelActions.classList.add("collectionsPanelActions");
-
-    loadCollectionsPanel.appendChild(collectionsPanelActions);
 
     //LOADING PAGE ACCESS
     loadingPanelDiv.innerHTML = "";
@@ -153,12 +168,12 @@ export function setCurrentCollection(collectionUID) {
       app.currentIndex = 0;
       openPanel("edition");
       populateEditionFields();
-      checkOtherInputs(elementFormatSelect.id, elementFormatSelect.value);
-      checkOtherInputs(pageFormatSelect.id, pageFormatSelect.value);
+      // checkOtherInputs(elementFormatSelect.id, elementFormatSelect.value);
+      // checkOtherInputs(pageFormatSelect.id, pageFormatSelect.value);
       setupResources();
       setupComponents();
       populateComponents();
-      setupElements();
+      updateDataView();
       renderCardUsingTemplate(app, app.currentIndex, currentCollection.collectionInfo.visualGuide);
     }, 500);
   }
@@ -177,7 +192,6 @@ export function createNewCollection() {
     copyFileSync(collectionTemplatePath, rootPath + "/collections/" + newUID + "/collection.json");
     getCollections();
 
-
     //CREATE DATA EXCEL SHEET
     const headers = []; // No headers initially
     const data = []; // No data initially
@@ -193,8 +207,6 @@ export function createNewCollection() {
     // Write the file to the file system
     const excelBuffer = XLSX.write(workbook, { bookType: "xlsx", type: "array" });
     fs.writeFileSync(filePath, Buffer.from(excelBuffer));
-
-
 
     setTimeout(() => {
       collectionsAvailable[collectionsAvailable.length - 1].collectionInfo.UID = newUID;
@@ -264,13 +276,13 @@ export function saveCollection(refreshAssets, reRenderCard) {
   collInfo.H = elementHeightInput.value;
   collInfo.visualGuide = visualGuideSelect.value;
 
-  collInfo.pageFormat = pageFormatSelect.value;
-  collInfo.pageWidth = pageWidthInput.value;
-  collInfo.pageHeight = pageHeightInput.value;
+  // collInfo.pageFormat = pageFormatSelect.value;
+  // collInfo.pageWidth = pageWidthInput.value;
+  // collInfo.pageHeight = pageHeightInput.value;
 
-  collInfo.pageOrientation = pageOrientationSelect.value;
-  collInfo.resolution = Math.max(1, pageResolutionInput.value);
-  collInfo.cuttingHelp = cuttingHelpInput.checked;
+  // collInfo.pageOrientation = pageOrientationSelect.value;
+  // collInfo.resolution = Math.max(1, pageResolutionInput.value);
+  // collInfo.cuttingHelp = cuttingHelpInput.checked;
 
   collInfo.lastSavingTime = Date.now();
 
@@ -358,29 +370,29 @@ export function setupCollectionDimensions() {
       break;
   }
 
-  switch (coll.pageFormat) {
-    case "A3":
-      coll.pageWidth = 29.7;
-      coll.pageHeight = 42;
-      break;
+  // switch (coll.pageFormat) {
+  //   case "A3":
+  //     coll.pageWidth = 29.7;
+  //     coll.pageHeight = 42;
+  //     break;
 
-    case "A4":
-      coll.pageWidth = 21;
-      coll.pageHeight = 29.7;
-      break;
-  }
+  //   case "A4":
+  //     coll.pageWidth = 21;
+  //     coll.pageHeight = 29.7;
+  //     break;
+  // }
 
-  if (coll.pageOrientation === "landscape") {
-    let _temp = coll.pageWidth;
-    coll.pageWidth = coll.pageHeight;
-    coll.pageHeight = _temp;
-  }
+  // if (coll.pageOrientation === "landscape") {
+  //   let _temp = coll.pageWidth;
+  //   coll.pageWidth = coll.pageHeight;
+  //   coll.pageHeight = _temp;
+  // }
 
-  // DERIVED MARGINS & COLUMN/ROW COUNTS TO CENTER THE CARDS IN THE PAGE
-  coll.colCount = Math.floor(coll.pageWidth / coll.W);
-  coll.rowCount = Math.floor(coll.pageHeight / coll.H);
-  coll.marginX = ((coll.pageWidth - coll.W * coll.colCount) / 2) * coll.resolution;
-  coll.marginY = ((coll.pageHeight - coll.H * coll.rowCount) / 2) * coll.resolution;
+  // // DERIVED MARGINS & COLUMN/ROW COUNTS TO CENTER THE CARDS IN THE PAGE
+  // coll.colCount = Math.floor(coll.pageWidth / coll.W);
+  // coll.rowCount = Math.floor(coll.pageHeight / coll.H);
+  // coll.marginX = ((coll.pageWidth - coll.W * coll.colCount) / 2) * coll.resolution;
+  // coll.marginY = ((coll.pageHeight - coll.H * coll.rowCount) / 2) * coll.resolution;
 }
 
 export function addNewImage() {
@@ -403,14 +415,4 @@ function assignUIDToNewComponent() {
   currentCollection.collectionInfo.lastComponentIndex++;
   setupComponents();
   generateCollectionBtn.click();
-}
-
-export function addNewElement() {
-  currentCollection.elements.push(cloneDeep(elementTemplate));
-  currentCollection.elements[currentCollection.elements.length - 1].UID = currentCollection.collectionInfo.lastElementIndex;
-  currentCollection.collectionInfo.lastElementIndex++;
-
-  setupElements();
-  generateCollectionBtn.click();
-  updateCardCounter();
 }

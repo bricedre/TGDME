@@ -1,5 +1,5 @@
 import { currentCollection, getCollections, setCurrentCollection } from "../collection/collectionManager.js";
-import { checkOtherInputs, updateCardCounter } from "./editionScreen.js";
+import { checkOtherInputs, updateElementsCounter } from "./editionScreen.js";
 import { populateComponents } from "../template/componentsFunctions.js";
 
 const bottomBar = document.querySelector(".bottomBar");
@@ -82,7 +82,7 @@ export function openPanel(panelName) {
       let firstRadio = document.querySelector(".tabs input");
       firstRadio.checked = true;
 
-      updateCardCounter();
+      updateElementsCounter();
       mainTitleDiv.innerHTML = currentCollection?.collectionInfo.collectionName;
       archiveCollectionBtn.innerHTML = currentCollection.collectionInfo.archived ? "DÉSARCHIVER<img src='./assets/archiveCollection.png'>" : "ARCHIVER<img src='./assets/archiveCollection.png'>";
       break;

@@ -33,10 +33,6 @@
       </button> -->
 
       <div class="homePagePanel" id="loadCollectionsPanel">
-        <div class="imgContainer">
-          <img src="./assets/newCollectionBtn.png" alt="add symbol" />
-        </div>
-        <p class="panelTitle">COLLECTIONS D'ÉLÉMENTS</p>
       </div>
       <div class="homePagePanel" id="loadPagesPanel">
         <div class="imgContainer">
@@ -71,7 +67,10 @@
         <label for="tabElementsInput" title="Modification des Données (F4)">Données</label>
 
         <div class="content">
+
           <div id="contentConfigDiv">
+
+            <div class="mainContent">
 
             <div class="parameterSlot">
               <p class="parameterName">Nom de la Collection</p>
@@ -138,9 +137,9 @@
               </select>
             </div>
 
-            <div class="separator"></div>
+          </div>
 
-            <div class="collBtns">
+            <div class="btnContainer">
             <button id="duplicateCollectionBtn" class="navBtn" title="Créer une copie de la collection actuelle">
               DUPLIQUER
               <img src="./assets/duplicateCollection.png">
@@ -160,8 +159,8 @@
           </div>
 
           <div id="contentRessDiv">
-            <div id="ressItemsDiv"></div>
-            <div class="ressBtns">
+            <div id="ressItemsDiv" class="mainContent"></div>
+            <div class="btnContainer">
               <label class="custom-file-upload">
                 <input id="newResourceInput" type="file" accept=".png,.jpg,.ttf,.otf" />
                 AJOUTER
@@ -171,8 +170,8 @@
           </div>
 
           <div id="contentTemplateDiv">
-            <div id="templateItemsDiv"></div>
-            <div class="templateBtns">
+            <div id="templateItemsDiv" class="mainContent"></div>
+            <div class="btnContainer">
               <button title="Ajouter un composant Image" id="addImageComponentBtn" class="navBtn">
                 AJOUTER
                 <img src="./assets/addImageComponent.png">
@@ -189,10 +188,22 @@
           </div>
 
           <div id="contentElementsDiv">
-            <!-- <div id="elementItemsDiv"></div> -->
+            <div id="elementItemsDiv" class="mainContent">
+              fthfth
+            </div>
+            <div class="btnContainer">
+              <button title="Ajouter un composant Image" id="modifyDataBtn" class="navBtn" >
+                MODIFIER LES DONNÉES
+                <img src="./assets/addImageComponent.png">
+              </button>
+              <button title="Ajouter un composant Forme" id="updateDataBtn" class="navBtn">
+                METTRE À JOUR LES DONNÉES
+                <img src="./assets/addShapeComponent.png">
+              </button>
+            </div>
           </div>
 
-          <div id="contentPrintingDiv">
+          <!-- <div id="contentPrintingDiv">
 
             <div class="parameterSlot">
               <p class="parameterName">Format de Page</p>
@@ -236,7 +247,7 @@
               <input type="checkbox" id="cuttingHelpInput" name="cuttingHelpInput" />
               <label class="parameterName" for="cuttingHelpInput">Aide à la Découpe 🔍</label>
             </div>
-          </div>
+          </div> -->
         </div>
 
       </div>
