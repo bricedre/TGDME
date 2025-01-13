@@ -1,23 +1,32 @@
-import { currentCollection, getCollections, setCurrentCollection } from "../collection/collectionManager.js";
 import { checkOtherInputs, updateElementsCounter } from "./editionScreen.js";
-import { populateComponents } from "../template/componentsFunctions.js";
-
-const bottomBar = document.querySelector(".bottomBar");
+import { currentCollection, getCollections, setCurrentCollection } from "../core/collectionsManager.js";
+import { populateComponents } from "../core/componentsManager.js";
+import { getFontList } from "../core/assetsManager.js";
+import { setupMenu } from "./menuScreen.js";
+const $ = require("jquery");
 
 export const rootElement = document.querySelector(":root");
 
-let lastPanel = "start";
-let currentPanel = "start";
-
-homeBtn.addEventListener("click", () => {
-  setCurrentCollection(-1);
-  getCollections();
-
-  if (currentPanel != "start") {
-    openPanel(lastPanel);
+const sceneUIElements = {
+  titles : {
+    "start" : "LA CABANE À PROTOS",
+    "loading" : "BIBLIOTHÈQUE DE COLLECTIONS",
+    "edition" : () => currentCollection?.collectionInfo.collectionName,
+  },
+  "icon" : {
+    "start" : "./assets/home.png",
+    "loading" : "./assets/newCollectionBtn.png",
+    "edition" : "./assets/loadCollectionBtn.png",
   }
+}
 
-});
+export let lastPanel = "start";
+export let currentPanel = "start";
+
+getFontList();
+// getCollections();
+// setupMenu();
+openScene(currentPanel);
 
 document.addEventListener("keyup", function (event) {
   if (event.key === "Enter") {
@@ -50,46 +59,42 @@ allSelects.forEach((select) => {
   });
 });
 
-export function openPanel(panelName) {
+export function openScene(panelName) {
+
+  $(".panel").css("display", "none");
+  
+  let $currentPanel;
+  let homeIcon = $("#homeIcon");
+  let bottomBarDiv = $("#bottomBarDiv");
+
   switch (panelName) {
     case "start":
-      startPanelDiv.style.display = "flex";
-      loadingPanelDiv.style.display = "none";
-      editionPanelDiv.style.display = "none";
-      bottomBarDiv.style.display = "none";
-      mainTitleDiv.innerHTML = "LA CABANE À PROTOS";
-      homeIcon.src = "./assets/home.png";
-
+      $currentPanel = $("#startPanelDiv");
+      bottomBarDiv.css("display", "none");
       break;
 
     case "loading":
-      startPanelDiv.style.display = "none";
-      loadingPanelDiv.style.display = "flex";
-      editionPanelDiv.style.display = "none";
-      bottomBarDiv.style.display = "none";
-      mainTitleDiv.innerHTML = "BIBLIOTHÈQUE DE COLLECTIONS";
-      homeIcon.src = "./assets/home.png";
+      $currentPanel = $("#loadingPanelDiv");
+      bottomBarDiv.css("display", "none");
       break;
 
     case "edition":
-      startPanelDiv.style.display = "none";
-      loadingPanelDiv.style.display = "none";
-      editionPanelDiv.style.display = "flex";
-      bottomBarDiv.style.display = "flex";
-      homeIcon.src = "./assets/loadCollectionBtn.png";
+      $currentPanel = $("#editionPanelDiv");
+      bottomBarDiv.css("display", "flex");
 
-      //Go back to Config all the time
+      //Go back to Config tab all the time
       let firstRadio = document.querySelector(".tabs input");
       firstRadio.checked = true;
 
       updateElementsCounter();
-      mainTitleDiv.innerHTML = currentCollection?.collectionInfo.collectionName;
       archiveCollectionBtn.innerHTML = currentCollection.collectionInfo.archived ? "DÉSARCHIVER<img src='./assets/archiveCollection.png'>" : "ARCHIVER<img src='./assets/archiveCollection.png'>";
       break;
   }
+  
+  $currentPanel.css("display", "flex");
+  $currentPanel.text = sceneUIElements.titles[panelName];
+  homeIcon.attr("src", sceneUIElements.icon[panelName]);
 
   lastPanel = currentPanel;
   currentPanel = panelName;
-
-  console.log(lastPanel, currentPanel)
 }

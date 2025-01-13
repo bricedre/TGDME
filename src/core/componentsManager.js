@@ -1,8 +1,11 @@
-import { updateDataView } from "../elements/elementFunctions.js";
-import { IMAGE_parameters, TEXT_parameters, SHAPE_parameters, ELEMENT_parameters, resetElementParameters } from "../template/componentParameters.js";
-import { currentCollection } from "../collection/collectionManager.js";
-import { allSystemFonts } from "../assets/assetLoader.js";
+import { updateDataView } from "./elementsManager.js";
+
+import { IMAGE_parameters, TEXT_parameters, SHAPE_parameters } from "./componentsUI.js";
+import { currentCollection } from "./collectionsManager.js";
+import { allSystemFonts } from "./assetsManager.js";
 import { moveComponent } from "../screens/editionScreen.js";
+
+export let ELEMENT_parameters = [];
 
 export function setupComponents() {
   while (templateItemsDiv.firstChild) {
@@ -335,4 +338,8 @@ export function populateComponents() {
     input.src = currentMode == "0" ? "./assets/fixedType.png" : "./assets/elementBasedType.png";
     input.title = currentMode == "0" ? "Fixe" : "Basé sur l'élement";
   });
+}
+
+export function resetElementParameters() {
+  ELEMENT_parameters = [];
 }

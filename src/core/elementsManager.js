@@ -1,5 +1,5 @@
 import { app } from "../app.js";
-import { currentCollection, saveCollection } from "../collection/collectionManager.js";
+import { currentCollection, saveCollection } from "./collectionsManager.js";
 import { updateElementsCounter } from "../screens/editionScreen.js";
 
 const $ = require("jquery");
@@ -10,13 +10,11 @@ export function updateDataView() {
   const elementItemsDiv = $("#elementItemsDiv");
   elementItemsDiv.empty();
 
-  if(currentCollection.elements.headers.length > 0){
-
+  if (currentCollection.elements.headers.length > 0) {
     currentCollection.elements.headers.forEach((header, index) => {
       elementItemsDiv.append($("<p></p>").text(`${header} : ${currentCollection.elements.data[app.currentIndex][index]}`));
     });
-  }
-  else{
+  } else {
     elementItemsDiv.append($("<p></p>").text("Aucune donnée disponible").addClass("noStuffDiv"));
   }
 
@@ -64,6 +62,11 @@ export function checkForFileUpdate() {
 
         updateDataView();
         generateCollectionBtn.click(); //Saving mods to colelction
+      } else {
+        currentCollection.elements = {
+          headers: [],
+          data: [],
+        };
       }
     })
     .catch((error) => {

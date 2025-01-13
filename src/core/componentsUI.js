@@ -163,6 +163,7 @@ export let SHAPE_parameters = [
   { name: "Opacité", refValue: "shadowOpacity", forced: true, type: "range" },
   { name: "Flou", refValue: "shadowBlur", forced: true, type: "text" },
 ];
+
 export let TEXT_parameters = [
   { name: "<span class='spacerIcon spacerIconCentered'>🪪</span><span>Informations Générales</span>", type: "spacer" },
   { name: "Déclenchement conditionné", refValue: "trigger", type: "checkbox", forced: true },
@@ -212,9 +213,3 @@ export let TEXT_parameters = [
   { name: "Opacité", refValue: "shadowOpacity", type: "range" },
   { name: "Flou", refValue: "shadowBlur", type: "text" },
 ];
-
-export function resetElementParameters() {
-  ELEMENT_parameters = [];
-}
-
-export let ELEMENT_parameters = [];

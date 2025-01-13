@@ -1,11 +1,10 @@
 import { app } from "../app.js";
-import { addNewImage, addNewShape, addNewText, archiveCollection, currentCollection, deleteCurrentCollection, duplicateCollection, saveCollection } from "../collection/collectionManager.js";
+import { addNewImage, addNewShape, addNewText, archiveCollection, currentCollection, deleteCurrentCollection, duplicateCollection, saveCollection } from "../core/collectionsManager.js";
 import { rootElement } from "./mainLayout.js";
-
-import { renderCardUsingTemplate, triggerGeneration } from "../render.js";
-import { addAsset, allSystemFonts, currentAssetsList, removeAsset } from "../assets/assetLoader.js";
-import { setupComponents } from "../template/componentsFunctions.js";
-import { checkForFileUpdate, openExcelFile, updateDataView } from "../elements/elementFunctions.js";
+import { renderCardUsingTemplate } from "../render.js";
+import { addAsset, allSystemFonts, removeAsset } from "../core/assetsManager.js";
+import { setupComponents } from "../core/componentsManager.js";
+import { checkForFileUpdate, openExcelFile, updateDataView } from "../core/elementsManager.js";
 
 const $ = require("jquery");
 
@@ -41,7 +40,6 @@ $("#addTextComponentBtn").on("click", () => addNewText());
 
 $("#modifyDataBtn").on("click", () => openExcelFile());
 $("#updateDataBtn").on("click", () => checkForFileUpdate());
-
 
 
 /*        

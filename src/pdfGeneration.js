@@ -1,4 +1,4 @@
-import { currentCollection } from "./collection/collectionManager.js";
+import { currentCollection } from "./core/collectionsManager.js";
 
 const { jsPDF } = require("jspdf");
 

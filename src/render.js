@@ -1,8 +1,9 @@
-import { currentCollection } from "./collection/collectionManager.js";
+import { currentCollection } from "./core/collectionsManager.js";
 import { generatePDF } from "./pdfGeneration.js";
 import { app } from "./app.js";
-import { assetsLibrary, errorImage } from "./assets/assetLoader.js";
-import { IMAGE_parameters, TEXT_parameters, SHAPE_parameters, ELEMENT_parameters } from "./template/componentParameters.js";
+import { assetsLibrary, errorImage } from "./core/assetsManager.js";
+import { IMAGE_parameters, TEXT_parameters, SHAPE_parameters } from "./core/componentsUI.js";
+import { ELEMENT_parameters } from "./core/componentsManager.js";
 
 //FUTURE IDEES :
 /*
@@ -25,11 +26,8 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
 
   let elementData = currentElements[elementIndex];
 
-  // Render only if trigger is empty OR equal to good value
-
   // if (componentData.trigger.value == "" || elementData[componentData.trigger.value]) {
-  var _src = getActualValue(componentData.src, "src", componentData, elementData, elementIndex, "", false);
-  _src = _src.replace("INDEX", elementIndex.toString());
+  var _src = getActualValue(componentData.src, "src", componentData, elementData, elementIndex, "", false).toString();
 
   var _textToWrite;
   var _shape;
@@ -437,7 +435,6 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
       p5.card.pop();
     }
   } catch (e) {
-    console.log(e);
     if (componentType == "IMAGE") {
       p5.card.image(errorImage, 0, 0, _width, _height);
     }
@@ -461,9 +458,8 @@ function getActualValue(refValue, refValueName, componentData, elementData, elem
   if (refValue) {
     if (ev) {
       try {
-        let indexOfValue = currentCollection.elements.headers.indexOf(refValue.value);
-
         if (refValue.type == "1") {
+          let indexOfValue = currentCollection.elements.headers.indexOf(refValue.value);
           finalValue = eval(currentCollection.elements.data[elementIndex][indexOfValue]);
         } else {
           finalValue = eval(refValue.value);
@@ -471,8 +467,8 @@ function getActualValue(refValue, refValueName, componentData, elementData, elem
       } catch (e) {}
     } else {
       try {
-        let indexOfValue = currentCollection.elements.headers.indexOf(refValue.value);
         if (refValue.type == "1") {
+          let indexOfValue = currentCollection.elements.headers.indexOf(refValue.value);
           finalValue = currentCollection.elements.data[elementIndex][indexOfValue];
         } else {
           finalValue = refValue.value;
@@ -481,7 +477,7 @@ function getActualValue(refValue, refValueName, componentData, elementData, elem
     }
   } else finalValue == null;
 
-  return finalValue ? finalValue : dft;
+  return (finalValue || "0") ? finalValue : dft;
 }
 
 export function triggerGeneration() {

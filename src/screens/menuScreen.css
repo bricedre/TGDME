@@ -64,7 +64,7 @@
   border: none;
   display: flex;
   flex-direction: column;
-  background: var(--mainBtnColor);
+  background: var(--panelBG);
   box-shadow: 5px 5px 10px #104d6924;
   font-family: "Main Font", sans-serif;
   gap: 1rem;
@@ -96,7 +96,7 @@
 }
 
 .imgContainer > img {
-  height: 4rem;
+  height: 3rem;
   rotate: 5deg;
 }
 

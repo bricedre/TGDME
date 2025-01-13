@@ -2,7 +2,7 @@
 
 const p5 = require("p5");
 
-import { currentCollection, currentCollectionUID } from "./collection/collectionManager.js";
+import { currentCollection, currentCollectionUID } from "./core/collectionsManager.js";
 import { generatePages, renderCardUsingTemplate } from "./render.js";
 import { setupMenu } from "./screens/menuScreen.js";
 
@@ -20,7 +20,7 @@ const sketch = (p) => {
     
     p.card.noSmooth();
 
-    setupMenu();
+    // setupMenu();
   };
 
   p.draw = () => {

@@ -2,33 +2,32 @@ const cloneDeep = require("lodash/cloneDeep");
 
 import { app } from "../app.js";
 import { checkOtherInputs, populateEditionFields, updateElementsCounter } from "../screens/editionScreen.js";
-import { openPanel } from "../screens/mainLayout.js";
+import { openScene } from "../screens/mainLayout.js";
 
-import { getFontList, loadAssets } from "../assets/assetLoader.js";
-import { imageComponentTemplate, textComponentTemplate, shapeComponentTemplate } from "../templates.js";
+import { getFontList, loadAssets } from "./assetsManager.js";
+import { imageComponentTemplate, textComponentTemplate, shapeComponentTemplate } from "./componentTemplates.js";
 import { renderCardUsingTemplate } from "../render.js";
-import { setupResources } from "../assets/resourceFunctions.js";
-import { populateComponents, setupComponents } from "../template/componentsFunctions.js";
-import { updateDataView } from "../elements/elementFunctions.js";
-const { rootPath } = require("electron-root-path");
+import { setupResources } from "./assetsManager.js";
+import { populateComponents, setupComponents } from "./componentsManager.js";
+import { updateDataView } from "./elementsManager.js";
+import { setupMenu } from "../screens/menuScreen.js";
 
+const { rootPath } = require("electron-root-path");
 const fs = require("fs").promises;
 const { existsSync, mkdirSync, copyFileSync, readdirSync } = require("fs");
 const rimraf = require("rimraf");
 const fsExtra = require("fs-extra");
-// const fs = require('fs');
+const fs2 = require('fs');
 const XLSX = require("xlsx");
-const $ = require("jquery");
 
 export let collectionsAvailable;
 export let currentCollectionUID = -1;
 export let currentCollection;
 
 getCollections();
-openPanel("start");
-getFontList();
 
 export function getCollections() {
+
   collectionsAvailable = readdirSync(rootPath + "/collections", { withFileTypes: true })
     .filter((dirent) => dirent.isDirectory())
     .map((dirent) => dirent.name);
@@ -39,116 +38,7 @@ export function getCollections() {
   });
 
   setTimeout(() => {
-    //HOMEPAGE QUICK ACCESS
-    const loadCollectionsPanel = $("#loadCollectionsPanel");
-    loadCollectionsPanel.empty();
-
-    //Elements
-    const panelImageContainer = $("<div></div>").addClass("imgContainer");
-    const panelImage = $("<img>").attr("src", "./assets/newCollectionBtn.png");
-    panelImageContainer.append(panelImage);
-    const panelHeader = $("<div></div>").addClass("panelHeader");
-    const panelHeaderTitle = $("<div></div>").text("COLLECTIONS D'ÉLÉMENTS");
-    const panelHeaderBtn = $("<button></button>")
-      .addClass("panelHeaderBtn")
-      .text("TOUT VOIR")
-      .on("click", (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        openPanel("loading");
-      });
-    panelHeader.append(panelHeaderTitle, panelHeaderBtn);
-    loadCollectionsPanel.append(panelImageContainer, panelHeader);
-
-    collectionsAvailable = collectionsAvailable.sort((a, b) => {
-      return b.collectionInfo.lastSavingTime - a.collectionInfo.lastSavingTime;
-    });
-
-    collectionsAvailable.forEach((collection, index) => {
-      if (index < 5) {
-        const btnElement = $("<button></button>")
-          .addClass("homePageBtn")
-          .text(collection.collectionInfo.collectionName)
-          .on("click", (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            setCurrentCollection(collection.collectionInfo.UID);
-            
-          });
-
-        loadCollectionsPanel.append(btnElement);
-      }
-    });
-
-    //LOADING PAGE ACCESS
-    loadingPanelDiv.innerHTML = "";
-
-    // Collections to show
-    if (collectionsAvailable.length > 0) {
-      var activeCollections = collectionsAvailable.filter((col) => !col.collectionInfo.archived);
-      var archivedCollections = collectionsAvailable.filter((col) => col.collectionInfo.archived);
-
-      if (activeCollections.length > 0) {
-        var activeCol = document.createElement("div");
-        activeCol.id = "activeCollectionsDiv";
-        loadingPanelDiv.appendChild(activeCol);
-
-        activeCollections.forEach((collection) => {
-          var btnElement = document.createElement("button");
-          btnElement.classList.add("deckBtn");
-          btnElement.innerHTML = collection.collectionInfo.collectionName;
-          btnElement.addEventListener("click", (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            setCurrentCollection(collection.collectionInfo.UID);
-          });
-
-          activeCol.appendChild(btnElement);
-        });
-      }
-
-      if (archivedCollections.length > 0) {
-        var archivedColContainer = document.createElement("div");
-        archivedColContainer.id = "archivedCollectionsContainer";
-        archivedColContainer.addEventListener("click", () => {
-          if (archivedColContainer.classList.contains("active")) {
-            archivedColContainer.style.maxHeight = "3.2rem";
-          } else {
-            archivedColContainer.style.maxHeight = "calc(2rem + " + archivedColContainer.scrollHeight + "px)";
-          }
-
-          archivedColContainer.classList.toggle("active");
-        });
-        archivedColContainer.innerHTML = "<img src='" + rootPath + "/assets/archiveCollection.png'> Collections Archivées";
-        loadingPanelDiv.appendChild(archivedColContainer);
-
-        var archivedCol = document.createElement("div");
-        archivedCol.id = "archivedCollectionsDiv";
-        archivedColContainer.appendChild(archivedCol);
-
-        archivedCollections.forEach((collection) => {
-          var btnElement = document.createElement("button");
-          btnElement.classList.add("deckBtn");
-          btnElement.innerHTML = collection.collectionInfo.collectionName;
-          btnElement.addEventListener("click", (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            setCurrentCollection(collection.collectionInfo.UID);
-          });
-
-          archivedCol.appendChild(btnElement);
-        });
-      }
-    }
-
-    //No Collections to show
-    else {
-      var noResourceText = document.createElement("div");
-      noResourceText.classList.add("noStuffDiv");
-      noResourceText.innerHTML = "Aucune Collection dans votre Bibliothèque<br><br><br><br>Retournez sur la page d'accueil pour en créer une";
-
-      loadingPanelDiv.appendChild(noResourceText);
-    }
+    setupMenu();
   }, 500);
 }
 
@@ -166,7 +56,7 @@ export function setCurrentCollection(collectionUID) {
 
     setTimeout(() => {
       app.currentIndex = 0;
-      openPanel("edition");
+      openScene("edition");
       populateEditionFields();
       // checkOtherInputs(elementFormatSelect.id, elementFormatSelect.value);
       // checkOtherInputs(pageFormatSelect.id, pageFormatSelect.value);
@@ -181,16 +71,15 @@ export function setCurrentCollection(collectionUID) {
 
 export function createNewCollection() {
   const newUID = collectionsAvailable.length == 0 ? 0 : collectionsAvailable[collectionsAvailable.length - 1].collectionInfo.UID + 1;
-  console.log(collectionsAvailable);
   var dir = rootPath + "/collections/" + newUID;
 
-  const collectionTemplatePath = rootPath + "/src/collection/collectionTemplate.json";
+  const collectionTemplatePath = rootPath + "/src/core/collectionTemplate.json";
 
   if (!existsSync(dir)) {
     mkdirSync(dir);
     mkdirSync(dir + "/assets");
     copyFileSync(collectionTemplatePath, rootPath + "/collections/" + newUID + "/collection.json");
-    getCollections();
+
 
     //CREATE DATA EXCEL SHEET
     const headers = []; // No headers initially
@@ -206,12 +95,13 @@ export function createNewCollection() {
 
     // Write the file to the file system
     const excelBuffer = XLSX.write(workbook, { bookType: "xlsx", type: "array" });
-    fs.writeFileSync(filePath, Buffer.from(excelBuffer));
+    fs2.writeFileSync(filePath, Buffer.from(excelBuffer));
+
+    getCollections();
 
     setTimeout(() => {
       collectionsAvailable[collectionsAvailable.length - 1].collectionInfo.UID = newUID;
       collectionsAvailable[collectionsAvailable.length - 1].collectionInfo.collectionName = "Nouvelle Collection N°" + (newUID + 1);
-      // collectionsAvailable[collectionsAvailable.length - 1].collectionInfo.collectionName = "Coucou";
       var deckToSave = JSON.stringify(collectionsAvailable[collectionsAvailable.length - 1]);
       fs.writeFile(rootPath + "/collections/" + newUID + "/collection.json", deckToSave, (err) => {
         if (err) {
@@ -229,7 +119,7 @@ export function deleteCurrentCollection() {
     .then(() => {
       setCurrentCollection(-1);
       getCollections();
-      openPanel("start");
+      openScene("start");
     })
     .catch((e) => console.log(e));
 }
@@ -263,7 +153,7 @@ export function archiveCollection() {
   saveCollection(false, false);
   setCurrentCollection(-1);
   setTimeout(() => getCollections(), 300);
-  setTimeout(() => openPanel("loading"), 1000);
+  setTimeout(() => openScene("loading"), 1000);
 }
 
 export function saveCollection(refreshAssets, reRenderCard) {

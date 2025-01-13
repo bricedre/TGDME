@@ -18,6 +18,6 @@
   },
   "template": [],
   "elements": {
-    "headers": ["valeur"],
-    "data": [[""]] }
+    "headers": [],
+    "data": [] }
 }
