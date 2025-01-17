@@ -1,13 +1,12 @@
 export let IMAGE_parameters = [
   { name: "<span class='spacerIcon spacerIconCentered'>🪪</span><span>Informations Générales</span>", type: "spacer" },
-  { name: "Déclenchement conditionné", refValue: "trigger", type: "checkbox", forced: true, title: "Définir dans chaque élément si ce composant est visible ou non" },
   {
-    name: "Nom du Composant ",
+    name: "Nom du Composant",
     refValue: "componentName",
     type: "text",
     forced: true,
   },
-  { name: "Source", refValue: "src", type: "text", title: "Image ou liste d'images à afficher. Si vous désirez créer une chaîne d'images, séparez-les par des virgules" },
+  { name: "Image(s) Source", refValue: "src", type: "text", title: "Si vous désirez créer une chaîne d'images, séparez-les par des virgules" },
 
   { name: "<span class='spacerIcon'>📏</span><span>Positionnement, Dimensions & Rotation</span>", type: "spacer" },
   { name: "Position Horizontale", refValue: "positionX", type: "text" },
@@ -39,7 +38,6 @@ export let IMAGE_parameters = [
   { name: "Opacité", refValue: "opacity", type: "range" },
 
   { name: "<span class='spacerIcon'>☀️</span><span>Ombre Portée</span>", type: "spacer" },
-  { name: "Ombre Portée ?", refValue: "shadow", type: "checkbox"},
   { name: "Couleur", refValue: "shadowColor", type: "color" },
   { name: "Décalage Horizontal", refValue: "shadowOffsetX", type: "text" },
   { name: "Décalage Vertical", refValue: "shadowOffsetY", type: "text" },

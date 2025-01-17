@@ -63,23 +63,24 @@ export function openScene(panelName) {
 
   $(".panel").css("display", "none");
   
-  let $currentPanel;
+  let currentPanelDiv;
   let homeIcon = $("#homeIcon");
+  let mainTitleDiv = $("#mainTitleDiv");
   let bottomBarDiv = $("#bottomBarDiv");
 
   switch (panelName) {
     case "start":
-      $currentPanel = $("#startPanelDiv");
+      currentPanelDiv = $("#startPanelDiv");
       bottomBarDiv.css("display", "none");
       break;
 
     case "loading":
-      $currentPanel = $("#loadingPanelDiv");
+      currentPanelDiv = $("#loadingPanelDiv");
       bottomBarDiv.css("display", "none");
       break;
 
     case "edition":
-      $currentPanel = $("#editionPanelDiv");
+      currentPanelDiv = $("#editionPanelDiv");
       bottomBarDiv.css("display", "flex");
 
       //Go back to Config tab all the time
@@ -91,8 +92,8 @@ export function openScene(panelName) {
       break;
   }
   
-  $currentPanel.css("display", "flex");
-  $currentPanel.text = sceneUIElements.titles[panelName];
+  currentPanelDiv.css("display", "flex");
+  mainTitleDiv.text(sceneUIElements.titles[panelName]); 
   homeIcon.attr("src", sceneUIElements.icon[panelName]);
 
   lastPanel = currentPanel;

@@ -115,7 +115,7 @@ export function createNewCollection() {
 
 export function deleteCurrentCollection() {
   rimraf
-    .rimraf("./src/collections/" + currentCollectionUID)
+    .rimraf("./collections/" + currentCollectionUID)
     .then(() => {
       setCurrentCollection(-1);
       getCollections();
@@ -126,10 +126,10 @@ export function deleteCurrentCollection() {
 
 export function duplicateCollection() {
   const newUID = collectionsAvailable.length == 0 ? 0 : collectionsAvailable[collectionsAvailable.length - 1].collectionInfo.UID + 1;
-  var dir = "./src/collections/" + newUID;
+  var dir = "./collections/" + newUID;
 
   if (!existsSync(dir)) {
-    fsExtra.copy("./src/collections/" + currentCollectionUID, "./src/collections/" + newUID);
+    fsExtra.copy("./collections/" + currentCollectionUID, "./collections/" + newUID);
     getCollections();
 
     setTimeout(() => {
@@ -137,7 +137,7 @@ export function duplicateCollection() {
       collectionsAvailable[collectionsAvailable.length - 1].collectionInfo.UID = newUID;
       collectionsAvailable[collectionsAvailable.length - 1].collectionInfo.collectionName = "Copie de " + currentCollection.collectionInfo.collectionName;
       var deckToSave = JSON.stringify(collectionsAvailable[collectionsAvailable.length - 1]);
-      fs.writeFile("./src/collections/" + newUID + "/collection.json", deckToSave, (err) => {
+      fs.writeFile("./collections/" + newUID + "/collection.json", deckToSave, (err) => {
         if (err) {
           console.error(err);
         }

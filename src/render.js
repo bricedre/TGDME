@@ -3,7 +3,7 @@ import { generatePDF } from "./pdfGeneration.js";
 import { app } from "./app.js";
 import { assetsLibrary, errorImage } from "./core/assetsManager.js";
 import { IMAGE_parameters, TEXT_parameters, SHAPE_parameters } from "./core/componentsUI.js";
-import { ELEMENT_parameters } from "./core/componentsManager.js";
+
 
 //FUTURE IDEES :
 /*
@@ -454,13 +454,13 @@ function getActualValue(refValue, refValueName, componentData, elementData, elem
   var LEFT = app.LEFT;
   var RIGHT = app.RIGHT;
 
-  var finalValue;
+  var finalValue = "";
   if (refValue) {
     if (ev) {
       try {
         if (refValue.type == "1") {
           let indexOfValue = currentCollection.elements.headers.indexOf(refValue.value);
-          finalValue = eval(currentCollection.elements.data[elementIndex][indexOfValue]);
+          if(indexOfValue != -1) finalValue = eval(currentCollection.elements.data[elementIndex][indexOfValue]);
         } else {
           finalValue = eval(refValue.value);
         }
@@ -469,14 +469,13 @@ function getActualValue(refValue, refValueName, componentData, elementData, elem
       try {
         if (refValue.type == "1") {
           let indexOfValue = currentCollection.elements.headers.indexOf(refValue.value);
-          finalValue = currentCollection.elements.data[elementIndex][indexOfValue];
+          if(indexOfValue != -1) finalValue = currentCollection.elements.data[elementIndex][indexOfValue];
         } else {
           finalValue = refValue.value;
         }
       } catch (e) {}
     }
-  } else finalValue == null;
-
+  }
   return (finalValue || "0") ? finalValue : dft;
 }
 
@@ -560,7 +559,6 @@ export function renderCardUsingTemplate(p, elementIndex, guide) {
 function renderVisualGuide(p, guide) {
   var W = currentCollection.collectionInfo.W * currentCollection.collectionInfo.resolution;
   var H = currentCollection.collectionInfo.H * currentCollection.collectionInfo.resolution;
-
   p.card.stroke(255, 0, 0, 100);
   p.card.noFill();
   p.card.strokeWeight(W * 0.007);
