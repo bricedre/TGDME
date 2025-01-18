@@ -73,7 +73,6 @@ export let IMAGE_parameters = [
 
 export let SHAPE_parameters = [
   { name: "<span class='spacerIcon spacerIconCentered'>🪪</span><span>Informations Générales</span>", type: "spacer" },
-  { name: "Déclenchement conditionné", refValue: "trigger", type: "checkbox", forced: true },
   {
     name: "Nom du Composant ",
     refValue: "componentName",
@@ -154,7 +153,6 @@ export let SHAPE_parameters = [
   { name: "Épaisseur de la Bordure", refValue: "borderWeight", forced: true, type: "text" },
 
   { name: "<span class='spacerIcon'>☀️</span><span>Ombre Portée</span>", type: "spacer" },
-  { name: "Ombre Portée ?", refValue: "shadow", forced: true, type: "checkbox", title: "Une légère ombre portée permet de mieux détacher votre texte du fond" },
   { name: "Couleur", refValue: "shadowColor", forced: true, type: "color" },
   { name: "Décalage Horizontal", refValue: "shadowOffsetX", forced: true, type: "text" },
   { name: "Décalage Vertical", refValue: "shadowOffsetY", forced: true, type: "text" },
@@ -164,7 +162,6 @@ export let SHAPE_parameters = [
 
 export let TEXT_parameters = [
   { name: "<span class='spacerIcon spacerIconCentered'>🪪</span><span>Informations Générales</span>", type: "spacer" },
-  { name: "Déclenchement conditionné", refValue: "trigger", type: "checkbox", forced: true },
   {
     name: "Nom du Composant ",
     refValue: "componentName",
@@ -204,7 +201,6 @@ export let TEXT_parameters = [
   { name: "Opacité", refValue: "opacity", type: "range" },
 
   { name: "<span class='spacerIcon'>☀️</span><span>Ombre Portée</span>", type: "spacer" },
-  { name: "Ombre Portée ?", refValue: "shadow", type: "checkbox", title: "Une légère ombre portée permet de mieux détacher votre texte du fond" },
   { name: "Couleur", refValue: "shadowColor", type: "color" },
   { name: "Décalage Horizontal", refValue: "shadowOffsetX", type: "text" },
   { name: "Décalage Vertical", refValue: "shadowOffsetY", type: "text" },

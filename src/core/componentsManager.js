@@ -124,6 +124,7 @@ export function createNewComponent(item, itemIndex) {
   var itemPanel = document.createElement("div");
   itemPanel.classList.add("itemPanel");
 
+  // ADDING PARAMETERS TO COMPONENTS
   parametersToLoad.forEach((param, paramIndex) => {
     var parameterSlot = document.createElement("div");
     parameterSlot.classList.add("parameterSlot");
@@ -142,9 +143,15 @@ export function createNewComponent(item, itemIndex) {
     var parameterInput = document.createElement("input");
     var inputID = itemIndex + "-" + param.refValue;
     parameterInput.id = inputID;
+    if(param.type == "range"){
+      parameterInput.setAttribute("min", 0.0);
+      parameterInput.setAttribute("max", 1.0);
+      parameterInput.setAttribute("step", 0.01);
+    }
+
     parameterInput.addEventListener("input", (e) => {
       try {
-        currentCollection.template[itemIndex][param.refValue]["value"] = e.target.value;
+        currentCollection.template[itemIndex][param.refValue].value = e.target.value;
       } catch {
         currentCollection.template[itemIndex][param.refValue] = {
           value: e.target.value,
@@ -181,6 +188,7 @@ export function createNewComponent(item, itemIndex) {
       try {
         currentMode = currentCollection.template[itemIndex][param.refValue]["type"];
       } catch (e) {
+        console.log(e)
         currentMode = "0";
       }
 
@@ -227,9 +235,19 @@ export function createNewComponent(item, itemIndex) {
           parameterInput.appendChild(option);
         });
 
+        try {
+          if(item[param.refValue].value) parameterInput.value = item[param.refValue].value;
+        } catch (e) {
+          console.log(e)
+          parameterInput.value = "";
+        }
 
-        if (item[param.refValue]) parameterInput.value = item[param.refValue]["value"];
-        else parameterInput.value = "";
+        try {
+          if(item[param.refValue].valueCB) parameterCBInput.value = item[param.refValue].valueCB;
+        } catch (e) {
+          console.log(e)
+          parameterCBInput.value = "";
+        }
 
         
         parameterCBInput.classList.add("parameterInput","CBInput");
@@ -242,15 +260,25 @@ export function createNewComponent(item, itemIndex) {
         }
         parameterSlot.appendChild(parameterInputLine);
       } else {
+
         parameterInput.classList.add("parameterInput", "mainInput");
         if (param.type === "color") parameterInput.style.padding = "0.2rem";
         parameterInput.type = param.type;
         try {
-          parameterInput.value = item[param.refValue]["value"];
+          if(item[param.refValue].value) parameterInput.value = item[param.refValue].value;
         } catch (e) {
+          console.log(e)
           parameterInput.value = "";
         }
+
         parameterCBInput.classList.add("parameterInput", "CBInput");
+        try {
+          if(item[param.refValue].valueCB) parameterCBInput.value = item[param.refValue].valueCB;
+        } catch (e) {
+          console.log(e.message)
+          parameterCBInput.value = "";
+        }
+
         parameterSlot.appendChild(parameterName);
         parameterInputLine.appendChild(parameterInput);
         if (!param.forced) {
@@ -259,8 +287,6 @@ export function createNewComponent(item, itemIndex) {
         }
         parameterSlot.appendChild(parameterInputLine);
 
-        // if (currentCollection.template[itemIndex][param.refValue]["type"] == "1") parameterInput.style.display = "none";
-        // else parameterCBInput.style.display = "none";
       }
     } else {
       parameterName.classList.add("spacer");

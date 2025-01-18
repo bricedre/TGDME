@@ -50,12 +50,12 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
   var _mirror = getActualValue(componentData.mirror, elementIndex, "none", false);
   var _angle = getActualValue(componentData.angle, elementIndex, 0, true);
   var _tint = getActualValue(componentData.tint, elementIndex, "#FFFFFF", false);
-  var _opacity = getActualValue(componentData.opacity, elementIndex, 100, true);
+  var _opacity = getActualValue(componentData.opacity, elementIndex, 1, true);
   var _size = getActualValue(componentData.size, elementIndex, 5, true);
   var _font = getActualValue(componentData.font, elementIndex, "Verdana", false);
   var _color = getActualValue(componentData.color, elementIndex, "#000000", false);
   var _borderColor = getActualValue(componentData.borderColor, elementIndex, "#FF0000", false);
-  var _borderOpacity = getActualValue(componentData.borderOpacity, elementIndex, 50, false);
+  var _borderOpacity = getActualValue(componentData.borderOpacity, elementIndex, 1, false);
   var _borderWeight = getActualValue(componentData.borderWeight, elementIndex, 3, false);
 
   var _listAnchor = getActualValue(componentData.listAnchor, elementIndex, p5.CENTER, true);
@@ -83,6 +83,7 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
 
     for (let copy = 0; copy < totalCopies; copy++) {
       p5.card.push();
+
       p5.card.translate(_positionX, _positionY);
 
       if ((copy == 1 && _mirror == "hori") || (copy == 1 && _mirror == "corners")) p5.card.translate((W / 2 - _positionX) * 2, 0);
@@ -107,18 +108,18 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
           if (pass == 0) {
             if (_anchor === p5.CENTER) p5.card.translate(-_width / 2, -_height / 2);
             if (_shadow) {
-              p5.card.fill(_shadowColor + Math.round(_shadowOpacity * 2.55).toString(16));
+              p5.card.fill(_shadowColor + zeroPad(Math.floor(_shadowOpacity * 255).toString(16), 2));
               p5.card.noStroke();
               p5.card.translate(_shadowOffsetX, _shadowOffsetY);
             } else {
-              p5.card.fill(_color + Math.round(_opacity * 2.55).toString(16));
-              p5.card.stroke(_borderColor + Math.round(_borderOpacity * 2.55).toString(16));
+              p5.card.fill(_color + zeroPad(Math.floor(_opacity * 255).toString(16), 2));
+              p5.card.stroke(_borderColor + Math.floor(_borderOpacity * 255).toString(16));
               if (_borderWeight != 0) p5.card.strokeWeight(_borderWeight);
               else p5.card.noStroke();
             }
           } else {
-            p5.card.fill(_color + Math.round(_opacity * 2.55).toString(16));
-            p5.card.stroke(_borderColor + Math.round(_borderOpacity * 2.55).toString(16));
+            p5.card.fill(_color + zeroPad(Math.floor(_opacity * 255).toString(16), 2));
+            p5.card.stroke(_borderColor + Math.floor(_borderOpacity * 255).toString(16));
             if (_borderWeight != 0) p5.card.strokeWeight(_borderWeight);
             else p5.card.noStroke();
           }
@@ -135,7 +136,7 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
                 p5.card.vertex(Math.cos((i / 60) * Math.PI * 2) * _width * 0.2, -Math.sin((i / 60) * Math.PI * 2) * _height * 0.2);
               }
               p5.card.endShape(p5.CLOSE);
-              p5.card.stroke(_borderColor + Math.round(_borderOpacity * 2.55).toString(16));
+              p5.card.stroke(_borderColor + zeroPad(Math.floor(_borderOpacity * 255).toString(16), 2));
               if (_borderWeight != 0) p5.card.strokeWeight(_borderWeight);
               else p5.card.noStroke();
               p5.card.noFill();
@@ -370,11 +371,11 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
         p5.card.textSize(_size * currentCollection.collectionInfo.H * currentCollection.collectionInfo.resolution * 0.02);
 
         if (_shadow) {
-          p5.card.fill(_shadowColor + Math.round(_shadowOpacity * 2.55).toString(16));
+          p5.card.fill(_shadowColor + zeroPad(Math.floor(_shadowOpacity * 255).toString(16), 2));
           p5.card.text(_textToWrite, _shadowOffsetX, _shadowOffsetY);
         }
 
-        p5.card.fill(_color + Math.round(_opacity * 2.55).toString(16));
+        p5.card.fill(_color + zeroPad(Math.floor(_opacity * 255).toString(16), 2));
         p5.card.text(_textToWrite, 0, 0);
       }
 
@@ -391,10 +392,10 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
         for (let i = 0; i < _elementsList.length; i++) {
           for (var pass = 0; pass < passes; pass++) {
             if (pass == 0 && _shadow) {
-              p5.card.tint(_shadowColor + Math.round(_shadowOpacity * 2.55).toString(16));
+              p5.card.tint(_shadowColor + zeroPad(Math.floor(_shadowOpacity * 255).toString(16), 2));
               p5.card.translate(_shadowOffsetX, _shadowOffsetY);
             } else {
-              p5.card.tint(_tint + Math.round(_opacity * 2.55).toString(16));
+              p5.card.tint(_tint + zeroPad(Math.floor(_opacity * 255).toString(16), 2));
             }
 
             if (_listAnchor == p5.CENTER) {
@@ -429,19 +430,22 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
           }
         }
       }
-
-      p5.card.pop();
     }
   } catch (e) {
+    console.log(e.message)
     if (componentType == "IMAGE") {
       p5.card.image(errorImage, 0, 0, _width, _height);
     }
   }
-  // }
+
+  p5.card.pop();
+}
+
+function zeroPad(num, places) {
+  return String(num).padStart(places, "0");
 }
 
 function getActualValue(refValue, elementIndex, dft, evaluated) {
-
   //GLOBAL VARIABLES THAT CAN BE USED IN EVALUATED VALUES
   let currentCollectionInfo = currentCollection.collectionInfo;
   var W = currentCollectionInfo.W * currentCollectionInfo.resolution;
@@ -461,7 +465,6 @@ function getActualValue(refValue, elementIndex, dft, evaluated) {
 
   //Value is not undefined
   if (refValue) {
-
     let fixedValue = refValue.value;
     let valueType = refValue.type;
     let cardBasedValue = refValue.valueCB;
@@ -483,9 +486,11 @@ function getActualValue(refValue, elementIndex, dft, evaluated) {
         if (evaluated) finalValue = eval(fixedValue);
         else finalValue = fixedValue;
       }
-    } catch (e) {}
+    } catch (e) {
+      console.log(e)
+    }
   }
-  
+
   return finalValue || "0" ? finalValue : dft;
 }
 

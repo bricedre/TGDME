@@ -89,7 +89,6 @@ export function addAsset(newAsset) {
   let assetsPath = rootPath + "/collections/" + currentCollectionUID + "/assets/";
   let assetUID = currentCollection.collectionInfo.lastAssetIndex;
   let extension = newAsset.name.split(".")[1];
-  console.log(assetsPath + assetUID + "." + extension);
   currentCollection.collectionInfo.lastAssetIndex++;
   fs.copyFile(newAsset.path, assetsPath + assetUID + "." + extension, (err) => {
     saveCollection(true, true);

@@ -69,6 +69,7 @@ main {
 
 main:hover {
   scale: 1.4;
+  cursor: cell;
 }
 
 

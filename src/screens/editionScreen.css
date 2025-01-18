@@ -10,6 +10,16 @@ canvas {
 
 #canvasDiv {
   padding: 4rem;
+  position: relative;
+    height: 100%;
+}
+
+#shadowCard{
+  width: calc(100% - 8rem);
+  height: calc(100% - 8rem);
+  background: #4c4c4c;
+  position: absolute;
+  border-radius: 1rem;
 }
 
 .btnContainer {
