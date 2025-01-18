@@ -4,7 +4,6 @@ import { app } from "./app.js";
 import { assetsLibrary, errorImage } from "./core/assetsManager.js";
 import { IMAGE_parameters, TEXT_parameters, SHAPE_parameters } from "./core/componentsUI.js";
 
-
 //FUTURE IDEES :
 /*
 
@@ -27,7 +26,7 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
   let elementData = currentElements[elementIndex];
 
   // if (componentData.trigger.value == "" || elementData[componentData.trigger.value]) {
-  var _src = getActualValue(componentData.src, "src", componentData, elementData, elementIndex, "", false).toString();
+  var _src = getActualValue(componentData.src, elementIndex, "", false).toString();
 
   var _textToWrite;
   var _shape;
@@ -43,36 +42,35 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
       if (assetsLibrary[_elementsList[i].trim()]) _imgs.push(assetsLibrary[_elementsList[i].trim()]);
     }
   }
+  var _positionX = getActualValue(componentData.positionX, elementIndex, 0, true);
+  var _positionY = getActualValue(componentData.positionY, elementIndex, 0, true);
+  var _width = getActualValue(componentData.width, elementIndex, "W", true);
+  var _height = getActualValue(componentData.height, elementIndex, "W", true);
+  var _anchor = getActualValue(componentData.anchor, elementIndex, p5.CENTER, true);
+  var _mirror = getActualValue(componentData.mirror, elementIndex, "none", false);
+  var _angle = getActualValue(componentData.angle, elementIndex, 0, true);
+  var _tint = getActualValue(componentData.tint, elementIndex, "#FFFFFF", false);
+  var _opacity = getActualValue(componentData.opacity, elementIndex, 100, true);
+  var _size = getActualValue(componentData.size, elementIndex, 5, true);
+  var _font = getActualValue(componentData.font, elementIndex, "Verdana", false);
+  var _color = getActualValue(componentData.color, elementIndex, "#000000", false);
+  var _borderColor = getActualValue(componentData.borderColor, elementIndex, "#FF0000", false);
+  var _borderOpacity = getActualValue(componentData.borderOpacity, elementIndex, 50, false);
+  var _borderWeight = getActualValue(componentData.borderWeight, elementIndex, 3, false);
 
-  var _positionX = getActualValue(componentData.positionX, "positionX", componentData, elementData, elementIndex, 0, true);
-  var _positionY = getActualValue(componentData.positionY, "positionY", componentData, elementData, elementIndex, 0, true);
-  var _width = getActualValue(componentData.width, "width", componentData, elementData, elementIndex, "W", true);
-  var _height = getActualValue(componentData.height, "height", componentData, elementData, elementIndex, "W", true);
-  var _anchor = getActualValue(componentData.anchor, "anchor", componentData, elementData, elementIndex, p5.CENTER, true);
-  var _mirror = getActualValue(componentData.mirror, "mirror", componentData, elementData, elementIndex, "none", false);
-  var _angle = getActualValue(componentData.angle, "angle", componentData, elementData, elementIndex, 0, true);
-  var _tint = getActualValue(componentData.tint, "tint", componentData, elementData, elementIndex, "#FFFFFF", false);
-  var _opacity = getActualValue(componentData.opacity, "opacity", componentData, elementData, elementIndex, 100, true);
-  var _size = getActualValue(componentData.size, "size", componentData, elementData, elementIndex, 5, true);
-  var _font = getActualValue(componentData.font, "font", componentData, elementData, elementIndex, "Verdana", false);
-  var _color = getActualValue(componentData.color, "color", componentData, elementData, elementIndex, "#000000", false);
-  var _borderColor = getActualValue(componentData.borderColor, "borderColor", componentData, elementData, elementIndex, "#FF0000", false);
-  var _borderOpacity = getActualValue(componentData.borderOpacity, "borderOpacity", componentData, elementData, elementIndex, 50, false);
-  var _borderWeight = getActualValue(componentData.borderWeight, "borderWeight", componentData, elementData, elementIndex, 3, false);
+  var _listAnchor = getActualValue(componentData.listAnchor, elementIndex, p5.CENTER, true);
+  var _spacingX = getActualValue(componentData.spacingX, elementIndex, 0, true);
+  var _spacingY = getActualValue(componentData.spacingY, elementIndex, 0, true);
+  var _style = getActualValue(componentData.style, elementIndex, "straight", false);
+  var _offsetX = getActualValue(componentData.offsetX, elementIndex, 0, true);
+  var _offsetY = getActualValue(componentData.offsetY, elementIndex, 0, true);
 
-  var _listAnchor = getActualValue(componentData.listAnchor, "listAnchor", componentData, elementData, elementIndex, p5.CENTER, true);
-  var _spacingX = getActualValue(componentData.spacingX, "spacingX", componentData, elementData, elementIndex, 0, true);
-  var _spacingY = getActualValue(componentData.spacingY, "spacingY", componentData, elementData, elementIndex, 0, true);
-  var _style = getActualValue(componentData.style, "style", componentData, elementData, elementIndex, "straight", false);
-  var _offsetX = getActualValue(componentData.offsetX, "offsetX", componentData, elementData, elementIndex, 0, true);
-  var _offsetY = getActualValue(componentData.offsetY, "offsetY", componentData, elementData, elementIndex, 0, true);
-
-  var _shadow = getActualValue(componentData.shadow, "shadow", componentData, elementData, elementIndex, false, false);
-  var _shadowColor = getActualValue(componentData.shadowColor, "shadowColor", componentData, elementData, elementIndex, "#000000", false);
-  var _shadowOpacity = getActualValue(componentData.shadowOpacity, "shadowOpacity", componentData, elementData, elementIndex, 30, true);
-  var _shadowOffsetX = getActualValue(componentData.shadowOffsetX, "shadowOffsetX", componentData, elementData, elementIndex, 10, true);
-  var _shadowOffsetY = getActualValue(componentData.shadowOffsetY, "shadowOffsetY", componentData, elementData, elementIndex, 10, true);
-  var _shadowBlur = getActualValue(componentData.shadowBlur, "shadowBlur", componentData, elementData, elementIndex, 0, true);
+  var _shadow = getActualValue(componentData.shadow, elementIndex, false, false);
+  var _shadowColor = getActualValue(componentData.shadowColor, elementIndex, "#000000", false);
+  var _shadowOpacity = getActualValue(componentData.shadowOpacity, elementIndex, 30, true);
+  var _shadowOffsetX = getActualValue(componentData.shadowOffsetX, elementIndex, 10, true);
+  var _shadowOffsetY = getActualValue(componentData.shadowOffsetY, elementIndex, 10, true);
+  var _shadowBlur = getActualValue(componentData.shadowBlur, elementIndex, 0, true);
 
   try {
     p5.card.angleMode(p5.DEGREES);
@@ -442,41 +440,53 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
   // }
 }
 
-function getActualValue(refValue, refValueName, componentData, elementData, elementIndex, dft, ev) {
+function getActualValue(refValue, elementIndex, dft, evaluated) {
+
+  //GLOBAL VARIABLES THAT CAN BE USED IN EVALUATED VALUES
   let currentCollectionInfo = currentCollection.collectionInfo;
   var W = currentCollectionInfo.W * currentCollectionInfo.resolution;
   var L = currentCollectionInfo.W * currentCollectionInfo.resolution;
   var H = currentCollectionInfo.H * currentCollectionInfo.resolution;
   var INDEX = elementIndex;
-
   var CENTER = app.CENTER;
+  var CENTRE = app.CENTER;
   var CORNER = app.CORNER;
+  var COIN = app.CORNER;
   var LEFT = app.LEFT;
+  var GAUCHE = app.LEFT;
   var RIGHT = app.RIGHT;
+  var DROITE = app.RIGHT;
 
   var finalValue = "";
+
+  //Value is not undefined
   if (refValue) {
-    if (ev) {
-      try {
-        if (refValue.type == "1") {
-          let indexOfValue = currentCollection.elements.headers.indexOf(refValue.value);
-          if(indexOfValue != -1) finalValue = eval(currentCollection.elements.data[elementIndex][indexOfValue]);
-        } else {
-          finalValue = eval(refValue.value);
+
+    let fixedValue = refValue.value;
+    let valueType = refValue.type;
+    let cardBasedValue = refValue.valueCB;
+
+    try {
+      //Card Based
+      if (valueType == "1") {
+        let indexOfValue = currentCollection.elements.headers.indexOf(cardBasedValue);
+        //Header present in the data
+        if (indexOfValue != -1) {
+          //Value with evaluation i.e. calculus available, access to global variables...
+          if (evaluated) finalValue = eval(currentCollection.elements.data[elementIndex][indexOfValue]);
+          //Straight values, no mods
+          else finalValue = currentCollection.elements.data[elementIndex][indexOfValue];
         }
-      } catch (e) {}
-    } else {
-      try {
-        if (refValue.type == "1") {
-          let indexOfValue = currentCollection.elements.headers.indexOf(refValue.value);
-          if(indexOfValue != -1) finalValue = currentCollection.elements.data[elementIndex][indexOfValue];
-        } else {
-          finalValue = refValue.value;
-        }
-      } catch (e) {}
-    }
+      }
+      //Fixed value
+      else {
+        if (evaluated) finalValue = eval(fixedValue);
+        else finalValue = fixedValue;
+      }
+    } catch (e) {}
   }
-  return (finalValue || "0") ? finalValue : dft;
+  
+  return finalValue || "0" ? finalValue : dft;
 }
 
 export function triggerGeneration() {
@@ -526,6 +536,8 @@ export function generatePages(p5) {
 }
 
 export function renderCardUsingTemplate(p, elementIndex, guide) {
+  p.card.resetMatrix();
+
   //WHITE BG BY DEFAULT
   p.card.background(255);
 
@@ -559,6 +571,8 @@ export function renderCardUsingTemplate(p, elementIndex, guide) {
 function renderVisualGuide(p, guide) {
   var W = currentCollection.collectionInfo.W * currentCollection.collectionInfo.resolution;
   var H = currentCollection.collectionInfo.H * currentCollection.collectionInfo.resolution;
+
+  p.card.resetMatrix();
   p.card.stroke(255, 0, 0, 100);
   p.card.noFill();
   p.card.strokeWeight(W * 0.007);
