@@ -17,7 +17,7 @@ export function setupMenu() {
 
   //Elements
   const panelImageContainer = $("<div></div>").addClass("imgContainer");
-  const panelImage = $("<img>").attr("src", "./assets/newCollectionBtn.png");
+  const panelImage = $("<img>").attr("src", "./assets/icon.png");
   panelImageContainer.append(panelImage);
   const panelHeader = $("<div></div>").addClass("panelHeader");
   const panelHeaderTitle = $("<div></div>").text("COLLECTIONS D'ÉLÉMENTS");

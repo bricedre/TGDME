@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.8.0/p5.min.js"></script>
@@ -162,11 +162,14 @@
           <div id="contentRessDiv">
             <div id="ressItemsDiv" class="mainContent"></div>
             <div class="btnContainer">
-              <label class="custom-file-upload">
-                <input id="newResourceInput" type="file" accept=".png,.jpg,.ttf,.otf" />
-                AJOUTER
+             <button id="openResFolderBtn" class="navBtn" title="Ouvrir le dossier des Ressources de la Collection">
+                OUVRIR
+                <img src="./assets/archiveCollection.png">
+              </button>
+              <button id="reloadResBtn" class="navBtn" title="Recharger les Ressources afin de récupérer les modifications">
+                RECHARGER
                 <img src="./assets/imgResource.png">
-              </label>
+              </button>
             </div>
           </div>
 
@@ -192,13 +195,13 @@
             <div id="elementItemsDiv" class="mainContent">
             </div>
             <div class="btnContainer">
-              <button title="Ajouter un composant Image" id="modifyDataBtn" class="navBtn" >
-                MODIFIER LES DONNÉES
-                <img src="./assets/addImageComponent.png">
+              <button title="Ouvrir les données dans un tableur (nécessite la présence d'un tableur : Excel, OpenCalc...)" id="modifyDataBtn" class="navBtn" >
+                MODIFIER
+                <img src="./assets/fillData.png">
               </button>
-              <button title="Ajouter un composant Forme" id="updateDataBtn" class="navBtn">
-                METTRE À JOUR LES DONNÉES
-                <img src="./assets/addShapeComponent.png">
+              <button title="Mettre à jour les données de la collection" id="updateDataBtn" class="navBtn">
+                METTRE À JOUR
+                <img src="./assets/wizardFillBtn.png">
               </button>
             </div>
           </div>

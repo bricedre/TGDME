@@ -13,10 +13,10 @@ const sceneUIElements = {
     "loading" : "BIBLIOTHÈQUE DE COLLECTIONS",
     "edition" : () => currentCollection?.collectionInfo.collectionName,
   },
-  "icon" : {
+  icon : {
     "start" : "./assets/home.png",
-    "loading" : "./assets/newCollectionBtn.png",
-    "edition" : "./assets/loadCollectionBtn.png",
+    "loading" : "./assets/icon.png",
+    "edition" : "./assets/newCollectionBtn.png",
   }
 }
 

@@ -2,7 +2,7 @@ import { app } from "../app.js";
 import { addNewImage, addNewShape, addNewText, archiveCollection, currentCollection, deleteCurrentCollection, duplicateCollection, saveCollection } from "../core/collectionsManager.js";
 import { rootElement } from "./mainLayout.js";
 import { renderCardUsingTemplate } from "../render.js";
-import { addAsset, allSystemFonts, removeAsset } from "../core/assetsManager.js";
+import { allSystemFonts, loadAssets, openCurrentResFolder } from "../core/assetsManager.js";
 import { setupComponents } from "../core/componentsManager.js";
 import { checkForFileUpdate, openExcelFile, updateDataView } from "../core/elementsManager.js";
 
@@ -28,11 +28,8 @@ $("#duplicateCollectionBtn").on("click", () => duplicateCollection());
 $("#archiveCollectionBtn").on("click", () => archiveCollection());
 $("#deleteCollectionBtn").on("click", () => deleteCurrentCollection());
 
-$("#newResourceInput").on("change", (e) => {
-  if (e.target.files[0]) {
-    addAsset(e.target.files[0]);
-  }
-});
+$("#openResFolderBtn").on("click", () => openCurrentResFolder());
+$("#reloadResBtn").on("click", () => loadAssets(app));
 
 $("#addImageComponentBtn").on("click", () => addNewImage());
 $("#addShapeComponentBtn").on("click", () => addNewShape());

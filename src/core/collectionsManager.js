@@ -58,8 +58,6 @@ export function setCurrentCollection(collectionUID) {
       app.currentIndex = 0;
       openScene("edition");
       populateEditionFields();
-      // checkOtherInputs(elementFormatSelect.id, elementFormatSelect.value);
-      // checkOtherInputs(pageFormatSelect.id, pageFormatSelect.value);
       setupResources();
       setupComponents();
       populateComponents();

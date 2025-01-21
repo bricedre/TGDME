@@ -1,5 +1,4 @@
 ISSUES TO CORRECT : 
-- souci de décalage des images avec le render
 
 NEXT STEPS TO GO : 
 - resources actions

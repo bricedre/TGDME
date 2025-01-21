@@ -25,7 +25,6 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
 
   let elementData = currentElements[elementIndex];
 
-  // if (componentData.trigger.value == "" || elementData[componentData.trigger.value]) {
   var _src = getActualValue(componentData.src, elementIndex, "", false).toString();
 
   var _textToWrite;
@@ -42,6 +41,7 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
       if (assetsLibrary[_elementsList[i].trim()]) _imgs.push(assetsLibrary[_elementsList[i].trim()]);
     }
   }
+
   var _positionX = getActualValue(componentData.positionX, elementIndex, 0, true);
   var _positionY = getActualValue(componentData.positionY, elementIndex, 0, true);
   var _width = getActualValue(componentData.width, elementIndex, "W", true);

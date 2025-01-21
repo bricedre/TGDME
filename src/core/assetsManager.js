@@ -2,7 +2,8 @@ const { rootPath } = require("electron-root-path");
 const fs = require("fs");
 const fontList = require("font-list");
 
-import { currentCollection, currentCollectionUID, saveCollection } from "./collectionsManager.js";
+// import { exec } from "child_process";
+import { currentCollection, currentCollectionUID } from "./collectionsManager.js";
 
 export let allSystemFonts;
 export let assetsLibrary = {};
@@ -28,37 +29,30 @@ export function setupResources() {
 }
 
 export function createNewResource(item, itemIndex) {
-  var itemAccordion = document.createElement("div");
+  var ressContainer = document.createElement("div");
 
-  itemAccordion.id = itemIndex;
-  itemAccordion.classList.add("assetContainer");
+  ressContainer.id = itemIndex;
+  ressContainer.classList.add("ressContainer");
 
   let file = item.split("//")[1];
   let fileName = file.split(".")[0];
-  let extension = file.split(".")[1];
-
-  itemAccordion.innerHTML = "<img src='" + rootPath + "/collections/" + currentCollectionUID + "/assets/" + file + "'>";
-
-  var deleteResourceBtn = document.createElement("img");
-  deleteResourceBtn.classList.add("deleteResourceBtn");
-  deleteResourceBtn.src = "./assets/delete.png";
-  deleteResourceBtn.addEventListener("click", (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    removeAsset(currentAssetsList[itemAccordion.id]);
+  
+  ressContainer.title = "Copier le nom de la ressource";
+  ressContainer.addEventListener("click", () => {
+    navigator.clipboard.writeText(file);
   });
-  itemAccordion.appendChild(deleteResourceBtn);
 
-  var uidTag = document.createElement("div");
-  uidTag.classList.add("uidTagCorner");
-  uidTag.innerHTML = fileName;
-  uidTag.title = "Copier l'UID de la ressource";
-  uidTag.addEventListener("click", () => {
-    navigator.clipboard.writeText(fileName);
-  });
-  itemAccordion.appendChild(uidTag);
+  const bgImg = document.createElement("img");
+  bgImg.classList.add("ResBgImg");
+  bgImg.src = `${rootPath}/collections/${currentCollectionUID}/assets/${file}`;
+  ressContainer.appendChild(bgImg);
 
-  ressItemsDiv.appendChild(itemAccordion);
+  const ressTitle = document.createElement("div");
+  ressTitle.classList.add("ressTitle");
+  ressTitle.innerHTML = file;
+  ressContainer.appendChild(ressTitle);
+
+  ressItemsDiv.appendChild(ressContainer);
 }
 
 export function loadAssets(p) {
@@ -76,7 +70,7 @@ export function loadAssets(p) {
       let file = asset.split("//")[1];
       let fileName = file.split(".")[0];
       let img = p.loadImage(asset);
-      assetsLibrary[fileName] = img;
+      assetsLibrary[file] = img;
     });
   }
 
@@ -85,26 +79,14 @@ export function loadAssets(p) {
   setupResources();
 }
 
-export function addAsset(newAsset) {
-  let assetsPath = rootPath + "/collections/" + currentCollectionUID + "/assets/";
-  let assetUID = currentCollection.collectionInfo.lastAssetIndex;
-  let extension = newAsset.name.split(".")[1];
-  currentCollection.collectionInfo.lastAssetIndex++;
-  fs.copyFile(newAsset.path, assetsPath + assetUID + "." + extension, (err) => {
-    saveCollection(true, true);
-    generateCollectionBtn.click();
-    if (err) {
-      console.log("Error Found:", err);
-    }
-  });
-}
+export function openCurrentResFolder(){
+  const filePath = `${rootPath}\\collections\\${currentCollection.collectionInfo.UID}\\assets`;
 
-export function removeAsset(assetToDelete) {
-  fs.unlink(assetToDelete, (err) => {
-    saveCollection(true, true);
-    generateCollectionBtn.click();
+  // Open the folder
+  require('child_process').exec(`start "" "${filePath}"`, (err, stdout, stderr) => {
     if (err) {
-      console.log("Error Found:", err);
+      console.error("Le dossier n'a pas pu être trouvé :", err);
+      return;
     }
   });
 }
