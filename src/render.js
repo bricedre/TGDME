@@ -136,13 +136,43 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
                 p5.card.vertex(Math.cos((i / 60) * Math.PI * 2) * _width * 0.2, -Math.sin((i / 60) * Math.PI * 2) * _height * 0.2);
               }
               p5.card.endShape(p5.CLOSE);
+
               p5.card.stroke(_borderColor + zeroPad(Math.floor(_borderOpacity * 255).toString(16), 2));
               if (_borderWeight != 0) p5.card.strokeWeight(_borderWeight);
               else p5.card.noStroke();
               p5.card.noFill();
               p5.card.ellipse(0, 0, _width, _height);
               p5.card.ellipse(0, 0, _width * 0.4, _height * 0.4);
+              break;
+            case "target":
+              p5.card.translate(_width / 2, _height / 2);
+              p5.card.noStroke();
+              p5.card.beginShape();
+              for (var i = 0; i < 61; i++) {
+                p5.card.vertex(Math.cos((i / 60) * Math.PI * 2) * _width * 0.5, Math.sin((i / 60) * Math.PI * 2) * _height * 0.5);
+              }
+              for (var i = 0; i < 61; i++) {
+                p5.card.vertex(Math.cos((i / 60) * Math.PI * 2) * _width * 0.4, -Math.sin((i / 60) * Math.PI * 2) * _height * 0.4);
+              }
+              p5.card.endShape(p5.CLOSE);
 
+              p5.card.beginShape();
+              for (var i = 0; i < 61; i++) {
+                p5.card.vertex(Math.cos((i / 60) * Math.PI * 2) * _width * 0.3, Math.sin((i / 60) * Math.PI * 2) * _height * 0.3);
+              }
+              for (var i = 0; i < 61; i++) {
+                p5.card.vertex(Math.cos((i / 60) * Math.PI * 2) * _width * 0.2, -Math.sin((i / 60) * Math.PI * 2) * _height * 0.2);
+              }
+              p5.card.endShape(p5.CLOSE);
+
+              p5.card.ellipse(0, 0, _width * 0.2, _height * 0.2);
+
+              p5.card.stroke(_borderColor + zeroPad(Math.floor(_borderOpacity * 255).toString(16), 2));
+              if (_borderWeight != 0) p5.card.strokeWeight(_borderWeight);
+              else p5.card.noStroke();
+              p5.card.noFill();
+              p5.card.ellipse(0, 0, _width, _height);
+              p5.card.ellipse(0, 0, _width * 0.4, _height * 0.4);
               break;
             case "shield":
               p5.card.beginShape();
@@ -230,8 +260,19 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
               p5.card.beginShape();
               p5.card.translate(_width / 2, _height / 2);
               for (var i = 0; i < branches * 2; i++) {
-                var radiusX = _width * 0.3 + (i % 2) * _width * 0.25;
-                var radiusY = _height * 0.3 + (i % 2) * _height * 0.25;
+                var radiusX = _width * 0.3 + (i % 2) * _width * 0.2;
+                var radiusY = _height * 0.3 + (i % 2) * _height * 0.2;
+                p5.card.vertex(Math.cos(Math.PI / (branches * 2) + (i / branches) * Math.PI) * radiusX, Math.sin(Math.PI / (branches * 2) + (i / branches) * Math.PI) * radiusY);
+              }
+              p5.card.endShape(p5.CLOSE);
+              break;
+            case "sun":
+              var branches = 20;
+              p5.card.beginShape();
+              p5.card.translate(_width / 2, _height / 2);
+              for (var i = 0; i < branches * 2; i++) {
+                var radiusX = _width * 0.45 + (i % 2) * _width * 0.05;
+                var radiusY = _height * 0.45 + (i % 2) * _height * 0.05;
                 p5.card.vertex(Math.cos(Math.PI / (branches * 2) + (i / branches) * Math.PI) * radiusX, Math.sin(Math.PI / (branches * 2) + (i / branches) * Math.PI) * radiusY);
               }
               p5.card.endShape(p5.CLOSE);
@@ -348,8 +389,238 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
               break;
             case "rectRounded":
               p5.card.beginShape();
-              p5.card.rect(0, 0, _width, _height, _height * 0.1);
+              p5.card.rect(0, 0, _width, _height, _height * 0.05);
               p5.card.endShape(p5.CLOSE);
+              break;
+            case "leaf":
+              p5.card.beginShape();
+              p5.card.vertex(_width * 0.055, _height * 0.94);
+              p5.card.bezierVertex(_width * 0.11, _height * 0.8375, _width * 0.11, _height * 0.8375, _width * 0.1775, _height * 0.73);
+              p5.card.bezierVertex(_width * 0.08, _height * 0.5, _width * 0.07, _height * 0.2, _width * 0.635, _height * 0.1525);
+              p5.card.bezierVertex(_width * 0.8125, _height * 0.12, _width * 0.8125, _height * 0.12, _width * 0.9025, _height * 0);
+              p5.card.bezierVertex(_width * 1.17, _height * 0.7, _width * 0.5, _height * 1.05, _width * 0.255, _height * 0.7975);
+              p5.card.bezierVertex(_width * 0.2075, _height * 0.895, _width * 0.2075, _height * 0.895, _width * 0.18, _height * 0.965);
+              p5.card.bezierVertex(_width * 0.15, _height * 1.02, _width * 0.055, _height * 0.9825, _width * 0.055, _height * 0.94);
+              p5.card.endShape(p5.CLOSE);
+              break;
+            case "wing":
+              p5.card.beginShape();
+              p5.card.vertex(_width * 0.095, _height * 0.9825);
+              p5.card.bezierVertex(_width * -0.14, _height * 0.7, _width * 0.0275, _height * 0.4, _width * 0.57, _height * 0.25);
+              p5.card.bezierVertex(_width * 0.75, _height * 0.2, _width * 0.85, _height * 0.13, _width * 1, _height * 0.0);
+              p5.card.bezierVertex(_width * 1.025, _height * 0.1525, _width * 0.8825, _height * 0.34, _width * 0.63, _height * 0.45);
+              p5.card.bezierVertex(_width * 0.72, _height * 0.445, _width * 0.72, _height * 0.445, _width * 0.885, _height * 0.38);
+              p5.card.bezierVertex(_width * 0.8775, _height * 0.53, _width * 0.72, _height * 0.65, _width * 0.47, _height * 0.67);
+              p5.card.bezierVertex(_width * 0.53, _height * 0.6875, _width * 0.5975, _height * 0.6875, _width * 0.7, _height * 0.67);
+              p5.card.bezierVertex(_width * 0.6425, _height * 0.815, _width * 0.57, _height * 0.8225, _width * 0.3875, _height * 0.85);
+              p5.card.bezierVertex(_width * 0.245, _height * 0.8625, _width * 0.1425, _height * 0.885, _width * 0.095, _height * 0.9825);
+              p5.card.endShape(p5.CLOSE);
+              break;
+            case "tree":
+              p5.card.beginShape();
+              p5.card.vertex(_width * 0.3175, _height * 1);
+              p5.card.bezierVertex(_width * 0.3525, _height * 0.845, _width * 0.385, _height * 0.725, _width * 0.3775, _height * 0.61);
+              p5.card.vertex(_width * 0.345, _height * 0.565);
+              p5.card.bezierVertex(_width * 0.15, _height * 0.7, _width * -0.1, _height * 0.575, _width * 0.03, _height * 0.33);
+              p5.card.bezierVertex(_width * -0.12, _height * 0.0, _width * 0.3, _height * -0.05, _width * 0.4325, _height * 0.045);
+              p5.card.bezierVertex(_width * 0.65, _height * -0.05, _width * 0.75, _height * 0.05, _width * 0.7825, _height * 0.1925);
+              p5.card.bezierVertex(_width * 1.08, _height * 0.22, _width * 1.02, _height * 0.43, _width * 0.88, _height * 0.485);
+              p5.card.bezierVertex(
+                _width * 0.88,
+                _height * 0.59,
+
+                _width * 0.75,
+                _height * 0.73,
+                _width * 0.595,
+                _height * 0.595
+              );
+              p5.card.vertex(_width * 0.525, _height * 0.6375);
+              p5.card.bezierVertex(
+                _width * 0.51,
+                _height * 0.77,
+                _width * 0.54,
+                _height * 0.88,
+
+                _width * 0.5875,
+                _height * 1
+              );
+              p5.card.vertex(_width * 0.3175, _height * 1);
+              p5.card.endShape(p5.CLOSE);
+              break;
+            case "tick":
+              p5.card.beginShape();
+              p5.card.vertex(_width * 0.3, _height * 0.86);
+              p5.card.vertex(_width * 0.03, _height * 0.59);
+              p5.card.bezierVertex(_width * -0.07, _height * 0.49, _width * 0.1, _height * 0.34, _width * 0.18, _height * 0.43);
+              p5.card.vertex(_width * 0.4, _height * 0.63);
+              p5.card.vertex(_width * 0.8, _height * 0.12);
+              p5.card.bezierVertex(_width * 0.88, _height * 0.03, _width * 1.06, _height * 0.16, _width * 0.97, _height * 0.28);
+              p5.card.vertex(_width * 0.48, _height * 0.87);
+              p5.card.bezierVertex(_width * 0.45, _height * 0.92, _width * 0.35, _height * 0.92, _width * 0.3, _height * 0.86);
+              p5.card.endShape(p5.CLOSE);
+              break;
+            case "banner":
+              p5.card.beginShape();
+              p5.card.vertex(_width * 0, _height * 0);
+              p5.card.vertex(_width * 1, _height * 0);
+              p5.card.vertex(_width * 1, _height * 1);
+              p5.card.vertex(_width * 0.5, _height * 0.8);
+              p5.card.vertex(_width * 0, _height * 1);
+              p5.card.endShape(p5.CLOSE);
+              break;
+            case "moon":
+              p5.card.beginShape();
+              p5.card.vertex(_width * 0.5, _height * 0);
+              p5.card.bezierVertex(_width * 1.15, _height * 0, _width * 1.15, _height * 1, _width * 0.5, _height * 1);
+              p5.card.bezierVertex(_width * 0.7, _height * 0.6, _width * 0.7, _height * 0.4, _width * 0.5, _height * 0);
+              p5.card.endShape(p5.CLOSE);
+              break;
+            case "fire":
+              p5.card.beginShape();
+              p5.card.vertex(_width * 0.49, _height * 1);
+              p5.card.bezierVertex(_width * 0.12, _height * 0.95, _width * 0.05, _height * 0.53, _width * 0.22, _height * 0.31);
+              p5.card.bezierVertex(_width * 0.22, _height * 0.35, _width * 0.22, _height * 0.4, _width * 0.28, _height * 0.45);
+              p5.card.bezierVertex(_width * 0.25, _height * 0.3, _width * 0.34, _height * 0.1, _width * 0.61, _height * 0.0);
+              p5.card.bezierVertex(_width * 0.485, _height * 0.25, _width * 0.73, _height * 0.34, _width * 0.75, _height * 0.57);
+              p5.card.bezierVertex(_width * 0.78, _height * 0.49, _width * 0.81, _height * 0.45, _width * 0.8, _height * 0.34);
+              p5.card.bezierVertex(_width * 0.95, _height * 0.59, _width * 0.9, _height * 0.98, _width * 0.49, _height * 1);
+              p5.card.endShape(p5.CLOSE);
+              break;
+            case "mountain":
+              p5.card.beginShape();
+              p5.card.vertex(_width * 0.0, _height * 0.83);
+              p5.card.vertex(_width * 0.25, _height * 0.35);
+              p5.card.vertex(_width * 0.36, _height * 0.39);
+              p5.card.vertex(_width * 0.51, _height * 0.16);
+              p5.card.vertex(_width * 0.72, _height * 0.49);
+              p5.card.vertex(_width * 0.76, _height * 0.46);
+              p5.card.vertex(_width * 0.99, _height * 0.83);
+              p5.card.endShape(p5.CLOSE);
+              break;
+            case "hourglass":
+              p5.card.beginShape();
+              p5.card.vertex(_width * 0.25, _height * 0.93);
+              p5.card.bezierVertex(_width * 0.25, _height * 0.71, _width * 0.29, _height * 0.63, _width * 0.39, _height * 0.56);
+              p5.card.bezierVertex(_width * 0.44, _height * 0.53, _width * 0.44, _height * 0.47, _width * 0.39, _height * 0.43);
+              p5.card.bezierVertex(_width * 0.29, _height * 0.37, _width * 0.25, _height * 0.29, _width * 0.25, _height * 0.07);
+              p5.card.bezierVertex(_width * 0.18, _height * 0.07, _width * 0.18, _height * 0.0, _width * 0.25, _height * 0.0);
+              p5.card.vertex(_width * 0.75, _height * 0.0);
+              p5.card.bezierVertex(_width * 0.82, _height * 0.0, _width * 0.82, _height * 0.07, _width * 0.75, _height * 0.07);
+              p5.card.bezierVertex(_width * 0.75, _height * 0.29, _width * 0.71, _height * 0.37, _width * 0.6, _height * 0.44);
+              p5.card.bezierVertex(_width * 0.56, _height * 0.47, _width * 0.56, _height * 0.53, _width * 0.6, _height * 0.55);
+              p5.card.bezierVertex(_width * 0.71, _height * 0.63, _width * 0.75, _height * 0.71, _width * 0.75, _height * 0.93);
+              p5.card.bezierVertex(_width * 0.82, _height * 0.93, _width * 0.82, _height * 1, _width * 0.76, _height * 1);
+              p5.card.vertex(_width * 0.25, _height * 1.0);
+              p5.card.bezierVertex(_width * 0.18, _height * 1, _width * 0.18, _height * 0.93, _width * 0.25, _height * 0.93);
+              p5.card.endShape(p5.CLOSE);
+              break;
+            case "stone":
+              p5.card.beginShape();
+              p5.card.vertex(_width * 0.0, _height * 0.47);
+              p5.card.vertex(_width * 0.28, _height * 0.26);
+              p5.card.vertex(_width * 0.53, _height * 0.24);
+              p5.card.vertex(_width * 0.69, _height * 0.21);
+              p5.card.vertex(_width * 1.0, _height * 0.44);
+              p5.card.vertex(_width * 0.97, _height * 0.7);
+              p5.card.vertex(_width * 0.95, _height * 0.75);
+              p5.card.vertex(_width * 0.57, _height * 0.83);
+              p5.card.vertex(_width * 0.39, _height * 0.8);
+              p5.card.vertex(_width * 0.23, _height * 0.84);
+              p5.card.vertex(_width * 0.04, _height * 0.72);
+              p5.card.vertex(_width * 0.02, _height * 0.68);
+              p5.card.endShape(p5.CLOSE);
+              break;
+            case "battery":
+              p5.card.beginShape();
+              p5.card.vertex(_width * 0.33, _height * 1);
+              p5.card.bezierVertex(_width * 0.29, _height * 1, _width * 0.25, _height * 0.97, _width * 0.25, _height * 0.92);
+              p5.card.vertex(_width * 0.25, _height * 0.15);
+              p5.card.bezierVertex(_width * 0.25, _height * 0.12, _width * 0.27, _height * 0.08, _width * 0.31, _height * 0.08);
+              p5.card.vertex(_width * 0.38, _height * 0.08);
+              p5.card.vertex(_width * 0.38, _height * 0.03);
+              p5.card.bezierVertex(_width * 0.38, _height * 0, _width * 0.4, _height * 0, _width * 0.41, _height * 0);
+              p5.card.vertex(_width * 0.59, _height * 0);
+              p5.card.bezierVertex(_width * 0.6, _height * 0, _width * 0.62, _height * 0, _width * 0.62, _height * 0.03);
+              p5.card.vertex(_width * 0.62, _height * 0.08);
+              p5.card.vertex(_width * 0.68, _height * 0.08);
+              p5.card.bezierVertex(_width * 0.73, _height * 0.08, _width * 0.75, _height * 0.12, _width * 0.75, _height * 0.15);
+              p5.card.vertex(_width * 0.75, _height * 0.92);
+              p5.card.bezierVertex(_width * 0.75, _height * 0.97, _width * 0.71, _height * 1, _width * 0.67, _height * 1);
+              p5.card.vertex(_width * 0.33, _height * 1);
+              p5.card.endShape(p5.CLOSE);
+              break;
+            case "egg":
+              p5.card.beginShape();
+              p5.card.vertex(_width * 0.11, _height * 0.57);
+              p5.card.bezierVertex(_width * 0.18, _height * -0.17, _width * 0.82, _height * -0.17, _width * 0.89, _height * 0.57);
+              p5.card.bezierVertex(_width * 0.9, _height * 1.13, _width * 0.1, _height * 1.13, _width * 0.11, _height * 0.57);
+              p5.card.endShape(p5.CLOSE);
+              break;
+            case "puzzle":
+              p5.card.beginShape();
+              p5.card.vertex(_width * 0.21, _height * 0.78);
+              p5.card.vertex(_width * 0.21, _height * 0.59);
+              p5.card.bezierVertex(_width * 0.18, _height * 0.5, _width * 0.08, _height * 0.7, _width * 0.08, _height * 0.5);
+              p5.card.bezierVertex(_width * 0.08, _height * 0.3, _width * 0.18, _height * 0.5, _width * 0.21, _height * 0.41);
+              p5.card.vertex(_width * 0.21, _height * 0.22);
+              p5.card.vertex(_width * 0.39, _height * 0.22);
+              p5.card.bezierVertex(_width * 0.5, _height * 0.25, _width * 0.3, _height * 0.35, _width * 0.5, _height * 0.35);
+              p5.card.bezierVertex(_width * 0.7, _height * 0.35, _width * 0.5, _height * 0.25, _width * 0.61, _height * 0.22);
+              p5.card.vertex(_width * 0.79, _height * 0.22);
+              p5.card.vertex(_width * 0.79, _height * 0.39);
+              p5.card.bezierVertex(_width * 0.82, _height * 0.5, _width * 0.92, _height * 0.3, _width * 0.92, _height * 0.5);
+              p5.card.bezierVertex(_width * 0.92, _height * 0.7, _width * 0.82, _height * 0.5, _width * 0.79, _height * 0.61);
+              p5.card.vertex(_width * 0.79, _height * 0.78);
+              p5.card.vertex(_width * 0.61, _height * 0.78);
+              p5.card.bezierVertex(_width * 0.5, _height * 0.75, _width * 0.7, _height * 0.65, _width * 0.5, _height * 0.65);
+              p5.card.bezierVertex(_width * 0.3, _height * 0.65, _width * 0.5, _height * 0.75, _width * 0.39, _height * 0.78);
+              p5.card.endShape(p5.CLOSE);
+              break;
+            case "key":
+              p5.card.noStroke();
+              p5.card.beginShape();
+              p5.card.vertex(_width * 0.44, _height * 0.62);
+              p5.card.bezierVertex(_width * 0.26, _height * 0.86, _width * 0, _height * 0.68, _width * 0, _height * 0.5);
+              p5.card.bezierVertex(_width * 0, _height * 0.32, _width * 0.26, _height * 0.14, _width * 0.44, _height * 0.38);
+              p5.card.vertex(_width * 0.91, _height * 0.38);
+              p5.card.vertex(_width * 1, _height * 0.48);
+              p5.card.vertex(_width * 0.89, _height * 0.59);
+              p5.card.vertex(_width * 0.83, _height * 0.54);
+              p5.card.vertex(_width * 0.77, _height * 0.59);
+              p5.card.vertex(_width * 0.71, _height * 0.54);
+              p5.card.vertex(_width * 0.66, _height * 0.59);
+              p5.card.vertex(_width * 0.6, _height * 0.54);
+              p5.card.vertex(_width * 0.53, _height * 0.62);
+              p5.card.vertex(_width * 0.44, _height * 0.62);
+
+              for (var i = 0; i < 61; i++) {
+                p5.card.vertex(_width * 0.135 + Math.cos((i / 60) * Math.PI * 2) * _width * 0.065, _height * 0.5 - Math.sin((i / 60) * Math.PI * 2) * _height * 0.065);
+              }
+              p5.card.endShape(p5.CLOSE);
+
+              p5.card.stroke(_borderColor + zeroPad(Math.floor(_borderOpacity * 255).toString(16), 2));
+              if (_borderWeight != 0) p5.card.strokeWeight(_borderWeight);
+              else p5.card.noStroke();
+              p5.card.noFill();
+
+              p5.card.beginShape();
+              p5.card.vertex(_width * 0.44, _height * 0.62);
+              p5.card.bezierVertex(_width * 0.26, _height * 0.86, _width * 0, _height * 0.68, _width * 0, _height * 0.5);
+              p5.card.bezierVertex(_width * 0, _height * 0.32, _width * 0.26, _height * 0.14, _width * 0.44, _height * 0.38);
+              p5.card.vertex(_width * 0.91, _height * 0.38);
+              p5.card.vertex(_width * 1, _height * 0.48);
+              p5.card.vertex(_width * 0.89, _height * 0.59);
+              p5.card.vertex(_width * 0.83, _height * 0.54);
+              p5.card.vertex(_width * 0.77, _height * 0.59);
+              p5.card.vertex(_width * 0.71, _height * 0.54);
+              p5.card.vertex(_width * 0.66, _height * 0.59);
+              p5.card.vertex(_width * 0.6, _height * 0.54);
+              p5.card.vertex(_width * 0.53, _height * 0.62);
+              p5.card.vertex(_width * 0.44, _height * 0.62);
+              p5.card.endShape(p5.CLOSE);
+
+              p5.card.ellipse(_width * 0.135, _height * 0.5, _width * 0.065 * 2, _height * 0.065 * 2);
+
               break;
 
             default:
@@ -432,7 +703,7 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
       }
     }
   } catch (e) {
-    console.log(e.message)
+    console.log(e.message);
     if (componentType == "IMAGE") {
       p5.card.image(errorImage, 0, 0, _width, _height);
     }
@@ -487,7 +758,7 @@ function getActualValue(refValue, elementIndex, dft, evaluated) {
         else finalValue = fixedValue;
       }
     } catch (e) {
-      console.log(e)
+      console.log(e);
     }
   }
 

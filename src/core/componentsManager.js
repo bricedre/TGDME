@@ -231,6 +231,7 @@ export function createNewComponent(item, itemIndex) {
           var option = document.createElement("option");
           if (param.optionRef) option.style.fontFamily = opt.value;
           option.value = opt.value;
+          option.title = opt.value;
           option.innerHTML = opt.label;
           parameterInput.appendChild(option);
         });
