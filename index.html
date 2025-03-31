@@ -35,20 +35,20 @@
       <div class="homePagePanel" id="loadCollectionsPanel">
       </div>
       
-      <div class="homePagePanel" id="loadPagesPanel">
-        <div class="imgContainer">
+      <div class="homePagePanel" id="loadLayoutsPanel">
+        <!-- <div class="imgContainer">
           <img src="./assets/loadCollectionBtn.png" alt="add symbol" />
         </div>
-        <p class="panelTitle">DISPOSITIONS DE PAGES</p>
+        <p class="panelTitle">DISPOSITIONS DE PAGES</p> -->
       </div>
 
     </div>
 
-    <div id="loadingPanelDiv" class="panel">
+    <div id="collectionSelectionPanel" class="panel">
     </div>
 
 
-    <div id="editionPanelDiv" class="panel">
+    <div id="collectionEditionPanel" class="panel">
 
       <div class="tabs">
         <button id="generateCollectionBtn" title="Re-générer la Collection (Entrée)" class="generateCollectionBtn">
@@ -66,6 +66,9 @@
         <span>></span>
         <input id="tabElementsInput" type="radio" name="tabs">
         <label for="tabElementsInput" title="Modification des Données (F4)">Données</label>
+        <span>></span>
+        <input id="tabPrinting" type="radio" name="tabs">
+        <label for="tabPrinting" title="Impression (F5)">Impression</label>
 
         <div class="content">
 
@@ -116,6 +119,8 @@
               <p class="parameterName">Hauteur des Éléments (cm)</p>
               <input id="elementHeightInput" inputmode="decimal" class="parameterInput" step="0.1">
             </div>
+
+
 
             <div class="parameterSlot" title="Les repères visuels ne seront pas inclus dans le PDF final">
               <p class="parameterName">Repère Visuel 🔍</p>
@@ -206,57 +211,81 @@
             </div>
           </div>
 
-          <!-- <div id="contentPrintingDiv">
+          <div id="contentPrintingDiv">
 
-            <div class="parameterSlot">
-              <p class="parameterName">Format de Page</p>
-              <select id="pageFormatSelect" class="parameterInput">
-                <optgroup label="Formats standards">
-                  <option value="A4">A4</option>
-                  <option value="A3">A3</option>
-                </optgroup>
-                <optgroup label="Personnalisé">
-                  <option value="custom">Choisir ses dimensions...</option>
-                </optgroup>
-              </select>
-            </div>
-
-            <div class="parameterSlot">
-              <p class="parameterName">Orientation de Page</p>
-              <select id="pageOrientationSelect" class="parameterInput">
-                <option value="portrait">Portrait</option>
-                <option value="landscape">Paysage</option>
-              </select>
-            </div>
-
-            <div class="parameterSlot">
-              <p class="parameterName">Largeur de Page (cm)</p>
-              <input id="pageWidthInput" disabled inputmode="decimal" class="parameterInput" step="0.1">
+            <div class="mainContent">
+              
+              
+              <div class="parameterSlot">
+                <p class="parameterName">Format de Page</p>
+                <select id="pageFormatSelect" class="parameterInput">
+                  <optgroup label="Formats standards">
+                    <option value="A4">A4</option>
+                    <option value="A3">A3</option>
+                    <option value="TTS">TTS</option>
+                  </optgroup>
+                  <optgroup label="Personnalisé">
+                    <option value="custom">Choisir ses dimensions...</option>
+                  </optgroup>
+                </select>
+              </div>
+              
+              <div class="parameterSlot">
+                <p class="parameterName">Orientation de Page</p>
+                <select id="pageOrientationSelect" class="parameterInput">
+                  <option value="portrait">Portrait</option>
+                  <option value="landscape">Paysage</option>
+                </select>
+              </div>
+              
+              <div class="parameterSlot">
+                <p class="parameterName">Largeur de Page (cm)</p>
+              <input id="pageWidthInput" disabled inputmode="decimal" class="parameterInput" step="0.1"/>
             </div>
 
             <div class="parameterSlot">
               <p class="parameterName">Hauteur de Page (cm)</p>
-              <input id="pageHeightInput" disabled inputmode="decimal" class="parameterInput" step="0.1">
+              <input id="pageHeightInput" disabled inputmode="decimal" class="parameterInput" step="0.1"/>
             </div>
 
+            <div class="parameterSlot">
+            <p class="parameterName">Limite d'Éléments par Page</p>
+            <input id="maxElementQty" class="parameterInput" step="1" min="1"/>
+          </div>
+            
             <div class="parameterSlot"
-              title="300 dpi = 118.11 ppcm | Plus cette valeur sera haute, plus votre image sera nette">
-              <p class="parameterName">Résolution d'Impression (pixels/cm) 🔍</p>
-              <input id="pageResolutionInput" inputmode="decimal" class="parameterInput" step="0.1">
-            </div>
+            title="300 dpi = 118.11 ppcm | Plus cette valeur sera haute, plus votre image sera nette">
+            <p class="parameterName">Résolution d'Impression (pixels/cm) 🔍</p>
+            <input id="pageResolutionInput" inputmode="decimal" class="parameterInput" step="0.1"/>
+          </div>
 
-            <div class="parameterSlot"
-              title="L'Aide à la Découpe est une simple bordure semi-transparente mise autour des élements afin de guider la découpe une fois imprimés">
-              <input type="checkbox" id="cuttingHelpInput" name="cuttingHelpInput" />
-              <label class="parameterName" for="cuttingHelpInput">Aide à la Découpe 🔍</label>
+          <div class="parameterSlot">
+            <p class="parameterName">Format d'Export</p>
+            <select id="pageExportFormatSelect" class="parameterInput">
+              <option value="pdf">PDF</option>
+              <option value="jpg">JPG</option>
+            </select>
+          </div>
+          
+          <div class="parameterSlot"
+          title="L'Aide à la Découpe est une simple bordure semi-transparente mise autour des élements afin de guider la découpe une fois imprimés">
+          <input type="checkbox" id="cuttingHelpInput" name="cuttingHelpInput" />
+          <label class="parameterName" for="cuttingHelpInput">Aide à la Découpe 🔍</label>
+        </div>
+      </div>
+        
+        <div class="btnContainer">
+          <button title="Générer les pages d'élements en fonction des paramètres choisis" id="printPagesBtn" class="navBtn" >
+            GÉNÉRER PAGES
+                <img src="./assets/toPrint.png">
+              </button>
             </div>
-          </div> -->
+          </div>
         </div>
 
       </div>
 
       <div id="canvasDiv">
-        <div id="shadowCard"></div>
         <main></main>
       </div>
     </div>

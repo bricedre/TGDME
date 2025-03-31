@@ -4,7 +4,6 @@
 }
 
 :root {
-  --cardAngle: 2deg;
   --mainColor: #77c9f2;
   --mainBtnColor: #d4eeff;
   --mainColorDark: #2d94c7;
@@ -63,7 +62,6 @@ nav {
 main {
   display: grid;
   place-items: center;
-  rotate: var(--cardAngle);
   transition: scale 0.3s ease-in-out;
 }
 

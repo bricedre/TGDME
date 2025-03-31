@@ -48,13 +48,14 @@ export function checkForFileUpdate() {
     .then((arrayBuffer) => {
       // Process the file once it is fetched
       const workbook = XLSX.read(arrayBuffer, { type: "array" });
-
       const worksheet = workbook.Sheets[workbook.SheetNames[0]];
       const sheetData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
 
       if (sheetData.length > 0) {
         const headers = sheetData[0];
         const data = sheetData.slice(1);
+
+        console.log(headers, data)
 
         // Update currentCollection with the new data
         currentCollection.elements.headers = headers;
@@ -71,6 +72,6 @@ export function checkForFileUpdate() {
     })
     .catch((error) => {
       console.error(error);
-      alert("Le fichier n'a pas pu être trouvé.");
+      alert("Le fichier n'a pas pu être chargé.");
     });
 }

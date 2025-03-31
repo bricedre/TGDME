@@ -1,7 +1,6 @@
 import { app } from "../app.js";
 import { addNewImage, addNewShape, addNewText, archiveCollection, currentCollection, deleteCurrentCollection, duplicateCollection, saveCollection } from "../core/collectionsManager.js";
-import { rootElement } from "./mainLayout.js";
-import { renderCardUsingTemplate } from "../render.js";
+import { generatePages, renderCardUsingTemplate } from "../render.js";
 import { allSystemFonts, loadAssets, openCurrentResFolder } from "../core/assetsManager.js";
 import { setupComponents } from "../core/componentsManager.js";
 import { checkForFileUpdate, openExcelFile, updateDataView } from "../core/elementsManager.js";
@@ -38,6 +37,7 @@ $("#addTextComponentBtn").on("click", () => addNewText());
 $("#modifyDataBtn").on("click", () => openExcelFile());
 $("#updateDataBtn").on("click", () => checkForFileUpdate());
 
+$("#printPagesBtn").on("click", () => generatePages());
 
 /*        
 GLOBAL
@@ -75,7 +75,7 @@ export function goToOtherCard(delta) {
   renderCardUsingTemplate(app, app.currentIndex, currentCollection.collectionInfo.visualGuide);
   updateElementsCounter();
   updateDataView();
-  rootElement.style.setProperty("--cardAngle", 3 - app.random() * 6 + "deg");
+  $("main").prop("--cardAngle", 3 - app.random() * 6 + "deg");
 }
 
 export function populateEditionFields() {
@@ -86,15 +86,20 @@ export function populateEditionFields() {
   elementHeightInput.value = currentCollection.collectionInfo.H;
   visualGuideSelect.value = currentCollection.collectionInfo.visualGuide;
 
-  // pageFormatSelect.value = currentCollection.collectionInfo.pageFormat;
-  // pageOrientationSelect.value = currentCollection.collectionInfo.pageOrientation;
-  // pageWidthInput.value = currentCollection.collectionInfo.pageWidth;
-  // pageHeightInput.value = currentCollection.collectionInfo.pageHeight;
-  // pageResolutionInput.value = currentCollection.collectionInfo.resolution;
-  // cuttingHelpInput.value = currentCollection.collectionInfo.cuttingHelp;
+  pageExportFormatSelect.value = currentCollection.collectionInfo.pageExportFormat;
+  maxElementQty.value = currentCollection.collectionInfo.maxElementQty;
+  pageFormatSelect.value = currentCollection.collectionInfo.pageFormat;
+  pageOrientationSelect.value = currentCollection.collectionInfo.pageOrientation;
+  pageWidthInput.value = currentCollection.collectionInfo.pageWidth;
+  pageHeightInput.value = currentCollection.collectionInfo.pageHeight;
+  pageResolutionInput.value = currentCollection.collectionInfo.resolution;
+  cuttingHelpInput.value = currentCollection.collectionInfo.cuttingHelp;
 }
 
 export function checkOtherInputs(eventTargetId, eventTargetValue) {
+
+  console.log(eventTargetId)
+
   switch (eventTargetId) {
     case "elementFormatSelect":
       if (eventTargetValue === "custom") {
@@ -107,10 +112,11 @@ export function checkOtherInputs(eventTargetId, eventTargetValue) {
       }
       break;
 
-    case "pageFormat":
+    case "pageFormatSelect":
+      console.log("coucou")
       if (eventTargetValue === "custom") {
         pageWidthInput.disabled = false;
-        pageHeight.disabled = false;
+        pageHeightInput.disabled = false;
         pageOrientationSelect.disabled = true;
         populateEditionFields();
       } else {

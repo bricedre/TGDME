@@ -90,6 +90,28 @@ export function createNewComponent(item, itemIndex) {
   });
   itemAccordion.appendChild(visibilityBtn);
 
+  var duplicateComponentBtn = document.createElement("img");
+  duplicateComponentBtn.classList.add("duplicateComponentBtn");
+  duplicateComponentBtn.src = "./assets/duplicateComponent.png";
+  duplicateComponentBtn.title = "Dupliquer le Composant";
+  duplicateComponentBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    var componentToDuplicate = currentCollection.template.filter((el) => el.UID == e.target.parentNode.id)[0];
+    var indexWhereToDuplicate = currentCollection.template.indexOf(componentToDuplicate)+1;
+
+    var newComponent = JSON.parse(JSON.stringify(componentToDuplicate));
+    newComponent.UID = currentCollection.collectionInfo.lastComponentIndex;
+    currentCollection.collectionInfo.lastComponentIndex++;
+
+    currentCollection.template.splice(indexWhereToDuplicate, 0, newComponent);
+    setupComponents();
+    updateDataView();
+
+    generateCollectionBtn.click();
+  });
+  itemAccordion.appendChild(duplicateComponentBtn);
+
   var deleteComponentBtn = document.createElement("img");
   deleteComponentBtn.classList.add("deleteComponentBtn");
   deleteComponentBtn.src = "./assets/delete.png";

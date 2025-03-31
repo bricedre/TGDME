@@ -17,7 +17,7 @@ const fs = require("fs").promises;
 const { existsSync, mkdirSync, copyFileSync, readdirSync } = require("fs");
 const rimraf = require("rimraf");
 const fsExtra = require("fs-extra");
-const fs2 = require('fs');
+const fs2 = require("fs");
 const XLSX = require("xlsx");
 
 export let collectionsAvailable;
@@ -27,7 +27,6 @@ export let currentCollection;
 getCollections();
 
 export function getCollections() {
-
   collectionsAvailable = readdirSync(rootPath + "/collections", { withFileTypes: true })
     .filter((dirent) => dirent.isDirectory())
     .map((dirent) => dirent.name);
@@ -56,7 +55,7 @@ export function setCurrentCollection(collectionUID) {
 
     setTimeout(() => {
       app.currentIndex = 0;
-      openScene("edition");
+      openScene("collectionEdition");
       populateEditionFields();
       setupResources();
       setupComponents();
@@ -77,7 +76,6 @@ export function createNewCollection() {
     mkdirSync(dir);
     mkdirSync(dir + "/assets");
     copyFileSync(collectionTemplatePath, rootPath + "/collections/" + newUID + "/collection.json");
-
 
     //CREATE DATA EXCEL SHEET
     const headers = []; // No headers initially
@@ -117,7 +115,7 @@ export function deleteCurrentCollection() {
     .then(() => {
       setCurrentCollection(-1);
       getCollections();
-      openScene("start");
+      openScene("home");
     })
     .catch((e) => console.log(e));
 }
@@ -151,7 +149,7 @@ export function archiveCollection() {
   saveCollection(false, false);
   setCurrentCollection(-1);
   setTimeout(() => getCollections(), 300);
-  setTimeout(() => openScene("loading"), 1000);
+  setTimeout(() => openScene("collectionSelection"), 1000);
 }
 
 export function saveCollection(refreshAssets, reRenderCard) {
@@ -164,13 +162,15 @@ export function saveCollection(refreshAssets, reRenderCard) {
   collInfo.H = elementHeightInput.value;
   collInfo.visualGuide = visualGuideSelect.value;
 
-  // collInfo.pageFormat = pageFormatSelect.value;
-  // collInfo.pageWidth = pageWidthInput.value;
-  // collInfo.pageHeight = pageHeightInput.value;
+  collInfo.pageExportFormat = pageExportFormatSelect.value;
+  collInfo.pageFormat = pageFormatSelect.value;
+  collInfo.pageWidth = pageWidthInput.value;
+  collInfo.pageHeight = pageHeightInput.value;
+  collInfo.maxElementQty = maxElementQty.value;
 
-  // collInfo.pageOrientation = pageOrientationSelect.value;
-  // collInfo.resolution = Math.max(1, pageResolutionInput.value);
-  // collInfo.cuttingHelp = cuttingHelpInput.checked;
+  collInfo.pageOrientation = pageOrientationSelect.value;
+  collInfo.resolution = Math.max(1, pageResolutionInput.value);
+  collInfo.cuttingHelp = cuttingHelpInput.checked;
 
   collInfo.lastSavingTime = Date.now();
 
@@ -258,29 +258,34 @@ export function setupCollectionDimensions() {
       break;
   }
 
-  // switch (coll.pageFormat) {
-  //   case "A3":
-  //     coll.pageWidth = 29.7;
-  //     coll.pageHeight = 42;
-  //     break;
+  switch (coll.pageFormat) {
+    case "A3":
+      coll.pageWidth = 29.7;
+      coll.pageHeight = 42;
+      break;
 
-  //   case "A4":
-  //     coll.pageWidth = 21;
-  //     coll.pageHeight = 29.7;
-  //     break;
-  // }
+    case "A4":
+      coll.pageWidth = 21;
+      coll.pageHeight = 29.7;
+      break;
 
-  // if (coll.pageOrientation === "landscape") {
-  //   let _temp = coll.pageWidth;
-  //   coll.pageWidth = coll.pageHeight;
-  //   coll.pageHeight = _temp;
-  // }
+    case "TTS":
+      coll.pageWidth = Math.round(coll.W*100)/10;
+      coll.pageHeight = Math.round(coll.H*70)/10;
+      break;
+  }
 
-  // // DERIVED MARGINS & COLUMN/ROW COUNTS TO CENTER THE CARDS IN THE PAGE
-  // coll.colCount = Math.floor(coll.pageWidth / coll.W);
-  // coll.rowCount = Math.floor(coll.pageHeight / coll.H);
-  // coll.marginX = ((coll.pageWidth - coll.W * coll.colCount) / 2) * coll.resolution;
-  // coll.marginY = ((coll.pageHeight - coll.H * coll.rowCount) / 2) * coll.resolution;
+  if (coll.pageOrientation === "landscape") {
+    let _temp = coll.pageWidth;
+    coll.pageWidth = coll.pageHeight;
+    coll.pageHeight = _temp;
+  }
+
+  // DERIVED MARGINS & COLUMN/ROW COUNTS TO CENTER THE CARDS IN THE PAGE
+  coll.colCount = Math.floor(coll.pageWidth / coll.W);
+  coll.rowCount = Math.floor(coll.pageHeight / coll.H);
+  coll.marginX = ((coll.pageWidth - coll.W * coll.colCount) / 2) * coll.resolution;
+  coll.marginY = ((coll.pageHeight - coll.H * coll.rowCount) / 2) * coll.resolution;
 }
 
 export function addNewImage() {

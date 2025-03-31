@@ -5,27 +5,42 @@ import { getFontList } from "../core/assetsManager.js";
 import { setupMenu } from "./menuScreen.js";
 const $ = require("jquery");
 
-export const rootElement = document.querySelector(":root");
-
-const sceneUIElements = {
-  titles : {
-    "start" : "LA CABANE À PROTOS",
-    "loading" : "BIBLIOTHÈQUE DE COLLECTIONS",
-    "edition" : () => currentCollection?.collectionInfo.collectionName,
+const scenesSettings = {
+  home: {
+    title: "LA CABANE À PROTOS",
+    icon: "./assets/home.png",
+    uiElement: "#startPanelDiv",
+    hideFooter: true,
   },
-  icon : {
-    "start" : "./assets/home.png",
-    "loading" : "./assets/icon.png",
-    "edition" : "./assets/newCollectionBtn.png",
-  }
-}
+  collectionSelection: {
+    title: "BIBLIOTHÈQUE DE COLLECTIONS",
+    icon: "./assets/icon.png",
+    uiElement: "#collectionSelectionPanel",
+    hideFooter: true,
+  },
+  collectionEdition: {
+    title: () => currentCollection?.collectionInfo.collectionName,
+    icon: "./assets/newCollectionBtn.png",
+    uiElement: "#collectionEditionPanel",
+    hideFooter: false,
+  },
+  layoutSelection: {
+    title: "BIBLIOTHÈQUE DE PAGES",
+    icon: "./assets/home.png",
+    uiElement: "#startPanelDiv",
+    hideFooter: true,
+  },
+  layoutEdition: {
+    title: "PAGE X",
+    icon: "./assets/home.png",
+    uiElement: "#startPanelDiv",
+    hideFooter: true,
+  },
+};
 
-export let lastPanel = "start";
-export let currentPanel = "start";
+export let currentPanel = "home";
 
 getFontList();
-// getCollections();
-// setupMenu();
 openScene(currentPanel);
 
 document.addEventListener("keyup", function (event) {
@@ -39,12 +54,12 @@ document.addEventListener("keyup", function (event) {
     document.getElementById("tabTemplateInput").checked = true;
   } else if (event.key === "F4") {
     document.getElementById("tabElementsInput").checked = true;
+  } else if (event.key === "F5") {
+    document.getElementById("tabPrinting").checked = true;
   }
 });
 
 const allInputs = document.querySelectorAll('input:not([type="radio"])');
-const allSelects = document.querySelectorAll("select");
-
 allInputs.forEach((input) => {
   input.addEventListener("input", (e) => {
     populateComponents();
@@ -52,6 +67,7 @@ allInputs.forEach((input) => {
   });
 });
 
+const allSelects = document.querySelectorAll("select");
 allSelects.forEach((select) => {
   select.addEventListener("change", (e) => {
     generateCollectionBtn.click();
@@ -60,29 +76,22 @@ allSelects.forEach((select) => {
 });
 
 export function openScene(panelName) {
-
   $(".panel").css("display", "none");
-  
-  let currentPanelDiv;
+
+  let currentPanelDiv = $(scenesSettings[panelName].uiElement);
+  currentPanelDiv.css("display", "flex");
+
   let homeIcon = $("#homeIcon");
+  homeIcon.attr("src", scenesSettings[panelName].icon);
+
   let mainTitleDiv = $("#mainTitleDiv");
+  mainTitleDiv.text(scenesSettings[panelName].title);
+
   let bottomBarDiv = $("#bottomBarDiv");
+  bottomBarDiv.css("display", scenesSettings[panelName].hideFooter ? "none" : "flex");
 
   switch (panelName) {
-    case "start":
-      currentPanelDiv = $("#startPanelDiv");
-      bottomBarDiv.css("display", "none");
-      break;
-
-    case "loading":
-      currentPanelDiv = $("#loadingPanelDiv");
-      bottomBarDiv.css("display", "none");
-      break;
-
-    case "edition":
-      currentPanelDiv = $("#editionPanelDiv");
-      bottomBarDiv.css("display", "flex");
-
+    case "collectionEdition":
       //Go back to Config tab all the time
       let firstRadio = document.querySelector(".tabs input");
       firstRadio.checked = true;
@@ -91,11 +100,6 @@ export function openScene(panelName) {
       archiveCollectionBtn.innerHTML = currentCollection.collectionInfo.archived ? "DÉSARCHIVER<img src='./assets/archiveCollection.png'>" : "ARCHIVER<img src='./assets/archiveCollection.png'>";
       break;
   }
-  
-  currentPanelDiv.css("display", "flex");
-  mainTitleDiv.text(sceneUIElements.titles[panelName]); 
-  homeIcon.attr("src", sceneUIElements.icon[panelName]);
 
-  lastPanel = currentPanel;
   currentPanel = panelName;
 }

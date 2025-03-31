@@ -4,7 +4,7 @@ canvas {
   z-index: 1;
 }
 
-#editionPanelDiv {
+#collectionEditionPanel {
   flex-direction: row;
 }
 
@@ -176,7 +176,8 @@ input[type="radio"] {
 #tabPrintingInput:checked ~ .content #contentPrintingDiv,
 #tabTemplateInput:checked ~ .content #contentTemplateDiv,
 #tabElementsInput:checked ~ .content #contentElementsDiv,
-#tabRessInput:checked ~ .content #contentRessDiv {
+#tabRessInput:checked ~ .content #contentRessDiv,
+#tabPrinting:checked ~ .content #contentPrintingDiv {
   display: flex;
 }
 
@@ -307,7 +308,8 @@ input[type="radio"] {
 .downElementBtn:hover,
 .visibilityBtn:hover,
 .deleteComponentBtn:hover,
-.deleteElementBtn:hover {
+.deleteElementBtn:hover,
+.duplicateComponentBtn:hover{
   scale: 1.5;
 }
 

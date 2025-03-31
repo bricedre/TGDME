@@ -1,5 +1,5 @@
 import { collectionsAvailable, createNewCollection, currentCollectionUID, getCollections, setCurrentCollection } from "../core/collectionsManager.js";
-import { currentPanel, lastPanel, openScene } from "./mainLayout.js";
+import { currentPanel, openScene } from "./mainLayout.js";
 
 const $ = require("jquery");
 const { rootPath } = require("electron-root-path");
@@ -8,7 +8,7 @@ export function setupMenu() {
   $("#homeBtn").on("click", () => {
     // currentCollectionUID = -1;
     getCollections();
-    openScene("start");
+    openScene("home");
   });
 
   //HOMEPAGE QUICK ACCESS
@@ -58,13 +58,13 @@ export function setupMenu() {
     .on("click", (e) => {
       e.preventDefault();
       e.stopPropagation();
-      openScene("loading");
+      openScene("collectionSelection");
     });
   actionRow.append(newCollectionBtn, seeAllCollections);
   loadCollectionsPanel.append(actionRow);
 
   //LOADING PAGE ACCESS
-  loadingPanelDiv.innerHTML = "";
+  collectionSelectionPanel.innerHTML = "";
 
   // Collections to show
   if (collectionsSorted.length > 0) {
@@ -74,7 +74,7 @@ export function setupMenu() {
     if (activeCollections.length > 0) {
       var activeCol = document.createElement("div");
       activeCol.id = "activeCollectionsDiv";
-      loadingPanelDiv.appendChild(activeCol);
+      collectionSelectionPanel.appendChild(activeCol);
 
       activeCollections.forEach((collection) => {
         var btnElement = document.createElement("button");
@@ -103,7 +103,7 @@ export function setupMenu() {
         archivedColContainer.classList.toggle("active");
       });
       archivedColContainer.innerHTML = "<img src='" + rootPath + "/assets/archiveCollection.png'> Collections Archivées";
-      loadingPanelDiv.appendChild(archivedColContainer);
+      collectionSelectionPanel.appendChild(archivedColContainer);
 
       var archivedCol = document.createElement("div");
       archivedCol.id = "archivedCollectionsDiv";
@@ -130,14 +130,7 @@ export function setupMenu() {
     noResourceText.classList.add("noStuffDiv");
     noResourceText.innerHTML = "Aucune Collection dans votre Bibliothèque<br><br><br><br>Retournez sur la page d'accueil pour en créer une";
 
-    loadingPanelDiv.appendChild(noResourceText);
+    collectionSelectionPanel.appendChild(noResourceText);
   }
 
-  // tutorialBtn.addEventListener("click", () => {
-  //   window.open(`https://www.youtube.com/watch?v=vODPa1l_9q8&list=PLk03fyx-610aRbuL8wsF-e9e5T8pKYDCJ`);
-  // });
-
-  // newCollectionBtn.addEventListener("click", () => createNewCollection());
-
-  // loadCollectionsBtn.addEventListener("click", () => openScene("loading"));
 }

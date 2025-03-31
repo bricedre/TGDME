@@ -1,8 +1,9 @@
 import { currentCollection } from "./core/collectionsManager.js";
-import { generatePDF } from "./pdfGeneration.js";
+const { jsPDF } = require("jspdf");
 import { app } from "./app.js";
 import { assetsLibrary, errorImage } from "./core/assetsManager.js";
 import { IMAGE_parameters, TEXT_parameters, SHAPE_parameters } from "./core/componentsUI.js";
+const fs = require("fs");
 
 //FUTURE IDEES :
 /*
@@ -18,59 +19,53 @@ icone dans texte
 */
 
 export function renderComponent(p5, componentType, componentIndex, elementIndex) {
-  let currentElements = currentCollection.elements.data;
   let currentTemplate = currentCollection.template;
 
   let componentData = currentTemplate[componentIndex];
-
-  let elementData = currentElements[elementIndex];
-
-  var _src = getActualValue(componentData.src, elementIndex, "", false).toString();
 
   var _textToWrite;
   var _shape;
   var _elementsList = [];
   var _imgs = [];
 
-  if (componentType == "IMAGE") _elementsList = _src.split(",");
-  else if (componentType == "TEXT") _textToWrite = _src;
-  else if (componentType == "SHAPE") _shape = _src;
+  if (componentType == "IMAGE") _elementsList = getActualValue(componentData.src, elementIndex, "").toString().split(",");
+  else if (componentType == "TEXT") _textToWrite = getActualValue(componentData.src, elementIndex, "").toString();
+  else if (componentType == "SHAPE") _shape = getActualValue(componentData.src, elementIndex, "").toString();
 
-  if (_elementsList.length > 0) {
+  if (_elementsList && _elementsList.length > 0) {
     for (let i = 0; i < _elementsList.length; i++) {
       if (assetsLibrary[_elementsList[i].trim()]) _imgs.push(assetsLibrary[_elementsList[i].trim()]);
     }
   }
 
-  var _positionX = getActualValue(componentData.positionX, elementIndex, 0, true);
-  var _positionY = getActualValue(componentData.positionY, elementIndex, 0, true);
-  var _width = getActualValue(componentData.width, elementIndex, "W", true);
-  var _height = getActualValue(componentData.height, elementIndex, "W", true);
-  var _anchor = getActualValue(componentData.anchor, elementIndex, p5.CENTER, true);
-  var _mirror = getActualValue(componentData.mirror, elementIndex, "none", false);
-  var _angle = getActualValue(componentData.angle, elementIndex, 0, true);
-  var _tint = getActualValue(componentData.tint, elementIndex, "#FFFFFF", false);
-  var _opacity = getActualValue(componentData.opacity, elementIndex, 1, true);
-  var _size = getActualValue(componentData.size, elementIndex, 5, true);
-  var _font = getActualValue(componentData.font, elementIndex, "Verdana", false);
-  var _color = getActualValue(componentData.color, elementIndex, "#000000", false);
-  var _borderColor = getActualValue(componentData.borderColor, elementIndex, "#FF0000", false);
-  var _borderOpacity = getActualValue(componentData.borderOpacity, elementIndex, 1, false);
-  var _borderWeight = getActualValue(componentData.borderWeight, elementIndex, 3, false);
+  var _positionX = getActualValue(componentData.positionX, elementIndex, 0);
+  var _positionY = getActualValue(componentData.positionY, elementIndex, 0);
+  var _width = getActualValue(componentData.width, elementIndex, "W");
+  var _height = getActualValue(componentData.height, elementIndex, "W");
+  var _anchor = getActualValue(componentData.anchor, elementIndex, p5.CENTER);
+  var _mirror = getActualValue(componentData.mirror, elementIndex, "none");
+  var _angle = getActualValue(componentData.angle, elementIndex, 0);
+  var _tint = getActualValue(componentData.tint, elementIndex, "#FFFFFF");
+  var _opacity = getActualValue(componentData.opacity, elementIndex, 1);
+  var _size = getActualValue(componentData.size, elementIndex, 5);
+  var _font = getActualValue(componentData.font, elementIndex, "Verdana");
+  var _color = getActualValue(componentData.color, elementIndex, "#000000");
+  var _borderColor = getActualValue(componentData.borderColor, elementIndex, "#FF0000");
+  var _borderOpacity = getActualValue(componentData.borderOpacity, elementIndex, 1);
+  var _borderWeight = getActualValue(componentData.borderWeight, elementIndex, 3);
 
-  var _listAnchor = getActualValue(componentData.listAnchor, elementIndex, p5.CENTER, true);
-  var _spacingX = getActualValue(componentData.spacingX, elementIndex, 0, true);
-  var _spacingY = getActualValue(componentData.spacingY, elementIndex, 0, true);
-  var _style = getActualValue(componentData.style, elementIndex, "straight", false);
-  var _offsetX = getActualValue(componentData.offsetX, elementIndex, 0, true);
-  var _offsetY = getActualValue(componentData.offsetY, elementIndex, 0, true);
+  var _listAnchor = getActualValue(componentData.listAnchor, elementIndex, p5.CENTER);
+  var _spacingX = getActualValue(componentData.spacingX, elementIndex, 0);
+  var _spacingY = getActualValue(componentData.spacingY, elementIndex, 0);
+  var _style = getActualValue(componentData.style, elementIndex, "straight");
+  var _offsetX = getActualValue(componentData.offsetX, elementIndex, 0);
+  var _offsetY = getActualValue(componentData.offsetY, elementIndex, 0);
 
-  var _shadow = getActualValue(componentData.shadow, elementIndex, false, false);
-  var _shadowColor = getActualValue(componentData.shadowColor, elementIndex, "#000000", false);
-  var _shadowOpacity = getActualValue(componentData.shadowOpacity, elementIndex, 30, true);
-  var _shadowOffsetX = getActualValue(componentData.shadowOffsetX, elementIndex, 10, true);
-  var _shadowOffsetY = getActualValue(componentData.shadowOffsetY, elementIndex, 10, true);
-  var _shadowBlur = getActualValue(componentData.shadowBlur, elementIndex, 0, true);
+  var _shadowColor = getActualValue(componentData.shadowColor, elementIndex, "#000000");
+  var _shadowOpacity = getActualValue(componentData.shadowOpacity, elementIndex, 30);
+  var _shadowOffsetX = getActualValue(componentData.shadowOffsetX, elementIndex, 10);
+  var _shadowOffsetY = getActualValue(componentData.shadowOffsetY, elementIndex, 10);
+  var _shadowBlur = getActualValue(componentData.shadowBlur, elementIndex, 0);
 
   try {
     p5.card.angleMode(p5.DEGREES);
@@ -101,26 +96,26 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
       //! SHAPE
       if (componentType == "SHAPE") {
         var passes = 1;
-        if (_shadow) passes = 2;
+        if (_shadowOpacity > 0) passes = 2;
         p5.card.strokeJoin(p5.ROUND);
 
         for (var pass = 0; pass < passes; pass++) {
           if (pass == 0) {
             if (_anchor === p5.CENTER) p5.card.translate(-_width / 2, -_height / 2);
-            if (_shadow) {
+            if (_shadowOpacity > 0) {
               p5.card.fill(_shadowColor + zeroPad(Math.floor(_shadowOpacity * 255).toString(16), 2));
               p5.card.noStroke();
               p5.card.translate(_shadowOffsetX, _shadowOffsetY);
             } else {
               p5.card.fill(_color + zeroPad(Math.floor(_opacity * 255).toString(16), 2));
               p5.card.stroke(_borderColor + Math.floor(_borderOpacity * 255).toString(16));
-              if (_borderWeight != 0) p5.card.strokeWeight(_borderWeight);
+              if (_borderWeight != 0) p5.card.strokeWeight(_borderWeight * currentCollection.collectionInfo.resolution * 0.01);
               else p5.card.noStroke();
             }
           } else {
             p5.card.fill(_color + zeroPad(Math.floor(_opacity * 255).toString(16), 2));
             p5.card.stroke(_borderColor + Math.floor(_borderOpacity * 255).toString(16));
-            if (_borderWeight != 0) p5.card.strokeWeight(_borderWeight);
+            if (_borderWeight != 0) p5.card.strokeWeight(_borderWeight * currentCollection.collectionInfo.resolution * 0.01);
             else p5.card.noStroke();
           }
 
@@ -171,8 +166,11 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
               if (_borderWeight != 0) p5.card.strokeWeight(_borderWeight);
               else p5.card.noStroke();
               p5.card.noFill();
-              p5.card.ellipse(0, 0, _width, _height);
+              p5.card.ellipse(0, 0, _width * 0.2, _height * 0.2);
               p5.card.ellipse(0, 0, _width * 0.4, _height * 0.4);
+              p5.card.ellipse(0, 0, _width * 0.6, _height * 0.6);
+              p5.card.ellipse(0, 0, _width * 0.8, _height * 0.8);
+              p5.card.ellipse(0, 0, _width, _height);
               break;
             case "shield":
               p5.card.beginShape();
@@ -628,7 +626,7 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
               break;
           }
 
-          if (pass == 0 && _shadow) {
+          if (pass == 0 && _shadowOpacity > 0) {
             p5.card.translate(-_shadowOffsetX, -_shadowOffsetY);
           }
         }
@@ -641,7 +639,7 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
         p5.card.textFont(_font);
         p5.card.textSize(_size * currentCollection.collectionInfo.H * currentCollection.collectionInfo.resolution * 0.02);
 
-        if (_shadow) {
+        if (_shadowOpacity > 0) {
           p5.card.fill(_shadowColor + zeroPad(Math.floor(_shadowOpacity * 255).toString(16), 2));
           p5.card.text(_textToWrite, _shadowOffsetX, _shadowOffsetY);
         }
@@ -658,11 +656,11 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
         p5.card.imageMode(_anchor);
 
         var passes = 1;
-        if (_shadow) passes = 2;
+        if (_shadowOpacity > 0) passes = 2;
 
         for (let i = 0; i < _elementsList.length; i++) {
           for (var pass = 0; pass < passes; pass++) {
-            if (pass == 0 && _shadow) {
+            if (pass == 0 && _shadowOpacity > 0) {
               p5.card.tint(_shadowColor + zeroPad(Math.floor(_shadowOpacity * 255).toString(16), 2));
               p5.card.translate(_shadowOffsetX, _shadowOffsetY);
             } else {
@@ -695,7 +693,7 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
               );
             }
 
-            if (pass == 0 && _shadow) {
+            if (pass == 0 && _shadowOpacity > 0) {
               p5.card.translate(-_shadowOffsetX, -_shadowOffsetY);
             }
           }
@@ -703,8 +701,8 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
       }
     }
   } catch (e) {
-    console.log(e.message);
-    if (componentType == "IMAGE") {
+    // console.log(e);
+    if (componentType == "IMAGE" && _elementsList[0] != "") {
       p5.card.image(errorImage, 0, 0, _width, _height);
     }
   }
@@ -716,7 +714,7 @@ function zeroPad(num, places) {
   return String(num).padStart(places, "0");
 }
 
-function getActualValue(refValue, elementIndex, dft, evaluated) {
+function getActualValue(refValue, elementIndex, dft) {
   //GLOBAL VARIABLES THAT CAN BE USED IN EVALUATED VALUES
   let currentCollectionInfo = currentCollection.collectionInfo;
   var W = currentCollectionInfo.W * currentCollectionInfo.resolution;
@@ -732,6 +730,35 @@ function getActualValue(refValue, elementIndex, dft, evaluated) {
   var RIGHT = app.RIGHT;
   var DROITE = app.RIGHT;
 
+  //GLOBAL FONCTIONS THAT CAN BE USED IN EVALUATED VALUES
+  const RAND = (min, max) => {
+    return min + Math.random() * (max - min);
+  };
+
+  const RANDINT = (min, max) => {
+    return min + Math.floor(Math.random() * (max - min));
+  };
+
+  const CHOOSE = (elems, nb = 1) => {
+    return elems[Math.floor(Math.random() * elems.length)];
+  };
+
+  const PLACEHOLDER_TEXT = (len) => {
+    let text = "";
+    for (let i = 0; i < len; i++) {
+      text += CHOOSE(["a", "b", "c", "d", "e", "f", "g", "h", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]);
+    }
+    return text;
+  };
+
+  const PLACEHOLDER_NUM = (len) => {
+    let text = "";
+    for (let i = 0; i < len; i++) {
+      text += CHOOSE(["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]);
+    }
+    return text;
+  };
+
   var finalValue = "";
 
   //Value is not undefined
@@ -746,31 +773,25 @@ function getActualValue(refValue, elementIndex, dft, evaluated) {
         let indexOfValue = currentCollection.elements.headers.indexOf(cardBasedValue);
         //Header present in the data
         if (indexOfValue != -1) {
-          //Value with evaluation i.e. calculus available, access to global variables...
-          if (evaluated) finalValue = eval(currentCollection.elements.data[elementIndex][indexOfValue]);
-          //Straight values, no mods
-          else finalValue = currentCollection.elements.data[elementIndex][indexOfValue];
+          finalValue = currentCollection.elements.data[elementIndex][indexOfValue];
         }
       }
       //Fixed value
       else {
-        if (evaluated) finalValue = eval(fixedValue);
-        else finalValue = fixedValue;
+        finalValue = fixedValue;
       }
+
+      if (finalValue.charAt(0) == "=") finalValue = eval(finalValue.substring(1));
     } catch (e) {
-      console.log(e);
+      // console.log(e);
     }
   }
 
-  return finalValue || "0" ? finalValue : dft;
+  return finalValue || finalValue == "0" ? finalValue : dft;
 }
 
-export function triggerGeneration() {
-  app.generateMode = true;
-}
-
-// GENERATE 3x3 A4 PAGES OF CARDS
-export function generatePages(p5) {
+// GENERATE PAGES OF CARDS
+export function generatePages() {
   var W = currentCollection.collectionInfo.W * currentCollection.collectionInfo.resolution;
   var H = currentCollection.collectionInfo.H * currentCollection.collectionInfo.resolution;
   var colCount = currentCollection.collectionInfo.colCount;
@@ -784,31 +805,57 @@ export function generatePages(p5) {
 
   var currentPage;
 
-  var _allCardsIndices = [];
-  var currentElementIndex = 0;
-  currentCollection.elements.forEach((card) => {
-    if (card.quantity) {
-      for (let i = 0; i < card.quantity; i++) _allCardsIndices.push(currentElementIndex);
-    }
-    currentElementIndex++;
-  });
+  var elementsLength = currentCollection.elements.data.length;
+  var actualIndex = -1;
 
-  for (let i = 0; i < _allCardsIndices.length; i++) {
-    var elementIndex = _allCardsIndices[i];
+  for (let i = 0; i < currentCollection.elements.data.length; i++) {
+    var elementIndex = i;
+    actualIndex = i % Math.min(currentCollection.elements.data.length, currentCollection.collectionInfo.maxElementQty);
 
-    if (i % (colCount * rowCount) == 0) {
-      currentPage = p5.createGraphics(pageWidth, pageHeight);
+    
+
+    if (actualIndex == 0) {
+      currentPage = app.createGraphics(pageWidth, pageHeight);
       currentPage.background(255);
     }
-    renderCardUsingTemplate(p5, elementIndex, currentCollection.collectionInfo.visualGuide);
-    currentPage.image(p5.card, marginX + ((i % (colCount * rowCount)) % colCount) * W, marginY + Math.floor((i % (colCount * rowCount)) / colCount) * H, W, H);
 
-    if (i % (colCount * rowCount) == colCount * rowCount - 1 || i === _allCardsIndices.length - 1) {
+    renderCardUsingTemplate(app, elementIndex, currentCollection.collectionInfo.visualGuide);
+    currentPage.image(app.card, Math.round(marginX + (actualIndex%colCount) * W), Math.round(marginY + Math.floor(actualIndex / colCount) * H), W, H);
+
+    if (actualIndex === (currentCollection.collectionInfo.maxElementQty - 1) || i === elementsLength - 1) {
       pages.push(currentPage);
     }
   }
 
-  generatePDF(pages);
+
+  var coll = currentCollection.collectionInfo;
+  var collectionName = coll.collectionName;
+
+  if (currentCollection.collectionInfo.pageExportFormat == "pdf") {
+    let pageGeneration;
+
+    pageGeneration = new jsPDF("p", "px", [coll.pageWidth * coll.resolution, coll.pageHeight * coll.resolution], true);
+    pages.forEach((page, index) => {
+      if (index != 0) pageGeneration.addPage();
+
+      pageGeneration.addImage(page.canvas, "JPEG", 0, 0, coll.pageWidth * coll.resolution, coll.pageHeight * coll.resolution, "", "FAST");
+    });
+
+    pageGeneration.save("renders/" + collectionName + ".pdf");
+  } else if (currentCollection.collectionInfo.pageExportFormat == "jpg") {
+    pages.forEach((page, index) => {
+      // Get the DataUrl from the Canvas
+      const url = page.canvas.toDataURL("image/jpg", 0.8);
+
+      // remove Base64 stuff from the Image
+      const base64Data = url.replace(/^data:image\/png;base64,/, "");
+      fs.writeFile(`renders/${collectionName}-${index}.jpg`, base64Data, "base64", function (err) {
+        if(err) console.log(err);
+      });
+    });
+  }
+
+  renderCardUsingTemplate(app, app.currentIndex, currentCollection.collectionInfo.visualGuide);
 }
 
 export function renderCardUsingTemplate(p, elementIndex, guide) {
@@ -826,14 +873,14 @@ export function renderCardUsingTemplate(p, elementIndex, guide) {
     }
 
     //OVERLAYS
-    if (p.generateMode) {
-      if (currentCollection.collectionInfo.cuttingHelp) {
-        p.card.noFill();
-        p.card.stroke(0, 100);
-        p.card.strokeWeight(2);
-        p.card.rect(0, 0, currentCollection.collectionInfo.W, currentCollection.collectionInfo.H);
-      }
-    } else {
+    if (currentCollection.collectionInfo.cuttingHelp) {
+      p.card.noFill();
+      p.card.stroke(0, 100);
+      p.card.strokeWeight(2);
+      p.card.rect(0, 0, currentCollection.collectionInfo.W, currentCollection.collectionInfo.H);
+    }
+
+    if (currentCollection.collectionInfo.visualGuide != "none") {
       renderVisualGuide(p, guide);
     }
   }
