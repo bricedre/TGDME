@@ -1,25 +1,12 @@
 import { app } from "../app.js";
-import { currentCollection, saveCollection } from "./collectionsManager.js";
+import { currentCollection, currentCollectionUID, saveCollection } from "./collectionsManager.js";
 import { updateElementsCounter } from "../screens/editionScreen.js";
+
+const { rootPath } = require("electron-root-path");
 
 const $ = require("jquery");
 const XLSX = require("xlsx");
 const { exec } = require("child_process");
-
-export function updateDataView() {
-  const elementItemsDiv = $("#elementItemsDiv");
-  elementItemsDiv.empty();
-
-  if (currentCollection.elements.headers.length > 0) {
-    currentCollection.elements.headers.forEach((header, index) => {
-      elementItemsDiv.append($("<p></p>").text(`${header} : ${currentCollection.elements.data[app.currentIndex][index]}`));
-    });
-  } else {
-    elementItemsDiv.append($("<p></p>").text("Aucune donnée disponible").addClass("noStuffDiv"));
-  }
-
-  updateElementsCounter();
-}
 
 export function openExcelFile() {
   const filePath = `collections/${currentCollection.collectionInfo.UID}/data.xlsx`;
@@ -36,8 +23,6 @@ export function openExcelFile() {
 export function checkForFileUpdate() {
   const filePath = `collections/${currentCollection.collectionInfo.UID}/data.xlsx`;
 
-  // Here we simulate the manual file check. Since JavaScript in the browser can't access the local file system,
-  // this code will only work if the file path is accessible through a proper API (e.g., in a Node.js environment).
   fetch(filePath)
     .then((response) => {
       if (!response.ok) {
@@ -55,14 +40,28 @@ export function checkForFileUpdate() {
         const headers = sheetData[0];
         const data = sheetData.slice(1);
 
-        console.log(headers, data)
+        //Cleaning trailing empty data
+        for (let i = data.length - 1; i >= 0; i--) {
+          if (data[i].length == 0) {
+            data.pop();
+          } else {
+            break;
+          }
+        }
+
+        //Cleaning data without a header
+        data.forEach((data) => {
+          while (data.length > headers.length) {
+            data.pop();
+          }
+        });
 
         // Update currentCollection with the new data
         currentCollection.elements.headers = headers;
         currentCollection.elements.data = data;
 
         updateDataView();
-        generateCollectionBtn.click(); //Saving mods to colelction
+        generateCollectionBtn.click(); //Saving mods to collection
       } else {
         currentCollection.elements = {
           headers: [],
@@ -74,4 +73,54 @@ export function checkForFileUpdate() {
       console.error(error);
       alert("Le fichier n'a pas pu être chargé.");
     });
+}
+
+export function updateDataView() {
+  const elementItemsDiv = $("#elementItemsDiv");
+  elementItemsDiv.empty();
+
+  //Has data to show
+  if (currentCollection.elements.headers.length > 0) {
+    let dataTable = $(`<table class="dataTable"></table>`);
+    dataTable.append($("<thead><tr><th>Clé</th><th>Valeur</th><th>Aperçu</th></tr></thead>"));
+    let dataTableBody = $("<tbody></tbody>");
+    dataTableBody.css("background", "#ffffff")
+
+    currentCollection.elements.headers.forEach((header, index) => {
+      let newRow = $("<tr></tr>");
+      newRow.append($("<td></td>").text(header));
+
+      let valueToShow = currentCollection.elements.data[app.currentIndex][index];
+
+      newRow.append($("<td></td>").text(valueToShow));
+
+      if (valueToShow) {
+        if (valueToShow.toString().charAt(0) == "#") {
+          // newRow.append($("<td></td>")
+          let colorPreview = $("<div></div>").css("background", valueToShow).css("border-radius", "50%").css("width", "2rem").css("height", "2rem").css("border", "3px solid black");
+          let td = $("<td></td>");
+          td.append(colorPreview);
+          newRow.append(td);
+        } else if ([".png", ".jpg"].includes(valueToShow.toString().substring(valueToShow.length - 4))) {
+          // console.log("img")
+          newRow.append($("<td></td>").css("background-image", `url("collections/${currentCollectionUID}/assets/${valueToShow}")`).css("height", "5rem"));
+        } else {
+          newRow.append($("<td></td>"));
+        }
+      } else {
+        newRow.append($("<td></td>"));
+      }
+
+      dataTableBody.append(newRow);
+    });
+    dataTable.append(dataTableBody);
+    elementItemsDiv.append(dataTable);
+  }
+
+  // No data to show
+  else {
+    elementItemsDiv.append($("<p></p>").text("Aucune donnée disponible").addClass("noStuffDiv"));
+  }
+
+  updateElementsCounter();
 }

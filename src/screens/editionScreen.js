@@ -1,7 +1,8 @@
 import { app } from "../app.js";
+const { rootPath } = require("electron-root-path");
 import { addNewImage, addNewShape, addNewText, archiveCollection, currentCollection, deleteCurrentCollection, duplicateCollection, saveCollection } from "../core/collectionsManager.js";
 import { generatePages, renderCardUsingTemplate } from "../render.js";
-import { allSystemFonts, loadAssets, openCurrentResFolder } from "../core/assetsManager.js";
+import { allSystemFonts, loadAssets } from "../core/assetsManager.js";
 import { setupComponents } from "../core/componentsManager.js";
 import { checkForFileUpdate, openExcelFile, updateDataView } from "../core/elementsManager.js";
 
@@ -17,18 +18,25 @@ $("#generateCollectionBtn")
     $("#generateCollectionBtn").css("animation", "none");
   });
 
+$("#startPrevCardBtn").on("click", () => goToOtherCard(-500));
 $("#bigPrevCardBtn").on("click", () => goToOtherCard(-10));
 $("#prevCardBtn").on("click", () => goToOtherCard(-1));
 $("#nextCardBtn").on("click", () => goToOtherCard(1));
 $("#bigNextCardBtn").on("click", () => goToOtherCard(10));
+$("#endNextCardBtn").on("click", () => goToOtherCard(500));
 
 //TABS BUTTONS
 $("#duplicateCollectionBtn").on("click", () => duplicateCollection());
 $("#archiveCollectionBtn").on("click", () => archiveCollection());
-$("#deleteCollectionBtn").on("click", () => deleteCurrentCollection());
+$("#deleteCollectionBtn").on("click", () => {
+  if (confirm("Attention, cette action est irréversible !\nSupprimer ?")) deleteCurrentCollection();
+});
 
-$("#openResFolderBtn").on("click", () => openCurrentResFolder());
-$("#reloadResBtn").on("click", () => loadAssets(app));
+$("#openResFolderBtn").on("click", () => openSpecificFolder("assets"));
+$("#reloadResBtn").on("click", () => {
+  loadAssets(app);
+  generateCollectionBtn.click();
+});
 
 $("#addImageComponentBtn").on("click", () => addNewImage());
 $("#addShapeComponentBtn").on("click", () => addNewShape());
@@ -38,10 +46,18 @@ $("#modifyDataBtn").on("click", () => openExcelFile());
 $("#updateDataBtn").on("click", () => checkForFileUpdate());
 
 $("#printPagesBtn").on("click", () => generatePages());
+$("#showRendersBtn").on("click", () => openSpecificFolder("renders"));
+
+$("#turnCanvasBtn").on("click", () => turnCanvas());
+$("#scaleUpCanvasBtn").on("click", () => scaleCanvas(1));
+$("#scaleDownCanvasBtn").on("click", () => scaleCanvas(-1));
 
 /*        
 GLOBAL
 */
+
+let canvasRotation = 0;
+let canvasScale = 1;
 
 export function updateElementsCounter() {
   var currentIndex = app.currentIndex;
@@ -56,26 +72,29 @@ export function updateElementsCounter() {
   if (app.currentIndex != 0) {
     prevCardBtn.disabled = false;
     bigPrevCardBtn.disabled = false;
+    startPrevCardBtn.disabled = false;
   } else {
     prevCardBtn.disabled = true;
     bigPrevCardBtn.disabled = true;
+    startPrevCardBtn.disabled = true;
   }
 
   if (currentCollection.elements.data.length > 0 && app.currentIndex != currentCollection.elements.data.length - 1) {
     nextCardBtn.disabled = false;
     bigNextCardBtn.disabled = false;
+    endNextCardBtn.disabled = false;
   } else {
     nextCardBtn.disabled = true;
     bigNextCardBtn.disabled = true;
+    endNextCardBtn.disabled = true;
   }
 }
 
-export function goToOtherCard(delta) {
-  app.currentIndex = Math.min(Math.max(parseInt(app.currentIndex + delta), 0), currentCollection.elements.data.length - 1);
+export function goToOtherCard(value) {
+  app.currentIndex = Math.min(Math.max(parseInt(app.currentIndex + value), 0), currentCollection.elements.data.length - 1);
   renderCardUsingTemplate(app, app.currentIndex, currentCollection.collectionInfo.visualGuide);
   updateElementsCounter();
   updateDataView();
-  $("main").prop("--cardAngle", 3 - app.random() * 6 + "deg");
 }
 
 export function populateEditionFields() {
@@ -97,8 +116,7 @@ export function populateEditionFields() {
 }
 
 export function checkOtherInputs(eventTargetId, eventTargetValue) {
-
-  console.log(eventTargetId)
+  console.log(eventTargetId);
 
   switch (eventTargetId) {
     case "elementFormatSelect":
@@ -113,7 +131,7 @@ export function checkOtherInputs(eventTargetId, eventTargetValue) {
       break;
 
     case "pageFormatSelect":
-      console.log("coucou")
+      console.log("coucou");
       if (eventTargetValue === "custom") {
         pageWidthInput.disabled = false;
         pageHeightInput.disabled = false;
@@ -145,4 +163,26 @@ export function moveComponent(currentIndex, delta) {
     setupComponents();
     generateCollectionBtn.click();
   }, 200);
+}
+
+function openSpecificFolder(folder) {
+  const filePath = `${rootPath}\\collections\\${currentCollection.collectionInfo.UID}\\${folder}`;
+
+  // Open the folder
+  require("child_process").exec(`start "" "${filePath}"`, (err, stdout, stderr) => {
+    if (err) {
+      console.error("Le dossier n'a pas pu être trouvé :", err);
+      return;
+    }
+  });
+}
+
+function turnCanvas() {
+  canvasRotation = canvasRotation+90;
+  $("#canvasDiv main").css("rotate", canvasRotation+"deg");
+}
+
+function scaleCanvas(sign) {
+  canvasScale = (canvasScale + 0.1*sign);
+  $("#canvasDiv main").css("scale", canvasScale);
 }

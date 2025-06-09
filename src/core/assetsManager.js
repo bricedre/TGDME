@@ -37,7 +37,7 @@ export function createNewResource(item, itemIndex) {
   let file = item.split("//")[1];
   let fileName = file.split(".")[0];
   
-  ressContainer.title = "Copier le nom de la ressource";
+  ressContainer.title = "Cliquer pour copier le nom de la ressource";
   ressContainer.addEventListener("click", () => {
     navigator.clipboard.writeText(file);
   });
@@ -77,18 +77,6 @@ export function loadAssets(p) {
   errorImage = p.loadImage(rootPath + "/assets/imageError.png");
 
   setupResources();
-}
-
-export function openCurrentResFolder(){
-  const filePath = `${rootPath}\\collections\\${currentCollection.collectionInfo.UID}\\assets`;
-
-  // Open the folder
-  require('child_process').exec(`start "" "${filePath}"`, (err, stdout, stderr) => {
-    if (err) {
-      console.error("Le dossier n'a pas pu être trouvé :", err);
-      return;
-    }
-  });
 }
 
 function getFiles(dir, files = []) {

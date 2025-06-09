@@ -6,10 +6,10 @@ import { openScene } from "../screens/mainLayout.js";
 
 import { getFontList, loadAssets } from "./assetsManager.js";
 import { imageComponentTemplate, textComponentTemplate, shapeComponentTemplate } from "./componentTemplates.js";
-import { renderCardUsingTemplate } from "../render.js";
+import { renderCardUsingTemplate, setGlobalVariables } from "../render.js";
 import { setupResources } from "./assetsManager.js";
 import { populateComponents, setupComponents } from "./componentsManager.js";
-import { updateDataView } from "./elementsManager.js";
+import { checkForFileUpdate, updateDataView } from "./elementsManager.js";
 import { setupMenu } from "../screens/menuScreen.js";
 
 const { rootPath } = require("electron-root-path");
@@ -29,7 +29,8 @@ getCollections();
 export function getCollections() {
   collectionsAvailable = readdirSync(rootPath + "/collections", { withFileTypes: true })
     .filter((dirent) => dirent.isDirectory())
-    .map((dirent) => dirent.name);
+    .map((dirent) => dirent.name)
+    .sort((a,b) => a - b);
 
   collectionsAvailable.forEach(async (collection, index) => {
     const data = await fs.readFile(rootPath + "/collections/" + collection + "/collection.json");
@@ -61,25 +62,31 @@ export function setCurrentCollection(collectionUID) {
       setupComponents();
       populateComponents();
       updateDataView();
+      checkForFileUpdate();
+      setGlobalVariables();
       renderCardUsingTemplate(app, app.currentIndex, currentCollection.collectionInfo.visualGuide);
     }, 500);
   }
 }
 
 export function createNewCollection() {
+
   const newUID = collectionsAvailable.length == 0 ? 0 : collectionsAvailable[collectionsAvailable.length - 1].collectionInfo.UID + 1;
   var dir = rootPath + "/collections/" + newUID;
+
+  console.log(collectionsAvailable)
 
   const collectionTemplatePath = rootPath + "/src/core/collectionTemplate.json";
 
   if (!existsSync(dir)) {
     mkdirSync(dir);
     mkdirSync(dir + "/assets");
+    mkdirSync(dir + "/renders");
     copyFileSync(collectionTemplatePath, rootPath + "/collections/" + newUID + "/collection.json");
 
     //CREATE DATA EXCEL SHEET
-    const headers = []; // No headers initially
-    const data = []; // No data initially
+    const headers = ["donnée 1", "donnée 2"]; // No headers initially
+    const data = [["vide", "vide"]]; // No data initially
 
     const worksheetData = [headers, ...data];
     const worksheet = XLSX.utils.aoa_to_sheet(worksheetData);
@@ -97,7 +104,7 @@ export function createNewCollection() {
 
     setTimeout(() => {
       collectionsAvailable[collectionsAvailable.length - 1].collectionInfo.UID = newUID;
-      collectionsAvailable[collectionsAvailable.length - 1].collectionInfo.collectionName = "Nouvelle Collection N°" + (newUID + 1);
+      collectionsAvailable[collectionsAvailable.length - 1].collectionInfo.collectionName = "Nouveau Proto";
       var deckToSave = JSON.stringify(collectionsAvailable[collectionsAvailable.length - 1]);
       fs.writeFile(rootPath + "/collections/" + newUID + "/collection.json", deckToSave, (err) => {
         if (err) {
@@ -149,7 +156,7 @@ export function archiveCollection() {
   saveCollection(false, false);
   setCurrentCollection(-1);
   setTimeout(() => getCollections(), 300);
-  setTimeout(() => openScene("collectionSelection"), 1000);
+  setTimeout(() => openScene("home"), 1000);
 }
 
 export function saveCollection(refreshAssets, reRenderCard) {

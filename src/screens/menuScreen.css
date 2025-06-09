@@ -14,8 +14,9 @@
 
 #startPanelDiv {
   display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
+  flex-direction: column;
+  gap: 2rem;
+  justify-content: start;
 }
 
 #collectionSelectionPanel {
@@ -57,7 +58,7 @@
 .homePagePanel {
   position: relative;
   height: 70vh;
-  width: 42vw;
+  width: 90%;
   translate: 0 5vh;
 
   border-radius: 2vh;

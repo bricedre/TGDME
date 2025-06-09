@@ -16,59 +16,36 @@
 <body>
 
   <nav>
-    <button id="homeBtn" class="homeBtn">
+    <button id="homeBtn" class="homeBtn" title="Retour à l'Accueil">
       <img id="homeIcon" src="./assets/home.png" alt="home btn" />
     </button>
     <div id="mainTitleDiv">LA CABANE À PROTOS</div>
   </nav>
 
   <div class="viewer">
-    <div id="startPanelDiv" class="panel">
-
-      <!-- <button class="homePageBtn" id="tutorialBtn">
-        <div class="imgContainer">
-          <img src="./assets/tutorialBtn.png" alt="add symbol" />
-        </div>
-        <p>TUTORIEL</p>
-      </button> -->
-
-      <div class="homePagePanel" id="loadCollectionsPanel">
-      </div>
-      
-      <div class="homePagePanel" id="loadLayoutsPanel">
-        <!-- <div class="imgContainer">
-          <img src="./assets/loadCollectionBtn.png" alt="add symbol" />
-        </div>
-        <p class="panelTitle">DISPOSITIONS DE PAGES</p> -->
-      </div>
-
-    </div>
-
-    <div id="collectionSelectionPanel" class="panel">
-    </div>
-
+    <div id="startPanelDiv" class="panel"></div>
 
     <div id="collectionEditionPanel" class="panel">
-
       <div class="tabs">
         <button id="generateCollectionBtn" title="Re-générer la Collection (Entrée)" class="generateCollectionBtn">
           <img src="./assets/reload.png" alt="add symbol" />
         </button>
         <input id="tabConfigInput" type="radio" name="tabs" checked>
         <label for="tabConfigInput"
-          title="Configuration générale de la Collection et des Élements (F1)">Configuration</label>
+          title="Configuration générale de la Collection et des Élements">Configuration</label>
         <span>></span>
         <input id="tabRessInput" type="radio" name="tabs">
-        <label for="tabRessInput" title="Ressources liées à la Collection (F2)">Ressources</label>
+        <label for="tabRessInput" title="Images liées à la Collection">Images</label>
         <span>></span>
-        <input id="tabTemplateInput" type="radio" name="tabs">
-        <label for="tabTemplateInput" title="Création du Modèle (F3)">Modèle</label>
+<input id="tabElementsInput" type="radio" name="tabs">
+        <label for="tabElementsInput" title="Modification des Données">Données</label>
         <span>></span>
-        <input id="tabElementsInput" type="radio" name="tabs">
-        <label for="tabElementsInput" title="Modification des Données (F4)">Données</label>
+                <input id="tabTemplateInput" type="radio" name="tabs">
+        <label for="tabTemplateInput" title="Création du Modèle">Modèle</label>
+        
         <span>></span>
         <input id="tabPrinting" type="radio" name="tabs">
-        <label for="tabPrinting" title="Impression (F5)">Impression</label>
+        <label for="tabPrinting" title="Paramètres de Rendu">Rendu</label>
 
         <div class="content">
 
@@ -122,7 +99,7 @@
 
 
 
-            <div class="parameterSlot" title="Les repères visuels ne seront pas inclus dans le PDF final">
+            <div class="parameterSlot" title="Les repères visuels ne seront pas inclus dans le rendu final">
               <p class="parameterName">Repère Visuel 🔍</p>
               <select id="visualGuideSelect" class="parameterInput">
                 <option value="none">Aucun</option>
@@ -138,6 +115,10 @@
                   <option value="hexp">Hexagone Portrait</option>
                   <option value="hexl">Hexagone Paysage</option>
                   <option value="oct">Octogone</option>
+                </optgroup>
+
+                <optgroup label="Autre">
+                  <option value="domino">Bordure Domino</option>
                 </optgroup>
 
               </select>
@@ -156,7 +137,7 @@
               <img src="./assets/archiveCollection.png">
             </button>
 
-            <button id="deleteCollectionBtn" class="navBtn" title="Attention ! Cette action est irréversible !">
+            <button id="deleteCollectionBtn" class="navBtn" title="Supprimer la collection actuelle">
               SUPPRIMER
               <img src="./assets/deleteCollection.png">
             </button>
@@ -174,6 +155,21 @@
               <button id="reloadResBtn" class="navBtn" title="Recharger les Ressources afin de récupérer les modifications">
                 RECHARGER
                 <img src="./assets/imgResource.png">
+              </button>
+            </div>
+          </div>
+
+                    <div id="contentElementsDiv">
+            <div id="elementItemsDiv" class="mainContent">
+            </div>
+            <div class="btnContainer">
+              <button title="Ouvrir les données dans un tableur (nécessite la présence d'un tableur : Excel, OpenCalc...)" id="modifyDataBtn" class="navBtn" >
+                MODIFIER
+                <img src="./assets/fillData.png">
+              </button>
+              <button title="Mettre à jour les données de la collection" id="updateDataBtn" class="navBtn">
+                METTRE À JOUR
+                <img src="./assets/wizardFillBtn.png">
               </button>
             </div>
           </div>
@@ -196,20 +192,7 @@
             </div>
           </div>
 
-          <div id="contentElementsDiv">
-            <div id="elementItemsDiv" class="mainContent">
-            </div>
-            <div class="btnContainer">
-              <button title="Ouvrir les données dans un tableur (nécessite la présence d'un tableur : Excel, OpenCalc...)" id="modifyDataBtn" class="navBtn" >
-                MODIFIER
-                <img src="./assets/fillData.png">
-              </button>
-              <button title="Mettre à jour les données de la collection" id="updateDataBtn" class="navBtn">
-                METTRE À JOUR
-                <img src="./assets/wizardFillBtn.png">
-              </button>
-            </div>
-          </div>
+
 
           <div id="contentPrintingDiv">
 
@@ -222,7 +205,7 @@
                   <optgroup label="Formats standards">
                     <option value="A4">A4</option>
                     <option value="A3">A3</option>
-                    <option value="TTS">TTS</option>
+                    <option value="TTS">TableTop Simulator</option>
                   </optgroup>
                   <optgroup label="Personnalisé">
                     <option value="custom">Choisir ses dimensions...</option>
@@ -276,8 +259,12 @@
         
         <div class="btnContainer">
           <button title="Générer les pages d'élements en fonction des paramètres choisis" id="printPagesBtn" class="navBtn" >
-            GÉNÉRER PAGES
-                <img src="./assets/toPrint.png">
+            GÉNÉRER
+                <img src="./assets/toPrint.png" />
+              </button>
+              <button title="Ouvrir le dossier des rendus" id="showRendersBtn" class="navBtn" >
+            OUVRIR
+                <img src="./assets/archiveCollection.png"/>
               </button>
             </div>
           </div>
@@ -286,11 +273,15 @@
       </div>
 
       <div id="canvasDiv">
+        <p class="cardPreview">Aperçu de l'élément actuel</p>
+        <div class="btnContainer">
+          <button title="Tourner de 90°" id="turnCanvasBtn" class="navBtn" ><img src="./assets/rotate.png"/></button>
+              <button title="Agrandir" id="scaleUpCanvasBtn" class="navBtn" ><img src="./assets/scaleUp.png"/></button>
+              <button title="Réduire" id="scaleDownCanvasBtn" class="navBtn" ><img src="./assets/scaleDown.png"/></button>
+            </div>
         <main></main>
       </div>
     </div>
-
-   
 
   </div>
 
@@ -298,6 +289,9 @@
     <div id="cardCounterDiv">
       
       <div id="cardCounterDivBtns">
+        <button class="cardBtn" id="startPrevCardBtn">
+          ◄ Début
+        </button>
         <button class="cardBtn" id="bigPrevCardBtn">
           ◄ 10
         </button>
@@ -307,6 +301,7 @@
         <div id="cardCounterDivLabel">1/4 - 1 copy</div>
         <button class="cardBtn" id="nextCardBtn">►</button>
         <button class="cardBtn" id="bigNextCardBtn">10 ►</button>
+        <button class="cardBtn" id="endNextCardBtn">Fin ►</button>
       </div>
     </div>
 </body>

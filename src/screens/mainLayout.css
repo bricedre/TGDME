@@ -42,7 +42,7 @@ nav {
 
 .navBtn {
   width: -webkit-fill-available;
-  margin-top: 0.8rem;
+  /* margin-top: 0.8rem; */
   border-radius: 0.7rem;
 }
 
@@ -62,14 +62,7 @@ nav {
 main {
   display: grid;
   place-items: center;
-  transition: scale 0.3s ease-in-out;
 }
-
-main:hover {
-  scale: 1.4;
-  cursor: cell;
-}
-
 
 .panel {
   display: none;
@@ -79,8 +72,6 @@ main:hover {
   flex: 1;
   gap: 2rem;
 }
-
-
 
 button {
   padding: 0.5rem 1rem;
@@ -98,7 +89,7 @@ button {
   font-family: "Main Font", sans-serif;
 }
 
-button>img {
+button > img {
   height: 2rem;
   rotate: 5deg;
   filter: drop-shadow(2px 2px 2px var(--mainColorShadows));
@@ -113,7 +104,6 @@ button:disabled {
   cursor: default;
 }
 
-
 #bottomBarDiv {
   background: linear-gradient(-90deg, var(--mainColor), #34b3ff);
   min-height: 10vh;
@@ -125,10 +115,6 @@ button:disabled {
   border-radius: 2.5rem 2.5rem 0 0;
   margin: 0 2rem;
 }
-
-
-
-
 
 /* SCROLLBAR */
 /* width */
@@ -147,8 +133,6 @@ button:disabled {
   border-radius: 10px;
   border: 6px solid var(--panelBG);
 }
-
-
 
 /* Customize the label (the container) */
 .checkboxContainer {
@@ -186,12 +170,12 @@ button:disabled {
 }
 
 /* On mouse-over, add a grey background color */
-.checkboxContainer:hover input~.checkmark {
+.checkboxContainer:hover input ~ .checkmark {
   background: #ccc;
 }
 
 /* When the checkbox is checked, add a blue background */
-.checkboxContainer input:checked~.checkmark {
+.checkboxContainer input:checked ~ .checkmark {
   background-color: var(--mainColorDark);
 }
 
@@ -203,7 +187,7 @@ button:disabled {
 }
 
 /* Show the checkmark when checked */
-.checkboxContainer input:checked~.checkmark:after {
+.checkboxContainer input:checked ~ .checkmark:after {
   display: block;
 }
 

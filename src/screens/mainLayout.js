@@ -12,30 +12,12 @@ const scenesSettings = {
     uiElement: "#startPanelDiv",
     hideFooter: true,
   },
-  collectionSelection: {
-    title: "BIBLIOTHÈQUE DE COLLECTIONS",
-    icon: "./assets/icon.png",
-    uiElement: "#collectionSelectionPanel",
-    hideFooter: true,
-  },
   collectionEdition: {
     title: () => currentCollection?.collectionInfo.collectionName,
-    icon: "./assets/newCollectionBtn.png",
+    icon: "./assets/home.png",
     uiElement: "#collectionEditionPanel",
     hideFooter: false,
-  },
-  layoutSelection: {
-    title: "BIBLIOTHÈQUE DE PAGES",
-    icon: "./assets/home.png",
-    uiElement: "#startPanelDiv",
-    hideFooter: true,
-  },
-  layoutEdition: {
-    title: "PAGE X",
-    icon: "./assets/home.png",
-    uiElement: "#startPanelDiv",
-    hideFooter: true,
-  },
+  }
 };
 
 export let currentPanel = "home";
@@ -46,16 +28,6 @@ openScene(currentPanel);
 document.addEventListener("keyup", function (event) {
   if (event.key === "Enter") {
     generateCollectionBtn.click();
-  } else if (event.key === "F1") {
-    document.getElementById("tabConfigInput").checked = true;
-  } else if (event.key === "F2") {
-    document.getElementById("tabRessInput").checked = true;
-  } else if (event.key === "F3") {
-    document.getElementById("tabTemplateInput").checked = true;
-  } else if (event.key === "F4") {
-    document.getElementById("tabElementsInput").checked = true;
-  } else if (event.key === "F5") {
-    document.getElementById("tabPrinting").checked = true;
   }
 });
 

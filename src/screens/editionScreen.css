@@ -1,5 +1,5 @@
 canvas {
-  box-shadow: 5px 5px 30px #0003;
+  box-shadow: 0 0 30px #0003;
   border-radius: 1rem;
   z-index: 1;
 }
@@ -11,10 +11,53 @@ canvas {
 #canvasDiv {
   padding: 4rem;
   position: relative;
-    height: 100%;
+  height: 100%;
+  flex: 1;
+  background-color: var(--panelBG);
+  border-radius: 1rem;
 }
 
-#shadowCard{
+#canvasDiv .cardPreview {
+  position: absolute;
+  text-align: left;
+  top: 94%;
+  left: 50%;
+  font-size: 0.8rem;
+  translate: -50% -50%;
+  margin-top: 1rem;
+  opacity: 0.5;
+}
+
+#canvasDiv main {
+  rotate: 0deg;
+  scale: 1;
+  transition: all 0.3s ease-in-out;
+  pointer-events: none;
+}
+
+#canvasDiv .btnContainer {
+  transition: all 0.3s ease-in-out;
+  opacity: 0;
+  display: flex;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  translate: -50% -50%;
+  z-index: 5;
+  background: rgba(0, 0, 0, 0.37);
+  padding: 1rem;
+  border-radius: 1rem;
+}
+
+#canvasDiv:hover .btnContainer {
+  opacity: 1;
+}
+
+#canvasDiv .btnContainer img {
+  rotate: 0deg !important;
+}
+
+#shadowCard {
   width: calc(100% - 8rem);
   height: calc(100% - 8rem);
   background: #4c4c4c;
@@ -80,9 +123,7 @@ canvas {
   white-space: nowrap;
 }
 
-.uidTag {
-  color: #0005;
-  font-size: 0.8rem;
+.headerSpacer {
   width: -webkit-fill-available;
 }
 
@@ -104,7 +145,7 @@ canvas {
 /*      TAB SYSTEM     */
 
 .tabs {
-  width: 100%;
+  width: 50vw;
   height: 100%;
   background-color: var(--panelBG);
   border-radius: 1rem;
@@ -258,6 +299,8 @@ input[type="radio"] {
   display: flex;
   gap: 1rem;
   flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
 }
 
 /* ACCORDION */
@@ -309,7 +352,7 @@ input[type="radio"] {
 .visibilityBtn:hover,
 .deleteComponentBtn:hover,
 .deleteElementBtn:hover,
-.duplicateComponentBtn:hover{
+.duplicateComponentBtn:hover {
   scale: 1.5;
 }
 
@@ -376,11 +419,11 @@ input[type="radio"] {
   transition: all 0.1s ease-in-out;
 }
 
-.ressContainer:hover > img{
+.ressContainer:hover > img {
   opacity: 0.3;
 }
 
-.ressTitle{
+.ressTitle {
   position: absolute;
   opacity: 0;
   max-width: 80%;
@@ -389,7 +432,7 @@ input[type="radio"] {
   text-align: center;
 }
 
-.ressContainer:hover > .ressTitle{
+.ressContainer:hover > .ressTitle {
   opacity: 1;
 }
 
@@ -425,4 +468,35 @@ input[type="radio"] {
 .deleteResourceBtn:hover,
 .uidTagCorner:hover {
   scale: 1.2;
+}
+
+.dataTable {
+  width: 100%;
+  text-align: left;
+  border-collapse: collapse;
+  table-layout: fixed;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.dataTable th {
+  background: #65bee8;
+}
+
+.dataTable th{
+  padding: 0.5rem;
+  border-bottom: 3px solid #424141;
+}
+
+
+.dataTable td {
+  padding: 0.5rem;
+  border-bottom: 1px solid #424141;
+  background-position: left;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.dataTable tr:last-of-type td{
+  border-bottom: none;
 }

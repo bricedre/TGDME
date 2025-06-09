@@ -18,6 +18,24 @@ icone dans texte
 
 */
 
+//GLOBAL VARIABLES THAT CAN BE USED IN EVALUATED VALUES
+let W, L, H, CENTER, CENTRE, CORNER, COIN, LEFT, GAUCHE, RIGHT, DROITE;
+
+export function setGlobalVariables() {
+  let currentCollectionInfo = currentCollection.collectionInfo;
+  W = currentCollectionInfo.W * currentCollectionInfo.resolution;
+  L = currentCollectionInfo.W * currentCollectionInfo.resolution;
+  H = currentCollectionInfo.H * currentCollectionInfo.resolution;
+  CENTER = app.CENTER;
+  CENTRE = app.CENTER;
+  CORNER = app.CORNER;
+  COIN = app.CORNER;
+  LEFT = app.LEFT;
+  GAUCHE = app.LEFT;
+  RIGHT = app.RIGHT;
+  DROITE = app.RIGHT;
+}
+
 export function renderComponent(p5, componentType, componentIndex, elementIndex) {
   let currentTemplate = currentCollection.template;
 
@@ -42,6 +60,7 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
   var _positionY = getActualValue(componentData.positionY, elementIndex, 0);
   var _width = getActualValue(componentData.width, elementIndex, "W");
   var _height = getActualValue(componentData.height, elementIndex, "W");
+  var _maxWidth = getActualValue(componentData.maxWidth, elementIndex, "W");
   var _anchor = getActualValue(componentData.anchor, elementIndex, p5.CENTER);
   var _mirror = getActualValue(componentData.mirror, elementIndex, "none");
   var _angle = getActualValue(componentData.angle, elementIndex, 0);
@@ -634,6 +653,7 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
 
       //! TEXT
       else if (componentType == "TEXT") {
+
         p5.card.noStroke();
         p5.card.textAlign(_anchor, p5.CENTER);
         p5.card.textFont(_font);
@@ -645,7 +665,41 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
         }
 
         p5.card.fill(_color + zeroPad(Math.floor(_opacity * 255).toString(16), 2));
-        p5.card.text(_textToWrite, 0, 0);
+
+        let words = _textToWrite.split(" ");
+        let lines = [];
+        let newLine = "";
+        let imgs = [];
+
+        words.forEach((word, index) => {
+          word = checkForImages(word, imgs, p5.card.textWidth(newLine), lines.length);
+          let newWidth = p5.card.textWidth(newLine + " " + word);
+          if (newWidth > _maxWidth) {
+            lines.push(newLine);
+
+            newLine = word;
+            if (index === words.length - 1) {
+              lines.push(newLine);
+            }
+          } else if (index === words.length - 1) {
+            newLine += " " + word;
+            lines.push(newLine);
+          } else {
+            newLine += (index !== 0 ? " " : "") + word;
+          }
+        });
+        
+        let interline = _size * currentCollection.collectionInfo.H * currentCollection.collectionInfo.resolution * 0.02;
+        let linesStartOffset = (lines.length - 1) * 0.5 * interline;
+
+        lines.forEach((line, index) => p5.card.text(line, 0, -linesStartOffset + index * interline));
+
+        imgs.forEach(img => {
+          p5.card.imageMode(p5.CENTER);
+          let imgSize = 30;
+          let imgToShow = assetsLibrary[img.src];
+          p5.card.image(imgToShow, -(p5.card.textWidth(lines[img.lineIndex])/2) + img.xPlacement + p5.card.textWidth("___")*0.6, -linesStartOffset + img.lineIndex * interline, imgSize, imgSize);
+        })
       }
 
       //! IMAGE / STRIP
@@ -710,25 +764,22 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
   p5.card.pop();
 }
 
+function checkForImages(word, imgs, currentWidth, currentLineIndex){
+  //Image trouvée
+  if(word.charAt(0) == "["){
+    let img = word.replace("[[", "").replace("]]", "");
+    imgs.push({src : img, xPlacement : currentWidth, lineIndex : currentLineIndex})
+    return "   ";
+  }
+  else return word;
+}
+
 function zeroPad(num, places) {
   return String(num).padStart(places, "0");
 }
 
 function getActualValue(refValue, elementIndex, dft) {
-  //GLOBAL VARIABLES THAT CAN BE USED IN EVALUATED VALUES
-  let currentCollectionInfo = currentCollection.collectionInfo;
-  var W = currentCollectionInfo.W * currentCollectionInfo.resolution;
-  var L = currentCollectionInfo.W * currentCollectionInfo.resolution;
-  var H = currentCollectionInfo.H * currentCollectionInfo.resolution;
   var INDEX = elementIndex;
-  var CENTER = app.CENTER;
-  var CENTRE = app.CENTER;
-  var CORNER = app.CORNER;
-  var COIN = app.CORNER;
-  var LEFT = app.LEFT;
-  var GAUCHE = app.LEFT;
-  var RIGHT = app.RIGHT;
-  var DROITE = app.RIGHT;
 
   //GLOBAL FONCTIONS THAT CAN BE USED IN EVALUATED VALUES
   const RAND = (min, max) => {
@@ -812,24 +863,35 @@ export function generatePages() {
     var elementIndex = i;
     actualIndex = i % Math.min(currentCollection.elements.data.length, currentCollection.collectionInfo.maxElementQty);
 
-    
-
     if (actualIndex == 0) {
       currentPage = app.createGraphics(pageWidth, pageHeight);
       currentPage.background(255);
     }
 
-    renderCardUsingTemplate(app, elementIndex, currentCollection.collectionInfo.visualGuide);
-    currentPage.image(app.card, Math.round(marginX + (actualIndex%colCount) * W), Math.round(marginY + Math.floor(actualIndex / colCount) * H), W, H);
+    renderCardUsingTemplate(app, elementIndex, currentCollection.collectionInfo.visualGuide, true);
+    currentPage.image(app.card, Math.round(marginX + (actualIndex % colCount) * W), Math.round(marginY + Math.floor(actualIndex / colCount) * H), W, H);
 
-    if (actualIndex === (currentCollection.collectionInfo.maxElementQty - 1) || i === elementsLength - 1) {
+    if (actualIndex === currentCollection.collectionInfo.maxElementQty - 1 || i === elementsLength - 1) {
       pages.push(currentPage);
     }
   }
 
-
   var coll = currentCollection.collectionInfo;
   var collectionName = coll.collectionName;
+  
+  let _date = new Date(Date.now());
+  let _year = _date.getFullYear().toString().substring(2);
+  let _month = "" + (_date.getMonth() + 1);
+  let _day = "" + _date.getDate();
+  let _hour = "" + _date.getHours();
+  let _minute = "" + _date.getMinutes();
+  let _second = "" + _date.getSeconds();
+  if (_month.length < 2) _month = "0" + _month;
+  if (_day.length < 2) _day = "0" + _day;
+  if (_hour.length < 2) _hour = "0" + _hour;
+  if (_minute.length < 2) _minute = "0" + _minute;
+  if (_second.length < 2) _second = "0" + _second;
+  let generationDate = `${_year}${_month}${_day}${_hour}${_minute}${_second}`;
 
   if (currentCollection.collectionInfo.pageExportFormat == "pdf") {
     let pageGeneration;
@@ -841,7 +903,7 @@ export function generatePages() {
       pageGeneration.addImage(page.canvas, "JPEG", 0, 0, coll.pageWidth * coll.resolution, coll.pageHeight * coll.resolution, "", "FAST");
     });
 
-    pageGeneration.save("renders/" + collectionName + ".pdf");
+    pageGeneration.save(`collections/${coll.UID}/renders/${generationDate}-${collectionName}.pdf`);
   } else if (currentCollection.collectionInfo.pageExportFormat == "jpg") {
     pages.forEach((page, index) => {
       // Get the DataUrl from the Canvas
@@ -849,8 +911,8 @@ export function generatePages() {
 
       // remove Base64 stuff from the Image
       const base64Data = url.replace(/^data:image\/png;base64,/, "");
-      fs.writeFile(`renders/${collectionName}-${index}.jpg`, base64Data, "base64", function (err) {
-        if(err) console.log(err);
+      fs.writeFile(`collections/${coll.UID}/renders/${generationDate}-${index}.jpg`, base64Data, "base64", function (err) {
+        if (err) console.log(err);
       });
     });
   }
@@ -858,7 +920,7 @@ export function generatePages() {
   renderCardUsingTemplate(app, app.currentIndex, currentCollection.collectionInfo.visualGuide);
 }
 
-export function renderCardUsingTemplate(p, elementIndex, guide) {
+export function renderCardUsingTemplate(p, elementIndex, guide, finalRender = false) {
   p.card.resetMatrix();
 
   //WHITE BG BY DEFAULT
@@ -880,7 +942,7 @@ export function renderCardUsingTemplate(p, elementIndex, guide) {
       p.card.rect(0, 0, currentCollection.collectionInfo.W, currentCollection.collectionInfo.H);
     }
 
-    if (currentCollection.collectionInfo.visualGuide != "none") {
+    if (!finalRender && currentCollection.collectionInfo.visualGuide != "none") {
       renderVisualGuide(p, guide);
     }
   }
@@ -899,6 +961,12 @@ function renderVisualGuide(p, guide) {
   p.card.stroke(255, 0, 0, 100);
   p.card.noFill();
   p.card.strokeWeight(W * 0.007);
+  // p.card.rectMode(p.CENTER);
+
+  p.card.scale(1 - 0.1, 1 - 0.1 * (W / H));
+  p.card.translate(W * 0.05, W * 0.05);
+
+  p.card.rect(0, 0, W, H);
 
   switch (guide) {
     case "center":

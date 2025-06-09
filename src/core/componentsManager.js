@@ -5,6 +5,8 @@ import { currentCollection } from "./collectionsManager.js";
 import { allSystemFonts } from "./assetsManager.js";
 import { moveComponent } from "../screens/editionScreen.js";
 
+const $ = require("jquery");
+
 export function setupComponents() {
   while (templateItemsDiv.firstChild) {
     templateItemsDiv.removeChild(templateItemsDiv.lastChild);
@@ -48,7 +50,7 @@ export function createNewComponent(item, itemIndex) {
       break;
   }
 
-  itemAccordion.innerHTML = "<img src='" + icon + "'><span class='itemLabel'>" + item.componentName.value + "</span><span class='uidTag'>(#" + item.UID + ")<span>";
+  itemAccordion.innerHTML = `<img src="${icon}"><span class="itemLabel">${(item.componentName.value != "")?item.componentName.value:"Composant sans Nom"}</span><span class="headerSpacer"><span>`;
 
   if (itemIndex > 0) {
     var upElementBtn = document.createElement("img");
@@ -98,7 +100,7 @@ export function createNewComponent(item, itemIndex) {
     e.preventDefault();
     e.stopPropagation();
     var componentToDuplicate = currentCollection.template.filter((el) => el.UID == e.target.parentNode.id)[0];
-    var indexWhereToDuplicate = currentCollection.template.indexOf(componentToDuplicate)+1;
+    var indexWhereToDuplicate = currentCollection.template.indexOf(componentToDuplicate) + 1;
 
     var newComponent = JSON.parse(JSON.stringify(componentToDuplicate));
     newComponent.UID = currentCollection.collectionInfo.lastComponentIndex;
@@ -165,7 +167,7 @@ export function createNewComponent(item, itemIndex) {
     var parameterInput = document.createElement("input");
     var inputID = itemIndex + "-" + param.refValue;
     parameterInput.id = inputID;
-    if(param.type == "range"){
+    if (param.type == "range") {
       parameterInput.setAttribute("min", 0.0);
       parameterInput.setAttribute("max", 1.0);
       parameterInput.setAttribute("step", 0.01);
@@ -202,16 +204,28 @@ export function createNewComponent(item, itemIndex) {
       populateComponents();
     });
 
+    let currentMode = "0";
+
     var modeInput = document.createElement("img");
     modeInput.classList.add("modeInput");
 
     if (param.type !== "spacer") {
-      var currentMode;
       try {
         currentMode = currentCollection.template[itemIndex][param.refValue]["type"];
       } catch (e) {
-        console.log(e)
+        console.log(e);
         currentMode = "0";
+      }
+
+      //Disabling inputs based on mode
+      if(paramIndex > 1){
+        if (currentMode == "0") {
+          parameterInput.removeAttribute("disabled");
+          parameterCBInput.setAttribute("disabled", "disabled");
+        } else {
+          parameterInput.setAttribute("disabled", "disabled");
+          parameterCBInput.removeAttribute("disabled");
+        }
       }
 
       modeInput.src = currentMode == "0" ? "./assets/fixedType.png" : "./assets/elementBasedType.png";
@@ -224,17 +238,29 @@ export function createNewComponent(item, itemIndex) {
         var typeOfParameter = currentCollection.template[itemIndex][param.refValue]["type"];
         e.target.src = typeOfParameter == "0" ? "./assets/fixedType.png" : "./assets/elementBasedType.png";
         e.target.title = typeOfParameter == "0" ? "Fixe" : "Basé sur les données";
+
+        let leftSibling = $(e.target).prev();
+        let rightSibling = $(e.target).next();
+
+        if (leftSibling.prop("disabled")) leftSibling.prop("disabled", false);
+        else {
+          leftSibling.prop("disabled", true);
+        }
+        if (rightSibling.prop("disabled")) rightSibling.prop("disabled", false);
+        else {
+          rightSibling.prop("disabled", true);
+        }
+
         generateCollectionBtn.click();
         populateComponents();
       });
     }
 
     if (param.type !== "spacer") {
-
       //SELECTS
       if (param.type === "select") {
         parameterInput = document.createElement("select");
-        parameterInput.classList.add("parameterInput","mainInput");
+        parameterInput.classList.add("parameterInput", "mainInput");
         parameterInput.id = inputID;
         parameterInput.addEventListener("input", (e) => {
           if (currentCollection.template[itemIndex][param.refValue]) currentCollection.template[itemIndex][param.refValue]["value"] = e.target.value;
@@ -259,21 +285,20 @@ export function createNewComponent(item, itemIndex) {
         });
 
         try {
-          if(item[param.refValue].value) parameterInput.value = item[param.refValue].value;
+          if (item[param.refValue].value) parameterInput.value = item[param.refValue].value;
         } catch (e) {
-          console.log(e)
+          console.log(e);
           parameterInput.value = "";
         }
 
         try {
-          if(item[param.refValue].valueCB) parameterCBInput.value = item[param.refValue].valueCB;
+          if (item[param.refValue].valueCB) parameterCBInput.value = item[param.refValue].valueCB;
         } catch (e) {
-          console.log(e)
+          console.log(e);
           parameterCBInput.value = "";
         }
 
-        
-        parameterCBInput.classList.add("parameterInput","CBInput");
+        parameterCBInput.classList.add("parameterInput", "CBInput");
 
         parameterSlot.appendChild(parameterName);
         parameterInputLine.appendChild(parameterInput);
@@ -283,22 +308,21 @@ export function createNewComponent(item, itemIndex) {
         }
         parameterSlot.appendChild(parameterInputLine);
       } else {
-
         parameterInput.classList.add("parameterInput", "mainInput");
         if (param.type === "color") parameterInput.style.padding = "0.2rem";
         parameterInput.type = param.type;
         try {
-          if(item[param.refValue].value) parameterInput.value = item[param.refValue].value;
+          if (item[param.refValue].value) parameterInput.value = item[param.refValue].value;
         } catch (e) {
-          console.log(e)
+          console.log(e);
           parameterInput.value = "";
         }
 
         parameterCBInput.classList.add("parameterInput", "CBInput");
         try {
-          if(item[param.refValue].valueCB) parameterCBInput.value = item[param.refValue].valueCB;
+          if (item[param.refValue].valueCB) parameterCBInput.value = item[param.refValue].valueCB;
         } catch (e) {
-          console.log(e.message)
+          console.log(e.message);
           parameterCBInput.value = "";
         }
 
@@ -309,7 +333,6 @@ export function createNewComponent(item, itemIndex) {
           parameterInputLine.appendChild(parameterCBInput);
         }
         parameterSlot.appendChild(parameterInputLine);
-
       }
     } else {
       parameterName.classList.add("spacer");
