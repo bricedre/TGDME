@@ -45,14 +45,18 @@ export function setupMenu() {
     if (archivedCollections.length > 0) {
       var archivedColContainer = $("<div></div>").attr("id", "archivedCollectionsContainer").on("click", () => {
         if (archivedColContainer.hasClass("active")) {
-          archivedColContainer.css("max-height", "3.2rem");
+          archivedColContainer.css("max-height", "4rem");
         } else {
-          archivedColContainer.css("max-height", `calc(2rem + ${archivedColContainer.css("scroll-height")}px)`);
+          archivedColContainer.css("max-height", `calc(${4.5*Math.ceil(archivedCollections.length/5)}rem + 4rem)`);
         }
 
         archivedColContainer.toggleClass("active");
       });
-      // archivedColContainer.text((<img src="${rootPath}/assets/archiveCollection.png"> Collections Archivées`);
+      // archivedColContainer.css("display", "flex");
+      let archivedCollectionsHeader = $("<div></div>").addClass("archivedCollectionsHeader");
+      archivedCollectionsHeader.append($(`<img></img`).attr("src", `${rootPath}/assets/archiveCollection.png`));
+      archivedCollectionsHeader.append($("<div></div>").text("Collections Archivées"));
+      archivedColContainer.append(archivedCollectionsHeader);
       $("#startPanelDiv").append(archivedColContainer);
 
       var archivedCol = $("<div></div>").attr('id', "archivedCollectionsDiv");
@@ -78,6 +82,9 @@ export function setupMenu() {
     $("#startPanelDiv").append(noResourceText);
   }
 
+  //Spacer
+  $("#startPanelDiv").append($("<div></div>").css('flex', "1"));
+
   //ACTIONS
   const actionRow = $("<div></div>").addClass("btnContainer");
   const newCollectionBtn = $("<button></button>")
@@ -89,6 +96,8 @@ export function setupMenu() {
     });
   actionRow.append(newCollectionBtn);
   $("#startPanelDiv").append(actionRow);
+  // actionRow.insertBefore($("#archivedCollectionsContainer"));
+
 
 
   setupLangage();
