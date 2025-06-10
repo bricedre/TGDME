@@ -50,7 +50,7 @@ export function createNewComponent(item, itemIndex) {
       break;
   }
 
-  itemAccordion.innerHTML = `<img src="${icon}"><span class="itemLabel">${(item.componentName.value != "")?item.componentName.value:"Composant sans Nom"}</span><span class="headerSpacer"><span>`;
+  itemAccordion.innerHTML = `<img src="${icon}"><span class="itemLabel">${item.componentName.value != "" ? item.componentName.value : "Composant sans Nom"}</span><span class="headerSpacer"><span>`;
 
   if (itemIndex > 0) {
     var upElementBtn = document.createElement("img");
@@ -218,7 +218,7 @@ export function createNewComponent(item, itemIndex) {
       }
 
       //Disabling inputs based on mode
-      if(paramIndex > 1){
+      if (paramIndex > 1) {
         if (currentMode == "0") {
           parameterInput.removeAttribute("disabled");
           parameterCBInput.setAttribute("disabled", "disabled");
@@ -275,15 +275,45 @@ export function createNewComponent(item, itemIndex) {
 
         var refOptionList = param.optionRef ? eval(param.optionRef) : param.options;
 
-        refOptionList.forEach((opt) => {
-          var option = document.createElement("option");
-          if (param.optionRef) option.style.fontFamily = opt.value;
-          option.value = opt.value;
-          option.title = opt.value;
-          option.innerHTML = opt.label;
-          parameterInput.appendChild(option);
-        });
+        if (param.isShapesSelect) {
+          let categorizedOpts = {
+            none: [],
+            polygons: [],
+            basic_shapes: [],
+            nature: [],
+            complex_shapes: [],
+          };
 
+          refOptionList.forEach((opt) => {
+            categorizedOpts[opt.cat].push(opt);
+          });
+
+          let categoryOrder = ["polygons", "basic_shapes", "complex_shapes", "nature"];
+          let categoryLabels = ["Polygones", "Formes Simples", "Formes Complexes", "Nature"];
+
+          var option = document.createElement("option");
+          option.value = "none";
+          option.innerHTML = categorizedOpts["none"][0].label;
+          parameterInput.appendChild(option);
+
+          categoryOrder.forEach((cat, index) => {
+            let optGroupEl = $("<optgroup></optgroup>").attr("label", categoryLabels[index]);
+            categorizedOpts[cat].forEach((opt) => {
+              optGroupEl.append($("<option></option>").text(opt.label).val(opt.value));
+            });
+            $(parameterInput).append(optGroupEl);
+          });
+        } else {
+          refOptionList.forEach((opt) => {
+            var option = document.createElement("option");
+            if (param.optionRef) option.style.fontFamily = opt.value;
+            option.value = opt.value;
+            option.innerHTML = opt.label;
+            parameterInput.appendChild(option);
+          });
+        }
+
+        //Set values in editor
         try {
           if (item[param.refValue].value) parameterInput.value = item[param.refValue].value;
         } catch (e) {

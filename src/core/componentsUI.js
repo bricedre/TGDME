@@ -23,16 +23,6 @@ export let IMAGE_parameters = [
       { value: ":CORNER", label: "COIN SUPÉRIEUR GAUCHE" },
     ],
   },
-  {
-    name: "Copies sans Rotation",
-    refValue: "mirror",
-    type: "select",
-    options: [
-      { value: "none", label: "AUCUNE" },
-      { value: "hori", label: "GAUCHE / DROITE" },
-      { value: "corners", label: "DANS LES COINS" }
-    ],
-  },
   { name: "<span class='spacerIcon'>🎨</span><span>Teinte & Opacité</span>", type: "spacer" },
   { name: "Filtre de Teinte", refValue: "tint", type: "color" },
   { name: "Opacité", refValue: "opacity", type: "range" },
@@ -42,7 +32,6 @@ export let IMAGE_parameters = [
   { name: "Décalage Horizontal", refValue: "shadowOffsetX", type: "text" },
   { name: "Décalage Vertical", refValue: "shadowOffsetY", type: "text" },
   { name: "Opacité", refValue: "shadowOpacity", type: "range" },
-  { name: "Flou", refValue: "shadowBlur", type: "text" },
 
   { name: "<span class='spacerIcon'>🔗</span><span>Configuration de chaîne (liste d'images)</span>", type: "spacer" },
   {
@@ -83,55 +72,57 @@ export let SHAPE_parameters = [
     name: "Forme à Afficher",
     refValue: "src",
     type: "select",
-    title: "Le mot entre parenthèses est le mot à utiliser dans les données",
+    title: "Le mot entre parenthèses est celui à utiliser dans les données",
+    isShapesSelect : true,
     options: [
-      { value: "wing", label: "🪽 AILE (wing)" },
-      { value: "ring", label: "⭕ ANNEAU (ring)" },
-      { value: "tree", label: "🌳 ARBRE (tree)" },
-      { value: "banner", label: "🔖 BANNIÈRE (banner)" },
-      { value: "battery", label: "🔋 BATTERIE (battery)" },
-      { value: "shield", label: "🛡️ BOUCLIER (shield)" },
-      { value: "avatar", label: "👤 BUSTE (avatar)" },
-      { value: "lock", label: "🔒 CADENAS (lock)" },// A FAIRE
-      { value: "target", label: "🎯 CIBLE (target)" },
-      { value: "key", label: "🔑 CLÉ (key)" },
-      { value: "tick", label: "✔️ COCHE (tick)" },
-      { value: "heart", label: "💖 COEUR (heart)" },
-      { value: "crown", label: "👑 COURONNE (crown)" },
-      { value: "cross", label: "✖️ CROIX (cross)" },
-      { value: "diam", label: "💎 DIAMANT (diam)" },
-      { value: "flag", label: "🏴 DRAPEAU (flag)" },
-      { value: "bolt", label: "⚡ ÉCLAIR (bolt)" },
-      { value: "sword", label: "⚔️ ÉPÉE (sword)" }, // A FAIRE
-      { value: "star", label: "⭐ ÉTOILE (star)" },
-      { value: "ellipse", label: "🔵 ELLIPSE (ellipse)" },
-      { value: "gear", label: "⚙️ ENGRENAGE (gear)" }, // A FAIRE
-      { value: "leaf", label: "🍃 FEUILLE (leaf)" },
-      { value: "flask", label: "⚗️ FIOLE (flask)" },// A FAIRE
-      { value: "fire", label: "🔥 FLAMME (fire)" }, 
-      { value: "arrow", label: "➡️ FLÈCHE (arrow)" },
-      { value: "flower", label: "🌷 FLEUR (flower)" },
-      { value: "drop", label: "💧 GOUTTE (drop)" },
-      { value: "hexa", label: "🔢 HEXAGONE (hexa)" },
-      { value: "book", label: "📖 LIVRE (book)" },
-      { value: "loz", label: "🪁 LOSANGE (moon)" },
-      { value: "moon", label: "🌙 LUNE (moon)" },
-      { value: "medal", label: "🎖️ MÉDAILLE (medal)" },// A FAIRE
-      { value: "mountain", label: "🗻 MONTAGNE (mountain)" },
-      { value: "note", label: "🎵 NOTE (note)" },// A FAIRE
-      { value: "cloud", label: "☁️ NUAGE (cloud)" },
-      { value: "octo", label: "🔢 OCTOGONE (octo)" },
-      { value: "egg", label: "🥚 ŒUF (egg)" }, 
-      { value: "pent", label: "🔢 PENTAGONE (pent)" },
-      { value: "stone", label: "🪨 PIERRE (stone)" },
-      { value: "scroll", label: "📜 PARCHEMIN (scroll)" }, // A FAIRE
-      { value: "puzzle", label: "🧩 PUZZLE (puzzle)" },
-      { value: "hourglass", label: "⌛ SABLIER (hourglass)"},
-      { value: "tri", label: "🗻 TRIANGLE (tri)" },
-      { value: "triSqr", label: "📐 TRIANGLE RECTANGLE (triSqr)" },
-      { value: "rect", label: "🟧 RECTANGLE (rect)" },
-      { value: "rectRounded", label: "⏹️ RECTANGLE ARRONDI (rectRounded)"},
-      { value: "sun", label: "☀️ SOLEIL (sun)" },
+      { value: "none", label: "🚫 AUCUNE FORME (none)", cat: "none" },
+      { value: "wing", label: "🪽 AILE (wing)", cat: "nature" },
+      { value: "ring", label: "⭕ ANNEAU (ring)", cat: "basic_shapes" },
+      { value: "tree", label: "🌳 ARBRE (tree)", cat: "nature" },
+      { value: "banner", label: "🔖 BANNIÈRE (banner)", cat: "basic_shapes" },
+      { value: "battery", label: "🔋 BATTERIE (battery)", cat: "complex_shapes" },
+      { value: "shield", label: "🛡️ BOUCLIER (shield)", cat: "basic_shapes" },
+      { value: "avatar", label: "👤 BUSTE (avatar)", cat:"complex_shapes" },
+      { value: "lock", label: "🔒 CADENAS (lock)", cat:"complex_shapes" }, // A FAIRE
+      { value: "target", label: "🎯 CIBLE (target)", cat:"complex_shapes" },
+      { value: "key", label: "🔑 CLÉ (key)", cat:"complex_shapes" },
+      { value: "tick", label: "✔️ COCHE (tick)", cat:"nature" },
+      { value: "heart", label: "💖 COEUR (heart)", cat:"basic_shapes" },
+      { value: "crown", label: "👑 COURONNE (crown)", cat:"basic_shapes" },
+      { value: "cross", label: "✖️ CROIX (cross)", cat:"basic_shapes" },
+      { value: "diam", label: "💎 DIAMANT (diam)", cat:"basic_shapes" },
+      { value: "flag", label: "🏴 DRAPEAU (flag)", cat:"basic_shapes" },
+      { value: "bolt", label: "⚡ ÉCLAIR (bolt)", cat:"nature" },
+      { value: "sword", label: "⚔️ ÉPÉE (sword)", cat:"complex_shapes" }, // A FAIRE
+      { value: "star", label: "⭐ ÉTOILE (star)", cat:"basic_shapes" },
+      { value: "ellipse", label: "🔵 ELLIPSE (ellipse)", cat:"basic_shapes" },
+      { value: "gear", label: "⚙️ ENGRENAGE (gear)", cat:"complex_shapes" }, // A FAIRE
+      { value: "leaf", label: "🍃 FEUILLE (leaf)", cat:"nature" },
+      { value: "flask", label: "⚗️ FIOLE (flask)", cat:"complex_shapes" }, // A FAIRE
+      { value: "fire", label: "🔥 FLAMME (fire)", cat:"nature" },
+      { value: "arrow", label: "➡️ FLÈCHE (arrow)", cat:"basic_shapes" },
+      { value: "flower", label: "🌷 FLEUR (flower)", cat:"basic_shapes" },
+      { value: "drop", label: "💧 GOUTTE (drop)", cat:"basic_shapes" },
+      { value: "hexa", label: "🔢 HEXAGONE (hexa)", cat:"polygons" },
+      { value: "book", label: "📖 LIVRE (book)", cat:"basic_shapes" },
+      { value: "loz", label: "🪁 LOSANGE (loz)", cat:"polygons" },
+      { value: "moon", label: "🌙 LUNE (moon)", cat:"basic_shapes" },
+      { value: "medal", label: "🎖️ MÉDAILLE (medal)", cat:"complex_shapes" }, // A FAIRE
+      { value: "mountain", label: "🗻 MONTAGNE (mountain)", cat:"nature" },
+      { value: "note", label: "🎵 NOTE (note)", cat:"complex_shapes" }, // A FAIRE
+      { value: "cloud", label: "☁️ NUAGE (cloud)", cat:"nature" },
+      { value: "octo", label: "🔢 OCTOGONE (octo)", cat:"polygons" },
+      { value: "egg", label: "🥚 ŒUF (egg)", cat:"nature" },
+      { value: "pent", label: "🔢 PENTAGONE (pent)", cat:"polygons" },
+      { value: "stone", label: "🪨 PIERRE (stone)", cat:"nature" },
+      { value: "scroll", label: "📜 PARCHEMIN (scroll)", cat:"basic_shapes" }, // A FAIRE
+      { value: "puzzle", label: "🧩 PUZZLE (puzzle)", cat:"complex_shapes" },
+      { value: "hourglass", label: "⌛ SABLIER (hourglass)", cat:"complex_shapes" },
+      { value: "tri", label: "🗻 TRIANGLE (tri)", cat:"polygons" },
+      { value: "triSqr", label: "📐 TRIANGLE RECTANGLE (triSqr)", cat:"polygons" },
+      { value: "rect", label: "🟧 RECTANGLE (rect)", cat:"polygons" },
+      { value: "rectRounded", label: "⏹️ RECTANGLE ARRONDI (rectRounded)", cat:"polygons" },
+      { value: "sun", label: "☀️ SOLEIL (sun)", cat:"nature" },
     ],
   },
 
@@ -150,16 +141,6 @@ export let SHAPE_parameters = [
       { value: ":CORNER", label: "COIN SUPÉRIEUR GAUCHE" },
     ],
   },
-  {
-    name: "Copies sans Rotation",
-    refValue: "mirror",
-    type: "select",
-    options: [
-      { value: "none", label: "AUCUNE" },
-      { value: "hori", label: "GAUCHE / DROITE" },
-      { value: "corners", label: "DANS LES COINS" }
-    ],
-  },
 
   { name: "<span class='spacerIcon'>🎨</span><span>Couleurs & Bordure</span>", type: "spacer" },
   { name: "Couleur de Fond", refValue: "color", type: "color" },
@@ -173,7 +154,6 @@ export let SHAPE_parameters = [
   { name: "Décalage Horizontal", refValue: "shadowOffsetX", type: "text" },
   { name: "Décalage Vertical", refValue: "shadowOffsetY", type: "text" },
   { name: "Opacité", refValue: "shadowOpacity", type: "range" },
-  { name: "Flou", refValue: "shadowBlur", type: "text" },
 ];
 
 export let TEXT_parameters = [
@@ -201,16 +181,6 @@ export let TEXT_parameters = [
       { value: ":RIGHT", label: "DROITE" },
     ],
   },
-  {
-    name: "Copies sans Rotation",
-    refValue: "mirror",
-    type: "select",
-    options: [
-      { value: "none", label: "AUCUNE" },
-      { value: "hori", label: "GAUCHE / DROITE" },
-      { value: "corners", label: "DANS LES COINS" }
-    ],
-  },
   { name: "<span class='spacerIcon'>🎨</span><span>Aspect Visuel</span>", type: "spacer" },
   { name: "Couleur", refValue: "color", type: "color" },
   { name: "Taille", refValue: "size", type: "text" },
@@ -222,5 +192,4 @@ export let TEXT_parameters = [
   { name: "Décalage Horizontal", refValue: "shadowOffsetX", type: "text" },
   { name: "Décalage Vertical", refValue: "shadowOffsetY", type: "text" },
   { name: "Opacité", refValue: "shadowOpacity", type: "range" },
-  { name: "Flou", refValue: "shadowBlur", type: "text" },
 ];

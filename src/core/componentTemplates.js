@@ -9,7 +9,6 @@ export let shapeComponentTemplate = {
   width: { value: "100", type: "0" },
   height: { value: "100", type: "0" },
   anchor: { value: ":CENTER", type: "0" },
-  mirror: { value: "none", type: "0" },
   angle: { value: "0", type: "0" },
   color: { value: "#DDDDDD", type: "0" },
   opacity: { value: "1", type: "0" },
@@ -20,7 +19,6 @@ export let shapeComponentTemplate = {
   shadowOffsetX: { value: "5", type: "0" },
   shadowOffsetY: { value: "5", type: "0" },
   shadowOpacity: { value: "0", type: "0" },
-  shadowBlur: { value: "0", type: "0" },
 };
 
 export let textComponentTemplate = {
@@ -33,7 +31,6 @@ export let textComponentTemplate = {
   positionY: { value: ":0.5*H", type: "0" },
   maxWidth: { value: ":W", type: "0" },
   anchor: { value: ":CENTER", type: "0" },
-  mirror: { value: "none", type: "0" },
   color: { value: "#000000", type: "0" },
   size: { value: "4", type: "0" },
   font: { value: "Verdana", type: "0" },
@@ -43,7 +40,6 @@ export let textComponentTemplate = {
   shadowOffsetX: { value: "5", type: "0" },
   shadowOffsetY: { value: "5", type: "0" },
   shadowOpacity: { value: "0", type: "0" },
-  shadowBlur: { value: "0", type: "0" },
 };
 
 export let imageComponentTemplate = {
@@ -57,7 +53,6 @@ export let imageComponentTemplate = {
   width: { value: "100", type: "0" },
   height: { value: "100", type: "0" },
   anchor: { value: ":CENTER", type: "0" },
-  mirror: { value: "none", type: "0" },
   opacity: { value: "1", type: "0" },
   tint: { value: "#ffffff", type: "0" },
   angle: { value: "0", type: "0" },
@@ -71,5 +66,4 @@ export let imageComponentTemplate = {
   shadowOffsetX: { value: "5", type: "0" },
   shadowOffsetY: { value: "5", type: "0" },
   shadowOpacity: { value: "0", type: "0" },
-  shadowBlur: { value: "0", type: "0" },
 };
