@@ -16,10 +16,14 @@
 <body>
 
   <nav>
-    <button id="homeBtn" class="homeBtn" title="Retour à l'Accueil">
+    <button id="homeBtn" class="homeBtn btns_mainMenu" title="Retour à l'Accueil">
       <img id="homeIcon" src="./assets/home.png" alt="home btn" />
     </button>
-    <div id="mainTitleDiv">LA CABANE À PROTOS</div>
+    <div id="mainTitleDiv" class="other_mainTitle"></div>
+    <div id="langDiv" class="other_lang"></div>
+    <button id="langBtn" class="langbtn" title="Changer la Langue">
+      <img id="homeIcon" src="./assets/rotate.png" alt="home btn" />
+    </button>
   </nav>
 
   <div class="viewer">
@@ -31,21 +35,21 @@
           <img src="./assets/reload.png" alt="add symbol" />
         </button>
         <input id="tabConfigInput" type="radio" name="tabs" checked>
-        <label for="tabConfigInput"
-          title="Configuration générale de la Collection et des Élements">Configuration</label>
+        <label class="tabs_configuration" for="tabConfigInput"
+          title="Configuration générale de la Collection et des Élements"></label>
         <span>></span>
         <input id="tabRessInput" type="radio" name="tabs">
-        <label for="tabRessInput" title="Images liées à la Collection">Images</label>
+        <label class="tabs_images" for="tabRessInput" title="Images liées à la Collection"></label>
         <span>></span>
-<input id="tabElementsInput" type="radio" name="tabs">
-        <label for="tabElementsInput" title="Modification des Données">Données</label>
+        <input id="tabElementsInput" type="radio" name="tabs">
+        <label class="tabs_data" for="tabElementsInput" title="Modification des Données"></label>
         <span>></span>
-                <input id="tabTemplateInput" type="radio" name="tabs">
-        <label for="tabTemplateInput" title="Création du Modèle">Modèle</label>
-        
+        <input id="tabTemplateInput" type="radio" name="tabs">
+        <label class="tabs_template" for="tabTemplateInput" title="Création du Modèle"></label>
+
         <span>></span>
         <input id="tabPrinting" type="radio" name="tabs">
-        <label for="tabPrinting" title="Paramètres de Rendu">Rendu</label>
+        <label class="tabs_render" for="tabPrinting" title="Paramètres de Rendu"></label>
 
         <div class="content">
 
@@ -53,94 +57,95 @@
 
             <div class="mainContent">
 
-            <div class="parameterSlot">
-              <p class="parameterName">Nom de la Collection</p>
-              <input id="collectionNameInput" class="parameterInput">
+              <div class="parameterSlot">
+                <p class="parameterName">Nom de la Collection</p>
+                <input id="collectionNameInput" class="parameterInput">
+              </div>
+
+              <div class="parameterSlot">
+                <p class="parameterName">Format des Éléments</p>
+                <select id="elementFormatSelect" class="parameterInput">
+                  <optgroup label="Cartes">
+                    <option value="pokerCard">Carte Poker</option>
+                    <option value="bridgeCard">Carte Bridge</option>
+                    <option value="tarotCard">Carte Tarot</option>
+                    <option value="dominoCard">Carte Domino</option>
+                    <option value="halfCard">Demi-carte</option>
+                    <option value="squareCard">Carte carrée</option>
+                  </optgroup>
+
+                  <optgroup label="Tuiles Hexagones">
+                    <option value="hexTileP">Tuile hexagonale Portrait</option>
+                    <option value="hexTileL">Tuile hexagonale Paysage</option>
+                  </optgroup>
+
+                  <optgroup label="Jetons">
+                    <option value="smallToken">Jeton 2cm</option>
+                    <option value="mediumToken">Jeton 3cm</option>
+                    <option value="largeToken">Jeton 4cm</option>
+                  </optgroup>
+
+                  <optgroup label="Personnalisé">
+                    <option value="custom">Choisir ses dimensions...</option>
+                  </optgroup>
+                </select>
+              </div>
+
+              <div class="parameterSlot">
+                <p class="parameterName">Largeur des Éléments (cm)</p>
+                <input id="elementWidthInput" inputmode="decimal" class="parameterInput" step="0.1">
+              </div>
+
+              <div class="parameterSlot">
+                <p class="parameterName">Hauteur des Éléments (cm)</p>
+                <input id="elementHeightInput" inputmode="decimal" class="parameterInput" step="0.1">
+              </div>
+
+
+
+              <div class="parameterSlot" title="Les repères visuels ne seront pas inclus dans le rendu final">
+                <p class="parameterName">Repère Visuel 🔍</p>
+                <select id="visualGuideSelect" class="parameterInput">
+                  <option value="none">Aucun</option>
+                  <optgroup label="Grille">
+                    <option value="center">Centre</option>
+                    <option value="grid3">Grille 3x3</option>
+                    <option value="grid4">Grille 4x4</option>
+                    <option value="grid6">Grille 6x6</option>
+                  </optgroup>
+
+                  <optgroup label="Formes">
+                    <option value="circle">Ellipse</option>
+                    <option value="hexp">Hexagone Portrait</option>
+                    <option value="hexl">Hexagone Paysage</option>
+                    <option value="oct">Octogone</option>
+                  </optgroup>
+
+                  <optgroup label="Autre">
+                    <option value="domino">Bordure Domino</option>
+                  </optgroup>
+
+                </select>
+              </div>
+
             </div>
-
-            <div class="parameterSlot">
-              <p class="parameterName">Format des Éléments</p>
-              <select id="elementFormatSelect" class="parameterInput">
-                <optgroup label="Cartes">
-                  <option value="pokerCard">Carte Poker</option>
-                  <option value="bridgeCard">Carte Bridge</option>
-                  <option value="tarotCard">Carte Tarot</option>
-                  <option value="dominoCard">Carte Domino</option>
-                  <option value="halfCard">Demi-carte</option>
-                  <option value="squareCard">Carte carrée</option>
-                </optgroup>
-
-                <optgroup label="Tuiles Hexagones">
-                  <option value="hexTileP">Tuile hexagonale Portrait</option>
-                  <option value="hexTileL">Tuile hexagonale Paysage</option>
-                </optgroup>
-
-                <optgroup label="Jetons">
-                  <option value="smallToken">Jeton 2cm</option>
-                  <option value="mediumToken">Jeton 3cm</option>
-                  <option value="largeToken">Jeton 4cm</option>
-                </optgroup>
-
-                <optgroup label="Personnalisé">
-                  <option value="custom">Choisir ses dimensions...</option>
-                </optgroup>
-              </select>
-            </div>
-
-            <div class="parameterSlot">
-              <p class="parameterName">Largeur des Éléments (cm)</p>
-              <input id="elementWidthInput" inputmode="decimal" class="parameterInput" step="0.1">
-            </div>
-
-            <div class="parameterSlot">
-              <p class="parameterName">Hauteur des Éléments (cm)</p>
-              <input id="elementHeightInput" inputmode="decimal" class="parameterInput" step="0.1">
-            </div>
-
-
-
-            <div class="parameterSlot" title="Les repères visuels ne seront pas inclus dans le rendu final">
-              <p class="parameterName">Repère Visuel 🔍</p>
-              <select id="visualGuideSelect" class="parameterInput">
-                <option value="none">Aucun</option>
-                <optgroup label="Grille">
-                  <option value="center">Centre</option>
-                  <option value="grid3">Grille 3x3</option>
-                  <option value="grid4">Grille 4x4</option>
-                  <option value="grid6">Grille 6x6</option>
-                </optgroup>
-
-                <optgroup label="Formes">
-                  <option value="circle">Ellipse</option>
-                  <option value="hexp">Hexagone Portrait</option>
-                  <option value="hexl">Hexagone Paysage</option>
-                  <option value="oct">Octogone</option>
-                </optgroup>
-
-                <optgroup label="Autre">
-                  <option value="domino">Bordure Domino</option>
-                </optgroup>
-
-              </select>
-            </div>
-
-          </div>
 
             <div class="btnContainer">
-            <button id="duplicateCollectionBtn" class="navBtn" title="Créer une copie de la collection actuelle">
-              DUPLIQUER
-              <img src="./assets/duplicateCollection.png">
-            </button>
+              <button id="duplicateCollectionBtn" class="navBtn" title="Créer une copie de la collection actuelle">
+                DUPLIQUER
+                <img src="./assets/duplicateCollection.png">
+              </button>
 
-            <button id="archiveCollectionBtn" class="navBtn" title="Archiver (c.-à-d. cacher dans la Bibliothèque) la collection actuelle">
-              ARCHIVER
-              <img src="./assets/archiveCollection.png">
-            </button>
+              <button id="archiveCollectionBtn" class="navBtn"
+                title="Archiver (c.-à-d. cacher dans la Bibliothèque) la collection actuelle">
+                ARCHIVER
+                <img src="./assets/archiveCollection.png">
+              </button>
 
-            <button id="deleteCollectionBtn" class="navBtn" title="Supprimer la collection actuelle">
-              SUPPRIMER
-              <img src="./assets/deleteCollection.png">
-            </button>
+              <button id="deleteCollectionBtn" class="navBtn" title="Supprimer la collection actuelle">
+                SUPPRIMER
+                <img src="./assets/deleteCollection.png">
+              </button>
             </div>
 
           </div>
@@ -148,22 +153,25 @@
           <div id="contentRessDiv">
             <div id="ressItemsDiv" class="mainContent"></div>
             <div class="btnContainer">
-             <button id="openResFolderBtn" class="navBtn" title="Ouvrir le dossier des Ressources de la Collection">
+              <button id="openResFolderBtn" class="navBtn" title="Ouvrir le dossier des Ressources de la Collection">
                 OUVRIR
                 <img src="./assets/archiveCollection.png">
               </button>
-              <button id="reloadResBtn" class="navBtn" title="Recharger les Ressources afin de récupérer les modifications">
+              <button id="reloadResBtn" class="navBtn"
+                title="Recharger les Ressources afin de récupérer les modifications">
                 RECHARGER
                 <img src="./assets/imgResource.png">
               </button>
             </div>
           </div>
 
-                    <div id="contentElementsDiv">
+          <div id="contentElementsDiv">
             <div id="elementItemsDiv" class="mainContent">
             </div>
             <div class="btnContainer">
-              <button title="Ouvrir les données dans un tableur (nécessite la présence d'un tableur : Excel, OpenCalc...)" id="modifyDataBtn" class="navBtn" >
+              <button
+                title="Ouvrir les données dans un tableur (nécessite la présence d'un tableur : Excel, OpenCalc...)"
+                id="modifyDataBtn" class="navBtn">
                 MODIFIER
                 <img src="./assets/fillData.png">
               </button>
@@ -197,8 +205,8 @@
           <div id="contentPrintingDiv">
 
             <div class="mainContent">
-              
-              
+
+
               <div class="parameterSlot">
                 <p class="parameterName">Format de Page</p>
                 <select id="pageFormatSelect" class="parameterInput">
@@ -212,7 +220,7 @@
                   </optgroup>
                 </select>
               </div>
-              
+
               <div class="parameterSlot">
                 <p class="parameterName">Orientation de Page</p>
                 <select id="pageOrientationSelect" class="parameterInput">
@@ -220,51 +228,52 @@
                   <option value="landscape">Paysage</option>
                 </select>
               </div>
-              
+
               <div class="parameterSlot">
                 <p class="parameterName">Largeur de Page (cm)</p>
-              <input id="pageWidthInput" disabled inputmode="decimal" class="parameterInput" step="0.1"/>
+                <input id="pageWidthInput" disabled inputmode="decimal" class="parameterInput" step="0.1" />
+              </div>
+
+              <div class="parameterSlot">
+                <p class="parameterName">Hauteur de Page (cm)</p>
+                <input id="pageHeightInput" disabled inputmode="decimal" class="parameterInput" step="0.1" />
+              </div>
+
+              <div class="parameterSlot">
+                <p class="parameterName">Limite d'Éléments par Page</p>
+                <input id="maxElementQty" class="parameterInput" step="1" min="1" />
+              </div>
+
+              <div class="parameterSlot"
+                title="300 dpi = 118.11 ppcm | Plus cette valeur sera haute, plus votre image sera nette">
+                <p class="parameterName">Résolution d'Impression (pixels/cm) 🔍</p>
+                <input id="pageResolutionInput" inputmode="decimal" class="parameterInput" step="0.1" />
+              </div>
+
+              <div class="parameterSlot">
+                <p class="parameterName">Format d'Export</p>
+                <select id="pageExportFormatSelect" class="parameterInput">
+                  <option value="pdf">PDF</option>
+                  <option value="jpg">JPG</option>
+                </select>
+              </div>
+
+              <div class="parameterSlot"
+                title="L'Aide à la Découpe est une simple bordure semi-transparente mise autour des élements afin de guider la découpe une fois imprimés">
+                <input type="checkbox" id="cuttingHelpInput" name="cuttingHelpInput" />
+                <label class="parameterName" for="cuttingHelpInput">Aide à la Découpe 🔍</label>
+              </div>
             </div>
 
-            <div class="parameterSlot">
-              <p class="parameterName">Hauteur de Page (cm)</p>
-              <input id="pageHeightInput" disabled inputmode="decimal" class="parameterInput" step="0.1"/>
-            </div>
-
-            <div class="parameterSlot">
-            <p class="parameterName">Limite d'Éléments par Page</p>
-            <input id="maxElementQty" class="parameterInput" step="1" min="1"/>
-          </div>
-            
-            <div class="parameterSlot"
-            title="300 dpi = 118.11 ppcm | Plus cette valeur sera haute, plus votre image sera nette">
-            <p class="parameterName">Résolution d'Impression (pixels/cm) 🔍</p>
-            <input id="pageResolutionInput" inputmode="decimal" class="parameterInput" step="0.1"/>
-          </div>
-
-          <div class="parameterSlot">
-            <p class="parameterName">Format d'Export</p>
-            <select id="pageExportFormatSelect" class="parameterInput">
-              <option value="pdf">PDF</option>
-              <option value="jpg">JPG</option>
-            </select>
-          </div>
-          
-          <div class="parameterSlot"
-          title="L'Aide à la Découpe est une simple bordure semi-transparente mise autour des élements afin de guider la découpe une fois imprimés">
-          <input type="checkbox" id="cuttingHelpInput" name="cuttingHelpInput" />
-          <label class="parameterName" for="cuttingHelpInput">Aide à la Découpe 🔍</label>
-        </div>
-      </div>
-        
-        <div class="btnContainer">
-          <button title="Générer les pages d'élements en fonction des paramètres choisis" id="printPagesBtn" class="navBtn" >
-            GÉNÉRER
+            <div class="btnContainer">
+              <button title="Générer les pages d'élements en fonction des paramètres choisis" id="printPagesBtn"
+                class="navBtn">
+                GÉNÉRER
                 <img src="./assets/toPrint.png" />
               </button>
-              <button title="Ouvrir le dossier des rendus" id="showRendersBtn" class="navBtn" >
-            OUVRIR
-                <img src="./assets/archiveCollection.png"/>
+              <button title="Ouvrir le dossier des rendus" id="showRendersBtn" class="navBtn">
+                OUVRIR
+                <img src="./assets/archiveCollection.png" />
               </button>
             </div>
           </div>
@@ -275,10 +284,10 @@
       <div id="canvasDiv">
         <p class="cardPreview">Aperçu de l'élément actuel</p>
         <div class="btnContainer">
-          <button title="Tourner de 90°" id="turnCanvasBtn" class="navBtn" ><img src="./assets/rotate.png"/></button>
-              <button title="Agrandir" id="scaleUpCanvasBtn" class="navBtn" ><img src="./assets/scaleUp.png"/></button>
-              <button title="Réduire" id="scaleDownCanvasBtn" class="navBtn" ><img src="./assets/scaleDown.png"/></button>
-            </div>
+          <button title="Tourner de 90°" id="turnCanvasBtn" class="navBtn"><img src="./assets/rotate.png" /></button>
+          <button title="Agrandir" id="scaleUpCanvasBtn" class="navBtn"><img src="./assets/scaleUp.png" /></button>
+          <button title="Réduire" id="scaleDownCanvasBtn" class="navBtn"><img src="./assets/scaleDown.png" /></button>
+        </div>
         <main></main>
       </div>
     </div>
@@ -287,7 +296,7 @@
 
   <div id="bottomBarDiv">
     <div id="cardCounterDiv">
-      
+
       <div id="cardCounterDivBtns">
         <button class="cardBtn" id="startPrevCardBtn">
           ◄ Début

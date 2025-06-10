@@ -1,15 +1,30 @@
-#homeBtn {
+#homeBtn,
+#langBtn {
   display: flex;
   padding: 0.5rem;
   border-radius: 50%;
 }
 
-#homeBtn > img {
+#homeBtn>img,
+#langBtn>img {
   height: 3rem;
 }
 
-#homeBtn:hover {
+#homeBtn:hover,
+#langBtn:hover {
   background: var(--mainColorLight);
+}
+
+#langDiv {
+  background: var(--mainBtnColor);
+  font-size: 1rem;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  translate: 1rem;
+}
+
+#mainTitleDiv {
+  flex: 1;
 }
 
 #startPanelDiv {
@@ -37,7 +52,7 @@
   width: 100%;
 }
 
-#archivedCollectionsContainer > img {
+#archivedCollectionsContainer>img {
   width: 1rem;
 }
 
@@ -85,7 +100,7 @@
 
 .imgContainer {
   position: absolute;
-  top : 0;
+  top: 0;
   left: 0;
   translate: -50% -50%;
   background: var(--mainColor);
@@ -96,12 +111,12 @@
   place-items: center;
 }
 
-.imgContainer > img {
+.imgContainer>img {
   height: 3rem;
   rotate: 5deg;
 }
 
-.homePageBtn{
+.homePageBtn {
   background-color: var(--mainColorLight);
   display: flex;
   height: 100%;

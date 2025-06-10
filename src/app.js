@@ -15,8 +15,6 @@ const sketch = (p) => {
     p.card.imageMode(p.CENTER);
 
     p.card.noSmooth();
-
-    // setupMenu();
   };
 
   p.draw = () => {

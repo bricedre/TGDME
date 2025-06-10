@@ -1,14 +1,19 @@
 import { collectionsAvailable, createNewCollection, currentCollectionUID, getCollections, setCurrentCollection } from "../core/collectionsManager.js";
-import { currentPanel, openScene } from "./mainLayout.js";
+import { changeLangage, openScene, setupLangage } from "./mainLayout.js";
 
 const { rootPath } = require("electron-root-path");
 const $ = require("jquery");
 
+$("#homeBtn").on("click", () => {
+  getCollections();
+  openScene("home");
+});
+
+$("#langBtn").on("click", () => {
+  changeLangage();
+});
+
 export function setupMenu() {
-  $("#homeBtn").on("click", () => {
-    getCollections();
-    openScene("home");
-  });
 
   let collectionsSorted = [...collectionsAvailable].sort((a, b) => {
     return a.collectionInfo.collectionName - b.collectionInfo.collectionName;
@@ -68,17 +73,15 @@ export function setupMenu() {
 
   //No Collections to show
   else {
-    var noResourceText = $("<div></div>").addClass("noStuffDiv");
-    noResourceText.text("Aucune Collection dans votre Bibliothèque");
+    var noResourceText = $("<div></div>").addClass("noStuffDiv other_noProject");
 
-    startPanelDiv.append(noResourceText);
+    $("#startPanelDiv").append(noResourceText);
   }
 
   //ACTIONS
   const actionRow = $("<div></div>").addClass("btnContainer");
   const newCollectionBtn = $("<button></button>")
-    .addClass("navBtn")
-    .text("CRÉER UN NOUVEAU PROTO")
+    .addClass("navBtn bigBtn btns_newProto")
     .on("click", (e) => {
       e.preventDefault();
       e.stopPropagation();
@@ -86,4 +89,8 @@ export function setupMenu() {
     });
   actionRow.append(newCollectionBtn);
   $("#startPanelDiv").append(actionRow);
+
+
+  setupLangage();
+
 }

@@ -32,7 +32,7 @@ nav {
   font-size: xx-large;
   display: flex;
   align-items: center;
-  padding: 0 0.5rem;
+  padding: 0 1rem;
   box-shadow: 0 0 20px #0005;
   gap: 2rem;
   border-radius: 0 0 2.5rem 2.5rem;
@@ -45,6 +45,8 @@ nav {
   /* margin-top: 0.8rem; */
   border-radius: 0.7rem;
 }
+
+
 
 #title {
   flex: 1;
@@ -89,7 +91,7 @@ button {
   font-family: "Main Font", sans-serif;
 }
 
-button > img {
+button>img {
   height: 2rem;
   rotate: 5deg;
   filter: drop-shadow(2px 2px 2px var(--mainColorShadows));
@@ -102,6 +104,11 @@ button:hover {
 button:disabled {
   background: #fff5;
   cursor: default;
+}
+
+.bigBtn {
+  padding: 1rem 2rem;
+  font-size: 2rem;
 }
 
 #bottomBarDiv {
@@ -170,12 +177,12 @@ button:disabled {
 }
 
 /* On mouse-over, add a grey background color */
-.checkboxContainer:hover input ~ .checkmark {
+.checkboxContainer:hover input~.checkmark {
   background: #ccc;
 }
 
 /* When the checkbox is checked, add a blue background */
-.checkboxContainer input:checked ~ .checkmark {
+.checkboxContainer input:checked~.checkmark {
   background-color: var(--mainColorDark);
 }
 
@@ -187,7 +194,7 @@ button:disabled {
 }
 
 /* Show the checkmark when checked */
-.checkboxContainer input:checked ~ .checkmark:after {
+.checkboxContainer input:checked~.checkmark:after {
   display: block;
 }
 

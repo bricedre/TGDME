@@ -3,11 +3,17 @@ import { currentCollection, getCollections, setCurrentCollection } from "../core
 import { populateComponents } from "../core/componentsManager.js";
 import { getFontList } from "../core/assetsManager.js";
 import { setupMenu } from "./menuScreen.js";
+import { uiTexts } from "../core/translations.js";
+
 const $ = require("jquery");
+
+export let currentPanel = "home";
+let langIndex = 0;
+let langs = ["fr", "en", "es", "it", "pt-br", "el", "neo"];
 
 const scenesSettings = {
   home: {
-    title: "LA CABANE À PROTOS",
+    title: "",
     icon: "./assets/home.png",
     uiElement: "#startPanelDiv",
     hideFooter: true,
@@ -19,19 +25,16 @@ const scenesSettings = {
     hideFooter: false,
   }
 };
+const allInputs = document.querySelectorAll('input:not([type="radio"])');
+const allSelects = document.querySelectorAll("select");
 
-export let currentPanel = "home";
-
-getFontList();
-openScene(currentPanel);
-
+// EVENT LISTENERS //
 document.addEventListener("keyup", function (event) {
   if (event.key === "Enter") {
     generateCollectionBtn.click();
   }
 });
 
-const allInputs = document.querySelectorAll('input:not([type="radio"])');
 allInputs.forEach((input) => {
   input.addEventListener("input", (e) => {
     populateComponents();
@@ -39,7 +42,6 @@ allInputs.forEach((input) => {
   });
 });
 
-const allSelects = document.querySelectorAll("select");
 allSelects.forEach((select) => {
   select.addEventListener("change", (e) => {
     generateCollectionBtn.click();
@@ -47,6 +49,7 @@ allSelects.forEach((select) => {
   });
 });
 
+// FUNCTIONS
 export function openScene(panelName) {
   $(".panel").css("display", "none");
 
@@ -75,3 +78,34 @@ export function openScene(panelName) {
 
   currentPanel = panelName;
 }
+
+export function changeLangage() {
+  langIndex = (langIndex + 1) % langs.length;
+  setupLangage(langs[langIndex]);
+
+}
+
+export function setupLangage() {
+
+  console.log("--- setupLangage")
+  console.log(langs[langIndex]);
+
+  Object.keys(uiTexts).forEach(key => {
+    const elementsToSetup = $(`.${key}`);
+    try {
+      let textElements = uiTexts[key][langs[langIndex]].split("|");
+      if (textElements.length > 0) {
+        if (textElements[0] != "") elementsToSetup.text(textElements[0]);
+      }
+      if (textElements.length > 1) {
+        if (textElements[1] != "") elementsToSetup.attr("title", textElements[1]);
+      }
+    }
+    catch (e) {
+      elementsToSetup.text(uiTexts["other_error"][langs[langIndex]])
+    }
+  })
+}
+
+getFontList();
+openScene(currentPanel);
