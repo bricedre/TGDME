@@ -832,7 +832,7 @@ function getActualValue(refValue, elementIndex, dft) {
         finalValue = fixedValue;
       }
 
-      if (finalValue.charAt(0) == "=") finalValue = eval(finalValue.substring(1));
+      if (finalValue.charAt(0) == ":") finalValue = eval(finalValue.substring(1));
     } catch (e) {
       // console.log(e);
     }

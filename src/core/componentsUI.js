@@ -19,8 +19,8 @@ export let IMAGE_parameters = [
     refValue: "anchor",
     type: "select",
     options: [
-      { value: "=CENTER", label: "CENTRE" },
-      { value: "=CORNER", label: "COIN SUPÉRIEUR GAUCHE" },
+      { value: ":CENTER", label: "CENTRE" },
+      { value: ":CORNER", label: "COIN SUPÉRIEUR GAUCHE" },
     ],
   },
   {
@@ -50,9 +50,9 @@ export let IMAGE_parameters = [
     refValue: "listAnchor",
     type: "select",
     options: [
-      { value: "=LEFT", label: "GAUCHE" },
-      { value: "=CENTER", label: "CENTRE" },
-      { value: "=RIGHT", label: "DROITE" },
+      { value: ":LEFT", label: "GAUCHE" },
+      { value: ":CENTER", label: "CENTRE" },
+      { value: ":RIGHT", label: "DROITE" },
     ],
   },
   { name: "Espacement Horizontal", refValue: "spacingX", type: "text" },
@@ -146,8 +146,8 @@ export let SHAPE_parameters = [
     refValue: "anchor",
     type: "select",
     options: [
-      { value: "=CENTER", label: "CENTRE" },
-      { value: "=CORNER", label: "COIN SUPÉRIEUR GAUCHE" },
+      { value: ":CENTER", label: "CENTRE" },
+      { value: ":CORNER", label: "COIN SUPÉRIEUR GAUCHE" },
     ],
   },
   {
@@ -196,9 +196,9 @@ export let TEXT_parameters = [
     refValue: "anchor",
     type: "select",
     options: [
-      { value: "=LEFT", label: "GAUCHE" },
-      { value: "=CENTER", label: "CENTRE" },
-      { value: "=RIGHT", label: "DROITE" },
+      { value: ":LEFT", label: "GAUCHE" },
+      { value: ":CENTER", label: "CENTRE" },
+      { value: ":RIGHT", label: "DROITE" },
     ],
   },
   {
