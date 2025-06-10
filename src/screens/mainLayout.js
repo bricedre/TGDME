@@ -9,7 +9,7 @@ const $ = require("jquery");
 
 export let currentPanel = "home";
 let langIndex = 0;
-let langs = ["fr", "en", "es", "it", "pt-br", "el", "neo"];
+let langs = ["fr", "en"];
 
 const scenesSettings = {
   home: {
@@ -87,22 +87,29 @@ export function changeLangage() {
 
 export function setupLangage() {
 
-  console.log("--- setupLangage")
-  console.log(langs[langIndex]);
-
   Object.keys(uiTexts).forEach(key => {
     const elementsToSetup = $(`.${key}`);
     try {
       let textElements = uiTexts[key][langs[langIndex]].split("|");
       if (textElements.length > 0) {
-        if (textElements[0] != "") elementsToSetup.text(textElements[0]);
+        if (textElements[0] != "") {
+          elementsToSetup.text(textElements[0]);
+
+          // Right Icon on certain buttons
+          if (uiTexts[key]["icon"]) {
+            elementsToSetup.append($("<img></img>").attr("src", `./assets/${uiTexts[key]["icon"]}`))
+          }
+        }
       }
       if (textElements.length > 1) {
         if (textElements[1] != "") elementsToSetup.attr("title", textElements[1]);
+        else elementsToSetup.attr("title", "[à traduire]");
       }
+
+
     }
     catch (e) {
-      elementsToSetup.text(uiTexts["other_error"][langs[langIndex]])
+      elementsToSetup.text()
     }
   })
 }

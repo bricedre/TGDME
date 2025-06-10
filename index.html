@@ -21,7 +21,7 @@
     </button>
     <div id="mainTitleDiv" class="other_mainTitle"></div>
     <div id="langDiv" class="other_lang"></div>
-    <button id="langBtn" class="langbtn" title="Changer la Langue">
+    <button id="langBtn" class="btns_changeLang" title="Changer la Langue">
       <img id="homeIcon" src="./assets/rotate.png" alt="home btn" />
     </button>
   </nav>
@@ -31,7 +31,7 @@
 
     <div id="collectionEditionPanel" class="panel">
       <div class="tabs">
-        <button id="generateCollectionBtn" title="Re-générer la Collection (Entrée)" class="generateCollectionBtn">
+        <button id="generateCollectionBtn" class="generateCollectionBtn btns_reRenderCollection">
           <img src="./assets/reload.png" alt="add symbol" />
         </button>
         <input id="tabConfigInput" type="radio" name="tabs" checked>
@@ -131,20 +131,15 @@
             </div>
 
             <div class="btnContainer">
-              <button id="duplicateCollectionBtn" class="navBtn" title="Créer une copie de la collection actuelle">
-                DUPLIQUER
-                <img src="./assets/duplicateCollection.png">
+              <button id="duplicateCollectionBtn" class="navBtn btns_duplicateCollection"
+                title="Créer une copie de la collection actuelle">
               </button>
 
-              <button id="archiveCollectionBtn" class="navBtn"
+              <button id="archiveCollectionBtn" class="navBtn btns_archiveCollection"
                 title="Archiver (c.-à-d. cacher dans la Bibliothèque) la collection actuelle">
-                ARCHIVER
-                <img src="./assets/archiveCollection.png">
               </button>
 
-              <button id="deleteCollectionBtn" class="navBtn" title="Supprimer la collection actuelle">
-                SUPPRIMER
-                <img src="./assets/deleteCollection.png">
+              <button id="deleteCollectionBtn" class="navBtn btns_deleteCollection" title="Supprimer la collection actuelle">
               </button>
             </div>
 
