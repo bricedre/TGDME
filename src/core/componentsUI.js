@@ -83,7 +83,7 @@ export let SHAPE_parameters = [
       { value: "battery", label: "🔋 BATTERIE (battery)", cat: "complex_shapes" },
       { value: "shield", label: "🛡️ BOUCLIER (shield)", cat: "basic_shapes" },
       { value: "avatar", label: "👤 BUSTE (avatar)", cat:"complex_shapes" },
-      { value: "lock", label: "🔒 CADENAS (lock)", cat:"complex_shapes" }, // A FAIRE
+      // { value: "lock", label: "🔒 CADENAS (lock)", cat:"complex_shapes" }, // A FAIRE
       { value: "target", label: "🎯 CIBLE (target)", cat:"complex_shapes" },
       { value: "key", label: "🔑 CLÉ (key)", cat:"complex_shapes" },
       { value: "tick", label: "✔️ COCHE (tick)", cat:"nature" },
@@ -93,12 +93,12 @@ export let SHAPE_parameters = [
       { value: "diam", label: "💎 DIAMANT (diam)", cat:"basic_shapes" },
       { value: "flag", label: "🏴 DRAPEAU (flag)", cat:"basic_shapes" },
       { value: "bolt", label: "⚡ ÉCLAIR (bolt)", cat:"nature" },
-      { value: "sword", label: "⚔️ ÉPÉE (sword)", cat:"complex_shapes" }, // A FAIRE
+      // { value: "sword", label: "⚔️ ÉPÉE (sword)", cat:"complex_shapes" }, // A FAIRE
       { value: "star", label: "⭐ ÉTOILE (star)", cat:"basic_shapes" },
       { value: "ellipse", label: "🔵 ELLIPSE (ellipse)", cat:"basic_shapes" },
-      { value: "gear", label: "⚙️ ENGRENAGE (gear)", cat:"complex_shapes" }, // A FAIRE
+      // { value: "gear", label: "⚙️ ENGRENAGE (gear)", cat:"complex_shapes" }, // A FAIRE
       { value: "leaf", label: "🍃 FEUILLE (leaf)", cat:"nature" },
-      { value: "flask", label: "⚗️ FIOLE (flask)", cat:"complex_shapes" }, // A FAIRE
+      // { value: "flask", label: "⚗️ FIOLE (flask)", cat:"complex_shapes" }, // A FAIRE
       { value: "fire", label: "🔥 FLAMME (fire)", cat:"nature" },
       { value: "arrow", label: "➡️ FLÈCHE (arrow)", cat:"basic_shapes" },
       { value: "flower", label: "🌷 FLEUR (flower)", cat:"basic_shapes" },
@@ -107,15 +107,15 @@ export let SHAPE_parameters = [
       { value: "book", label: "📖 LIVRE (book)", cat:"basic_shapes" },
       { value: "loz", label: "🪁 LOSANGE (loz)", cat:"polygons" },
       { value: "moon", label: "🌙 LUNE (moon)", cat:"basic_shapes" },
-      { value: "medal", label: "🎖️ MÉDAILLE (medal)", cat:"complex_shapes" }, // A FAIRE
+      // { value: "medal", label: "🎖️ MÉDAILLE (medal)", cat:"complex_shapes" }, // A FAIRE
       { value: "mountain", label: "🗻 MONTAGNE (mountain)", cat:"nature" },
-      { value: "note", label: "🎵 NOTE (note)", cat:"complex_shapes" }, // A FAIRE
+      // { value: "note", label: "🎵 NOTE (note)", cat:"complex_shapes" }, // A FAIRE
       { value: "cloud", label: "☁️ NUAGE (cloud)", cat:"nature" },
       { value: "octo", label: "🔢 OCTOGONE (octo)", cat:"polygons" },
       { value: "egg", label: "🥚 ŒUF (egg)", cat:"nature" },
       { value: "pent", label: "🔢 PENTAGONE (pent)", cat:"polygons" },
       { value: "stone", label: "🪨 PIERRE (stone)", cat:"nature" },
-      { value: "scroll", label: "📜 PARCHEMIN (scroll)", cat:"basic_shapes" }, // A FAIRE
+      // { value: "scroll", label: "📜 PARCHEMIN (scroll)", cat:"basic_shapes" }, // A FAIRE
       { value: "puzzle", label: "🧩 PUZZLE (puzzle)", cat:"complex_shapes" },
       { value: "hourglass", label: "⌛ SABLIER (hourglass)", cat:"complex_shapes" },
       { value: "tri", label: "🗻 TRIANGLE (tri)", cat:"polygons" },
