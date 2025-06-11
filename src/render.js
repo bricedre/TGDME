@@ -36,6 +36,7 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
   if (componentType == "IMAGE") _elementsList = getActualValue(componentData.src, elementIndex, "").toString().split(",");
   else if (componentType == "TEXT") _textToWrite = getActualValue(componentData.src, elementIndex, "").toString();
   else if (componentType == "SHAPE") _shape = getActualValue(componentData.src, elementIndex, "").toString();
+  else if (componentType == "TITLE") _textToWrite = getActualValue(componentData.src, elementIndex, "").toString();
 
   if (_elementsList && _elementsList.length > 0) {
     for (let i = 0; i < _elementsList.length; i++) {
@@ -43,22 +44,21 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
     }
   }
 
+  //GENERIQUES
   var _positionX = getActualValue(componentData.positionX, elementIndex, 0);
   var _positionY = getActualValue(componentData.positionY, elementIndex, 0);
   var _width = getActualValue(componentData.width, elementIndex, "W");
   var _height = getActualValue(componentData.height, elementIndex, "W");
-  var _maxWidth = getActualValue(componentData.maxWidth, elementIndex, "W");
-  var _anchor = getActualValue(componentData.anchor, elementIndex, p5.CENTER);
   var _angle = getActualValue(componentData.angle, elementIndex, 0);
-  var _tint = getActualValue(componentData.tint, elementIndex, "#FFFFFF");
   var _opacity = getActualValue(componentData.opacity, elementIndex, 1);
-  var _size = getActualValue(componentData.size, elementIndex, 5);
-  var _font = getActualValue(componentData.font, elementIndex, "Verdana");
-  var _color = getActualValue(componentData.color, elementIndex, "#000000");
-  var _borderColor = getActualValue(componentData.borderColor, elementIndex, "#FF0000");
-  var _borderOpacity = getActualValue(componentData.borderOpacity, elementIndex, 1);
-  var _borderWeight = getActualValue(componentData.borderWeight, elementIndex, 3);
+  var _shadowColor = getActualValue(componentData.shadowColor, elementIndex, "#000000");
+  var _shadowOpacity = getActualValue(componentData.shadowOpacity, elementIndex, 30);
+  var _shadowOffsetX = getActualValue(componentData.shadowOffsetX, elementIndex, 10);
+  var _shadowOffsetY = getActualValue(componentData.shadowOffsetY, elementIndex, 10);
 
+  //IMAGE-SPECIFIC
+  var _anchor = getActualValue(componentData.anchor, elementIndex, p5.CENTER);
+  var _tint = getActualValue(componentData.tint, elementIndex, "#FFFFFF");
   var _listAnchor = getActualValue(componentData.listAnchor, elementIndex, p5.CENTER);
   var _spacingX = getActualValue(componentData.spacingX, elementIndex, 0);
   var _spacingY = getActualValue(componentData.spacingY, elementIndex, 0);
@@ -66,10 +66,25 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
   var _offsetX = getActualValue(componentData.offsetX, elementIndex, 0);
   var _offsetY = getActualValue(componentData.offsetY, elementIndex, 0);
 
-  var _shadowColor = getActualValue(componentData.shadowColor, elementIndex, "#000000");
-  var _shadowOpacity = getActualValue(componentData.shadowOpacity, elementIndex, 30);
-  var _shadowOffsetX = getActualValue(componentData.shadowOffsetX, elementIndex, 10);
-  var _shadowOffsetY = getActualValue(componentData.shadowOffsetY, elementIndex, 10);
+  //TEXT-SPECIFIC
+  var _textAnchorHori = getActualValue(componentData.textAnchorHori, elementIndex, p5.CENTER);
+  var _textAnchorVert = getActualValue(componentData.textAnchorVert, elementIndex, p5.CENTER);
+  var _maxWidth = getActualValue(componentData.maxWidth, elementIndex, "W");
+  var _interline = getActualValue(componentData.interline, elementIndex, 1);
+  var _inlineImgsSize = getActualValue(componentData.inlineImgsSize, elementIndex, 50);
+  var _inlineImgsXOffset = getActualValue(componentData.inlineImgsXOffset, elementIndex, 0);
+  var _size = getActualValue(componentData.size, elementIndex, 5);
+  var _font = getActualValue(componentData.font, elementIndex, "Verdana");
+  var _color = getActualValue(componentData.color, elementIndex, "#000000");
+
+  //TITLE-SPECIFIC
+  var _maxSize = getActualValue(componentData.maxSize, elementIndex, 5);
+  var _titleWidth = getActualValue(componentData.titleWidth, elementIndex, 0);
+
+  //SHAPE-SPECIFIC
+  var _borderColor = getActualValue(componentData.borderColor, elementIndex, "#FF0000");
+  var _borderOpacity = getActualValue(componentData.borderOpacity, elementIndex, 1);
+  var _borderWeight = getActualValue(componentData.borderWeight, elementIndex, 3);
 
   try {
     p5.card.angleMode(p5.DEGREES);
@@ -656,17 +671,40 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
         }
       });
 
-      let interline = _size * currentCollection.collectionInfo.H * currentCollection.collectionInfo.resolution * 0.02;
+      let interline = _interline * _size * currentCollection.collectionInfo.H * currentCollection.collectionInfo.resolution * 0.02;
       let linesStartOffset = (lines.length - 1) * 0.5 * interline;
 
+      
       lines.forEach((line, index) => p5.card.text(line, 0, -linesStartOffset + index * interline));
-
+      
       imgs.forEach((img) => {
         p5.card.imageMode(p5.CENTER);
-        let imgSize = 30;
         let imgToShow = assetsLibrary[img.src];
-        p5.card.image(imgToShow, -(p5.card.textWidth(lines[img.lineIndex]) / 2) + img.xPlacement + p5.card.textWidth("___") * 0.6, -linesStartOffset + img.lineIndex * interline, imgSize, imgSize);
+        p5.card.image(imgToShow, -(p5.card.textWidth(lines[img.lineIndex]) / 2) + img.xPlacement + parseFloat(_inlineImgsXOffset), -linesStartOffset + img.lineIndex * interline, _inlineImgsSize, _inlineImgsSize);
       });
+    }
+
+    //! TITLE
+    else if (componentType == "TITLE") {
+      p5.card.noStroke();
+      p5.card.textAlign(p5.CENTER, p5.CENTER);
+      p5.card.textFont(_font);
+      p5.card.textSize(0);
+
+      let smallestSizeToFit = 0;
+      while (p5.card.textWidth(_textToWrite) < _titleWidth && smallestSizeToFit < _maxSize) {
+        smallestSizeToFit += 0.05;
+        p5.card.textSize(smallestSizeToFit);
+      }
+
+      if (_shadowOpacity > 0) {
+        p5.card.fill(_shadowColor + zeroPad(Math.floor(_shadowOpacity * 255).toString(16), 2));
+        p5.card.text(_textToWrite, _shadowOffsetX, _shadowOffsetY);
+      }
+
+      p5.card.fill(_color + zeroPad(Math.floor(_opacity * 255).toString(16), 2));
+
+      p5.card.text(_textToWrite, 0, 0);
     }
 
     //! IMAGE / STRIP
@@ -722,7 +760,6 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
     }
 
     p5.card.pop();
-
   } catch (e) {
     // console.log(e);
     if (componentType == "IMAGE" && _elementsList[0] != "") {
@@ -731,7 +768,6 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
 
     p5.card.pop();
   }
-
 }
 
 function checkForImages(word, imgs, currentWidth, currentLineIndex) {

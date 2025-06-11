@@ -217,6 +217,7 @@ export function createNewComponent(item, itemIndex) {
       try {
         currentMode = currentCollection.template[itemIndex][param.refValue]["type"];
       } catch (e) {
+        console.log(param)
         console.log(e);
         currentMode = "0";
       }

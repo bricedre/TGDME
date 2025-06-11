@@ -173,7 +173,7 @@ export let TEXT_parameters = [
   { name: "Limite Horizontale", refValue: "maxWidth", type: "text" },
   {
     name: "Alignement Horizontal",
-    refValue: "anchorHori",
+    refValue: "textAnchorHori",
     type: "select",
     options: [
       { value: ":LEFT", label: "GAUCHE" },
@@ -183,7 +183,7 @@ export let TEXT_parameters = [
   },
   {
     name: "Alignement Vertical",
-    refValue: "anchorVert",
+    refValue: "textAnchorVert",
     type: "select",
     options: [
       { value: ":TOP", label: "HAUT" },
@@ -192,6 +192,7 @@ export let TEXT_parameters = [
     ],
   },
   { name: "Interligne", refValue: "interline", type: "text" },
+
   { name: "<span class='spacerIcon'>🎨</span><span>Aspect Visuel</span>", type: "spacer" },
   { name: "Couleur", refValue: "color", type: "color" },
   { name: "Taille", refValue: "size", type: "text" },
@@ -223,9 +224,10 @@ export let TITLE_parameters = [
   { name: "Position Horizontale", refValue: "positionX", type: "text" },
   { name: "Position Verticale", refValue: "positionY", type: "text" },
   { name: "Rotation", refValue: "angle", type: "text" },
-  { name: "Largeur", refValue: "width", type: "text" },
-
+  
   { name: "<span class='spacerIcon'>🎨</span><span>Aspect Visuel</span>", type: "spacer" },
+  { name: "Largeur Cible", refValue: "titleWidth", type: "text" },
+  { name: "Taille Maximale", refValue: "maxSize", type: "text" },
   { name: "Couleur", refValue: "color", type: "color" },
   { name: "Police d'Écriture", refValue: "font", type: "select", optionRef: "allSystemFonts" },
   { name: "Opacité", refValue: "opacity", type: "range" },
