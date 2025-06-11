@@ -43,13 +43,13 @@ export let textComponentTemplate = {
   shadowColor: { value: "#000000", type: "0" },
   shadowOffsetX: { value: "5", type: "0" },
   shadowOffsetY: { value: "5", type: "0" },
-  shadowOpacity: { value: "0", type: "0" },
+  shadowOpacity: { value: "0", type: "0" }, 
 };
 
 export let titleComponentTemplate = {
   UID:0,
   isVisible: true,
-  component: "TEXT",
+  component: "TITLE",
   componentName: { value: "TITRE" },
   src: { value: "nouveau titre", type: "0" },
   positionX: { value: ":0.5*W", type: "0" },

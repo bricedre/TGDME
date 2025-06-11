@@ -92,8 +92,8 @@ button {
 }
 
 button>img {
-  height: 2rem;
-  rotate: 5deg;
+  height: 3rem;
+  rotate: 3deg;
   filter: drop-shadow(2px 2px 2px var(--mainColorShadows));
 }
 

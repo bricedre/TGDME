@@ -157,7 +157,7 @@ export let SHAPE_parameters = [
 ];
 
 export let TEXT_parameters = [
-  { name: "<span class='spacerIcon spacerIconCentered'>🪪</span><span>Informations Générales</span>", type: "spacer" },
+  { name: "<span class='spacerIcon spacerIconCentered'>⚙</span><span>Informations Générales</span>", type: "spacer" },
   {
     name: "Nom du Composant ",
     refValue: "componentName",
@@ -172,8 +172,8 @@ export let TEXT_parameters = [
   { name: "Rotation", refValue: "angle", type: "text" },
   { name: "Limite Horizontale", refValue: "maxWidth", type: "text" },
   {
-    name: "Alignement",
-    refValue: "anchor",
+    name: "Alignement Horizontal",
+    refValue: "anchorHori",
     type: "select",
     options: [
       { value: ":LEFT", label: "GAUCHE" },
@@ -181,9 +181,52 @@ export let TEXT_parameters = [
       { value: ":RIGHT", label: "DROITE" },
     ],
   },
+  {
+    name: "Alignement Vertical",
+    refValue: "anchorVert",
+    type: "select",
+    options: [
+      { value: ":TOP", label: "HAUT" },
+      { value: ":CENTER", label: "CENTRE" },
+      { value: ":BOTTOM", label: "BAS" },
+    ],
+  },
+  { name: "Interligne", refValue: "interline", type: "text" },
   { name: "<span class='spacerIcon'>🎨</span><span>Aspect Visuel</span>", type: "spacer" },
   { name: "Couleur", refValue: "color", type: "color" },
   { name: "Taille", refValue: "size", type: "text" },
+  { name: "Police d'Écriture", refValue: "font", type: "select", optionRef: "allSystemFonts" },
+  { name: "Opacité", refValue: "opacity", type: "range" },
+
+  { name: "<span class='spacerIcon'>☀️</span><span>Ombre Portée</span>", type: "spacer" },
+  { name: "Couleur", refValue: "shadowColor", type: "color" },
+  { name: "Décalage Horizontal", refValue: "shadowOffsetX", type: "text" },
+  { name: "Décalage Vertical", refValue: "shadowOffsetY", type: "text" },
+  { name: "Opacité", refValue: "shadowOpacity", type: "range" },
+  
+  { name: "<span class='spacerIcon'>🏆</span><span>Icônes Incluses</span>", type: "spacer" },
+  { name: "Taille des Icônes", refValue: "inlineImgsSize", type: "text" },
+  { name: "Décalage Horizontal des Icônes", refValue: "inlineImgsXOffset", type: "text" },
+];
+
+export let TITLE_parameters = [
+  { name: "<span class='spacerIcon spacerIconCentered'>⚙</span><span>Informations Générales</span>", type: "spacer" },
+  {
+    name: "Nom du Composant ",
+    refValue: "componentName",
+    type: "text",
+    forced: true,
+  },
+  { name: "Titre à Afficher", refValue: "src", type: "text" },
+
+  { name: "<span class='spacerIcon'>📏</span><span>Positionnement, Dimensions & Rotation</span>", type: "spacer" },
+  { name: "Position Horizontale", refValue: "positionX", type: "text" },
+  { name: "Position Verticale", refValue: "positionY", type: "text" },
+  { name: "Rotation", refValue: "angle", type: "text" },
+  { name: "Largeur", refValue: "width", type: "text" },
+
+  { name: "<span class='spacerIcon'>🎨</span><span>Aspect Visuel</span>", type: "spacer" },
+  { name: "Couleur", refValue: "color", type: "color" },
   { name: "Police d'Écriture", refValue: "font", type: "select", optionRef: "allSystemFonts" },
   { name: "Opacité", refValue: "opacity", type: "range" },
 

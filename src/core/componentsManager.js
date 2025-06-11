@@ -1,6 +1,6 @@
 import { updateDataView } from "./elementsManager.js";
 
-import { IMAGE_parameters, TEXT_parameters, SHAPE_parameters } from "./componentsUI.js";
+import { IMAGE_parameters, TEXT_parameters, SHAPE_parameters, TITLE_parameters } from "./componentsUI.js";
 import { currentCollection } from "./collectionsManager.js";
 import { allSystemFonts } from "./assetsManager.js";
 import { moveComponent } from "../screens/editionScreen.js";
@@ -43,6 +43,10 @@ export function createNewComponent(item, itemIndex) {
     case "TEXT":
       icon = "assets/addTextComponent.png";
       parametersToLoad = TEXT_parameters;
+      break;
+    case "TITLE":
+      icon = "assets/addTitleComponent.png";
+      parametersToLoad = TITLE_parameters;
       break;
     case "SHAPE":
       icon = "assets/addShapeComponent.png";
@@ -304,6 +308,7 @@ export function createNewComponent(item, itemIndex) {
             $(parameterInput).append(optGroupEl);
           });
         } else {
+          console.log(param.refValue);
           refOptionList.forEach((opt) => {
             var option = document.createElement("option");
             if (param.optionRef) option.style.fontFamily = opt.value;
