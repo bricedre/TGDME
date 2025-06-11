@@ -117,7 +117,6 @@ export function populateEditionFields() {
 }
 
 export function checkOtherInputs(eventTargetId, eventTargetValue) {
-  console.log(eventTargetId);
 
   switch (eventTargetId) {
     case "elementFormatSelect":
@@ -132,7 +131,6 @@ export function checkOtherInputs(eventTargetId, eventTargetValue) {
       break;
 
     case "pageFormatSelect":
-      console.log("coucou");
       if (eventTargetValue === "custom") {
         pageWidthInput.disabled = false;
         pageHeightInput.disabled = false;

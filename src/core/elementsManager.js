@@ -102,7 +102,6 @@ export function updateDataView() {
           td.append(colorPreview);
           newRow.append(td);
         } else if ([".png", ".jpg"].includes(valueToShow.toString().substring(valueToShow.length - 4))) {
-          // console.log("img")
           newRow.append($("<td></td>").css("background-image", `url("collections/${currentCollectionUID}/assets/${valueToShow}")`).css("height", "5rem"));
         } else {
           newRow.append($("<td></td>"));

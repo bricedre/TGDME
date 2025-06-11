@@ -308,7 +308,6 @@ export function createNewComponent(item, itemIndex) {
             $(parameterInput).append(optGroupEl);
           });
         } else {
-          console.log(param.refValue);
           refOptionList.forEach((opt) => {
             var option = document.createElement("option");
             if (param.optionRef) option.style.fontFamily = opt.value;

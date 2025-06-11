@@ -29,8 +29,7 @@ getCollections();
 export function getCollections() {
   collectionsAvailable = readdirSync(rootPath + "/collections", { withFileTypes: true })
     .filter((dirent) => dirent.isDirectory())
-    .map((dirent) => dirent.name)
-    .sort((a,b) => a.lastSavingTime - b.lastSavingTime);
+    .map((dirent) => dirent.name);
 
   collectionsAvailable.forEach(async (collection, index) => {
     const data = await fs.readFile(rootPath + "/collections/" + collection + "/collection.json");
@@ -70,11 +69,8 @@ export function setCurrentCollection(collectionUID) {
 }
 
 export function createNewCollection() {
-
   const newUID = collectionsAvailable.length == 0 ? 0 : collectionsAvailable[collectionsAvailable.length - 1].collectionInfo.UID + 1;
   var dir = rootPath + "/collections/" + newUID;
-
-  console.log(collectionsAvailable)
 
   const collectionTemplatePath = rootPath + "/src/core/collectionTemplate.json";
 
@@ -277,8 +273,8 @@ export function setupCollectionDimensions() {
       break;
 
     case "TTS":
-      coll.pageWidth = Math.round(coll.W*100)/10;
-      coll.pageHeight = Math.round(coll.H*70)/10;
+      coll.pageWidth = Math.round(coll.W * 100) / 10;
+      coll.pageHeight = Math.round(coll.H * 70) / 10;
       break;
   }
 

@@ -16,7 +16,7 @@ $("#langBtn").on("click", () => {
 export function setupMenu() {
 
   let collectionsSorted = [...collectionsAvailable].sort((a, b) => {
-    return a.collectionInfo.collectionName - b.collectionInfo.collectionName;
+    return b.collectionInfo.lastSavingTime - a.collectionInfo.lastSavingTime;
   });
 
   $("#startPanelDiv").empty();
