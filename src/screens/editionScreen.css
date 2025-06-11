@@ -228,6 +228,30 @@ input[type="radio"] {
   margin-bottom: 0.5rem;
 }
 
+.param {
+    display: none;
+    padding: 0 1rem;
+}
+
+.catHeader{
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  border-radius: 0.5rem;
+;
+}
+
+.catHeader:hover{
+  background-color: #fff;
+}
+
+.catHeader.open ~ .param {
+    display: block;
+}
+
+.catHeader.open ~ .catHeader ~ .param {
+    display: none;
+}
+
 .parameterName {
   padding: 0;
   margin: 0 0 0.2rem 0;

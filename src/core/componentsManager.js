@@ -156,6 +156,7 @@ export function createNewComponent(item, itemIndex) {
   parametersToLoad.forEach((param, paramIndex) => {
     var parameterSlot = document.createElement("div");
     parameterSlot.classList.add("parameterSlot");
+    $(parameterSlot).addClass("param");
 
     var parameterName = document.createElement("p");
     parameterName.classList.add("parameterName");
@@ -217,7 +218,7 @@ export function createNewComponent(item, itemIndex) {
       try {
         currentMode = currentCollection.template[itemIndex][param.refValue]["type"];
       } catch (e) {
-        console.log(param)
+        console.log(param);
         console.log(e);
         currentMode = "0";
       }
@@ -367,11 +368,20 @@ export function createNewComponent(item, itemIndex) {
           parameterInputLine.appendChild(modeInput);
           parameterInputLine.appendChild(parameterCBInput);
         }
+
         parameterSlot.appendChild(parameterInputLine);
       }
     } else {
       parameterName.classList.add("spacer");
       if (paramIndex == 0) parameterName.classList.add("firstSpacer");
+
+      $(parameterSlot).removeClass("param");
+      $(parameterSlot).addClass("catHeader");
+      if (paramIndex == 0) {
+        $(parameterSlot).addClass("open");
+      }
+      $(parameterSlot).on("click", () => $(parameterSlot).toggleClass("open"));
+
       parameterSlot.appendChild(parameterName);
     }
 
