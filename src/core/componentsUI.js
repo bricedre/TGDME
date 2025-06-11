@@ -157,7 +157,7 @@ export let SHAPE_parameters = [
 ];
 
 export let TEXT_parameters = [
-  { name: "<span class='spacerIcon spacerIconCentered'>⚙</span><span>Informations Générales</span>", type: "spacer" },
+  { name: "<span class='spacerIcon spacerIconCentered'>🪪</span><span>Informations Générales</span>", type: "spacer" },
   {
     name: "Nom du Composant ",
     refValue: "componentName",
@@ -210,7 +210,7 @@ export let TEXT_parameters = [
 ];
 
 export let TITLE_parameters = [
-  { name: "<span class='spacerIcon spacerIconCentered'>⚙</span><span>Informations Générales</span>", type: "spacer" },
+  { name: "<span class='spacerIcon spacerIconCentered'>🪪</span><span>Informations Générales</span>", type: "spacer" },
   {
     name: "Nom du Composant ",
     refValue: "componentName",

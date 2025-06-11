@@ -400,6 +400,10 @@ export function populateComponents() {
         icon = "assets/addShapeComponent.png";
         parametersToLoad = SHAPE_parameters;
         break;
+      case "TITLE":
+        icon = "assets/addTitleComponent.png";
+        parametersToLoad = TITLE_parameters;
+        break;
     }
 
     allAccordions[index].querySelector("img").src = icon;

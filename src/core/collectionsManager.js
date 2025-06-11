@@ -29,7 +29,10 @@ getCollections();
 export function getCollections() {
   collectionsAvailable = readdirSync(rootPath + "/collections", { withFileTypes: true })
     .filter((dirent) => dirent.isDirectory())
-    .map((dirent) => dirent.name);
+    .map((dirent) => dirent.name)
+    .sort((a, b) => {
+      return a - b;
+    });
 
   collectionsAvailable.forEach(async (collection, index) => {
     const data = await fs.readFile(rootPath + "/collections/" + collection + "/collection.json");
