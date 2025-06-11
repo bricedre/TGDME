@@ -70,15 +70,14 @@
   margin-top: 1rem;
 }
 
-.archivedCollectionsHeader{
+.archivedCollectionsHeader {
   height: 2rem;
   display: flex;
   gap: 1rem;
-  justify-content: center;
-    align-items: center;
+  align-items: center;
 }
 
-.archivedCollectionsHeader img{
+.archivedCollectionsHeader img {
   height: 2rem;
 }
 
