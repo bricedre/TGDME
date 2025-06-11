@@ -113,7 +113,7 @@ export function populateEditionFields() {
   pageWidthInput.value = currentCollection.collectionInfo.pageWidth;
   pageHeightInput.value = currentCollection.collectionInfo.pageHeight;
   pageResolutionInput.value = currentCollection.collectionInfo.resolution;
-  cuttingHelpInput.value = currentCollection.collectionInfo.cuttingHelp;
+  cuttingHelpInput.checked = currentCollection.collectionInfo.cuttingHelp;
 }
 
 export function checkOtherInputs(eventTargetId, eventTargetValue) {

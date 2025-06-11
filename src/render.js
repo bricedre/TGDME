@@ -637,7 +637,7 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
     //! TEXT
     else if (componentType == "TEXT") {
       p5.card.noStroke();
-      p5.card.textAlign(_anchor, p5.CENTER);
+      p5.card.textAlign(_textAnchorHori, p5.CENTER);
       p5.card.textFont(_font);
       p5.card.textSize(_size * currentCollection.collectionInfo.H * currentCollection.collectionInfo.resolution * 0.02);
 
@@ -672,8 +672,11 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
       });
 
       let interline = _interline * _size * currentCollection.collectionInfo.H * currentCollection.collectionInfo.resolution * 0.02;
-      let linesStartOffset = (lines.length - 1) * 0.5 * interline;
 
+      let interlineQty = 0.5;
+      if(_textAnchorVert == "TOP") interlineQty = 0;
+      else if(_textAnchorVert == "BOTTOM") interlineQty = 1;
+      let linesStartOffset = (lines.length - 1) * interlineQty * interline;
       
       lines.forEach((line, index) => p5.card.text(line, 0, -linesStartOffset + index * interline));
       
@@ -940,11 +943,11 @@ export function renderCardUsingTemplate(p, elementIndex, guide, finalRender = fa
     }
 
     //OVERLAYS
-    if (currentCollection.collectionInfo.cuttingHelp) {
+    if (finalRender && currentCollection.collectionInfo.cuttingHelp) {
       p.card.noFill();
-      p.card.stroke(0, 100);
+      p.card.stroke(0, 80);
       p.card.strokeWeight(2);
-      p.card.rect(0, 0, currentCollection.collectionInfo.W, currentCollection.collectionInfo.H);
+      p.card.rect(0, 0, currentCollection.collectionInfo.W*currentCollection.collectionInfo.resolution, currentCollection.collectionInfo.H*currentCollection.collectionInfo.resolution);
     }
 
     if (!finalRender && currentCollection.collectionInfo.visualGuide != "none") {

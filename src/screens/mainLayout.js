@@ -39,7 +39,11 @@ allInputs.forEach((input) => {
   input.addEventListener("input", (e) => {
     populateComponents();
     checkOtherInputs(e.target.id, e.target.value);
+    if(input.type == "checkbox"){
+      generateCollectionBtn.click();
+    }
   });
+
 });
 
 allSelects.forEach((select) => {

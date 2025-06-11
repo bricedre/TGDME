@@ -186,9 +186,9 @@ export let TEXT_parameters = [
     refValue: "textAnchorVert",
     type: "select",
     options: [
-      { value: ":TOP", label: "HAUT" },
-      { value: ":CENTER", label: "CENTRE" },
-      { value: ":BOTTOM", label: "BAS" },
+      { value: "TOP", label: "HAUT" },
+      { value: "CENTER", label: "CENTRE" },
+      { value: "BOTTOM", label: "BAS" },
     ],
   },
   { name: "Interligne", refValue: "interline", type: "text" },
