@@ -1,6 +1,6 @@
 import { app } from "../app.js";
 const { rootPath } = require("electron-root-path");
-import { addNewImage, addNewShape, addNewText, archiveCollection, currentCollection, deleteCurrentCollection, duplicateCollection, saveCollection } from "../core/collectionsManager.js";
+import { addNewImage, addNewShape, addNewText, addNewTitle, archiveCollection, currentCollection, deleteCurrentCollection, duplicateCollection, saveCollection } from "../core/collectionsManager.js";
 import { generatePages, renderCardUsingTemplate } from "../render.js";
 import { allSystemFonts, loadAssets } from "../core/assetsManager.js";
 import { setupComponents } from "../core/componentsManager.js";
@@ -41,6 +41,7 @@ $("#reloadResBtn").on("click", () => {
 $("#addImageComponentBtn").on("click", () => addNewImage());
 $("#addShapeComponentBtn").on("click", () => addNewShape());
 $("#addTextComponentBtn").on("click", () => addNewText());
+$("#addTitleComponentBtn").on("click", () => addNewTitle());
 
 $("#modifyDataBtn").on("click", () => openExcelFile());
 $("#updateDataBtn").on("click", () => checkForFileUpdate());

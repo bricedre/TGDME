@@ -42,6 +42,27 @@ export let textComponentTemplate = {
   shadowOpacity: { value: "0", type: "0" },
 };
 
+export let titleComponentTemplate = {
+  UID:0,
+  isVisible: true,
+  component: "TEXT",
+  componentName: { value: "NOUVEAU TITRE" },
+  src: { value: "titre", type: "0" },
+  positionX: { value: ":0.5*W", type: "0" },
+  positionY: { value: ":0.1*H", type: "0" },
+  maxWidth: { value: ":W", type: "0" },
+  anchor: { value: ":CENTER", type: "0" },
+  color: { value: "#000000", type: "0" },
+  size: { value: "4", type: "0" },
+  font: { value: "Verdana", type: "0" },
+  angle: { value: "0", type: "0" },
+  opacity: { value: "1", type: "0" },
+  shadowColor: { value: "#000000", type: "0" },
+  shadowOffsetX: { value: "5", type: "0" },
+  shadowOffsetY: { value: "5", type: "0" },
+  shadowOpacity: { value: "0", type: "0" },
+};
+
 export let imageComponentTemplate = {
   UID:0,
   isVisible: true,

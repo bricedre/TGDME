@@ -5,7 +5,7 @@ import { checkOtherInputs, populateEditionFields, updateElementsCounter } from "
 import { openScene } from "../screens/mainLayout.js";
 
 import { getFontList, loadAssets } from "./assetsManager.js";
-import { imageComponentTemplate, textComponentTemplate, shapeComponentTemplate } from "./componentTemplates.js";
+import { imageComponentTemplate, textComponentTemplate, shapeComponentTemplate, titleComponentTemplate } from "./componentTemplates.js";
 import { renderCardUsingTemplate, setGlobalVariables } from "../render.js";
 import { setupResources } from "./assetsManager.js";
 import { populateComponents, setupComponents } from "./componentsManager.js";
@@ -302,6 +302,11 @@ export function addNewImage() {
 
 export function addNewText() {
   currentCollection.template.push(cloneDeep(textComponentTemplate));
+  assignUIDToNewComponent();
+}
+
+export function addNewTitle() {
+  currentCollection.template.push(cloneDeep(titleComponentTemplate));
   assignUIDToNewComponent();
 }
 
