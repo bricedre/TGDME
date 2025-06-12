@@ -218,8 +218,6 @@ export function createNewComponent(item, itemIndex) {
       try {
         currentMode = currentCollection.template[itemIndex][param.refValue]["type"];
       } catch (e) {
-        console.log(param);
-        console.log(e);
         currentMode = "0";
       }
 
@@ -280,6 +278,7 @@ export function createNewComponent(item, itemIndex) {
         });
 
         var refOptionList = param.optionRef ? eval(param.optionRef) : param.options;
+        if(!refOptionList) refOptionList = [];
 
         if (param.isShapesSelect) {
           let categorizedOpts = {
@@ -323,14 +322,12 @@ export function createNewComponent(item, itemIndex) {
         try {
           if (item[param.refValue].value) parameterInput.value = item[param.refValue].value;
         } catch (e) {
-          console.log(e);
           parameterInput.value = "";
         }
 
         try {
           if (item[param.refValue].valueCB) parameterCBInput.value = item[param.refValue].valueCB;
         } catch (e) {
-          console.log(e);
           parameterCBInput.value = "";
         }
 
@@ -350,7 +347,6 @@ export function createNewComponent(item, itemIndex) {
         try {
           if (item[param.refValue].value) parameterInput.value = item[param.refValue].value;
         } catch (e) {
-          console.log(e);
           parameterInput.value = "";
         }
 
@@ -358,7 +354,6 @@ export function createNewComponent(item, itemIndex) {
         try {
           if (item[param.refValue].valueCB) parameterCBInput.value = item[param.refValue].valueCB;
         } catch (e) {
-          console.log(e.message);
           parameterCBInput.value = "";
         }
 

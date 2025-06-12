@@ -264,16 +264,15 @@ input[type="radio"] {
   font-size: 1.2rem;
   margin-top: 1rem;
   background: #fff8;
-  padding: 0.5rem;
+  padding: 0.8rem;
   border-radius: 0.5rem;
   display: flex;
-  gap: 0.5rem;
+  gap: 1rem;
   align-items: center;
 }
 
 .spacerIcon {
-  font-size: 2rem;
-  translate: 0 -2px;
+  width: 2rem;
 }
 
 .spacerIconCentered {

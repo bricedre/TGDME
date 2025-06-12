@@ -1,5 +1,5 @@
 export let IMAGE_parameters = [
-  { name: "<span class='spacerIcon spacerIconCentered'>🪪</span><span>Informations Générales</span>", type: "spacer" },
+  { name: `<img src="assets/id.webp" class='spacerIcon'><span>Informations Générales</span>`, type: "spacer" },
   {
     name: "Nom du Composant",
     refValue: "componentName",
@@ -8,7 +8,7 @@ export let IMAGE_parameters = [
   },
   { name: "Image(s) Source", refValue: "src", type: "text", title: "Si vous désirez créer une chaîne d'images, séparez-les par des virgules" },
 
-  { name: "<span class='spacerIcon'>📏</span><span>Positionnement, Dimensions & Rotation</span>", type: "spacer" },
+  { name: "<img src='assets/ruler.webp'class='spacerIcon'><span>Positionnement, Dimensions & Rotation</span>", type: "spacer" },
   { name: "Position Horizontale", refValue: "positionX", type: "text" },
   { name: "Position Verticale", refValue: "positionY", type: "text" },
   { name: "Largeur", refValue: "width", type: "text" },
@@ -23,17 +23,17 @@ export let IMAGE_parameters = [
       { value: ":CORNER", label: "COIN SUPÉRIEUR GAUCHE" },
     ],
   },
-  { name: "<span class='spacerIcon'>🎨</span><span>Teinte & Opacité</span>", type: "spacer" },
+  { name: "<img src='assets/color.webp'class='spacerIcon'><span>Teinte & Opacité</span>", type: "spacer" },
   { name: "Filtre de Teinte", refValue: "tint", type: "color" },
   { name: "Opacité", refValue: "opacity", type: "range" },
 
-  { name: "<span class='spacerIcon'>☀️</span><span>Ombre Portée</span>", type: "spacer" },
+  { name: "<img src='assets/shadow.webp'class='spacerIcon'><span>Ombre Portée</span>", type: "spacer" },
   { name: "Couleur", refValue: "shadowColor", type: "color" },
   { name: "Décalage Horizontal", refValue: "shadowOffsetX", type: "text" },
   { name: "Décalage Vertical", refValue: "shadowOffsetY", type: "text" },
   { name: "Opacité", refValue: "shadowOpacity", type: "range" },
 
-  { name: "<span class='spacerIcon'>🔗</span><span>Configuration de chaîne (liste d'images)</span>", type: "spacer" },
+  { name: "<img src='assets/list.webp'class='spacerIcon'><span>Configuration de chaîne (liste d'images)</span>", type: "spacer" },
   {
     name: "Alignement de Chaîne",
     refValue: "listAnchor",
@@ -61,7 +61,7 @@ export let IMAGE_parameters = [
 ];
 
 export let SHAPE_parameters = [
-  { name: "<span class='spacerIcon spacerIconCentered'>🪪</span><span>Informations Générales</span>", type: "spacer" },
+  { name: "<img src='assets/id.webp'class='spacerIcon'><span>Informations Générales</span>", type: "spacer" },
   {
     name: "Nom du Composant ",
     refValue: "componentName",
@@ -126,7 +126,7 @@ export let SHAPE_parameters = [
     ],
   },
 
-  { name: "<span class='spacerIcon'>📏</span><span>Positionnement, Dimensions & Rotation</span>", type: "spacer" },
+  { name: "<img src='assets/ruler.webp'class='spacerIcon'><span>Positionnement, Dimensions & Rotation</span>", type: "spacer" },
   { name: "Position Horizontale", refValue: "positionX", type: "text" },
   { name: "Position Verticale", refValue: "positionY", type: "text" },
   { name: "Largeur", refValue: "width", type: "text" },
@@ -142,14 +142,14 @@ export let SHAPE_parameters = [
     ],
   },
 
-  { name: "<span class='spacerIcon'>🎨</span><span>Couleurs & Bordure</span>", type: "spacer" },
+  { name: "<img src='assets/color.webp'class='spacerIcon'><span>Couleurs & Bordure</span>", type: "spacer" },
   { name: "Couleur de Fond", refValue: "color", type: "color" },
   { name: "Opacité du Fond", refValue: "opacity", type: "range" },
   { name: "Couleur de Bordure", refValue: "borderColor", type: "color" },
   { name: "Opacité de la Bordure", refValue: "borderOpacity", type: "range" },
   { name: "Épaisseur de la Bordure", refValue: "borderWeight", type: "text" },
 
-  { name: "<span class='spacerIcon'>☀️</span><span>Ombre Portée</span>", type: "spacer" },
+  { name: "<img src='assets/shadow.webp'class='spacerIcon'><span>Ombre Portée</span>", type: "spacer" },
   { name: "Couleur", refValue: "shadowColor", type: "color" },
   { name: "Décalage Horizontal", refValue: "shadowOffsetX", type: "text" },
   { name: "Décalage Vertical", refValue: "shadowOffsetY", type: "text" },
@@ -157,7 +157,7 @@ export let SHAPE_parameters = [
 ];
 
 export let TEXT_parameters = [
-  { name: "<span class='spacerIcon spacerIconCentered'>🪪</span><span>Informations Générales</span>", type: "spacer" },
+  { name: "<img src='assets/id.webp'class='spacerIcon'><span>Informations Générales</span>", type: "spacer" },
   {
     name: "Nom du Composant ",
     refValue: "componentName",
@@ -166,7 +166,7 @@ export let TEXT_parameters = [
   },
   { name: "Texte à Afficher", refValue: "src", type: "text" },
 
-  { name: "<span class='spacerIcon'>📏</span><span>Positionnement, Dimensions & Rotation</span>", type: "spacer" },
+  { name: "<img src='assets/ruler.webp'class='spacerIcon'><span>Positionnement, Dimensions & Rotation</span>", type: "spacer" },
   { name: "Position Horizontale", refValue: "positionX", type: "text" },
   { name: "Position Verticale", refValue: "positionY", type: "text" },
   { name: "Rotation", refValue: "angle", type: "text" },
@@ -193,25 +193,25 @@ export let TEXT_parameters = [
   },
   { name: "Interligne", refValue: "interline", type: "text" },
 
-  { name: "<span class='spacerIcon'>🎨</span><span>Aspect Visuel</span>", type: "spacer" },
+  { name: "<img src='assets/color.webp'class='spacerIcon'><span>Aspect Visuel</span>", type: "spacer" },
   { name: "Couleur", refValue: "color", type: "color" },
   { name: "Taille", refValue: "size", type: "text" },
   { name: "Police d'Écriture", refValue: "font", type: "select", optionRef: "allSystemFonts" },
   { name: "Opacité", refValue: "opacity", type: "range" },
 
-  { name: "<span class='spacerIcon'>☀️</span><span>Ombre Portée</span>", type: "spacer" },
+  { name: "<img src='assets/shadow.webp'class='spacerIcon'><span>Ombre Portée</span>", type: "spacer" },
   { name: "Couleur", refValue: "shadowColor", type: "color" },
   { name: "Décalage Horizontal", refValue: "shadowOffsetX", type: "text" },
   { name: "Décalage Vertical", refValue: "shadowOffsetY", type: "text" },
   { name: "Opacité", refValue: "shadowOpacity", type: "range" },
   
-  { name: "<span class='spacerIcon'>🏆</span><span>Icônes Incluses</span>", type: "spacer" },
+  { name: "<img src='assets/inlineIcon.webp'class='spacerIcon'><span>Icônes Incluses</span>", type: "spacer" },
   { name: "Taille des Icônes", refValue: "inlineImgsSize", type: "text" },
   { name: "Décalage Horizontal des Icônes", refValue: "inlineImgsXOffset", type: "text" },
 ];
 
 export let TITLE_parameters = [
-  { name: "<span class='spacerIcon spacerIconCentered'>🪪</span><span>Informations Générales</span>", type: "spacer" },
+  { name: "<img src='assets/id.webp'class='spacerIcon'><span>Informations Générales</span>", type: "spacer" },
   {
     name: "Nom du Composant ",
     refValue: "componentName",
@@ -220,19 +220,19 @@ export let TITLE_parameters = [
   },
   { name: "Titre à Afficher", refValue: "src", type: "text" },
 
-  { name: "<span class='spacerIcon'>📏</span><span>Positionnement, Dimensions & Rotation</span>", type: "spacer" },
+  { name: "<img src='assets/ruler.webp'class='spacerIcon'><span>Positionnement, Dimensions & Rotation</span>", type: "spacer" },
   { name: "Position Horizontale", refValue: "positionX", type: "text" },
   { name: "Position Verticale", refValue: "positionY", type: "text" },
   { name: "Rotation", refValue: "angle", type: "text" },
   
-  { name: "<span class='spacerIcon'>🎨</span><span>Aspect Visuel</span>", type: "spacer" },
+  { name: "<img src='assets/color.webp'class='spacerIcon'><span>Aspect Visuel</span>", type: "spacer" },
   { name: "Largeur Cible", refValue: "titleWidth", type: "text" },
   { name: "Taille Maximale", refValue: "maxSize", type: "text" },
   { name: "Couleur", refValue: "color", type: "color" },
   { name: "Police d'Écriture", refValue: "font", type: "select", optionRef: "allSystemFonts" },
   { name: "Opacité", refValue: "opacity", type: "range" },
 
-  { name: "<span class='spacerIcon'>☀️</span><span>Ombre Portée</span>", type: "spacer" },
+  { name: "<img src='assets/shadow.webp'class='spacerIcon'><span>Ombre Portée</span>", type: "spacer" },
   { name: "Couleur", refValue: "shadowColor", type: "color" },
   { name: "Décalage Horizontal", refValue: "shadowOffsetX", type: "text" },
   { name: "Décalage Vertical", refValue: "shadowOffsetY", type: "text" },
