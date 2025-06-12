@@ -228,30 +228,6 @@ input[type="radio"] {
   margin-bottom: 0.5rem;
 }
 
-.param {
-    display: none;
-    padding: 0 1rem;
-}
-
-.catHeader{
-  cursor: pointer;
-  transition: all 0.2s ease-in-out;
-  border-radius: 0.5rem;
-;
-}
-
-.catHeader:hover{
-  background-color: #fff;
-}
-
-.catHeader.open ~ .param {
-    display: block;
-}
-
-.catHeader.open ~ .catHeader ~ .param {
-    display: none;
-}
-
 .parameterName {
   padding: 0;
   margin: 0 0 0.2rem 0;
@@ -368,6 +344,40 @@ input[type="radio"] {
   height: 1.8rem;
   rotate: 0deg;
   transition: 0.3s;
+}
+
+.paramAccordion {
+  background-color: #fff;
+  box-shadow: none;
+  border-radius: 0.3rem;
+  text-align: left;
+  width: 100%;
+  padding: 0.5rem;
+  display: flex;
+  gap: 0.5rem;
+  justify-content: start;
+}
+
+.paramAccordion.active {
+  background-color: var(--mainColor);
+  border-radius: 0.3rem 0.3rem 0 0;
+}
+
+.paramAccordion > img {
+  aspect-ratio: 1;
+  height: 1.8rem;
+  rotate: 0deg;
+  transition: 0.3s;
+}
+
+.paramPanel {
+  display: block;
+  overflow: hidden;
+  max-height: 0;
+  transition: all 0.2s ease-out;
+  background-color: #bec7cf;
+  translate: 0 -0.5rem;
+  border-radius: 0 0 0.3rem 0.3rem;
 }
 
 .upElementBtn:hover,
