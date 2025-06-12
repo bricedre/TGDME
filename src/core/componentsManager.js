@@ -394,32 +394,7 @@ export function createNewComponent(item, itemIndex) {
           parameterSlot.appendChild(parameterInputLine);
         }
       } 
-      // else {
-      //   parameterName.classList.add("spacer");
-      //   // if (paramIndex == 0) parameterName.classList.add("firstSpacer");
-
-
-      //   $(parameterSlot).addClass("catHeader accordion");
-
-
-      //   parameterSlot.addEventListener("click", () => {
-      //     let panel = parameterSlot.nextElementSibling;
-      //     if (parameterSlot.classList.contains("active")) {
-      //       panel.style.maxHeight = "0";
-      //       panel.style.marginBottom = "0rem";
-      //       panel.style.padding = "0rem";
-      //     } else {
-      //       panel.style.maxHeight = "calc(2rem + " + panel.scrollHeight + "px)";
-      //       panel.style.marginBottom = "1rem";
-      //       panel.style.padding = "1rem";
-      //     }
-
-      //     parameterSlot.classList.toggle("active");
-      //   });
-
-      //   parameterSlot.appendChild(parameterName);
-      // }
-
+      
       currentPanel.appendChild(parameterSlot);
     }
   });
