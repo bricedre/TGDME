@@ -56,6 +56,7 @@ export function createNewComponent(item, itemIndex) {
 
   itemAccordion.innerHTML = `<img src="${icon}"><span class="itemLabel">${item.componentName.value != "" ? item.componentName.value : "Composant sans Nom"}</span><span class="headerSpacer"><span>`;
 
+  //
   if (itemIndex > 0) {
     var upElementBtn = document.createElement("img");
     upElementBtn.classList.add("upElementBtn");
@@ -134,6 +135,8 @@ export function createNewComponent(item, itemIndex) {
   });
   itemAccordion.appendChild(deleteComponentBtn);
 
+
+
   itemAccordion.addEventListener("click", () => {
     var panel = itemAccordion.nextElementSibling;
     if (itemAccordion.classList.contains("active")) {
@@ -156,7 +159,6 @@ export function createNewComponent(item, itemIndex) {
   parametersToLoad.forEach((param, paramIndex) => {
     var parameterSlot = document.createElement("div");
     parameterSlot.classList.add("parameterSlot");
-    $(parameterSlot).addClass("param");
 
     var parameterName = document.createElement("p");
     parameterName.classList.add("parameterName");
@@ -278,7 +280,7 @@ export function createNewComponent(item, itemIndex) {
         });
 
         var refOptionList = param.optionRef ? eval(param.optionRef) : param.options;
-        if(!refOptionList) refOptionList = [];
+        if (!refOptionList) refOptionList = [];
 
         if (param.isShapesSelect) {
           let categorizedOpts = {
@@ -368,14 +370,32 @@ export function createNewComponent(item, itemIndex) {
       }
     } else {
       parameterName.classList.add("spacer");
-      if (paramIndex == 0) parameterName.classList.add("firstSpacer");
+      // if (paramIndex == 0) parameterName.classList.add("firstSpacer");
 
-      $(parameterSlot).removeClass("param");
-      $(parameterSlot).addClass("catHeader");
-      if (paramIndex == 0) {
-        $(parameterSlot).addClass("open");
-      }
-      $(parameterSlot).on("click", () => $(parameterSlot).toggleClass("open"));
+      // $(parameterSlot).removeClass("param");
+      $(parameterSlot).addClass("catHeader accordion");
+      // if (paramIndex == 0) {
+      //   $(parameterSlot).addClass("open");
+      // }
+      // $(parameterSlot).on("click", () => $(parameterSlot).toggleClass("open"));
+
+      var itemPanel = document.createElement("div");
+      itemPanel.classList.add("itemPanel");
+
+      parameterSlot.addEventListener("click", () => {
+        var panel = parameterSlot.nextElementSibling;
+        if (parameterSlot.classList.contains("active")) {
+          panel.style.maxHeight = "0";
+          panel.style.marginBottom = "0rem";
+          panel.style.padding = "0rem";
+        } else {
+          panel.style.maxHeight = "calc(2rem + " + panel.scrollHeight + "px)";
+          panel.style.marginBottom = "1rem";
+          panel.style.padding = "1rem";
+        }
+
+        parameterSlot.classList.toggle("active");
+      });
 
       parameterSlot.appendChild(parameterName);
     }
