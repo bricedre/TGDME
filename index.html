@@ -16,12 +16,12 @@
 <body>
 
   <nav>
-    <button id="homeBtn" class="homeBtn btns_mainMenu" title="Retour à l'Accueil">
+    <button id="homeBtn" class="homeBtn btn_mainMenu" title="Retour à l'Accueil">
       <img id="homeIcon" src="./assets/home.png" alt="home btn" />
     </button>
     <div id="mainTitleDiv" class="other_mainTitle"></div>
     <div id="langDiv" class="other_lang"></div>
-    <button id="langBtn" class="btns_changeLang" title="Changer la Langue">
+    <button id="langBtn" class="btn_changeLang" title="Changer la Langue">
       <img id="homeIcon" src="./assets/rotate.png" alt="home btn" />
     </button>
   </nav>
@@ -31,25 +31,24 @@
 
     <div id="collectionEditionPanel" class="panel">
       <div class="tabs">
-        <button id="generateCollectionBtn" class="generateCollectionBtn btns_reRenderCollection">
+        <button id="generateCollectionBtn" class="generateCollectionBtn btn_reRenderCollection">
           <img src="./assets/reload.png" alt="add symbol" />
         </button>
         <input id="tabConfigInput" type="radio" name="tabs" checked>
-        <label class="tabs_configuration" for="tabConfigInput"
-          title="Configuration générale de la Collection et des Élements"></label>
+        <label class="tabs_configuration" for="tabConfigInput"></label>
         <span>></span>
         <input id="tabRessInput" type="radio" name="tabs">
-        <label class="tabs_images" for="tabRessInput" title="Images liées à la Collection"></label>
+        <label class="tabs_images" for="tabRessInput" ></label>
         <span>></span>
         <input id="tabElementsInput" type="radio" name="tabs">
-        <label class="tabs_data" for="tabElementsInput" title="Modification des Données"></label>
+        <label class="tabs_data" for="tabElementsInput" ></label>
         <span>></span>
         <input id="tabTemplateInput" type="radio" name="tabs">
-        <label class="tabs_template" for="tabTemplateInput" title="Création du Modèle"></label>
+        <label class="tabs_template" for="tabTemplateInput" ></label>
 
         <span>></span>
         <input id="tabPrinting" type="radio" name="tabs">
-        <label class="tabs_render" for="tabPrinting" title="Paramètres de Rendu"></label>
+        <label class="tabs_render" for="tabPrinting"></label>
 
         <div class="content">
 
@@ -58,71 +57,71 @@
             <div class="mainContent">
 
               <div class="parameterSlot">
-                <p class="parameterName">Nom de la Collection</p>
+                <p class="parameterName"><span class="config_collectionName">Nom de la Collection</span></p>
                 <input id="collectionNameInput" class="parameterInput">
               </div>
 
               <div class="parameterSlot">
-                <p class="parameterName">Format des Éléments</p>
+                <p class="parameterName"><span class="config_elementFormat">Format des Éléments</span></p>
                 <select id="elementFormatSelect" class="parameterInput">
                   <optgroup label="Cartes">
-                    <option value="pokerCard">Carte Poker</option>
-                    <option value="bridgeCard">Carte Bridge</option>
-                    <option value="tarotCard">Carte Tarot</option>
-                    <option value="dominoCard">Carte Domino</option>
-                    <option value="halfCard">Demi-carte</option>
-                    <option value="squareCard">Carte carrée</option>
+                    <option value="pokerCard"><span class="opt_pokerCard">Carte Poker</span></option>
+                    <option value="bridgeCard"><span class="opt_bridgeCard">Carte Bridge</span></option>
+                    <option value="tarotCard"><span class="opt_tarotCard">Carte Tarot</span></option>
+                    <option value="dominoCard"><span class="opt_dominoCard">Carte Domino</span></option>
+                    <option value="halfCard"><span class="opt_halfCard">Demi-carte</span></option>
+                    <option value="squareCard"><span class="opt_squareCard">Carte carrée</span></option>
                   </optgroup>
 
                   <optgroup label="Tuiles Hexagones">
-                    <option value="hexTileP">Tuile hexagonale Portrait</option>
-                    <option value="hexTileL">Tuile hexagonale Paysage</option>
+                    <option value="hexTileP"><span class="opt_hexTilePortrait">Tuile hexagonale Portrait</span></option>
+                    <option value="hexTileL"><span class="opt_hexTileLandscape">Tuile hexagonale Paysage</span></option>
                   </optgroup>
 
                   <optgroup label="Jetons">
-                    <option value="smallToken">Jeton 2cm</option>
-                    <option value="mediumToken">Jeton 3cm</option>
-                    <option value="largeToken">Jeton 4cm</option>
+                    <option value="smallToken"><span class="opt_smallToken">Jeton 2cm</span></option>
+                    <option value="mediumToken"><span class="opt_mediumToken">Jeton 3cm</span></option>
+                    <option value="largeToken"><span class="opt_largeToken">Jeton 4cm</span></option>
                   </optgroup>
 
                   <optgroup label="Personnalisé">
-                    <option value="custom">Choisir ses dimensions...</option>
+                    <option value="custom"><span class="opt_customDimensions">Choisir ses dimensions...</span></option>
                   </optgroup>
                 </select>
               </div>
 
               <div class="parameterSlot">
-                <p class="parameterName">Largeur des Éléments (cm)</p>
+                <p class="parameterName"><span class="config_elementWidth">Largeur des Éléments (cm)</span></p>
                 <input id="elementWidthInput" inputmode="decimal" class="parameterInput" step="0.1">
               </div>
 
               <div class="parameterSlot">
-                <p class="parameterName">Hauteur des Éléments (cm)</p>
+                <p class="parameterName"><span class="config_elementHeight">Hauteur des Éléments (cm)</span></p>
                 <input id="elementHeightInput" inputmode="decimal" class="parameterInput" step="0.1">
               </div>
 
 
 
               <div class="parameterSlot" title="Les repères visuels ne seront pas inclus dans le rendu final">
-                <p class="parameterName">Repère Visuel 🔍</p>
+                <p class="parameterName"><span class="config_visualGuide">Repère Visuel 🔍</span></p>
                 <select id="visualGuideSelect" class="parameterInput">
-                  <option value="none">Aucun</option>
+                  <option value="none"><span class="opt_none">Aucun</span></option>
                   <optgroup label="Grille">
-                    <option value="center">Centre</option>
-                    <option value="grid3">Grille 3x3</option>
-                    <option value="grid4">Grille 4x4</option>
-                    <option value="grid6">Grille 6x6</option>
+                    <option value="center"><span class="opt_center">Centre</span></option>
+                    <option value="grid3"><span class="opt_grid3x3">Grille 3x3</span></option>
+                    <option value="grid4"><span class="opt_grid4x4">Grille 4x4</span></option>
+                    <option value="grid6"><span class="opt_grid6x6">Grille 6x6</span></option>
                   </optgroup>
 
                   <optgroup label="Formes">
-                    <option value="circle">Ellipse</option>
-                    <option value="hexp">Hexagone Portrait</option>
-                    <option value="hexl">Hexagone Paysage</option>
-                    <option value="oct">Octogone</option>
+                    <option value="circle"><span class="opt_ellipse">Ellipse</span></option>
+                    <option value="hexp"><span class="opt_hexagonPortrait">Hexagone Portrait</span></option>
+                    <option value="hexl"><span class="opt_hexagonLandscape">Hexagone Paysage</span></option>
+                    <option value="oct"><span class="opt_octagon">Octogone</span></option>
                   </optgroup>
 
                   <optgroup label="Autre">
-                    <option value="domino">Bordure Domino</option>
+                    <option value="domino"><span class="opt_dominoBorder">Bordure Domino</span></option>
                   </optgroup>
 
                 </select>
@@ -131,17 +130,9 @@
             </div>
 
             <div class="btnContainer">
-              <button id="duplicateCollectionBtn" class="navBtn btns_duplicateCollection"
-                title="Créer une copie de la collection actuelle">
-              </button>
-
-              <button id="archiveCollectionBtn" class="navBtn btns_archiveCollection"
-                title="Archiver (c.-à-d. cacher dans la Bibliothèque) la collection actuelle">
-              </button>
-
-              <button id="deleteCollectionBtn" class="navBtn btns_deleteCollection"
-                title="Supprimer la collection actuelle">
-              </button>
+              <button id="duplicateCollectionBtn" class="navBtn"><span class="btn_duplicateCollection"></span><img src="./assets/duplicateCollection.png"></button>
+              <button id="archiveCollectionBtn" class="navBtn"><span class="btn_archiveCollection"></span><img src="./assets/archiveCollection.png"></button>
+              <button id="deleteCollectionBtn" class="navBtn"><span class="btn_deleteCollection"></span><img src="./assets/deleteCollection.png"></button>
             </div>
 
           </div>
@@ -149,13 +140,12 @@
           <div id="contentRessDiv">
             <div id="ressItemsDiv" class="mainContent"></div>
             <div class="btnContainer">
-              <button id="openResFolderBtn" class="navBtn" title="Ouvrir le dossier des Ressources de la Collection">
-                OUVRIR
+              <button id="openResFolderBtn" class="navBtn">
+                <span class="btn_openResFolder">OUVRIR</span>
                 <img src="./assets/archiveCollection.png">
               </button>
-              <button id="reloadResBtn" class="navBtn"
-                title="Recharger les Ressources afin de récupérer les modifications">
-                RECHARGER
+              <button id="reloadResBtn" class="navBtn">
+                <span class="btn_reloadRes">RECHARGER</span>
                 <img src="./assets/imgResource.png">
               </button>
             </div>
@@ -166,13 +156,13 @@
             </div>
             <div class="btnContainer">
               <button
-                title="Ouvrir les données dans un tableur (nécessite la présence d'un tableur : Excel, OpenCalc...)"
                 id="modifyDataBtn" class="navBtn">
-                MODIFIER
+                <span class="btn_editData">MODIFIER</span>
+                
                 <img src="./assets/fillData.png">
               </button>
-              <button title="Mettre à jour les données de la collection" id="updateDataBtn" class="navBtn">
-                METTRE À JOUR
+              <button id="updateDataBtn" class="navBtn">
+                <span class="btn_updateData">METTRE À JOUR</span>
                 <img src="./assets/wizardFillBtn.png">
               </button>
             </div>
@@ -181,20 +171,23 @@
           <div id="contentTemplateDiv">
             <div id="templateItemsDiv" class="mainContent"></div>
             <div class="btnContainer">
-              <button title="Ajouter un composant Image" id="addImageComponentBtn" class="navBtn">
-                AJOUTER IMAGE
+              <button id="addImageComponentBtn" class="navBtn">
+                <span class="btn_addImageComponent">AJOUTER IMAGE</span>
                 <img src="./assets/addImageComponent.png">
               </button>
-              <button title="Ajouter un composant Forme" id="addShapeComponentBtn" class="navBtn">
-                AJOUTER FORME
+              <button id="addShapeComponentBtn" class="navBtn">
+                <span class="btn_addShapeComponent">AJOUTER FORME</span>
+                
                 <img src="./assets/addShapeComponent.png">
               </button>
-              <button title="Ajouter un composant Titre" id="addTitleComponentBtn" class="navBtn">
-                AJOUTER TITRE
+              <button id="addTitleComponentBtn" class="navBtn">
+                <span class="btn_addTitleComponent">AJOUTER TITRE</span>
+                
                 <img src="./assets/addTitleComponent.png">
               </button>
-              <button title="Ajouter un composant Texte" id="addTextComponentBtn" class="navBtn">
-                AJOUTER TEXTE
+              <button id="addTextComponentBtn" class="navBtn">
+                <span class="btn_addTextComponent">AJOUTER TEXTE</span>
+                
                 <img src="./assets/addTextComponent.png">
               </button>
             </div>
@@ -208,71 +201,73 @@
 
 
               <div class="parameterSlot">
-                <p class="parameterName">Format de Page</p>
+                <p class="parameterName"><span class="render_pageFormat">Format de Page</span></p>
                 <select id="pageFormatSelect" class="parameterInput">
                   <optgroup label="Formats standards">
-                    <option value="A4">A4</option>
-                    <option value="A3">A3</option>
-                    <option value="TTS">TableTop Simulator</option>
+                    <option value="A4"><span class="opt_a4">A4</span></option>
+                    <option value="A3"><span class="opt_a3">A3</span></option>
+                    <option value="TTS"><span class="opt_tableTopSimulator">TableTop Simulator</span></option>
                   </optgroup>
                   <optgroup label="Personnalisé">
-                    <option value="custom">Choisir ses dimensions...</option>
+                    <option value="custom"><span class="opt_customDimensions">Choisir ses dimensions...</span></option>
                   </optgroup>
                 </select>
               </div>
 
               <div class="parameterSlot">
-                <p class="parameterName">Orientation de Page</p>
+                <p class="parameterName"><span class="render_pageOrientation">Orientation de Page</span></p>
                 <select id="pageOrientationSelect" class="parameterInput">
-                  <option value="portrait">Portrait</option>
-                  <option value="landscape">Paysage</option>
+                  <option value="portrait"><span class="opt_portrait">Portrait</span></option>
+                  <option value="landscape"><span class="opt_landscape">Paysage</span></option>
                 </select>
               </div>
 
               <div class="parameterSlot">
-                <p class="parameterName">Largeur de Page (cm)</p>
+                <p class="parameterName"><span class="render_pageWidth">Largeur de Page (cm)</span></p>
                 <input id="pageWidthInput" disabled inputmode="decimal" class="parameterInput" step="0.1" />
               </div>
 
               <div class="parameterSlot">
-                <p class="parameterName">Hauteur de Page (cm)</p>
+                <p class="parameterName"><span class="render_pageHeight">Hauteur de Page (cm)</span></p>
                 <input id="pageHeightInput" disabled inputmode="decimal" class="parameterInput" step="0.1" />
               </div>
 
               <div class="parameterSlot">
-                <p class="parameterName">Éléments par Page</p>
+                <p class="parameterName"><span class="render_elementsPerPage">Éléments par Page</span></p>
                 <input id="maxElementQty" class="parameterInput" step="1" min="1" />
               </div>
 
               <div class="parameterSlot"
                 title="300 dpi = 118.11 ppcm | Plus cette valeur sera haute, plus votre image sera nette">
-                <p class="parameterName">Résolution d'Impression (pixels/cm) 🔍</p>
+                <p class="parameterName"><span class="render_printResolution">Résolution d'Impression (pixels/cm) 🔍</span></p>
                 <input id="pageResolutionInput" inputmode="decimal" class="parameterInput" step="0.1" />
               </div>
 
               <div class="parameterSlot">
-                <p class="parameterName">Format d'Export</p>
+                <p class="parameterName"><span class="render_exportFormat">Format d'Export</span></p>
                 <select id="pageExportFormatSelect" class="parameterInput">
-                  <option value="pdf">PDF</option>
-                  <option value="jpg">JPG</option>
+                  <option value="pdf"><span class="opt_pdf">PDF</span></option>
+                  <option value="jpg"><span class="opt_jpg">JPG</span></option>
                 </select>
               </div>
 
               <div class="parameterSlot"
                 title="L'Aide à la Découpe est une simple bordure semi-transparente mise autour des élements afin de guider la découpe une fois imprimés">
                 <input type="checkbox" id="cuttingHelpInput" name="cuttingHelpInput" />
-                <label class="parameterName" for="cuttingHelpInput">Aide à la Découpe 🔍</label>
+                <label class="parameterName" for="cuttingHelpInput"><span class="render_cuttingHelp">Aide à la Découpe 🔍</span></label>
               </div>
             </div>
 
             <div class="btnContainer">
-              <button title="Générer les pages d'élements en fonction des paramètres choisis" id="printPagesBtn"
+              <button id="printPagesBtn"
                 class="navBtn">
-                GÉNÉRER
+                 <span class="btn_renderPages">GÉNÉRER</span>
+                
                 <img src="./assets/toPrint.png" />
               </button>
-              <button title="Ouvrir le dossier des rendus" id="showRendersBtn" class="navBtn">
-                OUVRIR
+              <button id="showRendersBtn" class="navBtn">
+                <span class="btn_openRenderFolder">OUVRIR</span>
+                
                 <img src="./assets/archiveCollection.png" />
               </button>
             </div>
@@ -282,7 +277,7 @@
       </div>
 
       <div id="canvasDiv">
-        <p class="cardPreview">Aperçu de l'élément actuel</p>
+        <p class="cardPreview"><span class="preview_currentElement">Aperçu de l'élément actuel</span></p>
         <div class="btnContainer">
           <button title="Tourner de 90°" id="turnCanvasBtn" class="navBtn"><img src="./assets/rotate.png" /></button>
           <button title="Agrandir" id="scaleUpCanvasBtn" class="navBtn"><img src="./assets/scaleUp.png" /></button>
@@ -299,18 +294,18 @@
 
       <div id="cardCounterDivBtns">
         <button class="cardBtn" id="startPrevCardBtn">
-          ◄ Début
+          <span class="nav_start">◄ Début</span>
         </button>
         <button class="cardBtn" id="bigPrevCardBtn">
-          ◄ 10
+          <span class="nav_prev10">◄ 10</span>
         </button>
         <button class="cardBtn" id="prevCardBtn">
-          ◄
+          <span class="nav_prev">◄</span>
         </button>
-        <div id="cardCounterDivLabel">1/4 - 1 copy</div>
-        <button class="cardBtn" id="nextCardBtn">►</button>
-        <button class="cardBtn" id="bigNextCardBtn">10 ►</button>
-        <button class="cardBtn" id="endNextCardBtn">Fin ►</button>
+        <div id="cardCounterDivLabel"></div>
+        <button class="cardBtn" id="nextCardBtn"><span class="nav_next">►</span></button>
+        <button class="cardBtn" id="bigNextCardBtn"><span class="nav_next10">10 ►</span></button>
+        <button class="cardBtn" id="endNextCardBtn"><span class="nav_end">Fin ►</span></button>
       </div>
     </div>
 </body>

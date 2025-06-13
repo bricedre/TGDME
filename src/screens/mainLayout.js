@@ -9,7 +9,7 @@ const $ = require("jquery");
 
 export let currentPanel = "home";
 let langIndex = 0;
-let langs = ["fr", "en"];
+let langs = ["fr", "en", "de"];
 
 const scenesSettings = {
   home: {
@@ -76,7 +76,7 @@ export function openScene(panelName) {
       firstRadio.checked = true;
 
       updateElementsCounter();
-      archiveCollectionBtn.innerHTML = currentCollection.collectionInfo.archived ? "DÉSARCHIVER<img src='./assets/archiveCollection.png'>" : "ARCHIVER<img src='./assets/archiveCollection.png'>";
+      
       break;
   }
 

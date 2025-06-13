@@ -55,7 +55,7 @@ export function setupMenu() {
       // archivedColContainer.css("display", "flex");
       let archivedCollectionsHeader = $("<div></div>").addClass("archivedCollectionsHeader");
       archivedCollectionsHeader.append($(`<img></img`).attr("src", `${rootPath}/assets/archiveCollection.png`));
-      archivedCollectionsHeader.append($("<div></div>").text("Collections Archivées"));
+      archivedCollectionsHeader.append($("<span></span>").addClass("other_archivedCollections").text("Collections Archivées"));
       archivedColContainer.append(archivedCollectionsHeader);
       $("#startPanelDiv").append(archivedColContainer);
 
@@ -88,7 +88,7 @@ export function setupMenu() {
   //ACTIONS
   const actionRow = $("<div></div>").addClass("btnContainer");
   const newCollectionBtn = $("<button></button>")
-    .addClass("navBtn bigBtn btns_newProto")
+    .addClass("navBtn bigBtn btn_newProto")
     .on("click", (e) => {
       e.preventDefault();
       e.stopPropagation();
