@@ -1,15 +1,14 @@
 import { app } from "../app.js";
-import { currentCollection, currentCollectionUID, saveCollection } from "./collectionsManager.js";
+import { appDataFolder, currentCollection, currentCollectionUID, saveCollection } from "./collectionsManager.js";
 import { updateElementsCounter } from "../screens/editionScreen.js";
 
-const { rootPath } = require("electron-root-path");
 
 const $ = require("jquery");
 const XLSX = require("xlsx");
 const { exec } = require("child_process");
 
 export function openExcelFile() {
-  const filePath = `collections/${currentCollection.collectionInfo.UID}/data.xlsx`;
+  const filePath = `${appDataFolder}/collections/${currentCollection.collectionInfo.UID}/data.xlsx`;
 
   // Open the file with the default Excel application
   exec(`start "" "${filePath}"`, (err, stdout, stderr) => {
@@ -21,7 +20,7 @@ export function openExcelFile() {
 }
 
 export function checkForFileUpdate() {
-  const filePath = `collections/${currentCollection.collectionInfo.UID}/data.xlsx`;
+  const filePath = `${appDataFolder}/collections/${currentCollection.collectionInfo.UID}/data.xlsx`;
 
   fetch(filePath)
     .then((response) => {
@@ -102,7 +101,7 @@ export function updateDataView() {
           td.append(colorPreview);
           newRow.append(td);
         } else if ([".png", ".jpg"].includes(valueToShow.toString().substring(valueToShow.length - 4))) {
-          newRow.append($("<td></td>").css("background-image", `url("collections/${currentCollectionUID}/assets/${valueToShow}")`).css("height", "4rem"));
+          newRow.append($("<td></td>").css("background-image", `url("${appDataFolder}/collections/${currentCollectionUID}/assets/${valueToShow}")`).css("height", "4rem"));
         } else {
           newRow.append($("<td></td>"));
         }

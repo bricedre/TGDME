@@ -1,6 +1,5 @@
 import { app } from "../app.js";
-const { rootPath } = require("electron-root-path");
-import { addNewImage, addNewShape, addNewText, addNewTitle, archiveCollection, currentCollection, deleteCurrentCollection, duplicateCollection, saveCollection } from "../core/collectionsManager.js";
+import { addNewImage, addNewShape, addNewText, addNewTitle, appDataFolder, archiveCollection, currentCollection, deleteCurrentCollection, duplicateCollection, saveCollection } from "../core/collectionsManager.js";
 import { generatePages, renderCardUsingTemplate } from "../render.js";
 import { allSystemFonts, loadAssets } from "../core/assetsManager.js";
 import { setupComponents } from "../core/componentsManager.js";
@@ -165,7 +164,7 @@ export function moveComponent(currentIndex, delta) {
 }
 
 function openSpecificFolder(folder) {
-  const filePath = `${rootPath}\\collections\\${currentCollection.collectionInfo.UID}\\${folder}`;
+  const filePath = `${appDataFolder}\\collections\\${currentCollection.collectionInfo.UID}\\${folder}`;
 
   // Open the folder
   require("child_process").exec(`start "" "${filePath}"`, (err, stdout, stderr) => {

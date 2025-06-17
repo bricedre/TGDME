@@ -1,4 +1,4 @@
-import { currentCollection } from "./core/collectionsManager.js";
+import { appDataFolder, currentCollection } from "./core/collectionsManager.js";
 const { jsPDF } = require("jspdf");
 import { app } from "./app.js";
 import { assetsLibrary, errorImage } from "./core/assetsManager.js";
@@ -911,7 +911,7 @@ export function generatePages() {
       pageGeneration.addImage(page.canvas, "JPEG", 0, 0, coll.pageWidth * coll.resolution, coll.pageHeight * coll.resolution, "", "FAST");
     });
 
-    pageGeneration.save(`collections/${coll.UID}/renders/${generationDate}-${collectionName}.pdf`);
+    pageGeneration.save(`${appDataFolder}/collections/${coll.UID}/renders/${generationDate}-${collectionName}.pdf`);
   } else if (currentCollection.collectionInfo.pageExportFormat == "jpg") {
     pages.forEach((page, index) => {
       // Get the DataUrl from the Canvas
@@ -919,7 +919,7 @@ export function generatePages() {
 
       // remove Base64 stuff from the Image
       const base64Data = url.replace(/^data:image\/png;base64,/, "");
-      fs.writeFile(`collections/${coll.UID}/renders/${generationDate}-${index}.jpg`, base64Data, "base64", function (err) {
+      fs.writeFile(`${appDataFolder}/collections/${coll.UID}/renders/${generationDate}-${index}.jpg`, base64Data, "base64", function (err) {
         if (err) console.log(err);
       });
     });

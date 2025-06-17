@@ -19,29 +19,46 @@ const rimraf = require("rimraf");
 const fsExtra = require("fs-extra");
 const fs2 = require("fs");
 const XLSX = require("xlsx");
+const getAppDataPath = require("appdata-path");
+
 
 export let collectionsAvailable;
 export let currentCollectionUID = -1;
 export let currentCollection;
+export let appDataFolder;
 
+getAppDataFolder();
 getCollections();
 
-export function getCollections() {
-  try{
+function getAppDataFolder() {
+  let _appDataFolder = getAppDataPath();
+  if (!existsSync(_appDataFolder + "/Cabane a Protos")) {
+    mkdirSync(_appDataFolder + "/Cabane a Protos");
+    mkdirSync(_appDataFolder + "/Cabane a Protos/collections");
+  }
 
-    collectionsAvailable = readdirSync(rootPath + "/collections", { withFileTypes: true })
-    .filter((dirent) => dirent.isDirectory())
-    .map((dirent) => dirent.name)
-    .sort((a, b) => {
-      return a - b;
-    });
-    
+  appDataFolder = _appDataFolder + "/Cabane a Protos";
+}
+
+export function getCollections() {
+
+
+
+  try {
+
+    collectionsAvailable = readdirSync(appDataFolder + "/collections", { withFileTypes: true })
+      .filter((dirent) => dirent.isDirectory())
+      .map((dirent) => dirent.name)
+      .sort((a, b) => {
+        return a - b;
+      });
+
     collectionsAvailable.forEach(async (collection, index) => {
-      const data = await fs.readFile(rootPath + "/collections/" + collection + "/collection.json");
+      const data = await fs.readFile(appDataFolder + "/collections/" + collection + "/collection.json");
       collectionsAvailable[index] = JSON.parse(data);
     });
   }
-  catch (error){
+  catch (error) {
     collectionsAvailable = [];
     console.log(error)
   }
@@ -80,7 +97,7 @@ export function setCurrentCollection(collectionUID) {
 
 export function createNewCollection() {
   const newUID = collectionsAvailable.length == 0 ? 0 : collectionsAvailable[collectionsAvailable.length - 1].collectionInfo.UID + 1;
-  var dir = rootPath + "/collections/" + newUID;
+  var dir = appDataFolder + "/collections/" + newUID;
 
   const collectionTemplatePath = rootPath + "/src/core/collectionTemplate.json";
 
@@ -88,7 +105,7 @@ export function createNewCollection() {
     mkdirSync(dir);
     mkdirSync(dir + "/assets");
     mkdirSync(dir + "/renders");
-    copyFileSync(collectionTemplatePath, rootPath + "/collections/" + newUID + "/collection.json");
+    copyFileSync(collectionTemplatePath, appDataFolder + "/collections/" + newUID + "/collection.json");
 
     //CREATE DATA EXCEL SHEET
     const headers = ["donnée 1", "donnée 2"]; // No headers initially
@@ -112,7 +129,7 @@ export function createNewCollection() {
       collectionsAvailable[collectionsAvailable.length - 1].collectionInfo.UID = newUID;
       collectionsAvailable[collectionsAvailable.length - 1].collectionInfo.collectionName = "Nouveau Proto";
       var deckToSave = JSON.stringify(collectionsAvailable[collectionsAvailable.length - 1]);
-      fs.writeFile(rootPath + "/collections/" + newUID + "/collection.json", deckToSave, (err) => {
+      fs.writeFile(appDataFolder + "/collections/" + newUID + "/collection.json", deckToSave, (err) => {
         if (err) {
           console.error(err);
         }
@@ -124,7 +141,7 @@ export function createNewCollection() {
 
 export function deleteCurrentCollection() {
   rimraf
-    .rimraf("./collections/" + currentCollectionUID)
+    .rimraf(appDataFolder + "/collections/" + currentCollectionUID)
     .then(() => {
       setCurrentCollection(-1);
       getCollections();
@@ -135,10 +152,10 @@ export function deleteCurrentCollection() {
 
 export function duplicateCollection() {
   const newUID = collectionsAvailable.length == 0 ? 0 : collectionsAvailable[collectionsAvailable.length - 1].collectionInfo.UID + 1;
-  var dir = "./collections/" + newUID;
+  var dir = appDataFolder + "/collections/" + newUID;
 
   if (!existsSync(dir)) {
-    fsExtra.copy("./collections/" + currentCollectionUID, "./collections/" + newUID);
+    fsExtra.copy(appDataFolder + "/collections/" + currentCollectionUID, appDataFolder + "/collections/" + newUID);
     getCollections();
 
     setTimeout(() => {
@@ -146,7 +163,7 @@ export function duplicateCollection() {
       collectionsAvailable[collectionsAvailable.length - 1].collectionInfo.UID = newUID;
       collectionsAvailable[collectionsAvailable.length - 1].collectionInfo.collectionName = "Copie de " + currentCollection.collectionInfo.collectionName;
       var deckToSave = JSON.stringify(collectionsAvailable[collectionsAvailable.length - 1]);
-      fs.writeFile("./collections/" + newUID + "/collection.json", deckToSave, (err) => {
+      fs.writeFile(appDataFolder + "/collections/" + newUID + "/collection.json", deckToSave, (err) => {
         if (err) {
           console.error(err);
         }
@@ -192,7 +209,7 @@ export function saveCollection(refreshAssets, reRenderCard) {
 
   //SAVE CURRENT DECK IN FOLDER
   var deckToSave = JSON.stringify(currentCollection);
-  fs.writeFile(rootPath + "/collections/" + currentCollectionUID + "/collection.json", deckToSave, (err) => {
+  fs.writeFile(appDataFolder + "/collections/" + currentCollectionUID + "/collection.json", deckToSave, (err) => {
     if (err) {
       console.error(err);
     }
