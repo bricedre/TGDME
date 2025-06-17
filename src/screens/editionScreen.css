@@ -505,11 +505,12 @@ input[type="radio"] {
 
 .dataTable {
   width: 100%;
-  text-align: left;
-  border-collapse: collapse;
+  text-align: center;
   table-layout: fixed;
   border-radius: 1rem;
   overflow: hidden;
+  border-spacing: 0 0.5rem;
+
 }
 
 .dataTable th {
@@ -524,12 +525,12 @@ input[type="radio"] {
 
 .dataTable td {
   padding: 0.5rem;
-  border-bottom: 1px solid #424141;
-  background-position: left;
+  background-position: center;
   background-size: contain;
   background-repeat: no-repeat;
+  height: 4rem;
 }
 
-.dataTable tr:last-of-type td{
-  border-bottom: none;
+.dataTable tr{
+  border-radius: 1rem;
 }
