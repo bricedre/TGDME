@@ -1,7 +1,6 @@
 import { collectionsAvailable, createNewCollection, currentCollectionUID, getCollections, setCurrentCollection } from "../core/collectionsManager.js";
 import { changeLangage, openScene, setupLangage } from "./mainLayout.js";
 
-const { rootPath } = require("electron-root-path");
 const $ = require("jquery");
 
 $("#homeBtn").on("click", () => {
@@ -54,7 +53,7 @@ export function setupMenu() {
       });
       // archivedColContainer.css("display", "flex");
       let archivedCollectionsHeader = $("<div></div>").addClass("archivedCollectionsHeader");
-      archivedCollectionsHeader.append($(`<img></img`).attr("src", `${rootPath}/assets/archiveCollection.png`));
+      archivedCollectionsHeader.append($(`<img></img`).attr("src", `assets/btnIcons/archiveCollection.png`));
       archivedCollectionsHeader.append($("<span></span>").addClass("other_archivedCollections").text("Collections Archivées"));
       archivedColContainer.append(archivedCollectionsHeader);
       $("#startPanelDiv").append(archivedColContainer);

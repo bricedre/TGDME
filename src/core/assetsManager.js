@@ -1,4 +1,3 @@
-const { rootPath } = require("electron-root-path");
 const fs = require("fs");
 const fontList = require("font-list");
 
@@ -74,7 +73,7 @@ export function loadAssets(p) {
     });
   }
 
-  errorImage = p.loadImage(rootPath + "/assets/uiIcons/imageError.png");
+  errorImage = p.loadImage("./assets/uiIcons/imageError.png");
 
   setupResources();
 }

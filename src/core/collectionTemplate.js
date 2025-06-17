@@ -1,4 +1,4 @@
-{
+export const collectionTemplate = {
   "collectionInfo": {
     "archived": false,
     "UID": 0,

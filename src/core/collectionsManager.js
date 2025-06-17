@@ -11,8 +11,8 @@ import { setupResources } from "./assetsManager.js";
 import { populateComponents, setupComponents } from "./componentsManager.js";
 import { checkForFileUpdate, updateDataView } from "./elementsManager.js";
 import { setupMenu } from "../screens/menuScreen.js";
+import { collectionTemplate } from "./collectionTemplate.js";
 
-const { rootPath } = require("electron-root-path");
 const fs = require("fs").promises;
 const { existsSync, mkdirSync, copyFileSync, readdirSync } = require("fs");
 const rimraf = require("rimraf");
@@ -99,13 +99,14 @@ export function createNewCollection() {
   const newUID = collectionsAvailable.length == 0 ? 0 : collectionsAvailable[collectionsAvailable.length - 1].collectionInfo.UID + 1;
   var dir = appDataFolder + "/collections/" + newUID;
 
-  const collectionTemplatePath = rootPath + "/src/core/collectionTemplate.json";
+  const collectionTemplatePath = "./collectionTemplate.json";
 
   if (!existsSync(dir)) {
     mkdirSync(dir);
     mkdirSync(dir + "/assets");
     mkdirSync(dir + "/renders");
-    copyFileSync(collectionTemplatePath, appDataFolder + "/collections/" + newUID + "/collection.json");
+    fs2.writeFileSync(dir + "/collection.json", JSON.stringify(collectionTemplate));
+    // copyFileSync(collectionTemplatePath, dir + "/collection.json");
 
     //CREATE DATA EXCEL SHEET
     const headers = ["donnée 1", "donnée 2"]; // No headers initially
@@ -129,7 +130,7 @@ export function createNewCollection() {
       collectionsAvailable[collectionsAvailable.length - 1].collectionInfo.UID = newUID;
       collectionsAvailable[collectionsAvailable.length - 1].collectionInfo.collectionName = "Nouveau Proto";
       var deckToSave = JSON.stringify(collectionsAvailable[collectionsAvailable.length - 1]);
-      fs.writeFile(appDataFolder + "/collections/" + newUID + "/collection.json", deckToSave, (err) => {
+      fs.writeFile(dir + "/collection.json", deckToSave, (err) => {
         if (err) {
           console.error(err);
         }

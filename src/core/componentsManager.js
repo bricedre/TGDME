@@ -37,19 +37,19 @@ export function createNewComponent(item, itemIndex) {
   let parametersToLoad;
   switch (item.component) {
     case "IMAGE":
-      icon = "assets/addImageComponent.png";
+      icon = "assets/btnIcons/addImageComponent.png";
       parametersToLoad = IMAGE_parameters;
       break;
     case "TEXT":
-      icon = "assets/addTextComponent.png";
+      icon = "assets/btnIcons/addTextComponent.png";
       parametersToLoad = TEXT_parameters;
       break;
     case "TITLE":
-      icon = "assets/addTitleComponent.png";
+      icon = "assets/btnIcons/addTitleComponent.png";
       parametersToLoad = TITLE_parameters;
       break;
     case "SHAPE":
-      icon = "assets/addShapeComponent.png";
+      icon = "assets/btnIcons/addShapeComponent.png";
       parametersToLoad = SHAPE_parameters;
       break;
   }
@@ -60,7 +60,7 @@ export function createNewComponent(item, itemIndex) {
   if (itemIndex > 0) {
     let upElementBtn = document.createElement("img");
     upElementBtn.classList.add("upElementBtn");
-    upElementBtn.src = "./assets/moveUp.png";
+    upElementBtn.src = "./assets/elementIcons/moveUp.png";
     upElementBtn.title = "Reculer le Composant";
     upElementBtn.addEventListener("click", (e) => {
       e.preventDefault();
@@ -73,7 +73,7 @@ export function createNewComponent(item, itemIndex) {
   if (itemIndex < currentCollection.template.length - 1) {
     let downElementBtn = document.createElement("img");
     downElementBtn.classList.add("downElementBtn");
-    downElementBtn.src = "./assets/moveDown.png";
+    downElementBtn.src = "./assets/elementIcons/moveDown.png";
     downElementBtn.title = "Avancer le Composant";
     downElementBtn.addEventListener("click", (e) => {
       e.preventDefault();
@@ -86,8 +86,8 @@ export function createNewComponent(item, itemIndex) {
   let visibilityBtn = document.createElement("img");
   visibilityBtn.classList.add("visibilityBtn");
   visibilityBtn.title = "Afficher/Cacher";
-  if (item.isVisible) visibilityBtn.src = "./assets/visibilityOn.png";
-  else visibilityBtn.src = "./assets/visibilityOff.png";
+  if (item.isVisible) visibilityBtn.src = "./assets/elementIcons/visibilityOn.png";
+  else visibilityBtn.src = "./assets/elementIcons/visibilityOff.png";
   visibilityBtn.addEventListener("click", (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -99,7 +99,7 @@ export function createNewComponent(item, itemIndex) {
 
   let duplicateComponentBtn = document.createElement("img");
   duplicateComponentBtn.classList.add("duplicateComponentBtn");
-  duplicateComponentBtn.src = "./assets/duplicateComponent.png";
+  duplicateComponentBtn.src = "./assets/elementIcons/duplicateComponent.png";
   duplicateComponentBtn.title = "Dupliquer le Composant";
   duplicateComponentBtn.addEventListener("click", (e) => {
     e.preventDefault();
@@ -121,7 +121,7 @@ export function createNewComponent(item, itemIndex) {
 
   let deleteComponentBtn = document.createElement("img");
   deleteComponentBtn.classList.add("deleteComponentBtn");
-  deleteComponentBtn.src = "./assets/delete.png";
+  deleteComponentBtn.src = "./assets/elementIcons/delete.png";
   deleteComponentBtn.title = "Supprimer le Composant";
   deleteComponentBtn.addEventListener("click", (e) => {
     e.preventDefault();
@@ -259,7 +259,7 @@ export function createNewComponent(item, itemIndex) {
           }
         }
 
-        modeInput.src = currentMode == "0" ? "./assets/fixedType.png" : "./assets/elementBasedType.png";
+        modeInput.src = currentMode == "0" ? "./assets/paramIcons/fixedType.png" : "./assets/paramIcons/elementBasedType.png";
         modeInput.title = currentMode == "0" ? "Fixe" : "Basé sur les données";
         modeInput.id = inputID;
 
@@ -267,7 +267,7 @@ export function createNewComponent(item, itemIndex) {
           currentCollection.template[itemIndex][param.refValue]["type"] = currentCollection.template[itemIndex][param.refValue]["type"] == "0" ? "1" : "0";
 
           let typeOfParameter = currentCollection.template[itemIndex][param.refValue]["type"];
-          e.target.src = typeOfParameter == "0" ? "./assets/fixedType.png" : "./assets/elementBasedType.png";
+          e.target.src = typeOfParameter == "0" ? "./assets/paramIcons/fixedType.png" : "./assets/paramIcons/elementBasedType.png";
           e.target.title = typeOfParameter == "0" ? "Fixe" : "Basé sur les données";
 
           let leftSibling = $(e.target).prev();
@@ -411,19 +411,19 @@ export function populateComponents() {
     let parametersToLoad;
     switch (item.component) {
       case "IMAGE":
-        icon = "assets/addImageComponent.png";
+        icon = "assets/btnIcons/addImageComponent.png";
         parametersToLoad = IMAGE_parameters;
         break;
       case "TEXT":
-        icon = "assets/addTextComponent.png";
+        icon = "assets/btnIcons/addTextComponent.png";
         parametersToLoad = TEXT_parameters;
         break;
       case "SHAPE":
-        icon = "assets/addShapeComponent.png";
+        icon = "assets/btnIcons/addShapeComponent.png";
         parametersToLoad = SHAPE_parameters;
         break;
       case "TITLE":
-        icon = "assets/addTitleComponent.png";
+        icon = "assets/btnIcons/addTitleComponent.png";
         parametersToLoad = TITLE_parameters;
         break;
     }
@@ -431,7 +431,7 @@ export function populateComponents() {
     allAccordions[index].querySelector("img").src = icon;
 
     allAccordions[index].querySelector("span").innerHTML = item.componentName.value;
-    if (item.isVisible) allAccordions[index].querySelector(".visibilityBtn").src = "./assets/visibilityOn.png";
-    else allAccordions[index].querySelector(".visibilityBtn").src = "./assets/visibilityOff.png";
+    if (item.isVisible) allAccordions[index].querySelector(".visibilityBtn").src = "./assets/elementIcons/visibilityOn.png";
+    else allAccordions[index].querySelector(".visibilityBtn").src = "./assets/elementIcons/visibilityOff.png";
   });
 }

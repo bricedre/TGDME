@@ -100,16 +100,10 @@ export function setupLangage() {
       if (textElements.length > 0) {
         if (textElements[0] != "") {
           elementsToSetup.text(textElements[0]);
-
-          // Right Icon on certain buttons
-          if (uiTexts[key]["icon"]) {
-            elementsToSetup.append($("<img></img>").attr("src", `./assets/${uiTexts[key]["icon"]}`))
-          }
         }
       }
       if (textElements.length > 1) {
         if (textElements[1] != "") elementsToSetup.attr("title", textElements[1]);
-        else elementsToSetup.attr("title", "[à traduire]");
       }
 
 

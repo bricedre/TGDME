@@ -1,5 +1,5 @@
 export let IMAGE_parameters = [
-  { name: `<img src="assets/id.webp" class='spacerIcon'><span class="paramCat_general">Informations Générales</span>`, type: "catHeader" },
+  { name: `<img src="assets/paramIcons/id.webp" class='spacerIcon'><span class="paramCat_general">Informations Générales</span>`, type: "catHeader" },
   {
     name: "<span class='param_componentName'>Nom du Composant</span>",
     refValue: "componentName",
@@ -8,7 +8,7 @@ export let IMAGE_parameters = [
   },
   { name: "<span class='param_imageSource'>Image(s) Source</span>", refValue: "src", type: "text", title: "Si vous désirez créer une chaîne d'images, séparez-les par des virgules" },
 
-  { name: "<img src='assets/ruler.webp'class='spacerIcon'><span class='paramCat_transform'>Positionnement, Dimensions & Rotation</span>", type: "catHeader" },
+  { name: "<img src='assets/paramIcons/ruler.webp'class='spacerIcon'><span class='paramCat_transform'>Positionnement, Dimensions & Rotation</span>", type: "catHeader" },
   { name: "<span class='param_positionX'>Position Horizontale</span>", refValue: "positionX", type: "text" },
   { name: "<span class='param_positionY'>Position Verticale</span>", refValue: "positionY", type: "text" },
   { name: "<span class='param_width'>Largeur</span>", refValue: "width", type: "text" },
@@ -23,17 +23,17 @@ export let IMAGE_parameters = [
       { value: ":CORNER", label: "COIN SUPÉRIEUR GAUCHE" },
     ],
   },
-  { name: "<img src='assets/color.webp'class='spacerIcon'><span class='paramCat_tint'>Teinte & Opacité</span>", type: "catHeader" },
+  { name: "<img src='assets/paramIcons/color.webp'class='spacerIcon'><span class='paramCat_tint'>Teinte & Opacité</span>", type: "catHeader" },
   { name: "<span class='param_tintFilter'>Filtre de Teinte</span>", refValue: "tint", type: "color" },
   { name: "<span class='param_opacity'>Opacité</span>", refValue: "opacity", type: "range" },
 
-  { name: "<img src='assets/shadow.webp'class='spacerIcon'><span class='paramCat_shadow'>Ombre Portée</span>", type: "catHeader" },
+  { name: "<img src='assets/paramIcons/shadow.webp'class='spacerIcon'><span class='paramCat_shadow'>Ombre Portée</span>", type: "catHeader" },
   { name: "<span class='param_shadowColor'>Couleur</span>", refValue: "shadowColor", type: "color" },
   { name: "<span class='param_shadowOffsetX'>Décalage Horizontal</span>", refValue: "shadowOffsetX", type: "text" },
   { name: "<span class='param_shadowOffsetY'>Décalage Vertical</span>", refValue: "shadowOffsetY", type: "text" },
   { name: "<span class='param_shadowOpacity'>Opacité</span>", refValue: "shadowOpacity", type: "range" },
 
-  { name: "<img src='assets/list.webp'class='spacerIcon'><span class='paramCat_chainConfig'>Configuration de chaîne (liste d'images)</span>", type: "catHeader" },
+  { name: "<img src='assets/paramIcons/list.webp'class='spacerIcon'><span class='paramCat_chainConfig'>Configuration de chaîne (liste d'images)</span>", type: "catHeader" },
   {
     name: "<span class='param_chainAlignment'>Alignement de Chaîne</span>",
     refValue: "listAnchor",
@@ -61,7 +61,7 @@ export let IMAGE_parameters = [
 ];
 
 export let SHAPE_parameters = [
-  { name: "<img src='assets/id.webp'class='spacerIcon'><span class='paramCat_general'>Informations Générales</span>", type: "catHeader" },
+  { name: "<img src='assets/paramIcons/id.webp'class='spacerIcon'><span class='paramCat_general'>Informations Générales</span>", type: "catHeader" },
   {
     name: "<span class='param_componentName'>Nom du Composant</span>",
     refValue: "componentName",
@@ -126,7 +126,7 @@ export let SHAPE_parameters = [
     ],
   },
 
-  { name: "<img src='assets/ruler.webp'class='spacerIcon'><span class='paramCat_transform'>Positionnement, Dimensions & Rotation</span>", type: "catHeader" },
+  { name: "<img src='assets/paramIcons/ruler.webp'class='spacerIcon'><span class='paramCat_transform'>Positionnement, Dimensions & Rotation</span>", type: "catHeader" },
   { name: "<span class='param_positionX'>Position Horizontale</span>", refValue: "positionX", type: "text" },
   { name: "<span class='param_positionY'>Position Verticale</span>", refValue: "positionY", type: "text" },
   { name: "<span class='param_width'>Largeur</span>", refValue: "width", type: "text" },
@@ -142,14 +142,14 @@ export let SHAPE_parameters = [
     ],
   },
 
-  { name: "<img src='assets/color.webp'class='spacerIcon'><span class='paramCat_color'>Couleurs & Bordure</span>", type: "catHeader" },
+  { name: "<img src='assets/paramIcons/color.webp'class='spacerIcon'><span class='paramCat_color'>Couleurs & Bordure</span>", type: "catHeader" },
   { name: "<span class='param_backgroundColor'>Couleur de Fond</span>", refValue: "color", type: "color" },
   { name: "<span class='param_backgroundOpacity'>Opacité du Fond</span>", refValue: "opacity", type: "range" },
   { name: "<span class='param_borderColor'>Couleur de Bordure</span>", refValue: "borderColor", type: "color" },
   { name: "<span class='param_borderOpacity'>Opacité de la Bordure</span>", refValue: "borderOpacity", type: "range" },
   { name: "<span class='param_borderWeight'>Épaisseur de la Bordure</span>", refValue: "borderWeight", type: "text" },
 
-  { name: "<img src='assets/shadow.webp'class='spacerIcon'><span class='paramCat_shadow'>Ombre Portée</span>", type: "catHeader" },
+  { name: "<img src='assets/paramIcons/shadow.webp'class='spacerIcon'><span class='paramCat_shadow'>Ombre Portée</span>", type: "catHeader" },
   { name: "<span class='param_shadowColor'>Couleur</span>", refValue: "shadowColor", type: "color" },
   { name: "<span class='param_shadowOffsetX'>Décalage Horizontal</span>", refValue: "shadowOffsetX", type: "text" },
   { name: "<span class='param_shadowOffsetY'>Décalage Vertical</span>", refValue: "shadowOffsetY", type: "text" },
@@ -157,7 +157,7 @@ export let SHAPE_parameters = [
 ];
 
 export let TEXT_parameters = [
-  { name: "<img src='assets/id.webp'class='spacerIcon'><span class='paramCat_general'>Informations Générales</span>", type: "catHeader" },
+  { name: "<img src='assets/paramIcons/id.webp'class='spacerIcon'><span class='paramCat_general'>Informations Générales</span>", type: "catHeader" },
   {
     name: "<span class='param_componentName'>Nom du Composant</span>",
     refValue: "componentName",
@@ -166,7 +166,7 @@ export let TEXT_parameters = [
   },
   { name: "<span class='param_textToDisplay'>Texte à Afficher</span>", refValue: "src", type: "text" },
 
-  { name: "<img src='assets/ruler.webp'class='spacerIcon'><span class='paramCat_transform'>Positionnement, Dimensions & Rotation</span>", type: "catHeader" },
+  { name: "<img src='assets/paramIcons/ruler.webp'class='spacerIcon'><span class='paramCat_transform'>Positionnement, Dimensions & Rotation</span>", type: "catHeader" },
   { name: "<span class='param_positionX'>Position Horizontale</span>", refValue: "positionX", type: "text" },
   { name: "<span class='param_positionY'>Position Verticale</span>", refValue: "positionY", type: "text" },
   { name: "<span class='param_rotation'>Rotation</span>", refValue: "angle", type: "text" },
@@ -193,25 +193,25 @@ export let TEXT_parameters = [
   },
   { name: "<span class='param_lineSpacing'>Interligne</span>", refValue: "interline", type: "text" },
 
-  { name: "<img src='assets/color.webp'class='spacerIcon'><span class='paramCat_font'>Aspect Visuel</span>", type: "catHeader" },
+  { name: "<img src='assets/paramIcons/color.webp'class='spacerIcon'><span class='paramCat_font'>Aspect Visuel</span>", type: "catHeader" },
   { name: "<span class='param_color'>Couleur</span>", refValue: "color", type: "color" },
   { name: "<span class='param_fontSize'>Taille</span>", refValue: "size", type: "text" },
   { name: "<span class='param_fontFamily'>Police d'Écriture</span>", refValue: "font", type: "select", optionRef: "allSystemFonts" },
   { name: "<span class='param_opacity'>Opacité</span>", refValue: "opacity", type: "range" },
 
-  { name: "<img src='assets/shadow.webp'class='spacerIcon'><span class='paramCat_shadow'>Ombre Portée</span>", type: "catHeader" },
+  { name: "<img src='assets/paramIcons/shadow.webp'class='spacerIcon'><span class='paramCat_shadow'>Ombre Portée</span>", type: "catHeader" },
   { name: "<span class='param_shadowColor'>Couleur</span>", refValue: "shadowColor", type: "color" },
   { name: "<span class='param_shadowOffsetX'>Décalage Horizontal</span>", refValue: "shadowOffsetX", type: "text" },
   { name: "<span class='param_shadowOffsetY'>Décalage Vertical</span>", refValue: "shadowOffsetY", type: "text" },
   { name: "<span class='param_shadowOpacity'>Opacité</span>", refValue: "shadowOpacity", type: "range" },
 
-  { name: "<img src='assets/inlineIcon.webp'class='spacerIcon'><span class='paramCat_inlineIcons'>Icônes Incluses</span>", type: "catHeader" },
+  { name: "<img src='assets/paramIcons/inlineIcon.webp'class='spacerIcon'><span class='paramCat_inlineIcons'>Icônes Incluses</span>", type: "catHeader" },
   { name: "<span class='param_inlineIconSize'>Taille des Icônes</span>", refValue: "inlineImgsSize", type: "text" },
   { name: "<span class='param_inlineIconOffsetX'>Décalage Horizontal des Icônes</span>", refValue: "inlineImgsXOffset", type: "text" },
 ];
 
 export let TITLE_parameters = [
-  { name: "<img src='assets/id.webp'class='spacerIcon'><span class='paramCat_general'>Informations Générales</span>", type: "catHeader" },
+  { name: "<img src='assets/paramIcons/id.webp'class='spacerIcon'><span class='paramCat_general'>Informations Générales</span>", type: "catHeader" },
   {
     name: "<span class='param_componentName'>Nom du Composant</span>",
     refValue: "componentName",
@@ -220,19 +220,19 @@ export let TITLE_parameters = [
   },
   { name: "<span class='param_titleToDisplay'>Titre à Afficher</span>", refValue: "src", type: "text" },
 
-  { name: "<img src='assets/ruler.webp'class='spacerIcon'><span class='paramCat_transform'>Positionnement, Dimensions & Rotation</span>", type: "catHeader" },
+  { name: "<img src='assets/paramIcons/ruler.webp'class='spacerIcon'><span class='paramCat_transform'>Positionnement, Dimensions & Rotation</span>", type: "catHeader" },
   { name: "<span class='param_positionX'>Position Horizontale</span>", refValue: "positionX", type: "text" },
   { name: "<span class='param_positionY'>Position Verticale</span>", refValue: "positionY", type: "text" },
   { name: "<span class='param_rotation'>Rotation</span>", refValue: "angle", type: "text" },
 
-  { name: "<img src='assets/color.webp'class='spacerIcon'><span class='paramCat_font'>Aspect Visuel</span>", type: "catHeader" },
+  { name: "<img src='assets/paramIcons/color.webp'class='spacerIcon'><span class='paramCat_font'>Aspect Visuel</span>", type: "catHeader" },
   { name: "<span class='param_targetWidth'>Largeur Cible</span>", refValue: "titleWidth", type: "text" },
   { name: "<span class='param_maxSize'>Taille Maximale</span>", refValue: "maxSize", type: "text" },
   { name: "<span class='param_color'>Couleur</span>", refValue: "color", type: "color" },
   { name: "<span class='param_fontFamily'>Police d'Écriture</span>", refValue: "font", type: "select", optionRef: "allSystemFonts" },
   { name: "<span class='param_opacity'>Opacité</span>", refValue: "opacity", type: "range" },
 
-  { name: "<img src='assets/shadow.webp'class='spacerIcon'><span class='paramCat_shadow'>Ombre Portée</span>", type: "catHeader" },
+  { name: "<img src='assets/paramIcons/shadow.webp'class='spacerIcon'><span class='paramCat_shadow'>Ombre Portée</span>", type: "catHeader" },
   { name: "<span class='param_shadowColor'>Couleur</span>", refValue: "shadowColor", type: "color" },
   { name: "<span class='param_shadowOffsetX'>Décalage Horizontal</span>", refValue: "shadowOffsetX", type: "text" },
   { name: "<span class='param_shadowOffsetY'>Décalage Vertical</span>", refValue: "shadowOffsetY", type: "text" },
