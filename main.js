@@ -15,7 +15,7 @@ const createWindow = () => {
       contextIsolation: false,
       enableRemoteModule: true,
     },
-    icon: path.join(__dirname, "assets/home.png"),
+    icon: path.join(__dirname, "assets/uiIcons/home.png"),
   });
   mainWindow.maximize();
   // mainWindow.removeMenu();

@@ -27,17 +27,24 @@ export let currentCollection;
 getCollections();
 
 export function getCollections() {
-  collectionsAvailable = readdirSync(rootPath + "/collections", { withFileTypes: true })
+  try{
+
+    collectionsAvailable = readdirSync(rootPath + "/collections", { withFileTypes: true })
     .filter((dirent) => dirent.isDirectory())
     .map((dirent) => dirent.name)
     .sort((a, b) => {
       return a - b;
     });
-
-  collectionsAvailable.forEach(async (collection, index) => {
-    const data = await fs.readFile(rootPath + "/collections/" + collection + "/collection.json");
-    collectionsAvailable[index] = JSON.parse(data);
-  });
+    
+    collectionsAvailable.forEach(async (collection, index) => {
+      const data = await fs.readFile(rootPath + "/collections/" + collection + "/collection.json");
+      collectionsAvailable[index] = JSON.parse(data);
+    });
+  }
+  catch (error){
+    collectionsAvailable = [];
+    console.log(error)
+  }
 
   setTimeout(() => {
     setupMenu();

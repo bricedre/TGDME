@@ -17,12 +17,11 @@
 
   <nav>
     <button id="homeBtn" class="homeBtn btn_mainMenu" title="Retour à l'Accueil">
-      <img id="homeIcon" src="./assets/home.png" alt="home btn" />
+      <img id="homeIcon" src="./assets/uiIcons/home.png" alt="home btn" />
     </button>
     <div id="mainTitleDiv" class="other_mainTitle"></div>
-    <div id="langDiv" class="other_lang"></div>
     <button id="langBtn" class="btn_changeLang" title="Changer la Langue">
-      <img id="homeIcon" src="./assets/rotate.png" alt="home btn" />
+      <img id="langBtnIcon" src="" alt="home btn" />
     </button>
   </nav>
 
@@ -32,7 +31,7 @@
     <div id="collectionEditionPanel" class="panel">
       <div class="tabs">
         <button id="generateCollectionBtn" class="generateCollectionBtn btn_reRenderCollection">
-          <img src="./assets/reload.png" alt="add symbol" />
+          <img src="./assets/uiIcons/reload.png" alt="add symbol" />
         </button>
         <input id="tabConfigInput" type="radio" name="tabs" checked>
         <label class="tabs_configuration" for="tabConfigInput"></label>
@@ -130,9 +129,9 @@
             </div>
 
             <div class="btnContainer">
-              <button id="duplicateCollectionBtn" class="navBtn"><span class="btn_duplicateCollection"></span><img src="./assets/duplicateCollection.png"></button>
-              <button id="archiveCollectionBtn" class="navBtn"><span class="btn_archiveCollection"></span><img src="./assets/archiveCollection.png"></button>
-              <button id="deleteCollectionBtn" class="navBtn"><span class="btn_deleteCollection"></span><img src="./assets/deleteCollection.png"></button>
+              <button id="duplicateCollectionBtn" class="navBtn"><span class="btn_duplicateCollection"></span><img src="./assets/btnIcons/duplicateCollection.png"></button>
+              <button id="archiveCollectionBtn" class="navBtn"><span class="btn_archiveCollection"></span><img src="./assets/btnIcons/archiveCollection.png"></button>
+              <button id="deleteCollectionBtn" class="navBtn"><span class="btn_deleteCollection"></span><img src="./assets/btnIcons/deleteCollection.png"></button>
             </div>
 
           </div>
@@ -142,11 +141,11 @@
             <div class="btnContainer">
               <button id="openResFolderBtn" class="navBtn">
                 <span class="btn_openResFolder">OUVRIR</span>
-                <img src="./assets/archiveCollection.png">
+                <img src="./assets/btnIcons/archiveCollection.png">
               </button>
               <button id="reloadResBtn" class="navBtn">
                 <span class="btn_reloadRes">RECHARGER</span>
-                <img src="./assets/imgResource.png">
+                <img src="./assets/btnIcons/imgResource.png">
               </button>
             </div>
           </div>
@@ -159,11 +158,11 @@
                 id="modifyDataBtn" class="navBtn">
                 <span class="btn_editData">MODIFIER</span>
                 
-                <img src="./assets/fillData.png">
+                <img src="./assets/btnIcons/fillData.png">
               </button>
               <button id="updateDataBtn" class="navBtn">
                 <span class="btn_updateData">METTRE À JOUR</span>
-                <img src="./assets/wizardFillBtn.png">
+                <img src="./assets/btnIcons/wizardFillBtn.png">
               </button>
             </div>
           </div>
@@ -173,22 +172,22 @@
             <div class="btnContainer">
               <button id="addImageComponentBtn" class="navBtn">
                 <span class="btn_addImageComponent">AJOUTER IMAGE</span>
-                <img src="./assets/addImageComponent.png">
+                <img src="./assets/btnIcons/addImageComponent.png">
               </button>
               <button id="addShapeComponentBtn" class="navBtn">
                 <span class="btn_addShapeComponent">AJOUTER FORME</span>
                 
-                <img src="./assets/addShapeComponent.png">
+                <img src="./assets/btnIcons/addShapeComponent.png">
               </button>
               <button id="addTitleComponentBtn" class="navBtn">
                 <span class="btn_addTitleComponent">AJOUTER TITRE</span>
                 
-                <img src="./assets/addTitleComponent.png">
+                <img src="./assets/btnIcons/addTitleComponent.png">
               </button>
               <button id="addTextComponentBtn" class="navBtn">
                 <span class="btn_addTextComponent">AJOUTER TEXTE</span>
                 
-                <img src="./assets/addTextComponent.png">
+                <img src="./assets/btnIcons/addTextComponent.png">
               </button>
             </div>
           </div>
@@ -263,12 +262,12 @@
                 class="navBtn">
                  <span class="btn_renderPages">GÉNÉRER</span>
                 
-                <img src="./assets/toPrint.png" />
+                <img src="./assets/btnIcons/toPrint.png" />
               </button>
               <button id="showRendersBtn" class="navBtn">
                 <span class="btn_openRenderFolder">OUVRIR</span>
                 
-                <img src="./assets/archiveCollection.png" />
+                <img src="./assets/btnIcons/archiveCollection.png" />
               </button>
             </div>
           </div>
@@ -279,9 +278,9 @@
       <div id="canvasDiv">
         <p class="cardPreview"><span class="preview_currentElement">Aperçu de l'élément actuel</span></p>
         <div class="btnContainer">
-          <button title="Tourner de 90°" id="turnCanvasBtn" class="navBtn"><img src="./assets/rotate.png" /></button>
-          <button title="Agrandir" id="scaleUpCanvasBtn" class="navBtn"><img src="./assets/scaleUp.png" /></button>
-          <button title="Réduire" id="scaleDownCanvasBtn" class="navBtn"><img src="./assets/scaleDown.png" /></button>
+          <button title="Tourner de 90°" id="turnCanvasBtn" class="navBtn"><img src="./assets/uiIcons/rotate.png" /></button>
+          <button title="Agrandir" id="scaleUpCanvasBtn" class="navBtn"><img src="./assets/uiIcons/scaleUp.png" /></button>
+          <button title="Réduire" id="scaleDownCanvasBtn" class="navBtn"><img src="./assets/uiIcons/scaleDown.png" /></button>
         </div>
         <main></main>
       </div>

@@ -14,13 +14,13 @@ let langs = ["fr", "en", "de"];
 const scenesSettings = {
   home: {
     title: "",
-    icon: "./assets/home.png",
+    icon: "./assets/uiIcons/home.png",
     uiElement: "#startPanelDiv",
     hideFooter: true,
   },
   collectionEdition: {
     title: () => currentCollection?.collectionInfo.collectionName,
-    icon: "./assets/home.png",
+    icon: "./assets/uiIcons/home.png",
     uiElement: "#collectionEditionPanel",
     hideFooter: false,
   }
@@ -90,6 +90,8 @@ export function changeLangage() {
 }
 
 export function setupLangage() {
+
+  $("#langBtnIcon").attr("src", `assets/flags/${langs[langIndex]}.png`);
 
   Object.keys(uiTexts).forEach(key => {
     const elementsToSetup = $(`.${key}`);

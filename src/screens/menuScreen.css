@@ -14,12 +14,8 @@
   background: var(--mainColorLight);
 }
 
-#langDiv {
-  background: var(--mainBtnColor);
-  font-size: 1rem;
-  padding: 0.5rem;
-  border-radius: 0.5rem;
-  translate: 1rem;
+#langBtn {
+  border-radius: 50%;
 }
 
 #mainTitleDiv {

@@ -10,11 +10,6 @@ export let uiTexts = {
     en: "THE PROTO-SHACK",
     de: "DIE PROTO-HÜTTE",
   },
-  other_lang: {
-    fr: "français",
-    en: "english",
-    de: "deutsch",
-  },
   other_noProject: {
     fr: "Aucun Projet à afficher",
     en: "No Project to show",
