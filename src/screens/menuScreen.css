@@ -6,7 +6,7 @@
 
 #homeBtn>img,
 #langBtn>img {
-  height: 3rem;
+  height: 2.5rem;
 }
 
 #homeBtn:hover,
@@ -55,9 +55,7 @@
 #archivedCollectionsDiv {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  height: fit-content;
   gap: 1rem;
-  min-height: 6vh;
   width: 100%;
 }
 

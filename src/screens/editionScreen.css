@@ -60,7 +60,7 @@ canvas {
 #shadowCard {
   width: calc(100% - 8rem);
   height: calc(100% - 8rem);
-  background: #4c4c4c;
+  background: #0004;
   position: absolute;
   border-radius: 1rem;
 }
