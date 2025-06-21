@@ -1,4 +1,13 @@
 
+#homeBtn>img,
+#langBtn>img {
+  height: 3rem;
+}
+
+#homeBtn:hover,
+#langBtn:hover {
+  background: var(--mainColorLight);
+}
 
 
 
@@ -35,9 +44,7 @@
 #archivedCollectionsDiv {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  height: fit-content;
   gap: 1rem;
-  min-height: 6vh;
   width: 100%;
 }
 
