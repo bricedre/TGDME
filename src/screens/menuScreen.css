@@ -1,26 +1,6 @@
-#homeBtn,
-#langBtn {
-  display: flex;
-  padding: 0.5rem;
-}
 
-#homeBtn>img,
-#langBtn>img {
-  height: 3rem;
-}
 
-#homeBtn:hover,
-#langBtn:hover {
-  background: var(--mainColorLight);
-}
 
-#langBtn {
-  border-radius: 50%;
-}
-
-#mainTitleDiv {
-  flex: 1;
-}
 
 #startPanelDiv {
   display: flex;
@@ -37,7 +17,7 @@
 }
 
 #archivedCollectionsContainer {
-  background: #eee;
+  background: var(--panelBG);
   padding: 1rem;
   border-radius: 1rem;
   max-height: 4rem;

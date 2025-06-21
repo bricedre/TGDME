@@ -19,10 +19,19 @@
     <button id="homeBtn" class="homeBtn btn_mainMenu" title="Retour à l'Accueil">
       <img id="homeIcon" src="./assets/uiIcons/home.png" alt="home btn" />
     </button>
-    <div id="mainTitleDiv" class="other_mainTitle">?? ???????? ? ?????</div>
-    <button id="langBtn" class="btn_changeLang" title="Changer la Langue">
-      <img id="langBtnIcon" src="./assets/flags/fr.png" alt="home btn" />
-    </button>
+    <div id="mainTitleDiv" class="other_mainTitle"></div>
+    
+    <div class="settingsBar">
+      <button id="settingsBtn" class="btn_settings" title="Ouvrir les Paramètres">
+        <img id="settingsBtnIcon" src="./assets/btnIcons/settings.webp" alt="home btn" />
+      </button>
+      <button id="colorModeBtn" class="btn_colorMode" title="Changer le Thème">
+        <img id="colorModeBtnIcon" src="./assets/btnIcons/darkMode.png" alt="home btn" />
+      </button>
+      <button id="langBtn" class="btn_changeLang" title="Changer la Langue">
+        <img id="langBtnIcon" src="./assets/flags/fr.png" alt="home btn" />
+      </button>
+    </div>
   </nav>
 
   <div class="viewer">
@@ -37,13 +46,13 @@
         <label class="tabs_configuration" for="tabConfigInput"></label>
         <span>></span>
         <input id="tabRessInput" type="radio" name="tabs">
-        <label class="tabs_images" for="tabRessInput" ></label>
+        <label class="tabs_images" for="tabRessInput"></label>
         <span>></span>
         <input id="tabElementsInput" type="radio" name="tabs">
-        <label class="tabs_data" for="tabElementsInput" ></label>
+        <label class="tabs_data" for="tabElementsInput"></label>
         <span>></span>
         <input id="tabTemplateInput" type="radio" name="tabs">
-        <label class="tabs_template" for="tabTemplateInput" ></label>
+        <label class="tabs_template" for="tabTemplateInput"></label>
 
         <span>></span>
         <input id="tabPrinting" type="radio" name="tabs">
@@ -129,9 +138,12 @@
             </div>
 
             <div class="btnContainer">
-              <button id="duplicateCollectionBtn" class="navBtn"><span class="btn_duplicateCollection"></span><img src="./assets/btnIcons/duplicateCollection.png"></button>
-              <button id="archiveCollectionBtn" class="navBtn"><span class="btn_archiveCollection"></span><img src="./assets/btnIcons/archiveCollection.png"></button>
-              <button id="deleteCollectionBtn" class="navBtn"><span class="btn_deleteCollection"></span><img src="./assets/btnIcons/deleteCollection.png"></button>
+              <button id="duplicateCollectionBtn" class="navBtn"><span class="btn_duplicateCollection"></span><img
+                  src="./assets/btnIcons/duplicateCollection.png"></button>
+              <button id="archiveCollectionBtn" class="navBtn"><span class="btn_archiveCollection"></span><img
+                  src="./assets/btnIcons/archiveCollection.png"></button>
+              <button id="deleteCollectionBtn" class="navBtn"><span class="btn_deleteCollection"></span><img
+                  src="./assets/btnIcons/deleteCollection.png"></button>
             </div>
 
           </div>
@@ -154,10 +166,9 @@
             <div id="elementItemsDiv" class="mainContent">
             </div>
             <div class="btnContainer">
-              <button
-                id="modifyDataBtn" class="navBtn">
+              <button id="modifyDataBtn" class="navBtn">
                 <span class="btn_editData">MODIFIER</span>
-                
+
                 <img src="./assets/btnIcons/fillData.png">
               </button>
               <button id="updateDataBtn" class="navBtn">
@@ -176,17 +187,17 @@
               </button>
               <button id="addShapeComponentBtn" class="navBtn">
                 <span class="btn_addShapeComponent">AJOUTER FORME</span>
-                
+
                 <img src="./assets/btnIcons/addShapeComponent.png">
               </button>
               <button id="addTitleComponentBtn" class="navBtn">
                 <span class="btn_addTitleComponent">AJOUTER TITRE</span>
-                
+
                 <img src="./assets/btnIcons/addTitleComponent.png">
               </button>
               <button id="addTextComponentBtn" class="navBtn">
                 <span class="btn_addTextComponent">AJOUTER TEXTE</span>
-                
+
                 <img src="./assets/btnIcons/addTextComponent.png">
               </button>
             </div>
@@ -238,7 +249,8 @@
 
               <div class="parameterSlot"
                 title="300 dpi = 118.11 ppcm | Plus cette valeur sera haute, plus votre image sera nette">
-                <p class="parameterName"><span class="render_printResolution">Résolution d'Impression (pixels/cm) 🔍</span></p>
+                <p class="parameterName"><span class="render_printResolution">Résolution d'Impression (pixels/cm)
+                    🔍</span></p>
                 <input id="pageResolutionInput" inputmode="decimal" class="parameterInput" step="0.1" />
               </div>
 
@@ -253,20 +265,20 @@
               <div class="parameterSlot"
                 title="L'Aide à la Découpe est une simple bordure semi-transparente mise autour des élements afin de guider la découpe une fois imprimés">
                 <input type="checkbox" id="cuttingHelpInput" name="cuttingHelpInput" />
-                <label class="parameterName" for="cuttingHelpInput"><span class="render_cuttingHelp">Aide à la Découpe 🔍</span></label>
+                <label class="parameterName" for="cuttingHelpInput"><span class="render_cuttingHelp">Aide à la Découpe
+                    🔍</span></label>
               </div>
             </div>
 
             <div class="btnContainer">
-              <button id="printPagesBtn"
-                class="navBtn">
-                 <span class="btn_renderPages">GÉNÉRER</span>
-                
+              <button id="printPagesBtn" class="navBtn">
+                <span class="btn_renderPages">GÉNÉRER</span>
+
                 <img src="./assets/btnIcons/toPrint.png" />
               </button>
               <button id="showRendersBtn" class="navBtn">
                 <span class="btn_openRenderFolder">OUVRIR</span>
-                
+
                 <img src="./assets/btnIcons/archiveCollection.png" />
               </button>
             </div>
@@ -278,9 +290,12 @@
       <div id="canvasDiv">
         <p class="cardPreview"><span class="preview_currentElement">Aperçu de l'élément actuel</span></p>
         <div class="btnContainer">
-          <button title="Tourner de 90°" id="turnCanvasBtn" class="navBtn"><img src="./assets/uiIcons/rotate.png" /></button>
-          <button title="Agrandir" id="scaleUpCanvasBtn" class="navBtn"><img src="./assets/uiIcons/scaleUp.png" /></button>
-          <button title="Réduire" id="scaleDownCanvasBtn" class="navBtn"><img src="./assets/uiIcons/scaleDown.png" /></button>
+          <button title="Tourner de 90°" id="turnCanvasBtn" class="navBtn"><img
+              src="./assets/uiIcons/rotate.png" /></button>
+          <button title="Agrandir" id="scaleUpCanvasBtn" class="navBtn"><img
+              src="./assets/uiIcons/scaleUp.png" /></button>
+          <button title="Réduire" id="scaleDownCanvasBtn" class="navBtn"><img
+              src="./assets/uiIcons/scaleDown.png" /></button>
         </div>
         <main></main>
       </div>

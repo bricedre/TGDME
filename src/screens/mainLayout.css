@@ -4,21 +4,36 @@
 }
 
 :root {
-  --mainColor: #77c9f2;
+  --bgColor: #fbfdff;
   --mainBtnColor: #d4eeff;
-  --mainColorDark: #2d94c7;
-  --mainColorShadows: #00496e70;
   --mainColorLight: #eaf8ff;
   --panelBG: #ededed;
+  --panelBGDarker: #bdcdd5;
+  --mainColor: #77c9f2;
+  --mainColorDark: #2d94c7;
+  --mainColorShadows: #00496e70;
+  --mainColorText : #07001c;
+  --categoryColor : #68a;
 }
 
 * {
   user-select: none;
   box-sizing: border-box;
+  color: var(--mainColorText);
+
+}
+
+input, select{
+  background: var(--bgColor);
+}
+
+input:focus, select:focus, input:active, select:active{
+  outline: 2px solid var(--mainColor);
 }
 
 html,
 body {
+  background: var(--bgColor);
   margin: 0;
   padding: 0;
   overflow: hidden;
@@ -28,20 +43,63 @@ body {
 
 nav {
   background: linear-gradient(90deg, var(--mainColor), var(--mainColorDark));
-  min-height: 10vh;
+  min-height: 8vh;
   font-size: xx-large;
   display: flex;
   align-items: center;
-  padding: 0 1rem;
+  padding: 0 0.5rem;
   box-shadow: 0 0 20px #0005;
   gap: 2rem;
-  overflow: auto;
+  overflow: hidden;
+  position: relative;
+
 }
 
 .navBtn {
   width: -webkit-fill-available;
   /* margin-top: 0.8rem; */
   border-radius: 0.5rem;
+}
+
+#mainTitleDiv {
+  flex: 1;
+}
+
+.settingsBar {
+  display: flex;
+  gap: 1rem;
+  position: absolute;
+  right: -10rem;
+  transition: all 0.3s ease-in-out;
+  margin-right: 0.5rem;
+}
+
+#homeBtn,
+#langBtn,
+#colorModeBtn,
+#settingsBtn {
+  display: flex;
+  padding: 0.5rem;
+}
+
+#homeBtn>img,
+#langBtn>img,
+#colorModeBtn>img,
+#settingsBtn>img {
+  height: 3rem;
+}
+
+#homeBtn:hover,
+#langBtn:hover,
+#colorModeBtn:hover,
+#settingsBtn:hover {
+  background: var(--mainColorLight);
+}
+#homeBtn,
+#langBtn,
+#colorModeBtn,
+#settingsBtn {
+  border-radius: 50%;
 }
 
 
@@ -56,7 +114,7 @@ nav {
   padding: 2rem;
   justify-content: end;
   height: 100%;
-  max-height: 80vh;
+  max-height: 86vh;
 }
 
 main {
@@ -100,8 +158,8 @@ button:hover {
 }
 
 button:disabled {
-  background: #fff5;
-  cursor: default;
+  background: var(--mainBtnColor);
+  opacity: 0.5;
 }
 
 .bigBtn {
@@ -110,8 +168,8 @@ button:disabled {
 }
 
 #bottomBarDiv {
-  background: linear-gradient(-90deg, var(--mainColor), #34b3ff);
-  min-height: 10vh;
+  background: linear-gradient(-90deg, var(--mainColor), var(--mainColorDark));
+  min-height: 6vh;
   display: none;
   align-items: center;
   justify-content: center;
@@ -132,7 +190,7 @@ button:disabled {
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #63a9d5;
+  background: var(--mainColor);
   border-radius: 10px;
   border: 6px solid var(--panelBG);
 }
@@ -168,7 +226,7 @@ button:disabled {
   transform: translate(-50%, -50%);
   height: 25px;
   width: 25px;
-  background-color: #fff;
+  background-color: var(--bgColor);
   border-radius: 0.5rem;
 }
 
@@ -200,7 +258,7 @@ button:disabled {
   top: 5px;
   width: 5px;
   height: 10px;
-  border: solid white;
+  border: solid var(--bgColor);
   border-width: 0 3px 3px 0;
   -webkit-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
@@ -209,6 +267,7 @@ button:disabled {
 
 .noStuffDiv {
   text-align: center;
-  color: #0007;
+  color: var(--mainColorText);
+  opacity: 0.7;
   margin: 5rem auto;
 }
