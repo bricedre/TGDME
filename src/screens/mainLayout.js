@@ -8,6 +8,7 @@ import { uiTexts } from "../core/translations.js";
 const $ = require("jquery");
 
 export let currentPanel = "home";
+let currentColorScheme = 0;
 let langIndex = 0;
 let langs = ["fr", "en", "de"];
 
@@ -39,7 +40,7 @@ allInputs.forEach((input) => {
   input.addEventListener("input", (e) => {
     populateComponents();
     checkOtherInputs(e.target.id, e.target.value);
-    if(input.type == "checkbox"){
+    if (input.type == "checkbox") {
       generateCollectionBtn.click();
     }
   });
@@ -76,20 +77,66 @@ export function openScene(panelName) {
       firstRadio.checked = true;
 
       updateElementsCounter();
-      
+
       break;
   }
 
   currentPanel = panelName;
 }
 
+
+
+export function changeColorScheme() {
+  currentColorScheme = (currentColorScheme + 1) % 2;
+  localStorage.setItem("colorScheme", currentColorScheme);
+  setColorScheme();
+}
+
+export function setColorScheme() {
+  
+  if (localStorage.getItem("colorScheme")) currentColorScheme = parseInt(localStorage.getItem("colorScheme"));
+
+  let r = document.querySelector(':root');
+  switch (currentColorScheme) {
+    case 0:
+      r.style.setProperty('--bgColor', '#fbfdff');
+      r.style.setProperty('--mainColor', '#77c9f2');
+      r.style.setProperty('--mainBtnColor', '#d4eeff');
+      r.style.setProperty('--mainColorDark', '#2d94c7');
+      r.style.setProperty('--mainColorShadows', '#00496e30');
+      r.style.setProperty('--mainColorLight', '#eaf8ff');
+      r.style.setProperty('--mainColorText', '#07001c');
+      r.style.setProperty('--panelBG', '#ededed');
+      r.style.setProperty('--panelBGDarker', '#bdcdd5');
+      r.style.setProperty('--categoryColor', '#68a');
+      break;
+
+
+    case 1:
+      r.style.setProperty('--bgColor', '#343a40');
+      r.style.setProperty('--mainColor', '#00324c');
+      r.style.setProperty('--mainBtnColor', '#002136');
+      r.style.setProperty('--mainColorDark', '#00abff');
+      r.style.setProperty('--mainColorShadows', '#00000094');
+      r.style.setProperty('--mainColorLight', '#eaf8ff');
+      r.style.setProperty('--mainColorText', '#d7e7ff');
+      r.style.setProperty('--panelBG', '#282828');
+      r.style.setProperty('--panelBGDarker', '#191a1a');
+      r.style.setProperty('--categoryColor', '#68a');
+      break;
+  }
+}
+
 export function changeLangage() {
   langIndex = (langIndex + 1) % langs.length;
-  setupLangage(langs[langIndex]);
+  localStorage.setItem("lang", langIndex);
+  setupLangage();
 
 }
 
 export function setupLangage() {
+
+  if (localStorage.getItem("lang")) langIndex = parseInt(localStorage.getItem("lang"));
 
   $("#langBtnIcon").attr("src", `assets/flags/${langs[langIndex]}.png`);
 
@@ -115,4 +162,13 @@ export function setupLangage() {
 }
 
 getFontList();
+setColorScheme();
+setupLangage();
 openScene(currentPanel);
+
+setTimeout(() => {
+  $(".blindfold").css("opacity", "0")
+  setTimeout(() => {
+    $(".blindfold").remove();
+  }, 1000);
+}, 1000);

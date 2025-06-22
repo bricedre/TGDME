@@ -1,5 +1,5 @@
 import { collectionsAvailable, createNewCollection, currentCollectionUID, getCollections, setCurrentCollection } from "../core/collectionsManager.js";
-import { changeLangage, openScene, setupLangage } from "./mainLayout.js";
+import { changeColorScheme, changeLangage, openScene, setupLangage } from "./mainLayout.js";
 
 const $ = require("jquery");
 
@@ -15,40 +15,8 @@ $("#settingsBtn").on("click", () => {
   isSettingsBarOpen = !isSettingsBarOpen;
 });
 
-let currentColorScheme = 0;
 $("#colorModeBtn").on("click", () => {
-  currentColorScheme = (currentColorScheme + 1) % 2;
-  let r = document.querySelector(':root');
-
-  switch (currentColorScheme) {
-    case 0:
-      r.style.setProperty('--bgColor', '#fbfdff');
-      r.style.setProperty('--mainColor', '#77c9f2');
-      r.style.setProperty('--mainBtnColor', '#d4eeff');
-      r.style.setProperty('--mainColorDark', '#2d94c7');
-      r.style.setProperty('--mainColorShadows', '#00496e70');
-      r.style.setProperty('--mainColorLight', '#eaf8ff');
-      r.style.setProperty('--mainColorText', '#07001c');
-      r.style.setProperty('--panelBG', '#ededed');
-      r.style.setProperty('--panelBGDarker', '#bdcdd5');
-      r.style.setProperty('--categoryColor', '#68a');
-      break;
-
-
-    case 1:
-      r.style.setProperty('--bgColor', '#383c40');
-      r.style.setProperty('--mainColor', '#00324c');
-      r.style.setProperty('--mainBtnColor', '#002136');
-      r.style.setProperty('--mainColorDark', '#00abff');
-      r.style.setProperty('--mainColorShadows', '#00496e70');
-      r.style.setProperty('--mainColorLight', '#eaf8ff');
-      r.style.setProperty('--mainColorText', '#d7e7ff');
-      r.style.setProperty('--panelBG', '#282828');
-      r.style.setProperty('--panelBGDarker', '#bdcdd5');
-      r.style.setProperty('--categoryColor', '#68a');
-      break;
-  }
-
+  changeColorScheme();
 });
 
 $("#langBtn").on("click", () => {

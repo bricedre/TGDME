@@ -11,7 +11,7 @@
   --panelBGDarker: #bdcdd5;
   --mainColor: #77c9f2;
   --mainColorDark: #2d94c7;
-  --mainColorShadows: #00496e70;
+  --mainColorShadows: #00496e30;
   --mainColorText : #07001c;
   --categoryColor : #68a;
 }
@@ -41,8 +41,15 @@ body {
   font-family: "Main Font", sans-serif;
 }
 
+.blindfold{
+  position: absolute;
+  inset : 0;
+  background: #FFF;
+  transition: opacity 1s ease-in-out;
+}
+
 nav {
-  background: linear-gradient(90deg, var(--mainColor), var(--mainColorDark));
+  background: var(--mainColor);
   min-height: 8vh;
   font-size: xx-large;
   display: flex;
@@ -71,7 +78,16 @@ nav {
   position: absolute;
   right: -10rem;
   transition: all 0.3s ease-in-out;
-  margin-right: 0.5rem;
+  position: relative;
+  isolation: isolate;
+}
+
+.settingsBarBg{
+  position: absolute;
+  inset: 0;
+  background: var(--categoryColor);
+  translate: 2rem 0;
+  z-index: -1;
 }
 
 #homeBtn,
@@ -143,7 +159,7 @@ button {
   cursor: pointer;
   background: var(--mainBtnColor);
   transition: all 0.2s ease-in-out;
-  box-shadow: 5px 5px 10px #104d6924;
+  box-shadow: 5px 5px 10px var(--mainColorShadows);
   font-family: "Main Font", sans-serif;
 }
 
@@ -168,7 +184,7 @@ button:disabled {
 }
 
 #bottomBarDiv {
-  background: linear-gradient(-90deg, var(--mainColor), var(--mainColorDark));
+  background: var(--mainColor);
   min-height: 6vh;
   display: none;
   align-items: center;
