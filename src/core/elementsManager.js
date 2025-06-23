@@ -81,7 +81,7 @@ export function updateDataView() {
   //Has data to show
   if (currentCollection.elements.headers.length > 0) {
     let dataTable = $(`<table class="dataTable"></table>`);
-    dataTable.append($("<thead><tr><th>Clé</th><th>Valeur</th><th>Aperçu</th></tr></thead>"));
+    dataTable.append($("<thead><tr><th>CLÉ</th><th>VALEUR</th><th>APERÇU</th></tr></thead>"));
     let dataTableBody = $("<tbody></tbody>");
     dataTableBody.css("background", "#ffffff")
 
@@ -96,12 +96,14 @@ export function updateDataView() {
       if (valueToShow) {
         if (valueToShow.toString().charAt(0) == "#") {
           // newRow.append($("<td></td>")
-          let colorPreview = $("<div></div>").css("background", valueToShow).css("border-radius", "50%").css("width", "2rem").css("height", "2rem").css("border", "3px solid black");
+          let colorPreview = $("<div></div>").css("background", valueToShow).css("border-radius", "50%").css("width", "3rem").css("height", "3rem").css("border", "3px solid #0006").css("margin", "0 auto");
           let td = $("<td></td>");
           td.append(colorPreview);
           newRow.append(td);
         } else if ([".png", ".jpg"].includes(valueToShow.toString().substring(valueToShow.length - 4))) {
-          newRow.append($("<td></td>").css("background-image", `url("${appDataFolder}/collections/${currentCollectionUID}/assets/${valueToShow}")`).css("height", "4rem"));
+          let imgUrl = appDataFolder + "/collections/"+ currentCollectionUID + "/assets/" + valueToShow;
+          imgUrl = imgUrl.replaceAll("\\", "/");
+          newRow.append($("<td></td>").css("background-image", 'url("'+imgUrl+'")'));
         } else {
           newRow.append($("<td></td>"));
         }

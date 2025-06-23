@@ -19,12 +19,17 @@
 * {
   user-select: none;
   box-sizing: border-box;
-  color: var(--mainColorText);
-
 }
 
 input, select{
   background: var(--bgColor);
+  color: var(--mainColorText);
+}
+
+input:disabled, select:disabled{
+  background: var(--mainColorText);
+  color: var(--bgColor);
+  opacity: 0.2;
 }
 
 input:focus, select:focus, input:active, select:active{
@@ -64,7 +69,6 @@ nav {
 
 .navBtn {
   width: -webkit-fill-available;
-  /* margin-top: 0.8rem; */
   border-radius: 0.5rem;
 }
 
@@ -150,7 +154,7 @@ main {
 button {
   padding: 0.5rem 1rem;
   gap: 1rem;
-  border-radius: 1vh;
+  border-radius: 0.5rem;
   border: none;
   display: flex;
   align-items: center;
@@ -161,6 +165,7 @@ button {
   transition: all 0.2s ease-in-out;
   box-shadow: 5px 5px 10px var(--mainColorShadows);
   font-family: "Main Font", sans-serif;
+  color: var(--mainColorText);
 }
 
 button>img {
@@ -207,7 +212,7 @@ button:disabled {
 /* Handle */
 ::-webkit-scrollbar-thumb {
   background: var(--mainColor);
-  border-radius: 10px;
+  border-radius: 0.5rem;
   border: 6px solid var(--panelBG);
 }
 

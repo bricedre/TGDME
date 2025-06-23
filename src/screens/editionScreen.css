@@ -1,6 +1,6 @@
 canvas {
   box-shadow: 0 0 30px #0003;
-  border-radius: 1rem;
+  border-radius: 0.5rem;
   z-index: 1;
 }
 
@@ -46,7 +46,7 @@ canvas {
   z-index: 5;
   background: rgba(0, 0, 0, 0.37);
   padding: 1rem;
-  border-radius: 1rem;
+  border-radius: 0.5rem;
 }
 
 #canvasDiv:hover .btnContainer {
@@ -74,6 +74,7 @@ canvas {
 
 .cardBtn:hover {
   background: var(--mainColorLight);
+  color: var(--mainBtnColor);
 }
 
 .cardBtn:disabled {
@@ -98,7 +99,7 @@ canvas {
   scale: 1.3;
 }
 
-#generateCollectionBtn>img {
+#generateCollectionBtn > img {
   height: 4rem;
 }
 
@@ -149,7 +150,7 @@ canvas {
   height: 94%;
 }
 
-.content>div {
+.content > div {
   display: none;
   padding: 1rem;
 }
@@ -181,36 +182,37 @@ input[type="radio"] {
   display: none;
 }
 
-.tabs>label {
+.tabs > label {
   display: inline-block;
   padding: 0.5rem;
   text-align: center;
   border-bottom: 1px solid transparent;
   transition: color 0.2s ease-out;
   font-size: 0.8rem;
+  color: var(--mainColorText);
 }
 
-.tabs>label:hover {
-  color: var(--mainColor);
+.tabs > label:hover {
+  color: var(--mainColorDark);
   cursor: pointer;
 }
 
-.tabs>input:checked+label {
+.tabs > input:checked + label {
   color: var(--bgColor);
   background-color: var(--mainColorDark);
-  border-radius: 0.7rem;
+  border-radius: 0.5rem;
 }
 
-#tabConfigInput+label {
+#tabConfigInput + label {
   margin: 1rem 0 0 1rem;
 }
 
-#tabConfigInput:checked~.content #contentConfigDiv,
-#tabPrintingInput:checked~.content #contentPrintingDiv,
-#tabTemplateInput:checked~.content #contentTemplateDiv,
-#tabElementsInput:checked~.content #contentElementsDiv,
-#tabRessInput:checked~.content #contentRessDiv,
-#tabPrinting:checked~.content #contentPrintingDiv {
+#tabConfigInput:checked ~ .content #contentConfigDiv,
+#tabPrintingInput:checked ~ .content #contentPrintingDiv,
+#tabTemplateInput:checked ~ .content #contentTemplateDiv,
+#tabElementsInput:checked ~ .content #contentElementsDiv,
+#tabRessInput:checked ~ .content #contentRessDiv,
+#tabPrinting:checked ~ .content #contentPrintingDiv {
   display: flex;
 }
 
@@ -225,6 +227,7 @@ input[type="radio"] {
   margin: 0 0 0.2rem 0;
   font-size: 0.8rem;
   width: -webkit-fill-available;
+  color: var(--mainColorText);
 }
 
 .parameterInputLine {
@@ -243,19 +246,18 @@ input[type="radio"] {
 .modeInput {
   width: 2rem;
   cursor: pointer;
-  background: var(--mainColorText);
-  opacity: 0.2;
+  background: var(--categoryColor);
   border-radius: 0.5rem;
   padding: 0.2rem;
 }
 
 .modeInput:hover {
-  opacity: 0.4;
+  opacity: 0.6;
 }
 
 .mainContent {
-  overflow-y: auto;
-  padding: 0 1rem;
+  overflow-y: scroll;
+  padding: 0 0 0 1rem;
   flex: 1;
 }
 
@@ -269,29 +271,10 @@ input[type="radio"] {
 
 /* ACCORDION */
 
-.elementItemWrapper {
-  display: flex;
-  gap: 0.5rem;
-}
-
-.elementItemWrapper>input,
-.elementItemWrapper>.checkboxContainer {
-  margin: 0.5rem auto;
-  width: 3.5rem;
-}
-
-.elementItemWrapper>.qtyInput {
-  font-size: 1rem;
-  font-family: "Main Font";
-  border: none;
-  border-radius: 0.3rem;
-  text-align: center;
-}
-
 .accordion {
   background-color: var(--bgColor);
   box-shadow: none;
-  border-radius: 0.3rem;
+  border-radius: 0.5rem;
   text-align: left;
   width: 100%;
   padding: 0.5rem;
@@ -301,10 +284,10 @@ input[type="radio"] {
 
 .accordion.active {
   background-color: var(--mainColor);
-  border-radius: 0.3rem 0.3rem 0 0;
+  border-radius: 0.5rem 0.5rem 0 0;
 }
 
-.accordion>img {
+.accordion > img {
   aspect-ratio: 1;
   height: 1.8rem;
   rotate: 0deg;
@@ -312,7 +295,7 @@ input[type="radio"] {
 }
 
 .paramAccordion {
-  background-color: var(--bgColor);
+  background-color: var(--categoryColor);
   box-shadow: none;
   border-radius: 0.3rem;
   text-align: left;
@@ -323,12 +306,16 @@ input[type="radio"] {
   justify-content: start;
 }
 
-.paramAccordion.active {
-  background-color: var(--mainColor);
-  border-radius: 0.3rem 0.3rem 0 0;
+.paramAccordion:hover {
+  background-color: var(--categoryColor);
 }
 
-.paramAccordion>img {
+.paramAccordion.active {
+  background-color: var(--categoryColor);
+  border-radius: 0.5rem 0.5rem 0 0;
+}
+
+.paramAccordion > img {
   aspect-ratio: 1;
   height: 1.8rem;
   rotate: 0deg;
@@ -342,7 +329,7 @@ input[type="radio"] {
   transition: all 0.2s ease-out;
   background-color: var(--panelBG);
   translate: 0 -0.5rem;
-  border-radius: 0 0 0.3rem 0.3rem;
+  border-radius: 0 0 0.5rem 0.5rem;
 }
 
 .upElementBtn:hover,
@@ -361,7 +348,7 @@ input[type="radio"] {
   transition: all 0.2s ease-out;
   background-color: var(--panelBGDarker);
   translate: 0 -0.5rem;
-  border-radius: 0 0 0.3rem 0.3rem;
+  border-radius: 0 0 0.5rem 0.5rem;
 }
 
 .elementItemPanel {
@@ -372,13 +359,13 @@ input[type="radio"] {
   border: none;
   display: none;
   align-items: center;
-  border-radius: 0.3rem;
+  border-radius: 0.5rem;
   width: 100%;
   display: flex;
   gap: 0.5rem;
 }
 
-.elementsHeaderDiv>img {
+.elementsHeaderDiv > img {
   aspect-ratio: 1;
   height: 3.2rem;
   padding: 0.3rem;
@@ -396,27 +383,27 @@ input[type="radio"] {
 
 .ressContainer {
   position: relative;
-  height: 9rem;
+  height: 7rem;
   aspect-ratio: 1;
   margin: 0 !important;
-  background-color: var(--mainColor);
-  border-radius: 2vh;
+  background-color: var(--mainColorDark);
+  border-radius: 0.5rem;
   display: flex;
   align-items: center;
-  font-size: 1rem;
+  font-size: 0.5rem;
   justify-content: center;
   box-shadow: 5px 5px 10px #104d6924;
   overflow: hidden;
   cursor: pointer;
 }
 
-.ressContainer>img {
+.ressContainer > img {
   height: 100%;
   rotate: 0deg;
   transition: all 0.1s ease-in-out;
 }
 
-.ressContainer:hover>img {
+.ressContainer:hover > img {
   opacity: 0.3;
 }
 
@@ -427,9 +414,10 @@ input[type="radio"] {
   transition: all 0.1s ease-in-out;
   word-wrap: break-word;
   text-align: center;
+  font-size: 0.8rem;
 }
 
-.ressContainer:hover>.ressTitle {
+.ressContainer:hover > .ressTitle {
   opacity: 1;
 }
 
@@ -437,28 +425,39 @@ input[type="radio"] {
   width: 100%;
   text-align: center;
   table-layout: fixed;
-  border-radius: 1rem;
+  border-radius: 0.5rem;
   overflow: hidden;
   border-spacing: 0 0.5rem;
-
 }
 
 .dataTable th {
   background: var(--mainColor);
   padding: 0.5rem;
-  border-bottom: 3px solid #424141;
+  color: var(--mainColorText);
+  font-weight: 100;
 }
 
+td:nth-child(1),
+th:nth-child(1) {
+  border-radius: 0.5rem 0 0 0.5rem;
+}
+
+td:nth-child(3),
+th:nth-child(3) {
+  border-radius: 0 0.5rem 0.5rem 0;
+}
 
 .dataTable td {
+  background-color: var(--bgColor);
   padding: 0.5rem;
   background-position: center;
   background-size: contain;
   background-repeat: no-repeat;
   height: 4rem;
-  background: var(--bgColor);
+  overflow-wrap: anywhere;
+  color: var(--mainColorText);
 }
 
 .dataTable tr {
-  border-radius: 1rem;
+  border-radius: 0.5rem;
 }
