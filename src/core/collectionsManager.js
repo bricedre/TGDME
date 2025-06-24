@@ -2,7 +2,7 @@ const cloneDeep = require("lodash/cloneDeep");
 
 import { app } from "../app.js";
 import { checkOtherInputs, populateEditionFields, updateElementsCounter } from "../screens/editionScreen.js";
-import { openScene } from "../screens/mainLayout.js";
+import { openScene, setupLangage } from "../screens/mainLayout.js";
 
 import { getFontList, loadAssets } from "./assetsManager.js";
 import { imageComponentTemplate, textComponentTemplate, shapeComponentTemplate, titleComponentTemplate } from "./componentTemplates.js";
@@ -88,6 +88,7 @@ export function setCurrentCollection(collectionUID) {
       updateDataView();
       checkForFileUpdate();
       setGlobalVariables();
+      setupLangage();
       renderCardUsingTemplate(app, app.currentIndex, currentCollection.collectionInfo.visualGuide);
     }, 500);
   }
@@ -158,15 +159,8 @@ export function duplicateCollection() {
     getCollections();
 
     setTimeout(() => {
-      //MODS
       collectionsAvailable[collectionsAvailable.length - 1].collectionInfo.UID = newUID;
       collectionsAvailable[collectionsAvailable.length - 1].collectionInfo.collectionName = "Copie de " + currentCollection.collectionInfo.collectionName;
-      // var deckToSave = JSON.stringify(collectionsAvailable[collectionsAvailable.length - 1]);
-      // fs.writeFile(appDataFolder + "/collections/" + newUID + "/collection.json", deckToSave, (err) => {
-      //   if (err) {
-      //     console.error(err);
-      //   }
-      // });
       setCurrentCollection(newUID);
       getCollections();
     }, 500);

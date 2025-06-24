@@ -76,6 +76,10 @@ export function openScene(panelName) {
       let firstRadio = document.querySelector(".tabs input");
       firstRadio.checked = true;
 
+      //Hide archive buttons depending on state
+      $("#unarchiveCollectionBtn").css("display", currentCollection.collectionInfo.archived?"flex":"none");
+      $("#archiveCollectionBtn").css("display", currentCollection.collectionInfo.archived?"none":"flex");
+
       updateElementsCounter();
 
       break;

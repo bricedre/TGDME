@@ -79,8 +79,14 @@ export let uiTexts = {
     de: "DUPLIZIEREN|Eine Kopie der aktuellen Sammlung erstellen",
   },
 
+  btn_unarchiveCollection: {
+    fr: "DÉSARCHIVER|Désarchiver la collection actuelle",
+    en: "UNARCHIVE|Unarchive the current collection",
+    de: "|",
+  },
+
   btn_archiveCollection: {
-    fr: "ARCHIVER|Archiver (c.-à-d. cacher dans la Bibliothèque) la collection actuelle",
+    fr: "ARCHIVER|Archiver la collection actuelle",
     en: "ARCHIVE|Archive (i.e. hide in the Library) the current collection",
     de: "ARCHIVIEREN|Aktuelle Sammlung archivieren (d.h. in der Bibliothek verstecken)",
   },
@@ -160,7 +166,7 @@ export let uiTexts = {
   },
 
   paramCat_transform: {
-    fr: "Positionnement, Dimensions & Rotation",
+    fr: "Position & Dimensions",
     en: "Positioning, Dimensions & Rotation",
     de: "Positionierung, Abmessungen & Rotation",
   },
@@ -178,9 +184,9 @@ export let uiTexts = {
   },
 
   paramCat_chainConfig: {
-    fr: "Configuration de chaîne (liste d'images)",
-    en: "Chain Configuration (list of images)",
-    de: "Kettenkonfiguration (Bilderliste)",
+    fr: "Chaîne d'Images",
+    en: "Chain Configuration",
+    de: "Kettenkonfiguration",
   },
 
   paramCat_color: {
@@ -244,17 +250,17 @@ export let uiTexts = {
     de: "Anker",
   },
   param_tintFilter: {
-    fr: "Filtre de Teinte",
+    fr: "Filtre de Teinte (#000000-#FFFFFF)",
     en: "Tint Filter",
     de: "Farbtonfilter",
   },
   param_opacity: {
-    fr: "Opacité",
+    fr: "Opacité (0-1)",
     en: "Opacity",
     de: "Deckkraft",
   },
   param_shadowColor: {
-    fr: "Couleur",
+    fr: "Couleur(#000000-#FFFFFF)",
     en: "Color",
     de: "Farbe",
   },
@@ -269,7 +275,7 @@ export let uiTexts = {
     de: "Vertikaler Versatz",
   },
   param_shadowOpacity: {
-    fr: "Opacité",
+    fr: "Opacité (0-1)",
     en: "Opacity",
     de: "Deckkraft",
   },
@@ -315,17 +321,17 @@ export let uiTexts = {
     de: "Hintergrundfarbe",
   },
   param_backgroundOpacity: {
-    fr: "Opacité du Fond",
+    fr: "Opacité du Fond (#000000-#FFFFFF)",
     en: "Background Opacity",
     de: "Hintergrund-Deckkraft",
   },
   param_borderColor: {
-    fr: "Couleur de Bordure",
+    fr: "Couleur de Bordure (#000000-#FFFFFF)",
     en: "Border Color",
     de: "Rahmenfarbe",
   },
   param_borderOpacity: {
-    fr: "Opacité de la Bordure",
+    fr: "Opacité de la Bordure (0-1)",
     en: "Border Opacity",
     de: "Rahmen-Deckkraft",
   },
@@ -361,7 +367,7 @@ export let uiTexts = {
     de: "Zeilenabstand",
   },
   param_color: {
-    fr: "Couleur",
+    fr: "Couleur (#000000-#FFFFFF)",
     en: "Color",
     de: "Farbe",
   },

@@ -231,9 +231,10 @@ input[type="radio"] {
 }
 
 .parameterInputLine {
-  display: flex;
   align-items: center;
   gap: 0.5rem;
+  display: grid;
+  grid-template-columns: 10fr 1fr 10fr;
 }
 
 .parameterInput {
@@ -249,6 +250,7 @@ input[type="radio"] {
   background: var(--mainColorLight);
   border-radius: 0.5rem;
   padding: 0.2rem;
+  margin-inline: auto;
 }
 
 .modeInput:hover {

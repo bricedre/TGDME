@@ -10,8 +10,10 @@ $("#homeBtn").on("click", () => {
 
 let isSettingsBarOpen = false;
 $("#settingsBtn").on("click", () => {
+  
   if (isSettingsBarOpen) $(".settingsBar").css("right", "-10rem");
   else $(".settingsBar").css("right", "0");
+
   isSettingsBarOpen = !isSettingsBarOpen;
 });
 

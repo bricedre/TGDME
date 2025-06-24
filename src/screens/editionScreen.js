@@ -26,6 +26,7 @@ $("#endNextCardBtn").on("click", () => goToOtherCard(500));
 
 //TABS BUTTONS
 $("#duplicateCollectionBtn").on("click", () => duplicateCollection());
+$("#unarchiveCollectionBtn").on("click", () => archiveCollection());
 $("#archiveCollectionBtn").on("click", () => archiveCollection());
 $("#deleteCollectionBtn").on("click", () => {
   if (confirm("Attention, cette action est irréversible !\nSupprimer ?")) deleteCurrentCollection();
