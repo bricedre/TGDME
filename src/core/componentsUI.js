@@ -8,7 +8,7 @@ export let IMAGE_parameters = [
   },
   { name: "<span class='param_imageSource'>Image(s) Source</span>", refValue: "src", type: "text", title: "Si vous désirez créer une chaîne d'images, séparez-les par des virgules" },
 
-  { name: "<img src='assets/paramIcons/ruler.webp'class='spacerIcon'><span class='paramCat_transform'>Positionnement, Dimensions & Rotation</span>", type: "catHeader" },
+  { name: "<img src='assets/paramIcons/ruler.webp'class='spacerIcon'><span class='paramCat_transform'>Position & Dimensions</span>", type: "catHeader" },
   { name: "<span class='param_positionX'>Position Horizontale</span>", refValue: "positionX", type: "text" },
   { name: "<span class='param_positionY'>Position Verticale</span>", refValue: "positionY", type: "text" },
   { name: "<span class='param_width'>Largeur</span>", refValue: "width", type: "text" },
@@ -33,7 +33,7 @@ export let IMAGE_parameters = [
   { name: "<span class='param_shadowOffsetY'>Décalage Vertical</span>", refValue: "shadowOffsetY", type: "text" },
   { name: "<span class='param_shadowOpacity'>Opacité</span>", refValue: "shadowOpacity", type: "range" },
 
-  { name: "<img src='assets/paramIcons/list.webp'class='spacerIcon'><span class='paramCat_chainConfig'>Configuration de chaîne (liste d'images)</span>", type: "catHeader" },
+  { name: "<img src='assets/paramIcons/list.webp'class='spacerIcon'><span class='paramCat_chainConfig'>Chaîne d'Images</span>", type: "catHeader" },
   {
     name: "<span class='param_chainAlignment'>Alignement de Chaîne</span>",
     refValue: "listAnchor",
@@ -126,7 +126,7 @@ export let SHAPE_parameters = [
     ],
   },
 
-  { name: "<img src='assets/paramIcons/ruler.webp'class='spacerIcon'><span class='paramCat_transform'>Positionnement, Dimensions & Rotation</span>", type: "catHeader" },
+  { name: "<img src='assets/paramIcons/ruler.webp'class='spacerIcon'><span class='paramCat_transform'>Position & Dimensions</span>", type: "catHeader" },
   { name: "<span class='param_positionX'>Position Horizontale</span>", refValue: "positionX", type: "text" },
   { name: "<span class='param_positionY'>Position Verticale</span>", refValue: "positionY", type: "text" },
   { name: "<span class='param_width'>Largeur</span>", refValue: "width", type: "text" },
@@ -166,7 +166,7 @@ export let TEXT_parameters = [
   },
   { name: "<span class='param_textToDisplay'>Texte à Afficher</span>", refValue: "src", type: "text" },
 
-  { name: "<img src='assets/paramIcons/ruler.webp'class='spacerIcon'><span class='paramCat_transform'>Positionnement, Dimensions & Rotation</span>", type: "catHeader" },
+  { name: "<img src='assets/paramIcons/ruler.webp'class='spacerIcon'><span class='paramCat_transform'>Position & Dimensions</span>", type: "catHeader" },
   { name: "<span class='param_positionX'>Position Horizontale</span>", refValue: "positionX", type: "text" },
   { name: "<span class='param_positionY'>Position Verticale</span>", refValue: "positionY", type: "text" },
   { name: "<span class='param_rotation'>Rotation</span>", refValue: "angle", type: "text" },
@@ -220,7 +220,7 @@ export let TITLE_parameters = [
   },
   { name: "<span class='param_titleToDisplay'>Titre à Afficher</span>", refValue: "src", type: "text" },
 
-  { name: "<img src='assets/paramIcons/ruler.webp'class='spacerIcon'><span class='paramCat_transform'>Positionnement, Dimensions & Rotation</span>", type: "catHeader" },
+  { name: "<img src='assets/paramIcons/ruler.webp'class='spacerIcon'><span class='paramCat_transform'>Position & Dimensions</span>", type: "catHeader" },
   { name: "<span class='param_positionX'>Position Horizontale</span>", refValue: "positionX", type: "text" },
   { name: "<span class='param_positionY'>Position Verticale</span>", refValue: "positionY", type: "text" },
   { name: "<span class='param_rotation'>Rotation</span>", refValue: "angle", type: "text" },

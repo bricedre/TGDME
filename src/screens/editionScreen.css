@@ -246,7 +246,7 @@ input[type="radio"] {
 .modeInput {
   width: 2rem;
   cursor: pointer;
-  background: var(--categoryColor);
+  background: var(--panelBGDarker);
   border-radius: 0.5rem;
   padding: 0.2rem;
 }
@@ -274,37 +274,73 @@ input[type="radio"] {
 .paramTabs {
   display: flex;
   gap: 1rem;
-  justify-content: space-evenly;
+  justify-content: space-between;
 }
 
-.paramTab {}
-
-.paramTabLabel {
-  cursor: pointer;
-  padding: 0.5rem;
-  transition: all 0.2s ease-in-out;
+.paramTab {
   border-radius: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  padding: 0.3rem 0.5rem;
+  cursor: pointer;
+  gap: 0.5rem;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  transition: all .2s ease-in-out;
+  position: relative;
+  height: 6rem;
 }
 
-.paramTabLabel:hover {
+.paramTab:hover {
   background-color: var(--mainColor);
 }
 
-.paramTabLabel img {
+.paramTab.checked {
+  background-color: var(--mainColorDark);
+
+}
+
+.paramTab img {
+  position: absolute;
+  left: 50%;
+  top: 25%;
+  translate: -50% -50%;
   height: 2rem;
+  text-align: center;
+  transition: all .2s ease-in-out;
+  filter: drop-shadow(2px 2px 2px #0004);
 }
 
-.paramTabLabel span {
-  display: none;
+.paramTab.checked img {
+  top: 50%;
+  height: 4rem;
 }
 
-.paramContents {}
+.paramTab span {
+  font-size: 0.8rem;
+  text-align: center;
+  transition: all .2s ease-in-out;
+  position: absolute;
+  left: 50%;
+  top: 75%;
+  translate: -50% -50%;
+}
+
+.paramTab.checked span {
+  opacity: 0;
+}
 
 .paramContent {
-  height: 10vh;
+  padding: 1rem;
   background: var(--categoryColor);
   border-radius: 0.5rem;
   margin-top: 1rem;
+  display: none;
+}
+
+.paramContent.shown {
+  display: block;
 }
 
 /* ACCORDION */
@@ -465,7 +501,7 @@ input[type="radio"] {
   table-layout: fixed;
   border-radius: 0.5rem;
   overflow: hidden;
-  border-spacing: 0 0.5rem;
+  border-spacing: 0 1rem;
 }
 
 .dataTable th {

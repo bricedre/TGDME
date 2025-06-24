@@ -151,308 +151,537 @@ export function createNewComponent(item, itemIndex) {
   let itemPanel = $("<div class='itemPanel'></div>");
   let currentPanel = null;
   let paramTabsEl = $("<div class='paramTabs'</div>");
-  let paramContentsEl = $("<div class='paramContents'</div>");
   itemPanel.append(paramTabsEl);
-  itemPanel.append(paramContentsEl);
-  
+  let isFirstOfComp = true;
+
   parametersToLoad.forEach((param, paramIndex) => {
     if (param.type == "catHeader") {
 
-      paramTabsEl.append($("<input></input>").addClass("paramTab").attr("type", "radio").attr("id", "paramTab"+itemIndex+paramIndex).attr("name", "paramTabs"));
-      paramTabsEl.append($("<label></label>").html(param.name).addClass("paramTabLabel").attr("for", "paramTab"+itemIndex+paramIndex));
-      paramContentsEl.append($("<div></div>").addClass("paramContent"));
-      currentPanel = paramContentsEl;
-      
-      // <input id="tabConfigInput" type="radio" name="tabs" checked>
-      // <label class="tabs_configuration" for="tabConfigInput"></label>
+      let paramTabEl = $("<div></div>").html(param.name).addClass("paramTab");
+      paramTabsEl.append(paramTabEl);
+
+      let paramContentEl = $("<div></div>").addClass("paramContent");
+      itemPanel.append(paramContentEl);
+      currentPanel = paramContentEl;
+
+      paramTabEl.on("click", () => {
+
+        itemPanel.find(".paramTab").removeClass("checked");
+        paramTabEl.addClass("checked")
+
+        itemPanel.find(".paramContent").removeClass("shown");
+        paramContentEl.addClass("shown");
+      })
+
+      if (isFirstOfComp) {
+        paramTabEl.addClass("checked");
+        paramContentEl.addClass("shown");
+        isFirstOfComp = false;
+      }
 
     }
-        else{
+    else {
+      let parameterSlot = document.createElement("div");
+      parameterSlot.classList.add("parameterSlot");
 
+      let parameterName = document.createElement("p");
+      parameterName.classList.add("parameterName");
+      parameterName.innerHTML = param.name;
+      if (param.title) {
+        parameterName.title = param.title;
+        parameterName.innerHTML += " 🔍";
+      }
+
+      let parameterInputLine = document.createElement("div");
+      parameterInputLine.classList.add("parameterInputLine");
+
+      let parameterInput = document.createElement("input");
+      var inputID = itemIndex + "-" + param.refValue;
+      parameterInput.id = inputID;
+      if (param.type == "range") {
+        parameterInput.setAttribute("min", 0.0);
+        parameterInput.setAttribute("max", 1.0);
+        parameterInput.setAttribute("step", 0.01);
+      }
+
+      parameterInput.addEventListener("input", (e) => {
+        try {
+          currentCollection.template[itemIndex][param.refValue].value = e.target.value;
+        } catch {
+          currentCollection.template[itemIndex][param.refValue] = {
+            value: e.target.value,
+            type: "0",
+            valueCB: "",
+          };
         }
+
+        populateComponents();
+      });
+
+      let parameterCBInput = document.createElement("input");
+      var inputID = itemIndex + "-" + param.refValue + "_CB";
+      parameterCBInput.id = inputID;
+      parameterCBInput.addEventListener("input", (e) => {
+        try {
+          currentCollection.template[itemIndex][param.refValue]["valueCB"] = e.target.value;
+        } catch {
+          currentCollection.template[itemIndex][param.refValue] = {
+            value: "",
+            valueCB: e.target.value,
+            type: "0",
+          };
+        }
+
+        populateComponents();
+      });
+
+      let currentMode = "0";
+
+      let modeInput = document.createElement("img");
+      modeInput.classList.add("modeInput");
+
+      if (param.type !== "spacer") {
+        try {
+          currentMode = currentCollection.template[itemIndex][param.refValue]["type"];
+        } catch (e) {
+          currentMode = "0";
+        }
+
+        //Disabling inputs based on mode
+        if (paramIndex > 1) {
+          if (currentMode == "0") {
+            parameterInput.removeAttribute("disabled");
+            parameterCBInput.setAttribute("disabled", "disabled");
+          } else {
+            parameterInput.setAttribute("disabled", "disabled");
+            parameterCBInput.removeAttribute("disabled");
+          }
+        }
+
+        modeInput.src = currentMode == "0" ? "./assets/paramIcons/fixedType.png" : "./assets/paramIcons/elementBasedType.png";
+        modeInput.title = currentMode == "0" ? "Fixe" : "Basé sur les données";
+        modeInput.id = inputID;
+
+        modeInput.addEventListener("click", (e) => {
+          currentCollection.template[itemIndex][param.refValue]["type"] = currentCollection.template[itemIndex][param.refValue]["type"] == "0" ? "1" : "0";
+
+          let typeOfParameter = currentCollection.template[itemIndex][param.refValue]["type"];
+          e.target.src = typeOfParameter == "0" ? "./assets/paramIcons/fixedType.png" : "./assets/paramIcons/elementBasedType.png";
+          e.target.title = typeOfParameter == "0" ? "Fixe" : "Basé sur les données";
+
+          let leftSibling = $(e.target).prev();
+          let rightSibling = $(e.target).next();
+
+          if (leftSibling.prop("disabled")) leftSibling.prop("disabled", false);
+          else {
+            leftSibling.prop("disabled", true);
+          }
+          if (rightSibling.prop("disabled")) rightSibling.prop("disabled", false);
+          else {
+            rightSibling.prop("disabled", true);
+          }
+
+          generateCollectionBtn.click();
+          populateComponents();
+        });
+      }
+
+      if (param.type !== "spacer") {
+        //SELECTS
+        if (param.type === "select") {
+          parameterInput = document.createElement("select");
+          parameterInput.classList.add("parameterInput", "mainInput");
+          parameterInput.id = inputID;
+          parameterInput.addEventListener("input", (e) => {
+            if (currentCollection.template[itemIndex][param.refValue]) currentCollection.template[itemIndex][param.refValue]["value"] = e.target.value;
+            else
+              currentCollection.template[itemIndex][param.refValue] = {
+                value: e.target.value,
+                type: "0",
+              };
+            generateCollectionBtn.click();
+            populateComponents();
+          });
+
+          let refOptionList = param.optionRef ? eval(param.optionRef) : param.options;
+          if (!refOptionList) refOptionList = [];
+
+          if (param.isShapesSelect) {
+            let categorizedOpts = {
+              none: [],
+              polygons: [],
+              basic_shapes: [],
+              nature: [],
+              complex_shapes: [],
+            };
+
+            refOptionList.forEach((opt) => {
+              categorizedOpts[opt.cat].push(opt);
+            });
+
+            let categoryOrder = ["polygons", "basic_shapes", "complex_shapes", "nature"];
+            let categoryLabels = ["Polygones", "Formes Simples", "Formes Complexes", "Nature"];
+
+            let option = document.createElement("option");
+            option.value = "none";
+            option.innerHTML = categorizedOpts["none"][0].label;
+            parameterInput.appendChild(option);
+
+            categoryOrder.forEach((cat, index) => {
+              let optGroupEl = $("<optgroup></optgroup>").attr("label", categoryLabels[index]);
+              categorizedOpts[cat].forEach((opt) => {
+                optGroupEl.append($("<option></option>").text(opt.label).val(opt.value));
+              });
+              $(parameterInput).append(optGroupEl);
+            });
+          } else {
+            refOptionList.forEach((opt) => {
+              let option = document.createElement("option");
+              if (param.optionRef) option.style.fontFamily = opt.value;
+              option.value = opt.value;
+              option.innerHTML = opt.label;
+              parameterInput.appendChild(option);
+            });
+          }
+
+          //Set values in editor
+          try {
+            if (item[param.refValue].value) parameterInput.value = item[param.refValue].value;
+          } catch (e) {
+            parameterInput.value = "";
+          }
+
+          try {
+            if (item[param.refValue].valueCB) parameterCBInput.value = item[param.refValue].valueCB;
+          } catch (e) {
+            parameterCBInput.value = "";
+          }
+
+          parameterCBInput.classList.add("parameterInput", "CBInput");
+
+          parameterSlot.appendChild(parameterName);
+          parameterInputLine.appendChild(parameterInput);
+          if (!param.forced) {
+            parameterInputLine.appendChild(modeInput);
+            parameterInputLine.appendChild(parameterCBInput);
+          }
+          parameterSlot.appendChild(parameterInputLine);
+        } else {
+          parameterInput.classList.add("parameterInput", "mainInput");
+          if (param.type === "color") parameterInput.style.padding = "0.2rem";
+          parameterInput.type = param.type;
+          try {
+            if (item[param.refValue].value) parameterInput.value = item[param.refValue].value;
+          } catch (e) {
+            parameterInput.value = "";
+          }
+
+          parameterCBInput.classList.add("parameterInput", "CBInput");
+          try {
+            if (item[param.refValue].valueCB) parameterCBInput.value = item[param.refValue].valueCB;
+          } catch (e) {
+            parameterCBInput.value = "";
+          }
+
+          parameterSlot.appendChild(parameterName);
+          parameterInputLine.appendChild(parameterInput);
+          if (!param.forced) {
+            parameterInputLine.appendChild(modeInput);
+            parameterInputLine.appendChild(parameterCBInput);
+          }
+
+          parameterSlot.appendChild(parameterInputLine);
+        }
+      }
+
+      currentPanel.append($(parameterSlot));
+    }
   })
 
-        // ADDING PARAMETERS TO COMPONENTS
-        
+
+  ////////
+  //////// ADDING PARAMETERS TO COMPONENTS
+  ////////
+
   // parametersToLoad.forEach((param, paramIndex) => {
-          //   if (param.type == "catHeader") {
-          //     let paramAccordion = document.createElement("button");
-          //     paramAccordion.classList.add("paramAccordion");
-          //     paramAccordion.innerHTML = param.name;
+  //   if (param.type == "catHeader") {
+  //     let paramAccordion = document.createElement("button");
+  //     paramAccordion.classList.add("paramAccordion");
+  //     paramAccordion.innerHTML = param.name;
 
-          //     let paramPanel = document.createElement("div");
-          //     paramPanel.classList.add("paramPanel");
-          //     currentPanel = paramPanel;
+  //     let paramPanel = document.createElement("div");
+  //     paramPanel.classList.add("paramPanel");
+  //     currentPanel = paramPanel;
 
-          //     paramAccordion.addEventListener("click", () => {
-          //       if (paramAccordion.classList.contains("active")) {
-          //         paramPanel.style.maxHeight = "0";
-          //         paramPanel.style.marginBottom = "0rem";
-          //         paramPanel.style.padding = "0rem";
-          //       } else {
-          //         paramPanel.style.maxHeight = "max-content";
-          //         paramPanel.style.marginBottom = "1rem";
-          //         paramPanel.style.padding = "1rem";
-          //       }
+  //     paramAccordion.addEventListener("click", () => {
+  //       if (paramAccordion.classList.contains("active")) {
+  //         paramPanel.style.maxHeight = "0";
+  //         paramPanel.style.marginBottom = "0rem";
+  //         paramPanel.style.padding = "0rem";
+  //       } else {
+  //         paramPanel.style.maxHeight = "max-content";
+  //         paramPanel.style.marginBottom = "1rem";
+  //         paramPanel.style.padding = "1rem";
+  //       }
 
-          //       paramAccordion.classList.toggle("active");
-          //     });
+  //       paramAccordion.classList.toggle("active");
+  //     });
 
-          //     itemPanel.appendChild(paramAccordion);
-          //     itemPanel.appendChild(paramPanel);
-          //   } else {
-          //     let parameterSlot = document.createElement("div");
-          //     parameterSlot.classList.add("parameterSlot");
+  //     itemPanel.appendChild(paramAccordion);
+  //     itemPanel.appendChild(paramPanel);
+  //   } else {
+  //     let parameterSlot = document.createElement("div");
+  //     parameterSlot.classList.add("parameterSlot");
 
-          //     let parameterName = document.createElement("p");
-          //     parameterName.classList.add("parameterName");
-          //     parameterName.innerHTML = param.name;
-          //     if (param.title) {
-          //       parameterName.title = param.title;
-          //       parameterName.innerHTML += " 🔍";
-          //     }
+  //     let parameterName = document.createElement("p");
+  //     parameterName.classList.add("parameterName");
+  //     parameterName.innerHTML = param.name;
+  //     if (param.title) {
+  //       parameterName.title = param.title;
+  //       parameterName.innerHTML += " 🔍";
+  //     }
 
-          //     let parameterInputLine = document.createElement("div");
-          //     parameterInputLine.classList.add("parameterInputLine");
+  //     let parameterInputLine = document.createElement("div");
+  //     parameterInputLine.classList.add("parameterInputLine");
 
-          //     let parameterInput = document.createElement("input");
-          //     var inputID = itemIndex + "-" + param.refValue;
-          //     parameterInput.id = inputID;
-          //     if (param.type == "range") {
-          //       parameterInput.setAttribute("min", 0.0);
-          //       parameterInput.setAttribute("max", 1.0);
-          //       parameterInput.setAttribute("step", 0.01);
-          //     }
+  //     let parameterInput = document.createElement("input");
+  //     var inputID = itemIndex + "-" + param.refValue;
+  //     parameterInput.id = inputID;
+  //     if (param.type == "range") {
+  //       parameterInput.setAttribute("min", 0.0);
+  //       parameterInput.setAttribute("max", 1.0);
+  //       parameterInput.setAttribute("step", 0.01);
+  //     }
 
-          //     parameterInput.addEventListener("input", (e) => {
-          //       try {
-          //         currentCollection.template[itemIndex][param.refValue].value = e.target.value;
-          //       } catch {
-          //         currentCollection.template[itemIndex][param.refValue] = {
-          //           value: e.target.value,
-          //           type: "0",
-          //           valueCB: "",
-          //         };
-          //       }
+  //     parameterInput.addEventListener("input", (e) => {
+  //       try {
+  //         currentCollection.template[itemIndex][param.refValue].value = e.target.value;
+  //       } catch {
+  //         currentCollection.template[itemIndex][param.refValue] = {
+  //           value: e.target.value,
+  //           type: "0",
+  //           valueCB: "",
+  //         };
+  //       }
 
-          //       populateComponents();
-          //     });
+  //       populateComponents();
+  //     });
 
-          //     let parameterCBInput = document.createElement("input");
-          //     var inputID = itemIndex + "-" + param.refValue + "_CB";
-          //     parameterCBInput.id = inputID;
-          //     parameterCBInput.addEventListener("input", (e) => {
-          //       try {
-          //         currentCollection.template[itemIndex][param.refValue]["valueCB"] = e.target.value;
-          //       } catch {
-          //         currentCollection.template[itemIndex][param.refValue] = {
-          //           value: "",
-          //           valueCB: e.target.value,
-          //           type: "0",
-          //         };
-          //       }
+  //     let parameterCBInput = document.createElement("input");
+  //     var inputID = itemIndex + "-" + param.refValue + "_CB";
+  //     parameterCBInput.id = inputID;
+  //     parameterCBInput.addEventListener("input", (e) => {
+  //       try {
+  //         currentCollection.template[itemIndex][param.refValue]["valueCB"] = e.target.value;
+  //       } catch {
+  //         currentCollection.template[itemIndex][param.refValue] = {
+  //           value: "",
+  //           valueCB: e.target.value,
+  //           type: "0",
+  //         };
+  //       }
 
-          //       populateComponents();
-          //     });
+  //       populateComponents();
+  //     });
 
-          //     let currentMode = "0";
+  //     let currentMode = "0";
 
-          //     let modeInput = document.createElement("img");
-          //     modeInput.classList.add("modeInput");
+  //     let modeInput = document.createElement("img");
+  //     modeInput.classList.add("modeInput");
 
-          //     if (param.type !== "spacer") {
-          //       try {
-          //         currentMode = currentCollection.template[itemIndex][param.refValue]["type"];
-          //       } catch (e) {
-          //         currentMode = "0";
-          //       }
+  //     if (param.type !== "spacer") {
+  //       try {
+  //         currentMode = currentCollection.template[itemIndex][param.refValue]["type"];
+  //       } catch (e) {
+  //         currentMode = "0";
+  //       }
 
-          //       //Disabling inputs based on mode
-          //       if (paramIndex > 1) {
-          //         if (currentMode == "0") {
-          //           parameterInput.removeAttribute("disabled");
-          //           parameterCBInput.setAttribute("disabled", "disabled");
-          //         } else {
-          //           parameterInput.setAttribute("disabled", "disabled");
-          //           parameterCBInput.removeAttribute("disabled");
-          //         }
-          //       }
+  //       //Disabling inputs based on mode
+  //       if (paramIndex > 1) {
+  //         if (currentMode == "0") {
+  //           parameterInput.removeAttribute("disabled");
+  //           parameterCBInput.setAttribute("disabled", "disabled");
+  //         } else {
+  //           parameterInput.setAttribute("disabled", "disabled");
+  //           parameterCBInput.removeAttribute("disabled");
+  //         }
+  //       }
 
-          //       modeInput.src = currentMode == "0" ? "./assets/paramIcons/fixedType.png" : "./assets/paramIcons/elementBasedType.png";
-          //       modeInput.title = currentMode == "0" ? "Fixe" : "Basé sur les données";
-          //       modeInput.id = inputID;
+  //       modeInput.src = currentMode == "0" ? "./assets/paramIcons/fixedType.png" : "./assets/paramIcons/elementBasedType.png";
+  //       modeInput.title = currentMode == "0" ? "Fixe" : "Basé sur les données";
+  //       modeInput.id = inputID;
 
-          //       modeInput.addEventListener("click", (e) => {
-          //         currentCollection.template[itemIndex][param.refValue]["type"] = currentCollection.template[itemIndex][param.refValue]["type"] == "0" ? "1" : "0";
+  //       modeInput.addEventListener("click", (e) => {
+  //         currentCollection.template[itemIndex][param.refValue]["type"] = currentCollection.template[itemIndex][param.refValue]["type"] == "0" ? "1" : "0";
 
-          //         let typeOfParameter = currentCollection.template[itemIndex][param.refValue]["type"];
-          //         e.target.src = typeOfParameter == "0" ? "./assets/paramIcons/fixedType.png" : "./assets/paramIcons/elementBasedType.png";
-          //         e.target.title = typeOfParameter == "0" ? "Fixe" : "Basé sur les données";
+  //         let typeOfParameter = currentCollection.template[itemIndex][param.refValue]["type"];
+  //         e.target.src = typeOfParameter == "0" ? "./assets/paramIcons/fixedType.png" : "./assets/paramIcons/elementBasedType.png";
+  //         e.target.title = typeOfParameter == "0" ? "Fixe" : "Basé sur les données";
 
-          //         let leftSibling = $(e.target).prev();
-          //         let rightSibling = $(e.target).next();
+  //         let leftSibling = $(e.target).prev();
+  //         let rightSibling = $(e.target).next();
 
-          //         if (leftSibling.prop("disabled")) leftSibling.prop("disabled", false);
-          //         else {
-          //           leftSibling.prop("disabled", true);
-          //         }
-          //         if (rightSibling.prop("disabled")) rightSibling.prop("disabled", false);
-          //         else {
-          //           rightSibling.prop("disabled", true);
-          //         }
+  //         if (leftSibling.prop("disabled")) leftSibling.prop("disabled", false);
+  //         else {
+  //           leftSibling.prop("disabled", true);
+  //         }
+  //         if (rightSibling.prop("disabled")) rightSibling.prop("disabled", false);
+  //         else {
+  //           rightSibling.prop("disabled", true);
+  //         }
 
-          //         generateCollectionBtn.click();
-          //         populateComponents();
-          //       });
-          //     }
+  //         generateCollectionBtn.click();
+  //         populateComponents();
+  //       });
+  //     }
 
-          //     if (param.type !== "spacer") {
-          //       //SELECTS
-          //       if (param.type === "select") {
-          //         parameterInput = document.createElement("select");
-          //         parameterInput.classList.add("parameterInput", "mainInput");
-          //         parameterInput.id = inputID;
-          //         parameterInput.addEventListener("input", (e) => {
-          //           if (currentCollection.template[itemIndex][param.refValue]) currentCollection.template[itemIndex][param.refValue]["value"] = e.target.value;
-          //           else
-          //             currentCollection.template[itemIndex][param.refValue] = {
-          //               value: e.target.value,
-          //               type: "0",
-          //             };
-          //           generateCollectionBtn.click();
-          //           populateComponents();
-          //         });
+  //     if (param.type !== "spacer") {
+  //       //SELECTS
+  //       if (param.type === "select") {
+  //         parameterInput = document.createElement("select");
+  //         parameterInput.classList.add("parameterInput", "mainInput");
+  //         parameterInput.id = inputID;
+  //         parameterInput.addEventListener("input", (e) => {
+  //           if (currentCollection.template[itemIndex][param.refValue]) currentCollection.template[itemIndex][param.refValue]["value"] = e.target.value;
+  //           else
+  //             currentCollection.template[itemIndex][param.refValue] = {
+  //               value: e.target.value,
+  //               type: "0",
+  //             };
+  //           generateCollectionBtn.click();
+  //           populateComponents();
+  //         });
 
-          //         let refOptionList = param.optionRef ? eval(param.optionRef) : param.options;
-          //         if (!refOptionList) refOptionList = [];
+  //         let refOptionList = param.optionRef ? eval(param.optionRef) : param.options;
+  //         if (!refOptionList) refOptionList = [];
 
-          //         if (param.isShapesSelect) {
-          //           let categorizedOpts = {
-          //             none: [],
-          //             polygons: [],
-          //             basic_shapes: [],
-          //             nature: [],
-          //             complex_shapes: [],
-          //           };
+  //         if (param.isShapesSelect) {
+  //           let categorizedOpts = {
+  //             none: [],
+  //             polygons: [],
+  //             basic_shapes: [],
+  //             nature: [],
+  //             complex_shapes: [],
+  //           };
 
-          //           refOptionList.forEach((opt) => {
-          //             categorizedOpts[opt.cat].push(opt);
-          //           });
+  //           refOptionList.forEach((opt) => {
+  //             categorizedOpts[opt.cat].push(opt);
+  //           });
 
-          //           let categoryOrder = ["polygons", "basic_shapes", "complex_shapes", "nature"];
-          //           let categoryLabels = ["Polygones", "Formes Simples", "Formes Complexes", "Nature"];
+  //           let categoryOrder = ["polygons", "basic_shapes", "complex_shapes", "nature"];
+  //           let categoryLabels = ["Polygones", "Formes Simples", "Formes Complexes", "Nature"];
 
-          //           let option = document.createElement("option");
-          //           option.value = "none";
-          //           option.innerHTML = categorizedOpts["none"][0].label;
-          //           parameterInput.appendChild(option);
+  //           let option = document.createElement("option");
+  //           option.value = "none";
+  //           option.innerHTML = categorizedOpts["none"][0].label;
+  //           parameterInput.appendChild(option);
 
-          //           categoryOrder.forEach((cat, index) => {
-          //             let optGroupEl = $("<optgroup></optgroup>").attr("label", categoryLabels[index]);
-          //             categorizedOpts[cat].forEach((opt) => {
-          //               optGroupEl.append($("<option></option>").text(opt.label).val(opt.value));
-          //             });
-          //             $(parameterInput).append(optGroupEl);
-          //           });
-          //         } else {
-          //           refOptionList.forEach((opt) => {
-          //             let option = document.createElement("option");
-          //             if (param.optionRef) option.style.fontFamily = opt.value;
-          //             option.value = opt.value;
-          //             option.innerHTML = opt.label;
-          //             parameterInput.appendChild(option);
-          //           });
-          //         }
+  //           categoryOrder.forEach((cat, index) => {
+  //             let optGroupEl = $("<optgroup></optgroup>").attr("label", categoryLabels[index]);
+  //             categorizedOpts[cat].forEach((opt) => {
+  //               optGroupEl.append($("<option></option>").text(opt.label).val(opt.value));
+  //             });
+  //             $(parameterInput).append(optGroupEl);
+  //           });
+  //         } else {
+  //           refOptionList.forEach((opt) => {
+  //             let option = document.createElement("option");
+  //             if (param.optionRef) option.style.fontFamily = opt.value;
+  //             option.value = opt.value;
+  //             option.innerHTML = opt.label;
+  //             parameterInput.appendChild(option);
+  //           });
+  //         }
 
-          //         //Set values in editor
-          //         try {
-          //           if (item[param.refValue].value) parameterInput.value = item[param.refValue].value;
-          //         } catch (e) {
-          //           parameterInput.value = "";
-          //         }
+  //         //Set values in editor
+  //         try {
+  //           if (item[param.refValue].value) parameterInput.value = item[param.refValue].value;
+  //         } catch (e) {
+  //           parameterInput.value = "";
+  //         }
 
-          //         try {
-          //           if (item[param.refValue].valueCB) parameterCBInput.value = item[param.refValue].valueCB;
-          //         } catch (e) {
-          //           parameterCBInput.value = "";
-          //         }
+  //         try {
+  //           if (item[param.refValue].valueCB) parameterCBInput.value = item[param.refValue].valueCB;
+  //         } catch (e) {
+  //           parameterCBInput.value = "";
+  //         }
 
-          //         parameterCBInput.classList.add("parameterInput", "CBInput");
+  //         parameterCBInput.classList.add("parameterInput", "CBInput");
 
-          //         parameterSlot.appendChild(parameterName);
-          //         parameterInputLine.appendChild(parameterInput);
-          //         if (!param.forced) {
-          //           parameterInputLine.appendChild(modeInput);
-          //           parameterInputLine.appendChild(parameterCBInput);
-          //         }
-          //         parameterSlot.appendChild(parameterInputLine);
-          //       } else {
-          //         parameterInput.classList.add("parameterInput", "mainInput");
-          //         if (param.type === "color") parameterInput.style.padding = "0.2rem";
-          //         parameterInput.type = param.type;
-          //         try {
-          //           if (item[param.refValue].value) parameterInput.value = item[param.refValue].value;
-          //         } catch (e) {
-          //           parameterInput.value = "";
-          //         }
+  //         parameterSlot.appendChild(parameterName);
+  //         parameterInputLine.appendChild(parameterInput);
+  //         if (!param.forced) {
+  //           parameterInputLine.appendChild(modeInput);
+  //           parameterInputLine.appendChild(parameterCBInput);
+  //         }
+  //         parameterSlot.appendChild(parameterInputLine);
+  //       } else {
+  //         parameterInput.classList.add("parameterInput", "mainInput");
+  //         if (param.type === "color") parameterInput.style.padding = "0.2rem";
+  //         parameterInput.type = param.type;
+  //         try {
+  //           if (item[param.refValue].value) parameterInput.value = item[param.refValue].value;
+  //         } catch (e) {
+  //           parameterInput.value = "";
+  //         }
 
-          //         parameterCBInput.classList.add("parameterInput", "CBInput");
-          //         try {
-          //           if (item[param.refValue].valueCB) parameterCBInput.value = item[param.refValue].valueCB;
-          //         } catch (e) {
-          //           parameterCBInput.value = "";
-          //         }
+  //         parameterCBInput.classList.add("parameterInput", "CBInput");
+  //         try {
+  //           if (item[param.refValue].valueCB) parameterCBInput.value = item[param.refValue].valueCB;
+  //         } catch (e) {
+  //           parameterCBInput.value = "";
+  //         }
 
-          //         parameterSlot.appendChild(parameterName);
-          //         parameterInputLine.appendChild(parameterInput);
-          //         if (!param.forced) {
-          //           parameterInputLine.appendChild(modeInput);
-          //           parameterInputLine.appendChild(parameterCBInput);
-          //         }
+  //         parameterSlot.appendChild(parameterName);
+  //         parameterInputLine.appendChild(parameterInput);
+  //         if (!param.forced) {
+  //           parameterInputLine.appendChild(modeInput);
+  //           parameterInputLine.appendChild(parameterCBInput);
+  //         }
 
-          //         parameterSlot.appendChild(parameterInputLine);
-          //       }
-          //     } 
+  //         parameterSlot.appendChild(parameterInputLine);
+  //       }
+  //     }
 
-          //     currentPanel.appendChild(parameterSlot);
-          //   }
-          // });
+  //     currentPanel.appendChild(parameterSlot);
+  //   }
+  // });
 
 
 
-          templateItemsDiv.appendChild(itemAccordion);
-        $("#templateItemsDiv").append(itemPanel);
+  templateItemsDiv.appendChild(itemAccordion);
+  $("#templateItemsDiv").append(itemPanel);
 }
 
-        export function populateComponents() {
-          let allAccordions = templateItemsDiv.querySelectorAll(".accordion");
+export function populateComponents() {
+  let allAccordions = templateItemsDiv.querySelectorAll(".accordion");
 
   currentCollection.template.forEach((item, index) => {
-          let icon;
-        let parametersToLoad;
-        switch (item.component) {
+    let icon;
+    let parametersToLoad;
+    switch (item.component) {
       case "IMAGE":
         icon = "assets/btnIcons/addImageComponent.png";
         parametersToLoad = IMAGE_parameters;
         break;
-        case "TEXT":
+      case "TEXT":
         icon = "assets/btnIcons/addTextComponent.png";
         parametersToLoad = TEXT_parameters;
         break;
-        case "SHAPE":
+      case "SHAPE":
         icon = "assets/btnIcons/addShapeComponent.png";
         parametersToLoad = SHAPE_parameters;
         break;
-        case "TITLE":
+      case "TITLE":
         icon = "assets/btnIcons/addTitleComponent.png";
         parametersToLoad = TITLE_parameters;
         break;
     }
 
-        allAccordions[index].querySelector("img").src = icon;
+    allAccordions[index].querySelector("img").src = icon;
 
-        allAccordions[index].querySelector("span").innerHTML = item.componentName.value;
-        if (item.isVisible) allAccordions[index].querySelector(".visibilityBtn").src = "./assets/elementIcons/visibilityOn.png";
-        else allAccordions[index].querySelector(".visibilityBtn").src = "./assets/elementIcons/visibilityOff.png";
+    allAccordions[index].querySelector("span").innerHTML = item.componentName.value;
+    if (item.isVisible) allAccordions[index].querySelector(".visibilityBtn").src = "./assets/elementIcons/visibilityOn.png";
+    else allAccordions[index].querySelector(".visibilityBtn").src = "./assets/elementIcons/visibilityOff.png";
   });
 }
