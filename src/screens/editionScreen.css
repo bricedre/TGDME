@@ -291,6 +291,7 @@ input[type="radio"] {
   position: relative;
   height: 6rem;
   background-color: var(--bgColor);
+  overflow: hidden;
 }
 
 .paramTab:hover {
@@ -298,7 +299,7 @@ input[type="radio"] {
 }
 
 .paramTab.checked {
-  background-color: var(--mainColorDark);
+  background-color: var(--categoryColor);
 
 }
 
@@ -311,6 +312,7 @@ input[type="radio"] {
   text-align: center;
   transition: all .2s ease-in-out;
   filter: drop-shadow(2px 2px 2px #0004);
+  z-index: 1;
 }
 
 .paramTab.checked img {
@@ -327,15 +329,19 @@ input[type="radio"] {
   top: 75%;
   translate: -50% -50%;
   color: var(--mainColorText);
+
 }
 
 .paramTab.checked span {
-  opacity: 0;
+  top: 50%;
+  scale: 3;
+  opacity: 0.1;
+
 }
 
 .paramContent {
   padding: 1rem;
-  background: var(--categoryColor);
+  background: var(--mainColorShadows);
   border-radius: 0.5rem;
   margin-top: 1rem;
   display: none;

@@ -42,8 +42,6 @@ function getAppDataFolder() {
 
 export function getCollections() {
 
-
-
   try {
 
     collectionsAvailable = readdirSync(appDataFolder + "/collections", { withFileTypes: true })
@@ -163,12 +161,12 @@ export function duplicateCollection() {
       //MODS
       collectionsAvailable[collectionsAvailable.length - 1].collectionInfo.UID = newUID;
       collectionsAvailable[collectionsAvailable.length - 1].collectionInfo.collectionName = "Copie de " + currentCollection.collectionInfo.collectionName;
-      var deckToSave = JSON.stringify(collectionsAvailable[collectionsAvailable.length - 1]);
-      fs.writeFile(appDataFolder + "/collections/" + newUID + "/collection.json", deckToSave, (err) => {
-        if (err) {
-          console.error(err);
-        }
-      });
+      // var deckToSave = JSON.stringify(collectionsAvailable[collectionsAvailable.length - 1]);
+      // fs.writeFile(appDataFolder + "/collections/" + newUID + "/collection.json", deckToSave, (err) => {
+      //   if (err) {
+      //     console.error(err);
+      //   }
+      // });
       setCurrentCollection(newUID);
       getCollections();
     }, 500);

@@ -366,7 +366,9 @@ export function createNewComponent(item, itemIndex) {
           parameterSlot.appendChild(parameterInputLine);
         } else {
           parameterInput.classList.add("parameterInput", "mainInput");
-          if (param.type === "color") parameterInput.style.padding = "0.2rem";
+          if (param.type === "color"){
+            parameterInput.style.padding = "0.1rem 0.5rem";
+          }
           parameterInput.type = param.type;
           try {
             if (item[param.refValue].value) parameterInput.value = item[param.refValue].value;
