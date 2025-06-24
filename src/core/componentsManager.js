@@ -137,11 +137,9 @@ export function createNewComponent(item, itemIndex) {
     let panel = itemAccordion.nextElementSibling;
     if (itemAccordion.classList.contains("active")) {
       panel.style.maxHeight = "0";
-      panel.style.marginBottom = "0rem";
       panel.style.padding = "0rem";
     } else {
       panel.style.maxHeight = "max-content";
-      panel.style.marginBottom = "1rem";
       panel.style.padding = "1rem";
     }
 

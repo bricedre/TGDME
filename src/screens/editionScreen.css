@@ -425,6 +425,10 @@ input[type="radio"] {
   border-radius: 0 0 0.5rem 0.5rem;
 }
 
+.itemPanel:last-of-type {
+  margin-bottom: 10rem;
+}
+
 .elementItemPanel {
   margin-left: 7.7rem;
 }
