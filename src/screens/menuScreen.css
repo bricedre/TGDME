@@ -11,7 +11,8 @@
 
 
 
-#startPanelDiv {
+#projectSelectionPanel,
+#projectEditionPanel {
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -25,7 +26,8 @@
   justify-content: start;
 }
 
-#archivedCollectionsContainer {
+#archivedCollectionsContainer,
+#archivedProjectsContainer {
   background: var(--panelBG);
   padding: 1rem;
   border-radius: 0.5rem;
@@ -37,7 +39,8 @@
   color: var(--mainColorText);
 }
 
-#archivedCollectionsContainer>img {
+#archivedCollectionsContainer>img,
+#archivedProjectsContainer>img {
   width: 1rem;
 }
 

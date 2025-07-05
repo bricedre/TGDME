@@ -100,7 +100,6 @@ export function goToOtherCard(value) {
 
 export function populateEditionFields() {
   collectionNameInput.value = currentCollection.collectionInfo.collectionName;
-  mainTitleDiv.innerHTML = currentCollection?.collectionInfo.collectionName;
   elementFormatSelect.value = currentCollection.collectionInfo.elementFormat;
   elementWidthInput.value = currentCollection.collectionInfo.W;
   elementHeightInput.value = currentCollection.collectionInfo.H;

@@ -1,8 +1,8 @@
 import { checkOtherInputs, updateElementsCounter } from "./editionScreen.js";
-import { currentCollection, getCollections, setCurrentCollection } from "../core/collectionsManager.js";
+import { currentCollection, currentProject, getCollections, setCurrentCollection } from "../core/collectionsManager.js";
 import { populateComponents } from "../core/componentsManager.js";
 import { getFontList } from "../core/assetsManager.js";
-import { setupMenu } from "./menuScreen.js";
+import { setupProjectSelectionPanel } from "./menuScreen.js";
 import { uiTexts } from "../core/translations.js";
 
 const $ = require("jquery");
@@ -16,7 +16,13 @@ const scenesSettings = {
   home: {
     title: "",
     icon: "./assets/uiIcons/home.png",
-    uiElement: "#startPanelDiv",
+    uiElement: "#projectSelectionPanel",
+    hideFooter: true,
+  },
+  projectEdition: {
+    title: () => currentProject?.projectName,
+    icon: "./assets/uiIcons/home.png",
+    uiElement: "#projectEditionPanel",
     hideFooter: true,
   },
   collectionEdition: {
@@ -24,7 +30,7 @@ const scenesSettings = {
     icon: "./assets/uiIcons/home.png",
     uiElement: "#collectionEditionPanel",
     hideFooter: false,
-  }
+  },
 };
 const allInputs = document.querySelectorAll('input:not([type="radio"])');
 const allSelects = document.querySelectorAll("select");
@@ -44,7 +50,6 @@ allInputs.forEach((input) => {
       generateCollectionBtn.click();
     }
   });
-
 });
 
 allSelects.forEach((select) => {
@@ -71,14 +76,22 @@ export function openScene(panelName) {
   bottomBarDiv.css("display", scenesSettings[panelName].hideFooter ? "none" : "flex");
 
   switch (panelName) {
+    
+    case "projectEdition":
+      mainTitleDiv = $("#mainTitleDiv");
+      mainTitleDiv.text(scenesSettings[panelName].title);
+      break;
     case "collectionEdition":
+      mainTitleDiv = $("#mainTitleDiv");
+      mainTitleDiv.text(`COLLECTION : ${scenesSettings[panelName].title}`);
+
       //Go back to Config tab all the time
       let firstRadio = document.querySelector(".tabs input");
       firstRadio.checked = true;
 
       //Hide archive buttons depending on state
-      $("#unarchiveCollectionBtn").css("display", currentCollection.collectionInfo.archived?"flex":"none");
-      $("#archiveCollectionBtn").css("display", currentCollection.collectionInfo.archived?"none":"flex");
+      $("#unarchiveCollectionBtn").css("display", currentCollection.collectionInfo.archived ? "flex" : "none");
+      $("#archiveCollectionBtn").css("display", currentCollection.collectionInfo.archived ? "none" : "flex");
 
       updateElementsCounter();
 
@@ -88,8 +101,6 @@ export function openScene(panelName) {
   currentPanel = panelName;
 }
 
-
-
 export function changeColorScheme() {
   currentColorScheme = (currentColorScheme + 1) % 2;
   localStorage.setItem("colorScheme", currentColorScheme);
@@ -97,36 +108,34 @@ export function changeColorScheme() {
 }
 
 export function setColorScheme() {
-  
   if (localStorage.getItem("colorScheme")) currentColorScheme = parseInt(localStorage.getItem("colorScheme"));
 
-  let r = document.querySelector(':root');
+  let r = document.querySelector(":root");
   switch (currentColorScheme) {
     case 0:
-      r.style.setProperty('--bgColor', '#fbfdff');
-      r.style.setProperty('--mainColor', '#77c9f2');
-      r.style.setProperty('--mainBtnColor', '#d4eeff');
-      r.style.setProperty('--mainColorDark', '#2d94c7');
-      r.style.setProperty('--mainColorShadows', '#00496e30');
-      r.style.setProperty('--mainColorLight', '#eaf8ff');
-      r.style.setProperty('--mainColorText', '#07001c');
-      r.style.setProperty('--panelBG', '#ededed');
-      r.style.setProperty('--panelBGDarker', '#bdcdd5');
-      r.style.setProperty('--categoryColor', '#68a');
+      r.style.setProperty("--bgColor", "#fbfdff");
+      r.style.setProperty("--mainColor", "#77c9f2");
+      r.style.setProperty("--mainBtnColor", "#d4eeff");
+      r.style.setProperty("--mainColorDark", "#2d94c7");
+      r.style.setProperty("--mainColorShadows", "#00496e30");
+      r.style.setProperty("--mainColorLight", "#eaf8ff");
+      r.style.setProperty("--mainColorText", "#07001c");
+      r.style.setProperty("--panelBG", "#ededed");
+      r.style.setProperty("--panelBGDarker", "#bdcdd5");
+      r.style.setProperty("--categoryColor", "#68a");
       break;
 
-
     case 1:
-      r.style.setProperty('--bgColor', '#343a40');
-      r.style.setProperty('--mainColor', '#00324c');
-      r.style.setProperty('--mainBtnColor', '#002136');
-      r.style.setProperty('--mainColorDark', '#00abff');
-      r.style.setProperty('--mainColorShadows', '#00000094');
-      r.style.setProperty('--mainColorLight', '#eaf8ff');
-      r.style.setProperty('--mainColorText', '#d7e7ff');
-      r.style.setProperty('--panelBG', '#282828');
-      r.style.setProperty('--panelBGDarker', '#191a1a');
-      r.style.setProperty('--categoryColor', '#68a');
+      r.style.setProperty("--bgColor", "#343a40");
+      r.style.setProperty("--mainColor", "#00324c");
+      r.style.setProperty("--mainBtnColor", "#002136");
+      r.style.setProperty("--mainColorDark", "#00abff");
+      r.style.setProperty("--mainColorShadows", "#00000094");
+      r.style.setProperty("--mainColorLight", "#eaf8ff");
+      r.style.setProperty("--mainColorText", "#d7e7ff");
+      r.style.setProperty("--panelBG", "#282828");
+      r.style.setProperty("--panelBGDarker", "#191a1a");
+      r.style.setProperty("--categoryColor", "#68a");
       break;
   }
 }
@@ -135,16 +144,14 @@ export function changeLangage() {
   langIndex = (langIndex + 1) % langs.length;
   localStorage.setItem("lang", langIndex);
   setupLangage();
-
 }
 
 export function setupLangage() {
-
   if (localStorage.getItem("lang")) langIndex = parseInt(localStorage.getItem("lang"));
 
   $("#langBtnIcon").attr("src", `assets/flags/${langs[langIndex]}.png`);
 
-  Object.keys(uiTexts).forEach(key => {
+  Object.keys(uiTexts).forEach((key) => {
     const elementsToSetup = $(`.${key}`);
     try {
       let textElements = uiTexts[key][langs[langIndex]].split("|");
@@ -156,13 +163,10 @@ export function setupLangage() {
       if (textElements.length > 1) {
         if (textElements[1] != "") elementsToSetup.attr("title", textElements[1]);
       }
-
-
+    } catch (e) {
+      elementsToSetup.text();
     }
-    catch (e) {
-      elementsToSetup.text()
-    }
-  })
+  });
 }
 
 getFontList();
@@ -171,7 +175,7 @@ setupLangage();
 openScene(currentPanel);
 
 setTimeout(() => {
-  $(".blindfold").css("opacity", "0")
+  $(".blindfold").css("opacity", "0");
   setTimeout(() => {
     $(".blindfold").remove();
   }, 1000);

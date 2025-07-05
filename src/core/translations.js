@@ -15,10 +15,32 @@ export let uiTexts = {
     en: "No Project to show",
     de: "Kein Projekt anzuzeigen",
   },
+  other_noCollection: {
+    fr: "Aucune Collecton à afficher",
+    en: "No Collection to show",
+    de: "",
+  },
+    other_archivedProjects: {
+    fr: "Projets Archivés",
+    en: "",
+    de: "",
+  },
   other_archivedCollections: {
     fr: "Collections Archivées",
     en: "Archived Collections",
     de: "Archivierte Sammlungen",
+  },
+
+  other_project : {
+    fr: "PROJET",
+    en: "PROJECT",
+    de: "",
+  },
+
+  other_collection : {
+    fr: "COLLECTION",
+    en: "COLLECTION",
+    de: "",
   },
 
   //! TABS //
@@ -65,6 +87,12 @@ export let uiTexts = {
     fr: "CRÉER UN NOUVEAU PROJET",
     en: "CREATE A NEW PROJECT",
     de: "NEUES PROJEKT ERSTELLEN",
+  },
+
+    btn_newCollection: {
+    fr: "CRÉER UNE NOUVELLE COLLECTION",
+    en: "CREATE A NEW COLLECTION",
+    de: "",
   },
 
   btn_reRenderCollection: {

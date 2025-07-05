@@ -2,7 +2,7 @@ const fs = require("fs");
 const fontList = require("font-list");
 
 // import { exec } from "child_process";
-import { appDataFolder, currentCollection, currentCollectionUID } from "./collectionsManager.js";
+import { appDataFolder, currentCollection, currentCollectionUID, currentProjectUID } from "./collectionsManager.js";
 
 export let allSystemFonts;
 export let assetsLibrary = {};
@@ -43,7 +43,7 @@ export function createNewResource(item, itemIndex) {
 
   const bgImg = document.createElement("img");
   bgImg.classList.add("ResBgImg");
-  bgImg.src = `${appDataFolder}/collections/${currentCollectionUID}/assets/${file}`;
+  bgImg.src = `${appDataFolder}/projects/${currentProjectUID}/collections/${currentCollectionUID}/assets/${file}`;
   ressContainer.appendChild(bgImg);
 
   const ressTitle = document.createElement("div");
@@ -55,7 +55,7 @@ export function createNewResource(item, itemIndex) {
 }
 
 export function loadAssets(p) {
-  let assetsPath = appDataFolder + "/collections/" + currentCollectionUID + "/assets/";
+  let assetsPath = `${appDataFolder}/projects/${currentProjectUID}/collections/${currentCollectionUID}/assets/`;
   assetsLibrary = {};
 
   currentAssetsList = getFiles(assetsPath);

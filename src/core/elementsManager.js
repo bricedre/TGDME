@@ -1,5 +1,5 @@
 import { app } from "../app.js";
-import { appDataFolder, currentCollection, currentCollectionUID, saveCollection } from "./collectionsManager.js";
+import { appDataFolder, currentCollection, currentCollectionUID, currentProjectUID, saveCollection } from "./collectionsManager.js";
 import { updateElementsCounter } from "../screens/editionScreen.js";
 
 
@@ -8,7 +8,7 @@ const XLSX = require("xlsx");
 const { exec } = require("child_process");
 
 export function openExcelFile() {
-  const filePath = `${appDataFolder}/collections/${currentCollection.collectionInfo.UID}/data.xlsx`;
+  const filePath = `${appDataFolder}/projects/${currentProjectUID}/collections/${currentCollection.collectionInfo.UID}/data.xlsx`;
 
   // Open the file with the default Excel application
   exec(`start "" "${filePath}"`, (err, stdout, stderr) => {
@@ -20,7 +20,7 @@ export function openExcelFile() {
 }
 
 export function checkForFileUpdate() {
-  const filePath = `${appDataFolder}/collections/${currentCollection.collectionInfo.UID}/data.xlsx`;
+  const filePath = `${appDataFolder}/projects/${currentProjectUID}/collections/${currentCollection.collectionInfo.UID}/data.xlsx`;
 
   fetch(filePath)
     .then((response) => {
@@ -101,7 +101,7 @@ export function updateDataView() {
           td.append(colorPreview);
           newRow.append(td);
         } else if ([".png", ".jpg"].includes(valueToShow.toString().substring(valueToShow.length - 4))) {
-          let imgUrl = appDataFolder + "/collections/"+ currentCollectionUID + "/assets/" + valueToShow;
+          let imgUrl = `${appDataFolder}/projects/${currentProjectUID}/collections/${currentCollectionUID}/assets/${valueToShow}`;
           imgUrl = imgUrl.replaceAll("\\", "/");
           newRow.append($("<td></td>").css("background-image", 'url("'+imgUrl+'")'));
         } else {

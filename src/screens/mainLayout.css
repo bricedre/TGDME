@@ -74,6 +74,7 @@ nav {
 
 #mainTitleDiv {
   flex: 1;
+  color: var(--mainColorText);
 }
 
 .settingsBar {

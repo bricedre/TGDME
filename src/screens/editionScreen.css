@@ -99,7 +99,7 @@ canvas {
   scale: 1.3;
 }
 
-#generateCollectionBtn>img {
+#generateCollectionBtn > img {
   height: 4rem;
 }
 
@@ -145,12 +145,19 @@ canvas {
   position: relative;
 }
 
+.tabSpacer {
+  display: inline-block;
+  color: var(--mainColorText);
+  opacity: 0.3;
+  translate: 0 2px;
+}
+
 .content {
   backface-visibility: hidden;
   height: 94%;
 }
 
-.content>div {
+.content > div {
   display: none;
   padding: 1rem;
 }
@@ -182,7 +189,7 @@ input[type="radio"] {
   display: none;
 }
 
-.tabs>label {
+.tabs > label {
   display: inline-block;
   padding: 0.5rem;
   text-align: center;
@@ -192,27 +199,27 @@ input[type="radio"] {
   color: var(--mainColorText);
 }
 
-.tabs>label:hover {
+.tabs > label:hover {
   color: var(--mainColorDark);
   cursor: pointer;
 }
 
-.tabs>input:checked+label {
+.tabs > input:checked + label {
   color: var(--bgColor);
   background-color: var(--mainColorDark);
   border-radius: 0.5rem;
 }
 
-#tabConfigInput+label {
+#tabConfigInput + label {
   margin: 1rem 0 0 1rem;
 }
 
-#tabConfigInput:checked~.content #contentConfigDiv,
-#tabPrintingInput:checked~.content #contentPrintingDiv,
-#tabTemplateInput:checked~.content #contentTemplateDiv,
-#tabElementsInput:checked~.content #contentElementsDiv,
-#tabRessInput:checked~.content #contentRessDiv,
-#tabPrinting:checked~.content #contentPrintingDiv {
+#tabConfigInput:checked ~ .content #contentConfigDiv,
+#tabPrintingInput:checked ~ .content #contentPrintingDiv,
+#tabTemplateInput:checked ~ .content #contentTemplateDiv,
+#tabElementsInput:checked ~ .content #contentElementsDiv,
+#tabRessInput:checked ~ .content #contentRessDiv,
+#tabPrinting:checked ~ .content #contentPrintingDiv {
   display: flex;
 }
 
@@ -289,7 +296,7 @@ input[type="radio"] {
   justify-content: center;
   align-items: center;
   flex: 1;
-  transition: all .2s ease-in-out;
+  transition: all 0.2s ease-in-out;
   position: relative;
   height: 6rem;
   background-color: var(--bgColor);
@@ -302,7 +309,6 @@ input[type="radio"] {
 
 .paramTab.checked {
   background-color: var(--categoryColor);
-
 }
 
 .paramTab img {
@@ -312,7 +318,7 @@ input[type="radio"] {
   translate: -50% -50%;
   height: 2rem;
   text-align: center;
-  transition: all .2s ease-in-out;
+  transition: all 0.2s ease-in-out;
   filter: drop-shadow(2px 2px 2px #0004);
   z-index: 1;
 }
@@ -325,20 +331,18 @@ input[type="radio"] {
 .paramTab span {
   font-size: 0.8rem;
   text-align: center;
-  transition: all .2s ease-in-out;
+  transition: all 0.2s ease-in-out;
   position: absolute;
   left: 50%;
   top: 75%;
   translate: -50% -50%;
   color: var(--mainColorText);
-
 }
 
 .paramTab.checked span {
   top: 50%;
   scale: 3;
   opacity: 0.1;
-
 }
 
 .paramContent {
@@ -371,7 +375,7 @@ input[type="radio"] {
   border-radius: 0.5rem 0.5rem 0 0;
 }
 
-.accordion>img {
+.accordion > img {
   aspect-ratio: 1;
   height: 1.8rem;
   rotate: 0deg;
@@ -399,7 +403,7 @@ input[type="radio"] {
   border-radius: 0.5rem 0.5rem 0 0;
 }
 
-.paramAccordion>img {
+.paramAccordion > img {
   aspect-ratio: 1;
   height: 1.8rem;
   rotate: 0deg;
@@ -453,7 +457,7 @@ input[type="radio"] {
   gap: 0.5rem;
 }
 
-.elementsHeaderDiv>img {
+.elementsHeaderDiv > img {
   aspect-ratio: 1;
   height: 3.2rem;
   padding: 0.3rem;
@@ -485,13 +489,13 @@ input[type="radio"] {
   cursor: pointer;
 }
 
-.ressContainer>img {
+.ressContainer > img {
   height: 100%;
   rotate: 0deg;
   transition: all 0.1s ease-in-out;
 }
 
-.ressContainer:hover>img {
+.ressContainer:hover > img {
   opacity: 0.3;
 }
 
@@ -505,7 +509,7 @@ input[type="radio"] {
   font-size: 0.8rem;
 }
 
-.ressContainer:hover>.ressTitle {
+.ressContainer:hover > .ressTitle {
   opacity: 1;
 }
 
