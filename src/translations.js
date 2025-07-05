@@ -74,9 +74,9 @@ export let uiTexts = {
   //! BUTTONS //
 
   btn_mainMenu: {
-    fr: "|Retour à l'Accueil",
-    en: "|Back to Main Menu",
-    de: "|Zurück zum Hauptmenü",
+    fr: "|Retour",
+    en: "|Back",
+    de: "|Zurück",
   },
   btn_changeLang: {
     fr: "|Changer la Langue",

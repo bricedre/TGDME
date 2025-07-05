@@ -55,13 +55,13 @@ body {
 
 nav {
   background: var(--mainColor);
-  min-height: 8vh;
-  font-size: xx-large;
+  min-height: 7vh;
+  font-size: 2rem;
   display: flex;
   align-items: center;
-  padding: 0 0.5rem;
+  padding: 0 0.5rem 0 0;
   box-shadow: 0 0 20px #0005;
-  gap: 2rem;
+  gap: 1rem;
   overflow: hidden;
   position: relative;
 
@@ -73,8 +73,28 @@ nav {
 }
 
 #mainTitleDiv {
+  display: flex;
+  gap: 1rem;
   flex: 1;
   color: var(--mainColorText);
+   align-items: center;
+}
+
+.breadcrumbs{
+  padding: 0.5rem;
+    font-size: 1.5rem;
+    background: var(--mainColorDark);
+    border-radius: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.breadcrumbs:hover{
+  background: var(--categoryColor);
+}
+
+.separatorBc{
+  opacity: 0.5;
 }
 
 .settingsBar {
@@ -85,6 +105,7 @@ nav {
   transition: all 0.5s ease-in-out;
   position: relative;
   isolation: isolate;
+  align-items: center;
 }
 
 .settingsBarBg{
@@ -101,13 +122,30 @@ nav {
 #settingsBtn {
   display: flex;
   padding: 0.5rem;
+  border-radius: 50%;
+}
+
+#homeBtn, #settingsBtn{
+  padding: 0.5rem 1rem;
+  
+}
+
+#homeBtn{
+border-radius: 0 1rem 1rem 0;
+}
+
+#settingsBtn{
+  border-radius: 1rem 0 0 1rem;
 }
 
 #homeBtn>img,
-#langBtn>img,
-#colorModeBtn>img,
 #settingsBtn>img {
   height: 3rem;
+}
+
+#langBtn>img,
+#colorModeBtn>img{
+  height: 2.5rem;
 }
 
 #homeBtn:hover,
@@ -116,13 +154,6 @@ nav {
 #settingsBtn:hover {
   background: var(--mainColorLight);
 }
-#homeBtn,
-#langBtn,
-#colorModeBtn,
-#settingsBtn {
-  border-radius: 50%;
-}
-
 
 
 #title {
@@ -135,7 +166,7 @@ nav {
   padding: 2rem;
   justify-content: end;
   height: 100%;
-  max-height: 86vh;
+  max-height: 87vh;
 }
 
 main {

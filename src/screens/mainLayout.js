@@ -6,31 +6,11 @@ import { uiTexts } from "../translations.js";
 
 const $ = require("jquery");
 
-export let currentPanel = "home";
+export let currentPanel = "";
 let currentColorScheme = 0;
 let langIndex = 0;
 let langs = ["fr", "en", "de"];
 
-const scenesSettings = {
-  home: {
-    title: "",
-    icon: "./assets/uiIcons/home.png",
-    uiElement: "#projectSelectionPanel",
-    hideFooter: true,
-  },
-  projectEdition: {
-    title: () => currentProject?.projectName,
-    icon: "./assets/uiIcons/home.png",
-    uiElement: "#projectEditionPanel",
-    hideFooter: true,
-  },
-  collectionEdition: {
-    title: () => currentCollection?.collectionInfo.collectionName,
-    icon: "./assets/uiIcons/home.png",
-    uiElement: "#collectionEditionPanel",
-    hideFooter: false,
-  },
-};
 const allInputs = document.querySelectorAll('input:not([type="radio"])');
 const allSelects = document.querySelectorAll("select");
 
@@ -60,45 +40,51 @@ allSelects.forEach((select) => {
 
 // FUNCTIONS
 export function openScene(panelName) {
-  $(".panel").css("display", "none");
+  if (panelName !== currentPanel) {
 
-  let currentPanelDiv = $(scenesSettings[panelName].uiElement);
-  currentPanelDiv.css("display", "flex");
+    //Defaults
+    $(".panel").css("display", "none");
+    $("#mainTitleDiv").removeClass("other_mainTitle");
+    $("#mainTitleDiv").empty();
+    $("#bottomBarDiv").css("display", "none");
 
-  let homeIcon = $("#homeIcon");
-  homeIcon.attr("src", scenesSettings[panelName].icon);
+    switch (panelName) {
+      case "home":
+        $("#mainTitleDiv").addClass("other_mainTitle");
+        $("#projectSelectionPanel").css("display", "flex");
+        break;
 
-  let mainTitleDiv = $("#mainTitleDiv");
-  mainTitleDiv.removeClass("other_mainTitle");
+      case "projectEdition":
+        var projectBc = $("<span class='breadcrumbs'></span>").text(currentProject.projectName);
+        $("#mainTitleDiv").append($("<span class='separatorBc'>></span>"), projectBc);
+        $("#projectEditionPanel").css("display", "flex");
+        break;
 
-  let bottomBarDiv = $("#bottomBarDiv");
-  bottomBarDiv.css("display", scenesSettings[panelName].hideFooter ? "none" : "flex");
-  
+      case "collectionEdition":
+        var projectBc = $("<span class='breadcrumbs'></span>")
+          .text(currentProject.projectName)
+          .on("click", () => openScene("projectEdition")).css("cursor", "pointer");
+        var collectionBc = $("<span class='breadcrumbs'></span>").text(currentCollection.collectionInfo.collectionName);
+        $("#mainTitleDiv").append($("<span class='separatorBc'>></span>"), projectBc, $("<span class='separatorBc'>></span>"), collectionBc);
 
-  switch (panelName) {
-    case "home":
-      mainTitleDiv.addClass("other_mainTitle");
-      break;
-    case "projectEdition":
-      mainTitleDiv.text(scenesSettings[panelName].title);
-      break;
-    case "collectionEdition":
-      mainTitleDiv.text(scenesSettings[panelName].title);
+        $("#bottomBarDiv").css("display", "flex");
 
-      //Go back to Config tab all the time
-      let firstRadio = document.querySelector(".tabs input");
-      firstRadio.checked = true;
+        //Go back to Config tab all the time
+        let firstRadio = document.querySelector(".tabs input");
+        firstRadio.checked = true;
 
-      //Hide archive buttons depending on state
-      $("#unarchiveCollectionBtn").css("display", currentCollection.collectionInfo.archived ? "flex" : "none");
-      $("#archiveCollectionBtn").css("display", currentCollection.collectionInfo.archived ? "none" : "flex");
+        //Hide archive buttons depending on state
+        $("#unarchiveCollectionBtn").css("display", currentCollection.collectionInfo.archived ? "flex" : "none");
+        $("#archiveCollectionBtn").css("display", currentCollection.collectionInfo.archived ? "none" : "flex");
 
-      updateElementsCounter();
+        updateElementsCounter();
 
-      break;
+        $("#collectionEditionPanel").css("display", "flex");
+
+        break;
+    }
+    currentPanel = panelName;
   }
-
-  currentPanel = panelName;
 }
 
 export function changeColorScheme() {
@@ -172,7 +158,7 @@ export function setupLangage() {
 getFontList();
 setColorScheme();
 setupLangage();
-openScene(currentPanel);
+openScene("home");
 
 setTimeout(() => {
   $(".blindfold").css("opacity", "0");

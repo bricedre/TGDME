@@ -1,26 +1,6 @@
-
-#homeBtn>img,
-#langBtn>img {
-  height: 3rem;
-}
-
-#homeBtn:hover,
-#langBtn:hover {
-  background: var(--mainColorLight);
-}
-
-
-
 #projectSelectionPanel,
-#projectEditionPanel {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  justify-content: start;
-}
-
+#projectEditionPanel,
 #collectionSelectionPanel {
-  display: flex;
   flex-direction: column;
   gap: 2rem;
   justify-content: start;

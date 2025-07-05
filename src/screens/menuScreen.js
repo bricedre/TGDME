@@ -1,21 +1,25 @@
-import { collectionsAvailable, createNewCollection, currentCollectionUID, getCollections, getProjects, projectsAvailable, setCurrentCollection, setCurrentProject } from "../core/collectionsManager.js";
+import {
+  collectionsAvailable,
+  createNewCollection,
+  currentCollectionUID,
+  getCollections,
+  getProjects,
+  projectsAvailable,
+  setCurrentCollection,
+  setCurrentProject,
+} from "../core/collectionsManager.js";
 import { changeColorScheme, changeLangage, currentPanel, openScene, setupLangage } from "./mainLayout.js";
 
 const $ = require("jquery");
 
 $("#homeBtn").on("click", () => {
-  if (currentPanel == "projectEdition") {
-    getProjects();
-    openScene("home");
-  } else if (currentPanel == "collectionEdition") {
-    getCollections();
-    openScene("projectEdition");
-  }
+  getProjects();
+  openScene("home");
 });
 
 let isSettingsBarOpen = false;
 $("#settingsBtn").on("click", () => {
-  if (isSettingsBarOpen) $(".settingsBar").css("right", "-10rem");
+  if (isSettingsBarOpen) $(".settingsBar").css("right", "-9.5rem");
   else $(".settingsBar").css("right", "0");
 
   isSettingsBarOpen = !isSettingsBarOpen;
@@ -119,7 +123,7 @@ export function setupProjectSelectionPanel() {
   actionRow.append(newCollectionBtn);
   $("#projectSelectionPanel").append(actionRow);
 
-    setupLangage();
+  setupLangage();
 }
 
 export function setupProjectEditionPanel() {
@@ -213,5 +217,4 @@ export function setupProjectEditionPanel() {
   $("#projectEditionPanel").append(actionRow);
 
   setupLangage();
-
 }
