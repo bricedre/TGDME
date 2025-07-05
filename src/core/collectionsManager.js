@@ -6,7 +6,7 @@ import { openScene, setupLangage } from "../screens/mainLayout.js";
 
 import { getFontList, loadAssets } from "./assetsManager.js";
 import { imageComponentTemplate, textComponentTemplate, shapeComponentTemplate, titleComponentTemplate } from "./componentTemplates.js";
-import { renderCardUsingTemplate, setGlobalVariables } from "../render.js";
+import { renderCardUsingTemplate, setGlobalVariables } from "./render.js";
 import { setupResources } from "./assetsManager.js";
 import { populateComponents, setupComponents } from "./componentsManager.js";
 import { checkForFileUpdate, updateDataView } from "./elementsManager.js";
@@ -33,7 +33,7 @@ export let appDataFolder;
 
 getAppDataFolder();
 
-function getAppDataFolder() {
+async function getAppDataFolder() {
   let _appDataFolder = getAppDataPath();
 
   //First launch
@@ -130,51 +130,40 @@ async function copyDirectoryRecursive(src, dest) {
   }
 }
 
-export function getProjects() {
-  try {
-    projectsAvailable = fs2.readdirSync(appDataFolder + "/projects", { withFileTypes: true })
-      .filter((dirent) => dirent.isDirectory())
-      .map((dirent) => dirent.name)
-      .sort((a, b) => {
-        return a - b;
-      });
-
-    projectsAvailable.forEach(async (project, index) => {
-      const data = await fs.readFile(`${appDataFolder}/projects/${project}/project.json`);
-      projectsAvailable[index] = JSON.parse(data);
-    });
-
-  } catch (error) {
-    collectionsAvailable = [];
-    console.log(error);
-  }
-
-  setTimeout(() => {
-    setupProjectSelectionPanel();
-  }, 500);
+export async function getProjects() {
+  projectsAvailable = await getFolderContents(`${appDataFolder}/projects`, "project.json");
+  setupProjectSelectionPanel();
 }
 
-export function getCollections() {
+export async function getCollections() {
+  collectionsAvailable = await getFolderContents(`${appDataFolder}/projects/${currentProjectUID}/collections`, "collection.json");
+  setupProjectEditionPanel();
+}
+
+export async function getFolderContents(path, fileToExplore) {
+  let _content;
+
   try {
-    collectionsAvailable = fs2.readdirSync(`${appDataFolder}/projects/${currentProjectUID}/collections`, { withFileTypes: true })
+    const folderNames = fs2
+      .readdirSync(path, { withFileTypes: true })
       .filter((dirent) => dirent.isDirectory())
       .map((dirent) => dirent.name)
       .sort((a, b) => {
         return a - b;
       });
 
-    collectionsAvailable.forEach(async (collection, index) => {
-      const data = await fs.readFile(`${appDataFolder}/projects/${currentProjectUID}/collections/${collection}/collection.json`);
-      collectionsAvailable[index] = JSON.parse(data);
-    });
+    _content = [];
+    
+    // Use a for loop to process each folder sequentially
+    for (const folder of folderNames) {
+      const data = await fs.readFile(`${path}/${folder}/${fileToExplore}`);
+      _content.push(JSON.parse(data));
+    }
   } catch (error) {
-    collectionsAvailable = [];
-    console.log(error);
+    _content = [];
   }
 
-  setTimeout(() => {
-    setupProjectEditionPanel();
-  }, 500);
+  return _content;
 }
 
 export function setCurrentProject(projectUID) {
@@ -198,7 +187,6 @@ export function setCurrentCollection(collectionUID) {
 
     setTimeout(() => {
       app.currentIndex = 0;
-      openScene("collectionEdition");
       populateEditionFields();
       setupResources();
       setupComponents();
@@ -208,6 +196,7 @@ export function setCurrentCollection(collectionUID) {
       setGlobalVariables();
       setupLangage();
       renderCardUsingTemplate(app, app.currentIndex, currentCollection.collectionInfo.visualGuide);
+      openScene("collectionEdition");
     }, 500);
   }
 }

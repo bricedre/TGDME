@@ -212,4 +212,6 @@ export function setupProjectEditionPanel() {
   actionRow.append(newCollectionBtn);
   $("#projectEditionPanel").append(actionRow);
 
+  setupLangage();
+
 }

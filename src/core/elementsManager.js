@@ -7,20 +7,8 @@ const $ = require("jquery");
 const XLSX = require("xlsx");
 const { exec } = require("child_process");
 
-export function openExcelFile() {
-  const filePath = `${appDataFolder}/projects/${currentProjectUID}/collections/${currentCollection.collectionInfo.UID}/data.xlsx`;
-
-  // Open the file with the default Excel application
-  exec(`start "" "${filePath}"`, (err, stdout, stderr) => {
-    if (err) {
-      console.error("Le fichier n'a pas pu être trouvé :", err);
-      return;
-    }
-  });
-}
-
 export function checkForFileUpdate() {
-  const filePath = `${appDataFolder}/projects/${currentProjectUID}/collections/${currentCollection.collectionInfo.UID}/data.xlsx`;
+  const filePath = `${appDataFolder}/projects/${currentProjectUID}/collections/${currentCollectionUID}/data.xlsx`;
 
   fetch(filePath)
     .then((response) => {

@@ -21,7 +21,7 @@
     <button id="homeBtn" class="homeBtn btn_mainMenu" title="Retour à l'Accueil">
       <img id="homeIcon" src="./assets/uiIcons/home.png" alt="home btn" />
     </button>
-    <div id="mainTitleDiv" class="other_mainTitle"></div>
+    <div id="mainTitleDiv"></div>
 
     <div class="settingsBar">
       <div class="settingsBarBg"></div>
@@ -262,6 +262,14 @@
 
               <div class="parameterSlot">
                 <p class="parameterName"><span class="render_exportFormat">Format d'Export</span></p>
+                <select id="pageExportFormatSelect" class="parameterInput">
+                  <option value="pdf"><span class="opt_pdf">PDF</span></option>
+                  <option value="jpg"><span class="opt_jpg">JPG</span></option>
+                </select>
+              </div>
+
+              <div class="parameterSlot" title="Décale les éléments en miroir pour pouvoir imprimer en verso"></div>>
+                <p class="parameterName"><span class="render_exportSide">Recto/Verso ?</span></p>
                 <select id="pageExportFormatSelect" class="parameterInput">
                   <option value="pdf"><span class="opt_pdf">PDF</span></option>
                   <option value="jpg"><span class="opt_jpg">JPG</span></option>

@@ -1,8 +1,9 @@
-import { appDataFolder, currentCollection } from "./core/collectionsManager.js";
+import { appDataFolder, currentCollection, currentProjectUID } from "./collectionsManager.js";
 const { jsPDF } = require("jspdf");
-import { app } from "./app.js";
-import { assetsLibrary, errorImage } from "./core/assetsManager.js";
-import { IMAGE_parameters, TEXT_parameters, SHAPE_parameters } from "./core/componentsUI.js";
+import { app } from "../app.js";
+import { assetsLibrary, errorImage } from "./assetsManager.js";
+import { IMAGE_parameters, TEXT_parameters, SHAPE_parameters } from "./componentsUI.js";
+import { openLocation } from "../screens/editionScreen.js";
 const fs = require("fs");
 
 //GLOBAL VARIABLES THAT CAN BE USED IN EVALUATED VALUES
@@ -855,6 +856,7 @@ export function generatePages() {
   var H = currentCollection.collectionInfo.H * currentCollection.collectionInfo.resolution;
   var colCount = currentCollection.collectionInfo.colCount;
   var rowCount = currentCollection.collectionInfo.rowCount;
+  var pageVerso = currentCollection.collectionInfo.pageVerso;
   var marginX = currentCollection.collectionInfo.marginX;
   var marginY = currentCollection.collectionInfo.marginY;
   var pageWidth = currentCollection.collectionInfo.pageWidth * currentCollection.collectionInfo.resolution;
@@ -911,7 +913,7 @@ export function generatePages() {
       pageGeneration.addImage(page.canvas, "JPEG", 0, 0, coll.pageWidth * coll.resolution, coll.pageHeight * coll.resolution, "", "FAST");
     });
 
-    pageGeneration.save(`${appDataFolder}/collections/${coll.UID}/renders/${generationDate}-${collectionName}.pdf`);
+    pageGeneration.save(`${appDataFolder}/projects/${currentProjectUID}/renders/${generationDate}-${collectionName}.pdf`);
   } else if (currentCollection.collectionInfo.pageExportFormat == "jpg") {
     pages.forEach((page, index) => {
       // Get the DataUrl from the Canvas
@@ -919,13 +921,14 @@ export function generatePages() {
 
       // remove Base64 stuff from the Image
       const base64Data = url.replace(/^data:image\/png;base64,/, "");
-      fs.writeFile(`${appDataFolder}/collections/${coll.UID}/renders/${generationDate}-${index}.jpg`, base64Data, "base64", function (err) {
+      fs.writeFile(`${appDataFolder}/projects/${currentProjectUID}/renders/${generationDate}-${index}.jpg`, base64Data, "base64", function (err) {
         if (err) console.log(err);
       });
     });
   }
 
   renderCardUsingTemplate(app, app.currentIndex, currentCollection.collectionInfo.visualGuide);
+  openLocation(`${appDataFolder}/projects/${currentProjectUID}/renders`);
 }
 
 export function renderCardUsingTemplate(p, elementIndex, guide, finalRender = false) {

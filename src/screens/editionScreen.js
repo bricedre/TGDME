@@ -1,9 +1,9 @@
 import { app } from "../app.js";
-import { addNewImage, addNewShape, addNewText, addNewTitle, appDataFolder, archiveCollection, currentCollection, deleteCurrentCollection, duplicateCollection, saveCollection } from "../core/collectionsManager.js";
-import { generatePages, renderCardUsingTemplate } from "../render.js";
+import { addNewImage, addNewShape, addNewText, addNewTitle, appDataFolder, archiveCollection, currentCollection, currentCollectionUID, currentProjectUID, deleteCurrentCollection, duplicateCollection, saveCollection } from "../core/collectionsManager.js";
+import { generatePages, renderCardUsingTemplate } from "../core/render.js";
 import { allSystemFonts, loadAssets } from "../core/assetsManager.js";
 import { setupComponents } from "../core/componentsManager.js";
-import { checkForFileUpdate, openExcelFile, updateDataView } from "../core/elementsManager.js";
+import { checkForFileUpdate, updateDataView } from "../core/elementsManager.js";
 
 const $ = require("jquery");
 
@@ -32,7 +32,7 @@ $("#deleteCollectionBtn").on("click", () => {
   if (confirm("Attention, cette action est irréversible !\nSupprimer ?")) deleteCurrentCollection();
 });
 
-$("#openResFolderBtn").on("click", () => openSpecificFolder("assets"));
+$("#openResFolderBtn").on("click", () => openLocation(`${appDataFolder}/projects/${currentProjectUID}/collections/${currentCollectionUID}/assets`));
 $("#reloadResBtn").on("click", () => {
   loadAssets(app);
   generateCollectionBtn.click();
@@ -43,11 +43,11 @@ $("#addShapeComponentBtn").on("click", () => addNewShape());
 $("#addTextComponentBtn").on("click", () => addNewText());
 $("#addTitleComponentBtn").on("click", () => addNewTitle());
 
-$("#modifyDataBtn").on("click", () => openExcelFile());
+$("#modifyDataBtn").on("click", () => openLocation(`${appDataFolder}/projects/${currentProjectUID}/collections/${currentCollectionUID}/data.xlsx`));
 $("#updateDataBtn").on("click", () => checkForFileUpdate());
 
 $("#printPagesBtn").on("click", () => generatePages());
-$("#showRendersBtn").on("click", () => openSpecificFolder("renders"));
+$("#showRendersBtn").on("click", () => openLocation(`${appDataFolder}/projects/${currentProjectUID}/renders`));
 
 $("#turnCanvasBtn").on("click", () => turnCanvas());
 $("#scaleUpCanvasBtn").on("click", () => scaleCanvas(1));
@@ -163,8 +163,8 @@ export function moveComponent(currentIndex, delta) {
   }, 200);
 }
 
-function openSpecificFolder(folder) {
-  const filePath = `${appDataFolder}\\collections\\${currentCollection.collectionInfo.UID}\\${folder}`;
+export function openLocation(folder) {
+  const filePath = `${folder}`;
 
   // Open the folder
   require("child_process").exec(`start "" "${filePath}"`, (err, stdout, stderr) => {

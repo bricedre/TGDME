@@ -16,7 +16,7 @@ export let uiTexts = {
     de: "Kein Projekt anzuzeigen",
   },
   other_noCollection: {
-    fr: "Aucune Collecton à afficher",
+    fr: "Aucune Collection à afficher",
     en: "No Collection to show",
     de: "",
   },

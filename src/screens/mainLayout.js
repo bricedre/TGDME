@@ -1,9 +1,8 @@
 import { checkOtherInputs, updateElementsCounter } from "./editionScreen.js";
-import { currentCollection, currentProject, getCollections, setCurrentCollection } from "../core/collectionsManager.js";
+import { currentCollection, currentProject } from "../core/collectionsManager.js";
 import { populateComponents } from "../core/componentsManager.js";
 import { getFontList } from "../core/assetsManager.js";
-import { setupProjectSelectionPanel } from "./menuScreen.js";
-import { uiTexts } from "../core/translations.js";
+import { uiTexts } from "../translations.js";
 
 const $ = require("jquery");
 
@@ -70,20 +69,21 @@ export function openScene(panelName) {
   homeIcon.attr("src", scenesSettings[panelName].icon);
 
   let mainTitleDiv = $("#mainTitleDiv");
-  mainTitleDiv.text(scenesSettings[panelName].title);
+  mainTitleDiv.removeClass("other_mainTitle");
 
   let bottomBarDiv = $("#bottomBarDiv");
   bottomBarDiv.css("display", scenesSettings[panelName].hideFooter ? "none" : "flex");
+  
 
   switch (panelName) {
-    
+    case "home":
+      mainTitleDiv.addClass("other_mainTitle");
+      break;
     case "projectEdition":
-      mainTitleDiv = $("#mainTitleDiv");
       mainTitleDiv.text(scenesSettings[panelName].title);
       break;
     case "collectionEdition":
-      mainTitleDiv = $("#mainTitleDiv");
-      mainTitleDiv.text(`COLLECTION : ${scenesSettings[panelName].title}`);
+      mainTitleDiv.text(scenesSettings[panelName].title);
 
       //Go back to Config tab all the time
       let firstRadio = document.querySelector(".tabs input");
