@@ -10,6 +10,16 @@ export let uiTexts = {
     en: "THE PROTO-SHACK",
     de: "DIE PROTO-HÜTTE",
   },
+  other_collectionsHeader: {
+    fr: "LES COLLECTTIONS DU PROJET",
+    en: "",
+    de: "",
+  },
+  other_projectsHeader: {
+    fr: "MES PROJETS",
+    en: "",
+    de: "",
+  },
   other_noProject: {
     fr: "Aucun Projet à afficher",
     en: "No Project to show",
@@ -20,7 +30,7 @@ export let uiTexts = {
     en: "No Collection to show",
     de: "",
   },
-    other_archivedProjects: {
+  other_archivedProjects: {
     fr: "Projets Archivés",
     en: "",
     de: "",
@@ -31,13 +41,13 @@ export let uiTexts = {
     de: "Archivierte Sammlungen",
   },
 
-  other_project : {
+  other_project: {
     fr: "PROJET",
     en: "PROJECT",
     de: "",
   },
 
-  other_collection : {
+  other_collection: {
     fr: "COLLECTION",
     en: "COLLECTION",
     de: "",
@@ -88,8 +98,12 @@ export let uiTexts = {
     en: "CREATE A NEW PROJECT",
     de: "NEUES PROJEKT ERSTELLEN",
   },
-
-    btn_newCollection: {
+  btn_importProto: {
+    fr: "IMPORTER UN PROJET",
+    en: "IMPORT A PROJECT",
+    de: "NEUES PROJEKT ERSTELLEN",
+  },
+  btn_newCollection: {
     fr: "CRÉER UNE NOUVELLE COLLECTION",
     en: "CREATE A NEW COLLECTION",
     de: "",
@@ -185,7 +199,7 @@ export let uiTexts = {
     de: "ÖFFNEN|Render-Ordner öffnen",
   },
 
-//! PARAM CATS //
+  //! PARAM CATS //
 
   paramCat_general: {
     fr: "Informations Générales",

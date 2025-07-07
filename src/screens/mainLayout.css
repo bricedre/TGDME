@@ -12,8 +12,8 @@
   --mainColor: #77c9f2;
   --mainColorDark: #2d94c7;
   --mainColorShadows: #00496e30;
-  --mainColorText : #07001c;
-  --categoryColor : #68a;
+  --mainColorText: #07001c;
+  --categoryColor: #68a;
 }
 
 * {
@@ -21,18 +21,23 @@
   box-sizing: border-box;
 }
 
-input, select{
+input,
+select {
   background: var(--bgColor);
   color: var(--mainColorText);
 }
 
-input:disabled, select:disabled{
+input:disabled,
+select:disabled {
   background: var(--mainColorText);
   color: var(--bgColor);
   opacity: 0.2;
 }
 
-input:focus, select:focus, input:active, select:active{
+input:focus,
+select:focus,
+input:active,
+select:active {
   outline: 2px solid var(--mainColor);
 }
 
@@ -46,20 +51,20 @@ body {
   font-family: "Main Font", sans-serif;
 }
 
-.blindfold{
+.blindfold {
   position: absolute;
-  inset : 0;
+  inset: 0;
   background: #FFF;
   transition: opacity 1s ease-in-out;
 }
 
 nav {
   background: var(--mainColor);
-  min-height: 7vh;
+  height: 7vh;
   font-size: 2rem;
   display: flex;
   align-items: center;
-  padding: 0 0.5rem 0 0;
+  padding: 0 0.5rem 0 0.5rem;
   box-shadow: 0 0 20px #0005;
   gap: 1rem;
   overflow: hidden;
@@ -77,23 +82,23 @@ nav {
   gap: 1rem;
   flex: 1;
   color: var(--mainColorText);
-   align-items: center;
+  align-items: center;
 }
 
-.breadcrumbs{
+.breadcrumbs {
   padding: 0.5rem;
-    font-size: 1.5rem;
-    background: var(--mainColorDark);
-    border-radius: 1rem;
-    cursor: pointer;
-    transition: all 0.2s ease-in-out;
+  font-size: 1rem;
+  background: var(--mainColorDark);
+  border-radius: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
 }
 
-.breadcrumbs:hover{
+.breadcrumbs:hover {
   background: var(--categoryColor);
 }
 
-.separatorBc{
+.separatorBc {
   opacity: 0.5;
 }
 
@@ -101,19 +106,21 @@ nav {
   display: flex;
   gap: 1rem;
   position: absolute;
-  right: -10rem;
+  right: -9rem;
   transition: all 0.5s ease-in-out;
   position: relative;
   isolation: isolate;
   align-items: center;
+  height: 100%;
 }
 
-.settingsBarBg{
+.settingsBarBg {
   position: absolute;
   inset: 0;
   background: var(--categoryColor);
-  translate: 2rem 0;
+  translate: 3.5rem 0;
   z-index: -1;
+  border-radius: 2rem;
 }
 
 #homeBtn,
@@ -125,26 +132,18 @@ nav {
   border-radius: 50%;
 }
 
-#homeBtn, #settingsBtn{
-  padding: 0.5rem 1rem;
-  
-}
-
-#homeBtn{
-border-radius: 0 1rem 1rem 0;
-}
-
-#settingsBtn{
-  border-radius: 1rem 0 0 1rem;
+#settingsBtn, #homeBtn {
+  border-radius: 1rem;
+  padding: 0.5rem;
 }
 
 #homeBtn>img,
 #settingsBtn>img {
-  height: 3rem;
+  height: 2rem;
 }
 
 #langBtn>img,
-#colorModeBtn>img{
+#colorModeBtn>img {
   height: 2.5rem;
 }
 

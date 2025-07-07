@@ -19,7 +19,7 @@ $("#homeBtn").on("click", () => {
 
 let isSettingsBarOpen = false;
 $("#settingsBtn").on("click", () => {
-  if (isSettingsBarOpen) $(".settingsBar").css("right", "-9.5rem");
+  if (isSettingsBarOpen) $(".settingsBar").css("right", "-9rem");
   else $(".settingsBar").css("right", "0");
 
   isSettingsBarOpen = !isSettingsBarOpen;
@@ -39,6 +39,9 @@ export function setupProjectSelectionPanel() {
   });
 
   $("#projectSelectionPanel").empty();
+
+  //Title
+  $("#projectSelectionPanel").append($("<div></div>").addClass("homePageHeader other_projectsHeader"));
 
   // Collections to show
   if (projectsSorted.length > 0) {
@@ -113,14 +116,27 @@ export function setupProjectSelectionPanel() {
 
   //ACTIONS
   const actionRow = $("<div></div>").addClass("btnContainer");
+
   const newCollectionBtn = $("<button></button>")
     .addClass("navBtn bigBtn btn_newProto")
     .on("click", (e) => {
       e.preventDefault();
       e.stopPropagation();
-      createNewCollection();
+      // createNewCollection();
     });
   actionRow.append(newCollectionBtn);
+
+  $("#projectSelectionPanel").append(actionRow);
+
+  const importCollectionBtn = $("<button></button>")
+    .addClass("navBtn bigBtn btn_importProto")
+    .on("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      // createNewCollection();
+    });
+  actionRow.append(importCollectionBtn);
+
   $("#projectSelectionPanel").append(actionRow);
 
   setupLangage();
@@ -132,6 +148,9 @@ export function setupProjectEditionPanel() {
   });
 
   $("#projectEditionPanel").empty();
+
+  //Title
+  $("#projectEditionPanel").append($("<div></div>").addClass("homePageHeader other_collectionsHeader"));
 
   // Collections to show
   if (collectionsSorted.length > 0) {

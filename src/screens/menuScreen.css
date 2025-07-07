@@ -6,6 +6,15 @@
   justify-content: start;
 }
 
+.homePageHeader {
+  font-size: 2rem;
+  background: var(--panelBGDarker);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  width: 100%;
+  text-align: center;
+}
+
 #archivedCollectionsContainer,
 #archivedProjectsContainer {
   background: var(--panelBG);
