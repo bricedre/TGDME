@@ -6,6 +6,8 @@ import { allSystemFonts } from "./assetsManager.js";
 import { moveComponent } from "../screens/editionScreen.js";
 
 const $ = require("jquery");
+const cloneDeep = require("lodash/cloneDeep");
+import { imageComponentTemplate, textComponentTemplate, shapeComponentTemplate, titleComponentTemplate } from "./componentTemplates.js";
 
 export function setupComponents() {
 
@@ -439,6 +441,40 @@ export function createNewComponent(item, itemIndex) {
 
   templateItemsDiv.appendChild(itemAccordion);
   $("#templateItemsDiv").append(itemPanel);
+}
+
+export function addNewImage() {
+  currentCollection.template.push(cloneDeep(imageComponentTemplate));
+  assignUIDToNewComponent();
+  setupComponents();
+  generateCollectionBtn.click();
+}
+
+export function addNewText() {
+  currentCollection.template.push(cloneDeep(textComponentTemplate));
+  assignUIDToNewComponent();
+  setupComponents();
+  generateCollectionBtn.click();
+}
+
+export function addNewTitle() {
+  currentCollection.template.push(cloneDeep(titleComponentTemplate));
+  assignUIDToNewComponent();
+  setupComponents();
+  generateCollectionBtn.click();
+}
+
+export function addNewShape() {
+  currentCollection.template.push(cloneDeep(shapeComponentTemplate));
+  assignUIDToNewComponent();
+  setupComponents();
+  generateCollectionBtn.click();
+}
+
+function assignUIDToNewComponent() {
+  console.log("> assignUIDToNewComponent");
+  currentCollection.template[currentCollection.template.length - 1].UID = currentCollection.collectionInfo.lastComponentIndex;
+  currentCollection.collectionInfo.lastComponentIndex++;
 }
 
 export function populateComponents() {

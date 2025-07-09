@@ -11,7 +11,7 @@ export let uiTexts = {
     de: "DIE PROTO-HÜTTE",
   },
   other_collectionsHeader: {
-    fr: "LES COLLECTTIONS DU PROJET",
+    fr: "LES COLLECTIONS DU PROJET",
     en: "PROJECT'S COLLECTIONS",
     de: "",
   },

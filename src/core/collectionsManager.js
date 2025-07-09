@@ -1,15 +1,12 @@
-const cloneDeep = require("lodash/cloneDeep");
-
 import { app } from "../app.js";
 import { checkOtherInputs, populateEditionFields, updateElementsCounter } from "../screens/editionScreen.js";
 import { openScene, setupLangage } from "../screens/mainLayout.js";
 
 import { getFontList, loadAssets } from "./assetsManager.js";
-import { imageComponentTemplate, textComponentTemplate, shapeComponentTemplate, titleComponentTemplate } from "./componentTemplates.js";
 import { renderCardUsingTemplate, setCollectionSpecificVariables } from "./render.js";
 import { setupResources } from "./assetsManager.js";
 import { populateComponents, setupComponents } from "./componentsManager.js";
-import {  loadDataFile, updateDataView } from "./elementsManager.js";
+import { loadDataFile, updateDataView } from "./elementsManager.js";
 import { setupProjectEditionPanel, setupProjectSelectionPanel } from "../screens/menuScreen.js";
 import { collectionTemplate } from "./collectionTemplate.js";
 
@@ -21,7 +18,6 @@ const fs2 = require("fs");
 const XLSX = require("xlsx");
 const getAppDataPath = require("appdata-path");
 
-let projectHasChanged = false;
 export let projectsAvailable = [];
 export let currentProjectUID = -1;
 export let currentProject;
@@ -184,17 +180,13 @@ export function setCurrentProject(projectUID) {
   console.log("> setCurrentProject", projectUID, currentProjectUID);
 
   if (projectUID !== currentProjectUID) {
-    projectHasChanged = true;
     currentProjectUID = projectUID;
     currentProject = projectsAvailable.filter((proj) => proj.UID == projectUID)[0];
     getCollections();
-  } else {
-    projectHasChanged = false;
   }
 }
 
 export function setCurrentCollection(collectionUID) {
-
   currentCollectionUID = collectionUID;
   if (currentCollectionUID != -1) {
     currentCollection = collectionsAvailable.filter((coll) => coll.collectionInfo.UID == collectionUID)[0];
@@ -222,13 +214,14 @@ export function setCurrentCollection(collectionUID) {
 export function createNewCollection() {
   console.log("> createNewCollection");
 
-  const newUID = collectionsAvailable.length == 0 ? 0 : collectionsAvailable[collectionsAvailable.length - 1].collectionInfo.UID + 1;
-  var dir = appDataFolder + "/collections/" + newUID;
+  const newUID = getNextCollectionUID();
+  var dir = `${appDataFolder}/projects/${currentProjectUID}/collections/${newUID}`;
 
-  if (!existsSync(dir)) {
-    mkdirSync(dir);
-    mkdirSync(dir + "/assets");
-    mkdirSync(dir + "/renders");
+  console.log(newUID, dir);
+
+  if (!fs2.existsSync(dir)) {
+    fs2.mkdirSync(dir);
+    fs2.mkdirSync(dir + "/assets");
     fs2.writeFileSync(dir + "/collection.json", JSON.stringify(collectionTemplate));
 
     //CREATE DATA EXCEL SHEET
@@ -251,7 +244,7 @@ export function createNewCollection() {
 
     setTimeout(() => {
       collectionsAvailable[collectionsAvailable.length - 1].collectionInfo.UID = newUID;
-      collectionsAvailable[collectionsAvailable.length - 1].collectionInfo.collectionName = "Nouveau Proto";
+      collectionsAvailable[collectionsAvailable.length - 1].collectionInfo.collectionName = "Nouvelle Collection";
       var deckToSave = JSON.stringify(collectionsAvailable[collectionsAvailable.length - 1]);
       fs.writeFile(dir + "/collection.json", deckToSave, (err) => {
         if (err) {
@@ -264,15 +257,26 @@ export function createNewCollection() {
   }
 }
 
+function getNextCollectionUID() {
+  if (collectionsAvailable.length == 0) return 0;
+  else {
+    let biggestUID = 0;
+    collectionsAvailable.forEach((coll) => {
+      if (coll.collectionInfo.UID > biggestUID) biggestUID = parseInt(coll.collectionInfo.UID);
+    });
+    return biggestUID + 1;
+  }
+}
+
 export function deleteCurrentCollection() {
   console.log("> deleteCurrentCollection");
 
   rimraf
-    .rimraf(appDataFolder + "/collections/" + currentCollectionUID)
+    .rimraf(`${appDataFolder}/projects/${currentProjectUID}/collections/${currentCollectionUID}`)
     .then(() => {
       setCurrentCollection(-1);
       getCollections();
-      openScene("home");
+      openScene("projectEdition");
     })
     .catch((e) => console.log(e));
 }
@@ -280,18 +284,26 @@ export function deleteCurrentCollection() {
 export function duplicateCollection() {
   console.log("> duplicateCollection");
 
-  const newUID = collectionsAvailable.length == 0 ? 0 : collectionsAvailable[collectionsAvailable.length - 1].collectionInfo.UID + 1;
-  var dir = appDataFolder + "/collections/" + newUID;
+  const newUID = getNextCollectionUID();
+  var dir = `${appDataFolder}/projects/${currentProjectUID}/collections/${newUID}`;
 
-  if (!existsSync(dir)) {
-    fsExtra.copy(appDataFolder + "/collections/" + currentCollectionUID, appDataFolder + "/collections/" + newUID);
+  if (!fs2.existsSync(dir)) {
+    fsExtra.copy(`${appDataFolder}/projects/${currentProjectUID}/collections/${currentCollectionUID}`, `${appDataFolder}/projects/${currentProjectUID}/collections/${newUID}`);
+
     getCollections();
 
     setTimeout(() => {
       collectionsAvailable[collectionsAvailable.length - 1].collectionInfo.UID = newUID;
       collectionsAvailable[collectionsAvailable.length - 1].collectionInfo.collectionName = "Copie de " + currentCollection.collectionInfo.collectionName;
-      setCurrentCollection(newUID);
+      var deckToSave = JSON.stringify(collectionsAvailable[collectionsAvailable.length - 1]);
+      fs.writeFile(dir + "/collection.json", deckToSave, (err) => {
+        if (err) {
+          console.error(err);
+        }
+      });
       getCollections();
+      setCurrentCollection(newUID);
+      openScene("collectionEdition");
     }, 500);
   }
 }
@@ -303,7 +315,7 @@ export function archiveCollection() {
   saveCollection(false, false);
   setCurrentCollection(-1);
   setTimeout(() => getCollections(), 300);
-  setTimeout(() => openScene("home"), 1000);
+  setTimeout(() => openScene("projectEdition"), 1000);
 }
 
 export function saveCollection(refreshAssets, reRenderCard) {
@@ -443,33 +455,4 @@ export function setupCollectionDimensions() {
   coll.rowCount = Math.floor(coll.pageHeight / coll.H);
   coll.marginX = ((coll.pageWidth - coll.W * coll.colCount) / 2) * coll.resolution;
   coll.marginY = ((coll.pageHeight - coll.H * coll.rowCount) / 2) * coll.resolution;
-}
-
-export function addNewImage() {
-  currentCollection.template.push(cloneDeep(imageComponentTemplate));
-  assignUIDToNewComponent();
-}
-
-export function addNewText() {
-  currentCollection.template.push(cloneDeep(textComponentTemplate));
-  assignUIDToNewComponent();
-}
-
-export function addNewTitle() {
-  currentCollection.template.push(cloneDeep(titleComponentTemplate));
-  assignUIDToNewComponent();
-}
-
-export function addNewShape() {
-  currentCollection.template.push(cloneDeep(shapeComponentTemplate));
-  assignUIDToNewComponent();
-}
-
-function assignUIDToNewComponent() {
-  console.log("> assignUIDToNewComponent");
-
-  currentCollection.template[currentCollection.template.length - 1].UID = currentCollection.collectionInfo.lastComponentIndex;
-  currentCollection.collectionInfo.lastComponentIndex++;
-  setupComponents();
-  generateCollectionBtn.click();
 }

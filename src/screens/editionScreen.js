@@ -1,9 +1,5 @@
 import { app } from "../app.js";
 import {
-  addNewImage,
-  addNewShape,
-  addNewText,
-  addNewTitle,
   appDataFolder,
   archiveCollection,
   currentCollection,
@@ -15,7 +11,7 @@ import {
 } from "../core/collectionsManager.js";
 import { generatePages, renderCardUsingTemplate } from "../core/render.js";
 import { allSystemFonts, loadAssets } from "../core/assetsManager.js";
-import { setupComponents } from "../core/componentsManager.js";
+import { addNewImage, addNewShape, addNewText, addNewTitle, setupComponents } from "../core/componentsManager.js";
 import { checkForFileUpdate, updateDataView } from "../core/elementsManager.js";
 
 const $ = require("jquery");

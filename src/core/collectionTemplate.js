@@ -2,7 +2,7 @@ export const collectionTemplate = {
   "collectionInfo": {
     "archived": false,
     "UID": 0,
-    "collectionName": "Nouveau Proto",
+    "collectionName": "Nouvelle Collection",
     "resolution": 60,
     "elementFormat": "pokerCard",
     "pageFormat": "A4",
