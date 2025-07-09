@@ -118,10 +118,10 @@ export function setupProjectSelectionPanel() {
   $("#projectSelectionPanel").append($("<div></div>").css("flex", "1"));
 
   //ACTIONS
-  const actionRow = $("<div></div>").addClass("btnContainer");
+  const actionRow = $("<div></div>").addClass("btnContainer vertical");
 
   const newCollectionBtn = $("<button></button>")
-    .addClass("navBtn bigBtn btn_newProto")
+    .addClass("navBtn btn_newProto")
     .on("click", (e) => {
       e.preventDefault();
       e.stopPropagation();
@@ -132,7 +132,7 @@ export function setupProjectSelectionPanel() {
   $("#projectSelectionPanel").append(actionRow);
 
   const importCollectionBtn = $("<button></button>")
-    .addClass("navBtn bigBtn btn_importProto")
+    .addClass("navBtn btn_importProto")
     .on("click", (e) => {
       e.preventDefault();
       e.stopPropagation();
@@ -229,9 +229,9 @@ export function setupProjectEditionPanel() {
   $("#projectEditionPanel").append($("<div></div>").css("flex", "1"));
 
   //ACTIONS
-  const actionRow = $("<div></div>").addClass("btnContainer");
+  const actionRow = $("<div></div>").addClass("btnContainer vertical");
   const newCollectionBtn = $("<button></button>")
-    .addClass("navBtn bigBtn btn_newCollection")
+    .addClass("navBtn btn_newCollection")
     .on("click", (e) => {
       e.preventDefault();
       e.stopPropagation();

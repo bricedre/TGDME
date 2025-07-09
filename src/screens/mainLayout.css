@@ -54,7 +54,7 @@ body {
 .blindfold {
   position: absolute;
   inset: 0;
-  background: #FFF;
+  background: #fff;
   transition: opacity 0.5s ease-in-out;
 }
 
@@ -69,12 +69,12 @@ nav {
   gap: 1rem;
   overflow: hidden;
   position: relative;
-
 }
 
 .navBtn {
   width: -webkit-fill-available;
   border-radius: 0.5rem;
+  flex: 0 0 calc(50% - 0.5rem);
 }
 
 #mainTitleDiv {
@@ -132,18 +132,19 @@ nav {
   border-radius: 50%;
 }
 
-#settingsBtn, #homeBtn {
+#settingsBtn,
+#homeBtn {
   border-radius: 1rem;
   padding: 0.5rem;
 }
 
-#homeBtn>img,
-#settingsBtn>img {
+#homeBtn > img,
+#settingsBtn > img {
   height: 2rem;
 }
 
-#langBtn>img,
-#colorModeBtn>img {
+#langBtn > img,
+#colorModeBtn > img {
   height: 2.5rem;
 }
 
@@ -153,7 +154,6 @@ nav {
 #settingsBtn:hover {
   background: var(--mainColorLight);
 }
-
 
 #title {
   flex: 1;
@@ -201,8 +201,8 @@ button {
   color: var(--mainColorText);
 }
 
-button>img {
-  height: 3rem;
+button > img {
+  height: 1.5rem;
   rotate: 3deg;
   filter: drop-shadow(2px 2px 2px var(--mainColorShadows));
 }
@@ -214,11 +214,6 @@ button:hover {
 button:disabled {
   background: var(--mainBtnColor);
   opacity: 0.5;
-}
-
-.bigBtn {
-  padding: 1rem 2rem;
-  font-size: 2rem;
 }
 
 #bottomBarDiv {
@@ -285,12 +280,12 @@ button:disabled {
 }
 
 /* On mouse-over, add a grey background color */
-.checkboxContainer:hover input~.checkmark {
+.checkboxContainer:hover input ~ .checkmark {
   background: #ccc;
 }
 
 /* When the checkbox is checked, add a blue background */
-.checkboxContainer input:checked~.checkmark {
+.checkboxContainer input:checked ~ .checkmark {
   background-color: var(--mainColorDark);
 }
 
@@ -302,7 +297,7 @@ button:disabled {
 }
 
 /* Show the checkmark when checked */
-.checkboxContainer input:checked~.checkmark:after {
+.checkboxContainer input:checked ~ .checkmark:after {
   display: block;
 }
 
