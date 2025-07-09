@@ -55,7 +55,7 @@ body {
   position: absolute;
   inset: 0;
   background: #FFF;
-  transition: opacity 1s ease-in-out;
+  transition: opacity 0.5s ease-in-out;
 }
 
 nav {
@@ -89,7 +89,7 @@ nav {
   padding: 0.5rem;
   font-size: 1rem;
   background: var(--mainColorDark);
-  border-radius: 1rem;
+  border-radius: 0.5rem;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
 }
@@ -165,7 +165,7 @@ nav {
   padding: 2rem;
   justify-content: end;
   height: 100%;
-  max-height: 87vh;
+  max-height: 93vh;
 }
 
 main {
@@ -180,6 +180,8 @@ main {
   justify-content: center;
   flex: 1;
   gap: 2rem;
+  transition: all 0.5s ease-in-out;
+  opacity: 0;
 }
 
 button {

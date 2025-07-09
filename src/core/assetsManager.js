@@ -10,6 +10,9 @@ export let currentAssetsList = [];
 export let errorImage;
 
 export function setupResources() {
+
+  console.log("> setupResources")
+
   while (ressItemsDiv.firstChild) {
     ressItemsDiv.removeChild(ressItemsDiv.lastChild);
   }
@@ -28,6 +31,9 @@ export function setupResources() {
 }
 
 export function createNewResource(item, itemIndex) {
+
+    console.log("> createNewResource")
+
   var ressContainer = document.createElement("div");
 
   ressContainer.id = itemIndex;
@@ -35,7 +41,7 @@ export function createNewResource(item, itemIndex) {
 
   let file = item.split("//")[1];
   let fileName = file.split(".")[0];
-  
+
   ressContainer.title = "Cliquer pour copier le nom de la ressource";
   ressContainer.addEventListener("click", () => {
     navigator.clipboard.writeText(file);
@@ -55,6 +61,9 @@ export function createNewResource(item, itemIndex) {
 }
 
 export function loadAssets(p) {
+
+    console.log("> loadAssets")
+
   let assetsPath = `${appDataFolder}/projects/${currentProjectUID}/collections/${currentCollectionUID}/assets/`;
   assetsLibrary = {};
 
@@ -79,6 +88,9 @@ export function loadAssets(p) {
 }
 
 function getFiles(dir, files = []) {
+
+    console.log("> loadAssets > getFiles")
+
   // Get an array of all files and directories in the passed directory using fs.readdirSync
   const fileList = fs.readdirSync(dir);
   // Create the full path of the file/directory by concatenating the passed directory and file/directory name
@@ -97,6 +109,9 @@ function getFiles(dir, files = []) {
 }
 
 export async function getFontList() {
+
+  console.log("> getFontList")
+
   try {
     const fonts = await fontList.getFonts();
     allSystemFonts = fonts.map((font) => {
@@ -105,7 +120,7 @@ export async function getFontList() {
         value: font,
       };
     });
-  } catch (err) {
-    console.error("Error fetching font list:", err);
+  } catch (e) {
+    console.log("Error fetching font list:", e);
   }
 }

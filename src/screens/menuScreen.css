@@ -9,9 +9,8 @@
 .homePageHeader {
   font-size: 2rem;
   background: var(--panelBGDarker);
-  padding: 1rem;
-  border-radius: 0.5rem;
-  width: 100%;
+  padding: 1rem 3rem;
+  border-radius: 50vw;
   text-align: center;
 }
 
@@ -28,8 +27,8 @@
   color: var(--mainColorText);
 }
 
-#archivedCollectionsContainer>img,
-#archivedProjectsContainer>img {
+#archivedCollectionsContainer > img,
+#archivedProjectsContainer > img {
   width: 1rem;
 }
 
@@ -54,6 +53,21 @@
 
 .archivedCollectionsHeader img {
   height: 2rem;
+}
+
+.archivedSeparator {
+  flex: 1;
+}
+
+.archivedArrow {
+  rotate: -90deg;
+  transition: all 0.2s ease-in-out;
+  font-size: 1.5rem;
+  opacity: 0.5;
+}
+
+#archivedProjectsContainer.active .archivedArrow {
+  rotate: 90deg;
 }
 
 .homePagePanel {
@@ -97,7 +111,7 @@
   place-items: center;
 }
 
-.imgContainer>img {
+.imgContainer > img {
   height: 3rem;
   rotate: 5deg;
 }

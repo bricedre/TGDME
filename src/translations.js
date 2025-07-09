@@ -12,12 +12,12 @@ export let uiTexts = {
   },
   other_collectionsHeader: {
     fr: "LES COLLECTTIONS DU PROJET",
-    en: "",
+    en: "PROJECT'S COLLECTIONS",
     de: "",
   },
   other_projectsHeader: {
     fr: "MES PROJETS",
-    en: "",
+    en: "MY PROJECTS",
     de: "",
   },
   other_noProject: {
@@ -50,6 +50,24 @@ export let uiTexts = {
   other_collection: {
     fr: "COLLECTION",
     en: "COLLECTION",
+    de: "",
+  },
+
+  other_dataKey: {
+    fr: "CLÉ|Clé à renseigner dans votre Modèle",
+    en: "KEY|Key to use in your Template",
+    de: "",
+  },
+
+  other_dataValue: {
+    fr: "VALEUR",
+    en: "VALUE",
+    de: "",
+  },
+
+  other_dataPreview: {
+    fr: "APERÇU",
+    en: "PREVIEW",
     de: "",
   },
 

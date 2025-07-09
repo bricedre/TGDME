@@ -1,5 +1,5 @@
 import { app } from "../app.js";
-import { appDataFolder, currentCollection, currentCollectionUID, currentProjectUID, saveCollection } from "./collectionsManager.js";
+import { appDataFolder, currentCollection, currentCollectionUID, currentProjectUID } from "./collectionsManager.js";
 import { updateElementsCounter } from "../screens/editionScreen.js";
 
 
@@ -7,7 +7,16 @@ const $ = require("jquery");
 const XLSX = require("xlsx");
 const { exec } = require("child_process");
 
-export function checkForFileUpdate() {
+export function checkForFileUpdate(){
+  console.log("checkForFileUpdate");
+
+  loadDataFile();
+  generateCollectionBtn.click(); //Saving mods to collection
+}
+
+export function loadDataFile() {
+
+  console.log("loadDataFile");
   const filePath = `${appDataFolder}/projects/${currentProjectUID}/collections/${currentCollectionUID}/data.xlsx`;
 
   fetch(filePath)
@@ -46,9 +55,7 @@ export function checkForFileUpdate() {
         // Update currentCollection with the new data
         currentCollection.elements.headers = headers;
         currentCollection.elements.data = data;
-
-        updateDataView();
-        generateCollectionBtn.click(); //Saving mods to collection
+        
       } else {
         currentCollection.elements = {
           headers: [],
@@ -56,21 +63,24 @@ export function checkForFileUpdate() {
         };
       }
     })
-    .catch((error) => {
-      console.error(error);
+    .catch((e) => {
+      console.log(e);
       alert("Le fichier n'a pas pu être chargé.");
     });
 }
 
 export function updateDataView() {
+
+  console.log("> updateDataView")
+  
   const elementItemsDiv = $("#elementItemsDiv");
-  elementItemsDiv.empty();
+  const dataTableBody = $("#dataTableBody");
+  dataTableBody.empty();
+
 
   //Has data to show
   if (currentCollection.elements.headers.length > 0) {
-    let dataTable = $(`<table class="dataTable"></table>`);
-    dataTable.append($("<thead><tr><th>CLÉ</th><th>VALEUR</th><th>APERÇU</th></tr></thead>"));
-    let dataTableBody = $("<tbody></tbody>");
+
     dataTableBody.css("background", "#ffffff")
 
     currentCollection.elements.headers.forEach((header, index) => {
@@ -101,8 +111,6 @@ export function updateDataView() {
 
       dataTableBody.append(newRow);
     });
-    dataTable.append(dataTableBody);
-    elementItemsDiv.append(dataTable);
   }
 
   // No data to show

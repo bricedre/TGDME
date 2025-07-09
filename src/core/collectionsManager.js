@@ -6,10 +6,10 @@ import { openScene, setupLangage } from "../screens/mainLayout.js";
 
 import { getFontList, loadAssets } from "./assetsManager.js";
 import { imageComponentTemplate, textComponentTemplate, shapeComponentTemplate, titleComponentTemplate } from "./componentTemplates.js";
-import { renderCardUsingTemplate, setGlobalVariables } from "./render.js";
+import { renderCardUsingTemplate, setCollectionSpecificVariables } from "./render.js";
 import { setupResources } from "./assetsManager.js";
 import { populateComponents, setupComponents } from "./componentsManager.js";
-import { checkForFileUpdate, updateDataView } from "./elementsManager.js";
+import {  loadDataFile, updateDataView } from "./elementsManager.js";
 import { setupProjectEditionPanel, setupProjectSelectionPanel } from "../screens/menuScreen.js";
 import { collectionTemplate } from "./collectionTemplate.js";
 
@@ -21,6 +21,7 @@ const fs2 = require("fs");
 const XLSX = require("xlsx");
 const getAppDataPath = require("appdata-path");
 
+let projectHasChanged = false;
 export let projectsAvailable = [];
 export let currentProjectUID = -1;
 export let currentProject;
@@ -34,6 +35,8 @@ export let appDataFolder;
 getAppDataFolder();
 
 async function getAppDataFolder() {
+  console.log("> getAppDataFolder");
+
   let _appDataFolder = getAppDataPath();
 
   //First launch
@@ -51,6 +54,8 @@ async function getAppDataFolder() {
 }
 
 async function patchIfNotUsingProjectSystem() {
+  console.log("> patchIfNotUsingProjectSystem");
+
   if (confirm("NOUVELLE FEATURE - LES PROJETS : L'application va mettre vos données en conformité et s'éteindre d'elle-même. Redémarrez-la ensuite.")) {
     await fs.mkdir(appDataFolder + "/projects");
 
@@ -109,6 +114,8 @@ async function patchIfNotUsingProjectSystem() {
 
 // Helper function to copy directory recursively
 async function copyDirectoryRecursive(src, dest) {
+  console.log("> copyDirectoryRecursive");
+
   try {
     await fs.mkdir(dest, { recursive: true });
 
@@ -131,16 +138,22 @@ async function copyDirectoryRecursive(src, dest) {
 }
 
 export async function getProjects() {
+  console.log("> getProjects");
+
   projectsAvailable = await getFolderContents(`${appDataFolder}/projects`, "project.json");
   setupProjectSelectionPanel();
 }
 
 export async function getCollections() {
+  console.log("> getCollections");
+
   collectionsAvailable = await getFolderContents(`${appDataFolder}/projects/${currentProjectUID}/collections`, "collection.json");
   setupProjectEditionPanel();
 }
 
 export async function getFolderContents(path, fileToExplore) {
+  console.log("> getFolderContents", fileToExplore);
+
   let _content;
 
   try {
@@ -153,13 +166,14 @@ export async function getFolderContents(path, fileToExplore) {
       });
 
     _content = [];
-    
+
     // Use a for loop to process each folder sequentially
     for (const folder of folderNames) {
       const data = await fs.readFile(`${path}/${folder}/${fileToExplore}`);
       _content.push(JSON.parse(data));
     }
-  } catch (error) {
+  } catch (e) {
+    console.log(e);
     _content = [];
   }
 
@@ -167,13 +181,20 @@ export async function getFolderContents(path, fileToExplore) {
 }
 
 export function setCurrentProject(projectUID) {
-  currentProjectUID = projectUID;
-  currentProject = projectsAvailable.filter((proj) => proj.UID == projectUID)[0];
-  getCollections();
-  openScene("projectEdition");
+  console.log("> setCurrentProject", projectUID, currentProjectUID);
+
+  if (projectUID !== currentProjectUID) {
+    projectHasChanged = true;
+    currentProjectUID = projectUID;
+    currentProject = projectsAvailable.filter((proj) => proj.UID == projectUID)[0];
+    getCollections();
+  } else {
+    projectHasChanged = false;
+  }
 }
 
 export function setCurrentCollection(collectionUID) {
+
   currentCollectionUID = collectionUID;
   if (currentCollectionUID != -1) {
     currentCollection = collectionsAvailable.filter((coll) => coll.collectionInfo.UID == collectionUID)[0];
@@ -185,23 +206,22 @@ export function setCurrentCollection(collectionUID) {
 
     app.setupCanvas(coll.W * coll.resolution, coll.H * coll.resolution, coll.pageWidth * coll.resolution, coll.pageHeight * coll.resolution);
 
+    app.currentIndex = 0;
+    populateEditionFields();
+    setupComponents();
+    populateComponents();
+    loadDataFile();
+    updateDataView();
+    setCollectionSpecificVariables();
     setTimeout(() => {
-      app.currentIndex = 0;
-      populateEditionFields();
-      setupResources();
-      setupComponents();
-      populateComponents();
-      updateDataView();
-      checkForFileUpdate();
-      setGlobalVariables();
-      setupLangage();
       renderCardUsingTemplate(app, app.currentIndex, currentCollection.collectionInfo.visualGuide);
-      openScene("collectionEdition");
     }, 500);
   }
 }
 
 export function createNewCollection() {
+  console.log("> createNewCollection");
+
   const newUID = collectionsAvailable.length == 0 ? 0 : collectionsAvailable[collectionsAvailable.length - 1].collectionInfo.UID + 1;
   var dir = appDataFolder + "/collections/" + newUID;
 
@@ -239,11 +259,14 @@ export function createNewCollection() {
         }
       });
       setCurrentCollection(newUID);
+      openScene("collectionEdition");
     }, 500);
   }
 }
 
 export function deleteCurrentCollection() {
+  console.log("> deleteCurrentCollection");
+
   rimraf
     .rimraf(appDataFolder + "/collections/" + currentCollectionUID)
     .then(() => {
@@ -255,6 +278,8 @@ export function deleteCurrentCollection() {
 }
 
 export function duplicateCollection() {
+  console.log("> duplicateCollection");
+
   const newUID = collectionsAvailable.length == 0 ? 0 : collectionsAvailable[collectionsAvailable.length - 1].collectionInfo.UID + 1;
   var dir = appDataFolder + "/collections/" + newUID;
 
@@ -272,6 +297,8 @@ export function duplicateCollection() {
 }
 
 export function archiveCollection() {
+  console.log("> archiveCollection");
+
   currentCollection.collectionInfo.archived = !currentCollection.collectionInfo.archived;
   saveCollection(false, false);
   setCurrentCollection(-1);
@@ -280,6 +307,8 @@ export function archiveCollection() {
 }
 
 export function saveCollection(refreshAssets, reRenderCard) {
+  console.log("> saveCollection");
+
   var collInfo = currentCollection.collectionInfo;
 
   //ALTER THE DATA TO CURRENT DECK
@@ -301,7 +330,6 @@ export function saveCollection(refreshAssets, reRenderCard) {
 
   collInfo.lastSavingTime = Date.now();
 
-  setupCollectionDimensions();
   populateEditionFields();
 
   //SAVE CURRENT DECK IN FOLDER
@@ -326,6 +354,8 @@ export function saveCollection(refreshAssets, reRenderCard) {
 }
 
 export function setupCollectionDimensions() {
+  console.log("> setupCollectionDimensions");
+
   var coll = currentCollection.collectionInfo;
 
   switch (coll.elementFormat) {
@@ -436,6 +466,8 @@ export function addNewShape() {
 }
 
 function assignUIDToNewComponent() {
+  console.log("> assignUIDToNewComponent");
+
   currentCollection.template[currentCollection.template.length - 1].UID = currentCollection.collectionInfo.lastComponentIndex;
   currentCollection.collectionInfo.lastComponentIndex++;
   setupComponents();

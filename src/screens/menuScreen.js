@@ -13,7 +13,6 @@ import { changeColorScheme, changeLangage, currentPanel, openScene, setupLangage
 const $ = require("jquery");
 
 $("#homeBtn").on("click", () => {
-  getProjects();
   openScene("home");
 });
 
@@ -59,6 +58,7 @@ export function setupProjectSelectionPanel() {
             e.preventDefault();
             e.stopPropagation();
             setCurrentProject(project.UID);
+            openScene("projectEdition");
           });
 
         activeCol.append(btnElement);
@@ -79,10 +79,12 @@ export function setupProjectSelectionPanel() {
 
           archivedColContainer.toggleClass("active");
         });
-      // archivedColContainer.css("display", "flex");
+        
       let archivedCollectionsHeader = $("<div></div>").addClass("archivedCollectionsHeader");
       archivedCollectionsHeader.append($(`<img></img`).attr("src", `assets/btnIcons/archiveCollection.png`));
       archivedCollectionsHeader.append($("<span></span>").addClass("other_archivedProjects"));
+      archivedCollectionsHeader.append($("<span></span>").addClass("archivedSeparator"));
+      archivedCollectionsHeader.append($("<span></span>").text(">").addClass("archivedArrow"));
       archivedColContainer.append(archivedCollectionsHeader);
       $("#projectSelectionPanel").append(archivedColContainer);
 
@@ -97,6 +99,7 @@ export function setupProjectSelectionPanel() {
             e.preventDefault();
             e.stopPropagation();
             setCurrentProject(project.UID);
+            openSc("projectEdition");
           });
 
         archivedCol.append(btnElement);
@@ -168,6 +171,7 @@ export function setupProjectEditionPanel() {
             e.preventDefault();
             e.stopPropagation();
             setCurrentCollection(collection.collectionInfo.UID);
+            openScene("collectionEdition");
           });
 
         activeCol.append(btnElement);
@@ -206,6 +210,7 @@ export function setupProjectEditionPanel() {
             e.preventDefault();
             e.stopPropagation();
             setCurrentCollection(collection.collectionInfo.UID);
+            openScene("collectionEdition");
           });
 
         archivedCol.append(btnElement);

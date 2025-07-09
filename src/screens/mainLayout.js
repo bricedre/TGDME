@@ -3,8 +3,12 @@ import { currentCollection, currentProject } from "../core/collectionsManager.js
 import { populateComponents } from "../core/componentsManager.js";
 import { getFontList } from "../core/assetsManager.js";
 import { uiTexts } from "../translations.js";
+import { setGlobalVariables } from "../core/render.js";
+import { app } from "../app.js";
+// import { debounce } from "lodash";
 
 const $ = require("jquery");
+const lodash = require("lodash");
 
 export let currentPanel = "";
 let currentColorScheme = 0;
@@ -21,13 +25,12 @@ document.addEventListener("keyup", function (event) {
   }
 });
 
+const debouncedRender = lodash.debounce(() => generateCollectionBtn.click(), 300);
 allInputs.forEach((input) => {
   input.addEventListener("input", (e) => {
     populateComponents();
     checkOtherInputs(e.target.id, e.target.value);
-    if (input.type == "checkbox") {
-      generateCollectionBtn.click();
-    }
+    debouncedRender(); // Wait for user to stop typing
   });
 });
 
@@ -41,29 +44,51 @@ allSelects.forEach((select) => {
 // FUNCTIONS
 export function openScene(panelName) {
   if (panelName !== currentPanel) {
+    let lastPanel;
+    let nextPanel;
 
-    //Defaults
-    $(".panel").css("display", "none");
+    //FADE OUT
+    if (currentPanel !== "") {
+      switch (currentPanel) {
+        case "home":
+          lastPanel = $("#projectSelectionPanel");
+          break;
+        case "projectEdition":
+          lastPanel = $("#projectEditionPanel");
+          break;
+        case "collectionEdition":
+          lastPanel = $("#collectionEditionPanel");
+          break;
+      }
+
+      lastPanel.css("opacity", 0);
+      setTimeout(() => {
+        lastPanel.css("display", "none");
+      }, 500);
+    }
+
+    //HEADER & FOOTER
     $("#mainTitleDiv").removeClass("other_mainTitle");
     $("#mainTitleDiv").empty();
     $("#bottomBarDiv").css("display", "none");
 
     switch (panelName) {
       case "home":
+        nextPanel = $("#projectSelectionPanel");
         $("#mainTitleDiv").addClass("other_mainTitle");
-        $("#projectSelectionPanel").css("display", "flex");
         break;
 
       case "projectEdition":
         var projectBc = $("<span class='breadcrumbs'></span>").text(currentProject.projectName);
         $("#mainTitleDiv").append($("<span class='separatorBc'>></span>"), projectBc);
-        $("#projectEditionPanel").css("display", "flex");
+        nextPanel = $("#projectEditionPanel");
         break;
 
       case "collectionEdition":
         var projectBc = $("<span class='breadcrumbs'></span>")
           .text(currentProject.projectName)
-          .on("click", () => openScene("projectEdition")).css("cursor", "pointer");
+          .on("click", () => openScene("projectEdition"))
+          .css("cursor", "pointer");
         var collectionBc = $("<span class='breadcrumbs'></span>").text(currentCollection.collectionInfo.collectionName);
         $("#mainTitleDiv").append($("<span class='separatorBc'>></span>"), projectBc, $("<span class='separatorBc'>></span>"), collectionBc);
 
@@ -79,11 +104,21 @@ export function openScene(panelName) {
 
         updateElementsCounter();
 
-        $("#collectionEditionPanel").css("display", "flex");
+        nextPanel = $("#collectionEditionPanel");
 
         break;
     }
+
+    setTimeout(() => {
+      nextPanel.css("display", "flex");
+      setTimeout(() => {
+        nextPanel.css("opacity", 1);
+      }, 100)
+    }, 500);
+
     currentPanel = panelName;
+
+    setupLangage();
   }
 }
 
@@ -150,6 +185,7 @@ export function setupLangage() {
         if (textElements[1] != "") elementsToSetup.attr("title", textElements[1]);
       }
     } catch (e) {
+      console.log(e);
       elementsToSetup.text();
     }
   });
@@ -158,11 +194,12 @@ export function setupLangage() {
 getFontList();
 setColorScheme();
 setupLangage();
+// setGlobalVariables();
 openScene("home");
 
 setTimeout(() => {
   $(".blindfold").css("opacity", "0");
   setTimeout(() => {
     $(".blindfold").remove();
-  }, 1000);
-}, 1000);
+  }, 500);
+}, 500);

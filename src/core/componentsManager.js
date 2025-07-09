@@ -8,6 +8,9 @@ import { moveComponent } from "../screens/editionScreen.js";
 const $ = require("jquery");
 
 export function setupComponents() {
+
+  console.log("> setupComponents")
+
   $("#templateItemsDiv").empty();
 
   if (currentCollection.template.length > 0) {
@@ -27,6 +30,10 @@ export function setupComponents() {
 }
 
 export function createNewComponent(item, itemIndex) {
+
+  console.log("> createNewComponent")
+
+
   let itemAccordion = document.createElement("button");
   itemAccordion.id = item.UID;
   itemAccordion.classList.add("accordion");
@@ -206,7 +213,7 @@ export function createNewComponent(item, itemIndex) {
       parameterInput.addEventListener("input", (e) => {
         try {
           currentCollection.template[itemIndex][param.refValue].value = e.target.value;
-        } catch {
+        } catch (e){
           currentCollection.template[itemIndex][param.refValue] = {
             value: e.target.value,
             type: "0",
@@ -223,7 +230,7 @@ export function createNewComponent(item, itemIndex) {
       parameterCBInput.addEventListener("input", (e) => {
         try {
           currentCollection.template[itemIndex][param.refValue]["valueCB"] = e.target.value;
-        } catch {
+        } catch (e) {
           currentCollection.template[itemIndex][param.refValue] = {
             value: "",
             valueCB: e.target.value,
@@ -435,6 +442,9 @@ export function createNewComponent(item, itemIndex) {
 }
 
 export function populateComponents() {
+
+  console.log("> populateComponents")
+
   let allAccordions = templateItemsDiv.querySelectorAll(".accordion");
 
   currentCollection.template.forEach((item, index) => {

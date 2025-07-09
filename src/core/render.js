@@ -7,13 +7,23 @@ import { openLocation } from "../screens/editionScreen.js";
 const fs = require("fs");
 
 //GLOBAL VARIABLES THAT CAN BE USED IN EVALUATED VALUES
-let W, L, H, CENTER, CENTRE, CORNER, COIN, LEFT, GAUCHE, RIGHT, DROITE;
+let W, L, H;
+let CENTER, CENTRE, CORNER, COIN, LEFT, GAUCHE, RIGHT, DROITE;
 
-export function setGlobalVariables() {
+export function setCollectionSpecificVariables() {
+
+  console.log("> setCollectionSpecificVariables")
+  
   let currentCollectionInfo = currentCollection.collectionInfo;
   W = currentCollectionInfo.W * currentCollectionInfo.resolution;
   L = currentCollectionInfo.W * currentCollectionInfo.resolution;
   H = currentCollectionInfo.H * currentCollectionInfo.resolution;
+}
+
+export function setGlobalVariables() {
+
+  console.log("> setGlobalVariables")
+
   CENTER = app.CENTER;
   CENTRE = app.CENTER;
   CORNER = app.CORNER;
@@ -25,6 +35,9 @@ export function setGlobalVariables() {
 }
 
 export function renderComponent(p5, componentType, componentIndex, elementIndex) {
+
+  console.log("> renderComponent")
+
   let currentTemplate = currentCollection.template;
 
   let componentData = currentTemplate[componentIndex];
@@ -713,25 +726,28 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
 
     //! IMAGE / STRIP
     else if (componentType == "IMAGE") {
-      var _totalWidth = (_elementsList.length * Math.min(_width, _spacingX) + (_elementsList.length - 2) * _spacingX) / 2;
-      var _totalHeight = (_elementsList.length * Math.min(_height, _spacingY) + (_elementsList.length - 1) * _spacingY) / 2;
 
-      p5.card.imageMode(_anchor);
+      if(_imgs.length > 0){
 
-      var passes = 1;
-      if (_shadowOpacity > 0) passes = 2;
+        var _totalWidth = (_elementsList.length * Math.min(_width, _spacingX) + (_elementsList.length - 2) * _spacingX) / 2;
+        var _totalHeight = (_elementsList.length * Math.min(_height, _spacingY) + (_elementsList.length - 1) * _spacingY) / 2;
+        
+        p5.card.imageMode(_anchor);
+        
+        var passes = 1;
+        if (_shadowOpacity > 0) passes = 2;
+        
+        for (let i = 0; i < _elementsList.length; i++) {
+          for (var pass = 0; pass < passes; pass++) {
+            if (pass == 0 && _shadowOpacity > 0) {
+              p5.card.tint(_shadowColor + zeroPad(Math.floor(_shadowOpacity * 255).toString(16), 2));
+              p5.card.translate(_shadowOffsetX, _shadowOffsetY);
+            } else {
+              p5.card.tint(_tint + zeroPad(Math.floor(_opacity * 255).toString(16), 2));
+            }
 
-      for (let i = 0; i < _elementsList.length; i++) {
-        for (var pass = 0; pass < passes; pass++) {
-          if (pass == 0 && _shadowOpacity > 0) {
-            p5.card.tint(_shadowColor + zeroPad(Math.floor(_shadowOpacity * 255).toString(16), 2));
-            p5.card.translate(_shadowOffsetX, _shadowOffsetY);
-          } else {
-            p5.card.tint(_tint + zeroPad(Math.floor(_opacity * 255).toString(16), 2));
-          }
-
-          if (_listAnchor == p5.CENTER) {
-            p5.card.image(
+            if (_listAnchor == p5.CENTER) {
+              p5.card.image(
               _imgs[i],
               _elementsList.length > 1 ? (_spacingX > 0 ? i * _spacingX - _totalWidth / 2 : 0) + (_style == "alternate" ? (i % 2 == 0 ? _offsetX : -_offsetX) : 0) : 0,
               _elementsList.length > 1 ? (_spacingY > 0 ? i * _spacingY - _totalHeight / 2 : 0) + (_style == "alternate" ? (i % 2 == 0 ? _offsetY : -_offsetY) : 0) : 0,
@@ -755,17 +771,18 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
               _height
             );
           }
-
+          
           if (pass == 0 && _shadowOpacity > 0) {
             p5.card.translate(-_shadowOffsetX, -_shadowOffsetY);
           }
         }
       }
     }
+    }
 
     p5.card.pop();
   } catch (e) {
-    // console.log(e);
+    console.error(e);
     if (componentType == "IMAGE" && _elementsList[0] != "") {
       p5.card.image(errorImage, 0, 0, _width, _height);
     }
@@ -841,9 +858,9 @@ function getActualValue(refValue, elementIndex, dft) {
         finalValue = fixedValue;
       }
 
-      if (finalValue.charAt(0) == ":") finalValue = eval(finalValue.substring(1));
+      if (finalValue != "" && finalValue?.charAt(0) == ":") finalValue = eval(finalValue.substring(1));
     } catch (e) {
-      // console.log(e);
+      console.log(e);
     }
   }
 
@@ -932,6 +949,9 @@ export function generatePages() {
 }
 
 export function renderCardUsingTemplate(p, elementIndex, guide, finalRender = false) {
+
+  console.log("> renderCardUsingTemplate")
+
   p.card.resetMatrix();
 
   //WHITE BG BY DEFAULT

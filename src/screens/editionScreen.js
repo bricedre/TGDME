@@ -1,5 +1,18 @@
 import { app } from "../app.js";
-import { addNewImage, addNewShape, addNewText, addNewTitle, appDataFolder, archiveCollection, currentCollection, currentCollectionUID, currentProjectUID, deleteCurrentCollection, duplicateCollection, saveCollection } from "../core/collectionsManager.js";
+import {
+  addNewImage,
+  addNewShape,
+  addNewText,
+  addNewTitle,
+  appDataFolder,
+  archiveCollection,
+  currentCollection,
+  currentCollectionUID,
+  currentProjectUID,
+  deleteCurrentCollection,
+  duplicateCollection,
+  saveCollection,
+} from "../core/collectionsManager.js";
 import { generatePages, renderCardUsingTemplate } from "../core/render.js";
 import { allSystemFonts, loadAssets } from "../core/assetsManager.js";
 import { setupComponents } from "../core/componentsManager.js";
@@ -44,7 +57,10 @@ $("#addTextComponentBtn").on("click", () => addNewText());
 $("#addTitleComponentBtn").on("click", () => addNewTitle());
 
 $("#modifyDataBtn").on("click", () => openLocation(`${appDataFolder}/projects/${currentProjectUID}/collections/${currentCollectionUID}/data.xlsx`));
-$("#updateDataBtn").on("click", () => checkForFileUpdate());
+$("#updateDataBtn").on("click", () => {
+  checkForFileUpdate();
+  updateDataView();
+});
 
 $("#printPagesBtn").on("click", () => generatePages());
 $("#showRendersBtn").on("click", () => openLocation(`${appDataFolder}/projects/${currentProjectUID}/renders`));
@@ -116,7 +132,6 @@ export function populateEditionFields() {
 }
 
 export function checkOtherInputs(eventTargetId, eventTargetValue) {
-
   switch (eventTargetId) {
     case "elementFormatSelect":
       if (eventTargetValue === "custom") {
@@ -176,11 +191,11 @@ export function openLocation(folder) {
 }
 
 function turnCanvas() {
-  canvasRotation = canvasRotation+90;
-  $("#canvasDiv main").css("rotate", canvasRotation+"deg");
+  canvasRotation = canvasRotation + 90;
+  $("#canvasDiv main").css("rotate", canvasRotation + "deg");
 }
 
 function scaleCanvas(sign) {
-  canvasScale = (canvasScale + 0.1*sign);
+  canvasScale = canvasScale + 0.1 * sign;
   $("#canvasDiv main").css("scale", canvasScale);
 }
