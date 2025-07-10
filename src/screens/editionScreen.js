@@ -1,10 +1,9 @@
 import { app } from "../app.js";
 import {
-  appDataFolder,
   archiveCollection,
+  currCollInfo,
   currentCollection,
   currentCollectionUID,
-  currentProjectUID,
   deleteCurrentCollection,
   duplicateCollection,
   saveCollection,
@@ -13,6 +12,7 @@ import { generatePages, renderCardUsingTemplate } from "../core/render.js";
 import { allSystemFonts, loadAssets } from "../core/assetsManager.js";
 import { addNewImage, addNewShape, addNewText, addNewTitle, setupComponents } from "../core/componentsManager.js";
 import { checkForFileUpdate, updateDataView } from "../core/elementsManager.js";
+import { appDataFolder, currentProjectUID } from "../core/projectsManager.js";
 
 const $ = require("jquery");
 
@@ -105,26 +105,26 @@ export function updateElementsCounter() {
 
 export function goToOtherCard(value) {
   app.currentIndex = Math.min(Math.max(parseInt(app.currentIndex + value), 0), currentCollection.elements.data.length - 1);
-  renderCardUsingTemplate(app, app.currentIndex, currentCollection.collectionInfo.visualGuide);
+  renderCardUsingTemplate(app, app.currentIndex, currCollInfo.visualGuide);
   updateElementsCounter();
   updateDataView();
 }
 
 export function populateEditionFields() {
-  collectionNameInput.value = currentCollection.collectionInfo.collectionName;
-  elementFormatSelect.value = currentCollection.collectionInfo.elementFormat;
-  elementWidthInput.value = currentCollection.collectionInfo.W;
-  elementHeightInput.value = currentCollection.collectionInfo.H;
-  visualGuideSelect.value = currentCollection.collectionInfo.visualGuide;
+  collectionNameInput.value = currCollInfo.collectionName;
+  elementFormatSelect.value = currCollInfo.elementFormat;
+  elementWidthInput.value = currCollInfo.W;
+  elementHeightInput.value = currCollInfo.H;
+  visualGuideSelect.value = currCollInfo.visualGuide;
 
-  pageExportFormatSelect.value = currentCollection.collectionInfo.pageExportFormat;
-  maxElementQty.value = currentCollection.collectionInfo.maxElementQty;
-  pageFormatSelect.value = currentCollection.collectionInfo.pageFormat;
-  pageOrientationSelect.value = currentCollection.collectionInfo.pageOrientation;
-  pageWidthInput.value = currentCollection.collectionInfo.pageWidth;
-  pageHeightInput.value = currentCollection.collectionInfo.pageHeight;
-  pageResolutionInput.value = currentCollection.collectionInfo.resolution;
-  cuttingHelpInput.checked = currentCollection.collectionInfo.cuttingHelp;
+  pageExportFormatSelect.value = currCollInfo.pageExportFormat;
+  maxElementQty.value = currCollInfo.maxElementQty;
+  pageFormatSelect.value = currCollInfo.pageFormat;
+  pageOrientationSelect.value = currCollInfo.pageOrientation;
+  pageWidthInput.value = currCollInfo.pageWidth;
+  pageHeightInput.value = currCollInfo.pageHeight;
+  pageResolutionInput.value = currCollInfo.resolution;
+  cuttingHelpInput.checked = currCollInfo.cuttingHelp;
 }
 
 export function checkOtherInputs(eventTargetId, eventTargetValue) {

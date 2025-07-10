@@ -1,7 +1,7 @@
 import { updateDataView } from "./elementsManager.js";
 
 import { IMAGE_parameters, TEXT_parameters, SHAPE_parameters, TITLE_parameters } from "./componentsUI.js";
-import { currentCollection } from "./collectionsManager.js";
+import { currCollInfo, currentCollection } from "./collectionsManager.js";
 import { allSystemFonts } from "./assetsManager.js";
 import { moveComponent } from "../screens/editionScreen.js";
 
@@ -115,8 +115,8 @@ export function createNewComponent(item, itemIndex) {
     let indexWhereToDuplicate = currentCollection.template.indexOf(componentToDuplicate) + 1;
 
     let newComponent = JSON.parse(JSON.stringify(componentToDuplicate));
-    newComponent.UID = currentCollection.collectionInfo.lastComponentIndex;
-    currentCollection.collectionInfo.lastComponentIndex++;
+    newComponent.UID = currCollInfo.lastComponentIndex;
+    currCollInfo.lastComponentIndex++;
 
     currentCollection.template.splice(indexWhereToDuplicate, 0, newComponent);
     setupComponents();
@@ -473,8 +473,8 @@ export function addNewShape() {
 
 function assignUIDToNewComponent() {
   console.log("> assignUIDToNewComponent");
-  currentCollection.template[currentCollection.template.length - 1].UID = currentCollection.collectionInfo.lastComponentIndex;
-  currentCollection.collectionInfo.lastComponentIndex++;
+  currentCollection.template[currentCollection.template.length - 1].UID = currCollInfo.lastComponentIndex;
+  currCollInfo.lastComponentIndex++;
 }
 
 export function populateComponents() {

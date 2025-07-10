@@ -1,9 +1,10 @@
-import { appDataFolder, currentCollection, currentProjectUID } from "./collectionsManager.js";
+import { currCollInfo, currentCollection } from "./collectionsManager.js";
 const { jsPDF } = require("jspdf");
 import { app } from "../app.js";
 import { assetsLibrary, errorImage } from "./assetsManager.js";
 import { IMAGE_parameters, TEXT_parameters, SHAPE_parameters } from "./componentsUI.js";
 import { openLocation } from "../screens/editionScreen.js";
+import { appDataFolder, currentProjectUID } from "./projectsManager.js";
 const fs = require("fs");
 
 //GLOBAL VARIABLES THAT CAN BE USED IN EVALUATED VALUES
@@ -14,10 +15,9 @@ export function setCollectionSpecificVariables() {
 
   console.log("> setCollectionSpecificVariables")
   
-  let currentCollectionInfo = currentCollection.collectionInfo;
-  W = currentCollectionInfo.W * currentCollectionInfo.resolution;
-  L = currentCollectionInfo.W * currentCollectionInfo.resolution;
-  H = currentCollectionInfo.H * currentCollectionInfo.resolution;
+  W = currCollInfo.W * currCollInfo.resolution;
+  L = currCollInfo.W * currCollInfo.resolution;
+  H = currCollInfo.H * currCollInfo.resolution;
 }
 
 export function setGlobalVariables() {
@@ -125,13 +125,13 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
           } else {
             p5.card.fill(_color + zeroPad(Math.floor(_opacity * 255).toString(16), 2));
             p5.card.stroke(_borderColor + Math.floor(_borderOpacity * 255).toString(16));
-            if (_borderWeight != 0) p5.card.strokeWeight(_borderWeight * currentCollection.collectionInfo.resolution * 0.01);
+            if (_borderWeight != 0) p5.card.strokeWeight(_borderWeight * currCollInfo.resolution * 0.01);
             else p5.card.noStroke();
           }
         } else {
           p5.card.fill(_color + zeroPad(Math.floor(_opacity * 255).toString(16), 2));
           p5.card.stroke(_borderColor + Math.floor(_borderOpacity * 255).toString(16));
-          if (_borderWeight != 0) p5.card.strokeWeight(_borderWeight * currentCollection.collectionInfo.resolution * 0.01);
+          if (_borderWeight != 0) p5.card.strokeWeight(_borderWeight * currCollInfo.resolution * 0.01);
           else p5.card.noStroke();
         }
 
@@ -653,7 +653,7 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
       p5.card.noStroke();
       p5.card.textAlign(_textAnchorHori, p5.CENTER);
       p5.card.textFont(_font);
-      p5.card.textSize(_size * currentCollection.collectionInfo.H * currentCollection.collectionInfo.resolution * 0.02);
+      p5.card.textSize(_size * currCollInfo.H * currCollInfo.resolution * 0.02);
 
       if (_shadowOpacity > 0) {
         p5.card.fill(_shadowColor + zeroPad(Math.floor(_shadowOpacity * 255).toString(16), 2));
@@ -685,7 +685,7 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
         }
       });
 
-      let interline = _interline * _size * currentCollection.collectionInfo.H * currentCollection.collectionInfo.resolution * 0.02;
+      let interline = _interline * _size * currCollInfo.H * currCollInfo.resolution * 0.02;
 
       let interlineQty = 0.5;
       if(_textAnchorVert == "TOP") interlineQty = 0;
@@ -869,15 +869,15 @@ function getActualValue(refValue, elementIndex, dft) {
 
 // GENERATE PAGES OF CARDS
 export function generatePages() {
-  var W = currentCollection.collectionInfo.W * currentCollection.collectionInfo.resolution;
-  var H = currentCollection.collectionInfo.H * currentCollection.collectionInfo.resolution;
-  var colCount = currentCollection.collectionInfo.colCount;
-  var rowCount = currentCollection.collectionInfo.rowCount;
-  var pageVerso = currentCollection.collectionInfo.pageVerso;
-  var marginX = currentCollection.collectionInfo.marginX;
-  var marginY = currentCollection.collectionInfo.marginY;
-  var pageWidth = currentCollection.collectionInfo.pageWidth * currentCollection.collectionInfo.resolution;
-  var pageHeight = currentCollection.collectionInfo.pageHeight * currentCollection.collectionInfo.resolution;
+  var W = currCollInfo.W * currCollInfo.resolution;
+  var H = currCollInfo.H * currCollInfo.resolution;
+  var colCount = currCollInfo.colCount;
+  var rowCount = currCollInfo.rowCount;
+  var pageVerso = currCollInfo.pageVerso;
+  var marginX = currCollInfo.marginX;
+  var marginY = currCollInfo.marginY;
+  var pageWidth = currCollInfo.pageWidth * currCollInfo.resolution;
+  var pageHeight = currCollInfo.pageHeight * currCollInfo.resolution;
 
   var pages = [];
 
@@ -888,22 +888,22 @@ export function generatePages() {
 
   for (let i = 0; i < currentCollection.elements.data.length; i++) {
     var elementIndex = i;
-    actualIndex = i % Math.min(currentCollection.elements.data.length, currentCollection.collectionInfo.maxElementQty);
+    actualIndex = i % Math.min(currentCollection.elements.data.length, currCollInfo.maxElementQty);
 
     if (actualIndex == 0) {
       currentPage = app.createGraphics(pageWidth, pageHeight);
       currentPage.background(255);
     }
 
-    renderCardUsingTemplate(app, elementIndex, currentCollection.collectionInfo.visualGuide, true);
+    renderCardUsingTemplate(app, elementIndex, currCollInfo.visualGuide, true);
     currentPage.image(app.card, Math.round(marginX + (actualIndex % colCount) * W), Math.round(marginY + Math.floor(actualIndex / colCount) * H), W, H);
 
-    if (actualIndex === currentCollection.collectionInfo.maxElementQty - 1 || i === elementsLength - 1) {
+    if (actualIndex === currCollInfo.maxElementQty - 1 || i === elementsLength - 1) {
       pages.push(currentPage);
     }
   }
 
-  var coll = currentCollection.collectionInfo;
+  var coll = currCollInfo;
   var collectionName = coll.collectionName;
 
   let _date = new Date(Date.now());
@@ -920,7 +920,7 @@ export function generatePages() {
   if (_second.length < 2) _second = "0" + _second;
   let generationDate = `${_year}${_month}${_day}${_hour}${_minute}${_second}`;
 
-  if (currentCollection.collectionInfo.pageExportFormat == "pdf") {
+  if (currCollInfo.pageExportFormat == "pdf") {
     let pageGeneration;
 
     pageGeneration = new jsPDF("p", "px", [coll.pageWidth * coll.resolution, coll.pageHeight * coll.resolution], true);
@@ -931,7 +931,7 @@ export function generatePages() {
     });
 
     pageGeneration.save(`${appDataFolder}/projects/${currentProjectUID}/renders/${generationDate}-${collectionName}.pdf`);
-  } else if (currentCollection.collectionInfo.pageExportFormat == "jpg") {
+  } else if (currCollInfo.pageExportFormat == "jpg") {
     pages.forEach((page, index) => {
       // Get the DataUrl from the Canvas
       const url = page.canvas.toDataURL("image/jpg", 0.8);
@@ -944,7 +944,7 @@ export function generatePages() {
     });
   }
 
-  renderCardUsingTemplate(app, app.currentIndex, currentCollection.collectionInfo.visualGuide);
+  renderCardUsingTemplate(app, app.currentIndex, currCollInfo.visualGuide);
   openLocation(`${appDataFolder}/projects/${currentProjectUID}/renders`);
 }
 
@@ -966,14 +966,14 @@ export function renderCardUsingTemplate(p, elementIndex, guide, finalRender = fa
     }
 
     //OVERLAYS
-    if (finalRender && currentCollection.collectionInfo.cuttingHelp) {
+    if (finalRender && currCollInfo.cuttingHelp) {
       p.card.noFill();
       p.card.stroke(0, 80);
       p.card.strokeWeight(2);
-      p.card.rect(0, 0, currentCollection.collectionInfo.W*currentCollection.collectionInfo.resolution, currentCollection.collectionInfo.H*currentCollection.collectionInfo.resolution);
+      p.card.rect(0, 0, currCollInfo.W*currCollInfo.resolution, currCollInfo.H*currCollInfo.resolution);
     }
 
-    if (!finalRender && currentCollection.collectionInfo.visualGuide != "none") {
+    if (!finalRender && currCollInfo.visualGuide != "none") {
       renderVisualGuide(p, guide);
     }
   }
@@ -985,8 +985,8 @@ export function renderCardUsingTemplate(p, elementIndex, guide, finalRender = fa
 }
 
 function renderVisualGuide(p, guide) {
-  var W = currentCollection.collectionInfo.W * currentCollection.collectionInfo.resolution;
-  var H = currentCollection.collectionInfo.H * currentCollection.collectionInfo.resolution;
+  var W = currCollInfo.W * currCollInfo.resolution;
+  var H = currCollInfo.H * currCollInfo.resolution;
 
   p.card.resetMatrix();
   p.card.stroke(255, 0, 0, 100);

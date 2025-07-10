@@ -1,14 +1,16 @@
 import { checkOtherInputs, updateElementsCounter } from "./editionScreen.js";
-import { currentCollection, currentProject } from "../core/collectionsManager.js";
+import { currCollInfo, currentCollection } from "../core/collectionsManager.js";
 import { populateComponents } from "../core/componentsManager.js";
 import { getFontList } from "../core/assetsManager.js";
 import { uiTexts } from "../translations.js";
 import { setGlobalVariables } from "../core/render.js";
 import { app } from "../app.js";
-// import { debounce } from "lodash";
+import { currentProject } from "../core/projectsManager.js";
 
 const $ = require("jquery");
 const lodash = require("lodash");
+const fs = require("fs").promises;
+const fs2 = require("fs");
 
 export let currentPanel = "";
 let currentColorScheme = 0;
@@ -42,6 +44,35 @@ allSelects.forEach((select) => {
 });
 
 // FUNCTIONS
+export async function getFolderContents(path, fileToExplore) {
+  console.log("> getFolderContents", fileToExplore);
+
+  let _content;
+
+  try {
+    const folderNames = fs2
+      .readdirSync(path, { withFileTypes: true })
+      .filter((dirent) => dirent.isDirectory())
+      .map((dirent) => dirent.name)
+      .sort((a, b) => {
+        return a - b;
+      });
+
+    _content = [];
+
+    // Use a for loop to process each folder sequentially
+    for (const folder of folderNames) {
+      const data = await fs.readFile(`${path}/${folder}/${fileToExplore}`);
+      _content.push(JSON.parse(data));
+    }
+  } catch (e) {
+    console.log(e);
+    _content = [];
+  }
+
+  return _content;
+}
+
 export function openScene(panelName) {
   if (panelName !== currentPanel) {
     let lastPanel;
@@ -89,7 +120,7 @@ export function openScene(panelName) {
           .text(currentProject.projectName)
           .on("click", () => openScene("projectEdition"))
           .css("cursor", "pointer");
-        var collectionBc = $("<span class='breadcrumbs'></span>").text(currentCollection.collectionInfo.collectionName);
+        var collectionBc = $("<span class='breadcrumbs'></span>").text(currCollInfo.collectionName);
         $("#mainTitleDiv").append($("<span class='separatorBc'>></span>"), projectBc, $("<span class='separatorBc'>></span>"), collectionBc);
 
         $("#bottomBarDiv").css("display", "flex");
@@ -99,8 +130,8 @@ export function openScene(panelName) {
         firstRadio.checked = true;
 
         //Hide archive buttons depending on state
-        $("#unarchiveCollectionBtn").css("display", currentCollection.collectionInfo.archived ? "flex" : "none");
-        $("#archiveCollectionBtn").css("display", currentCollection.collectionInfo.archived ? "none" : "flex");
+        $("#unarchiveCollectionBtn").css("display", currCollInfo.archived ? "flex" : "none");
+        $("#archiveCollectionBtn").css("display", currCollInfo.archived ? "none" : "flex");
 
         updateElementsCounter();
 
@@ -113,7 +144,7 @@ export function openScene(panelName) {
       nextPanel.css("display", "flex");
       setTimeout(() => {
         nextPanel.css("opacity", 1);
-      }, 100)
+      }, 100);
     }, 500);
 
     currentPanel = panelName;
@@ -194,7 +225,6 @@ export function setupLangage() {
 getFontList();
 setColorScheme();
 setupLangage();
-// setGlobalVariables();
 openScene("home");
 
 setTimeout(() => {

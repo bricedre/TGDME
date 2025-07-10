@@ -1,14 +1,10 @@
 import {
   collectionsAvailable,
   createNewCollection,
-  currentCollectionUID,
-  getCollections,
-  getProjects,
-  projectsAvailable,
   setCurrentCollection,
-  setCurrentProject,
 } from "../core/collectionsManager.js";
-import { changeColorScheme, changeLangage, currentPanel, openScene, setupLangage } from "./mainLayout.js";
+import { projectsAvailable, setCurrentProject } from "../core/projectsManager.js";
+import { changeColorScheme, changeLangage, openScene, setupLangage } from "./mainLayout.js";
 
 const $ = require("jquery");
 

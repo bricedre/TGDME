@@ -1,8 +1,8 @@
 const fs = require("fs");
-const fontList = require("font-list");
 
-// import { exec } from "child_process";
-import { appDataFolder, currentCollection, currentCollectionUID, currentProjectUID } from "./collectionsManager.js";
+
+import { currentCollectionUID} from "./collectionsManager.js";
+import { appDataFolder, currentProjectUID } from "./projectsManager.js";
 
 export let allSystemFonts;
 export let assetsLibrary = {};
@@ -109,6 +109,8 @@ function getFiles(dir, files = []) {
 }
 
 export async function getFontList() {
+
+  const fontList = require("font-list");
 
   console.log("> getFontList")
 

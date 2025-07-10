@@ -1,6 +1,7 @@
 import { app } from "../app.js";
-import { appDataFolder, currentCollection, currentCollectionUID, currentProjectUID } from "./collectionsManager.js";
+import { currentCollection, currentCollectionUID } from "./collectionsManager.js";
 import { updateElementsCounter } from "../screens/editionScreen.js";
+import { appDataFolder, currentProjectUID } from "./projectsManager.js";
 
 
 const $ = require("jquery");

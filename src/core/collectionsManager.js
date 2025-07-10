@@ -1,144 +1,27 @@
 import { app } from "../app.js";
-import { checkOtherInputs, populateEditionFields, updateElementsCounter } from "../screens/editionScreen.js";
-import { openScene, setupLangage } from "../screens/mainLayout.js";
+import { populateEditionFields } from "../screens/editionScreen.js";
+import { getFolderContents, openScene } from "../screens/mainLayout.js";
 
-import { getFontList, loadAssets } from "./assetsManager.js";
+import { loadAssets } from "./assetsManager.js";
 import { renderCardUsingTemplate, setCollectionSpecificVariables } from "./render.js";
-import { setupResources } from "./assetsManager.js";
 import { populateComponents, setupComponents } from "./componentsManager.js";
 import { loadDataFile, updateDataView } from "./elementsManager.js";
-import { setupProjectEditionPanel, setupProjectSelectionPanel } from "../screens/menuScreen.js";
+import { setupProjectEditionPanel } from "../screens/menuScreen.js";
 import { collectionTemplate } from "./collectionTemplate.js";
+import { appDataFolder, currentProjectUID } from "./projectsManager.js";
 
 const fs = require("fs").promises;
-const path = require("path");
 const rimraf = require("rimraf");
 const fsExtra = require("fs-extra");
 const fs2 = require("fs");
 const XLSX = require("xlsx");
-const getAppDataPath = require("appdata-path");
 
-export let projectsAvailable = [];
-export let currentProjectUID = -1;
-export let currentProject;
 
 export let collectionsAvailable = [];
 export let currentCollectionUID = -1;
 export let currentCollection;
+export let currCollInfo;
 
-export let appDataFolder;
-
-getAppDataFolder();
-
-async function getAppDataFolder() {
-  console.log("> getAppDataFolder");
-
-  let _appDataFolder = getAppDataPath();
-
-  //First launch
-  if (!fs2.existsSync(_appDataFolder + "/Cabane a Protos")) {
-    mkdirSync(_appDataFolder + "/Cabane a Protos");
-  }
-
-  appDataFolder = _appDataFolder + "/Cabane a Protos";
-
-  if (!fs2.existsSync(appDataFolder + "/projects")) {
-    patchIfNotUsingProjectSystem();
-  }
-
-  getProjects();
-}
-
-async function patchIfNotUsingProjectSystem() {
-  console.log("> patchIfNotUsingProjectSystem");
-
-  if (confirm("NOUVELLE FEATURE - LES PROJETS : L'application va mettre vos données en conformité et s'éteindre d'elle-même. Redémarrez-la ensuite.")) {
-    await fs.mkdir(appDataFolder + "/projects");
-
-    await copyDirectoryRecursive(appDataFolder + "/collections", appDataFolder + "/projects");
-
-    const projectsAvailable = await fs.readdir(appDataFolder + "/projects", { withFileTypes: true });
-    const projectDirs = projectsAvailable.filter((dirent) => dirent.isDirectory());
-
-    for (const proj of projectDirs) {
-      const projectPath = path.join(appDataFolder, "projects", proj.name);
-      const collectionsPath = path.join(projectPath, "collections");
-      const collection0Path = path.join(collectionsPath, "0");
-
-      await fs.mkdir(collectionsPath, { recursive: true });
-      await fs.mkdir(collection0Path);
-
-      const originalCollectionPath = path.join(projectPath, "collection.json");
-      const collectionData = await fs.readFile(originalCollectionPath, "utf8");
-      const collectionJson = JSON.parse(collectionData);
-      const _collectionInfo = collectionJson.collectionInfo;
-
-      const _projectTemplate = {
-        UID: _collectionInfo.UID,
-        projectName: _collectionInfo.collectionName,
-        lastSavingTime: _collectionInfo.lastSavingTime,
-        archived: _collectionInfo.archived,
-      };
-
-      const projectJsonPath = path.join(projectPath, "project.json");
-      await fs.writeFile(projectJsonPath, JSON.stringify(_projectTemplate, null, 2));
-
-      const filesToMove = [
-        { from: "collection.json", to: "collections/0/collection.json" },
-        { from: "assets", to: "collections/0/assets" },
-        { from: "data.xlsx", to: "collections/0/data.xlsx" },
-      ];
-
-      for (const file of filesToMove) {
-        const fromPath = path.join(projectPath, file.from);
-        const toPath = path.join(projectPath, file.to);
-        await fs.rename(fromPath, toPath);
-      }
-
-      const movedCollectionPath = path.join(projectPath, "collections", "0", "collection.json");
-      const movedCollectionData = await fs.readFile(movedCollectionPath, "utf8");
-      const movedCollection = JSON.parse(movedCollectionData);
-      movedCollection.collectionInfo.UID = "0";
-      await fs.writeFile(movedCollectionPath, JSON.stringify(movedCollection, null, 2));
-    }
-
-    await fs.rmdir(appDataFolder + "/collections", { recursive: true });
-
-    window.close();
-  }
-}
-
-// Helper function to copy directory recursively
-async function copyDirectoryRecursive(src, dest) {
-  console.log("> copyDirectoryRecursive");
-
-  try {
-    await fs.mkdir(dest, { recursive: true });
-
-    const entries = await fs.readdir(src, { withFileTypes: true });
-
-    for (const entry of entries) {
-      const srcPath = path.join(src, entry.name);
-      const destPath = path.join(dest, entry.name);
-
-      if (entry.isDirectory()) {
-        await copyDirectoryRecursive(srcPath, destPath);
-      } else {
-        await fs.copyFile(srcPath, destPath);
-      }
-    }
-  } catch (error) {
-    console.error(`Error copying directory ${src} to ${dest}:`, error);
-    throw error;
-  }
-}
-
-export async function getProjects() {
-  console.log("> getProjects");
-
-  projectsAvailable = await getFolderContents(`${appDataFolder}/projects`, "project.json");
-  setupProjectSelectionPanel();
-}
 
 export async function getCollections() {
   console.log("> getCollections");
@@ -147,56 +30,17 @@ export async function getCollections() {
   setupProjectEditionPanel();
 }
 
-export async function getFolderContents(path, fileToExplore) {
-  console.log("> getFolderContents", fileToExplore);
-
-  let _content;
-
-  try {
-    const folderNames = fs2
-      .readdirSync(path, { withFileTypes: true })
-      .filter((dirent) => dirent.isDirectory())
-      .map((dirent) => dirent.name)
-      .sort((a, b) => {
-        return a - b;
-      });
-
-    _content = [];
-
-    // Use a for loop to process each folder sequentially
-    for (const folder of folderNames) {
-      const data = await fs.readFile(`${path}/${folder}/${fileToExplore}`);
-      _content.push(JSON.parse(data));
-    }
-  } catch (e) {
-    console.log(e);
-    _content = [];
-  }
-
-  return _content;
-}
-
-export function setCurrentProject(projectUID) {
-  console.log("> setCurrentProject", projectUID, currentProjectUID);
-
-  if (projectUID !== currentProjectUID) {
-    currentProjectUID = projectUID;
-    currentProject = projectsAvailable.filter((proj) => proj.UID == projectUID)[0];
-    getCollections();
-  }
-}
-
 export function setCurrentCollection(collectionUID) {
   currentCollectionUID = collectionUID;
   if (currentCollectionUID != -1) {
-    currentCollection = collectionsAvailable.filter((coll) => coll.collectionInfo.UID == collectionUID)[0];
 
-    var coll = currentCollection.collectionInfo;
+    currentCollection = collectionsAvailable.filter((coll) => coll.collectionInfo.UID == collectionUID)[0];
+    currCollInfo = currentCollection.collectionInfo;
 
     loadAssets(app);
     setupCollectionDimensions();
 
-    app.setupCanvas(coll.W * coll.resolution, coll.H * coll.resolution, coll.pageWidth * coll.resolution, coll.pageHeight * coll.resolution);
+    app.setupCanvas(currCollInfo.W * currCollInfo.resolution, currCollInfo.H * currCollInfo.resolution, currCollInfo.pageWidth * currCollInfo.resolution, currCollInfo.pageHeight * currCollInfo.resolution);
 
     app.currentIndex = 0;
     populateEditionFields();
@@ -206,7 +50,7 @@ export function setCurrentCollection(collectionUID) {
     updateDataView();
     setCollectionSpecificVariables();
     setTimeout(() => {
-      renderCardUsingTemplate(app, app.currentIndex, currentCollection.collectionInfo.visualGuide);
+      renderCardUsingTemplate(app, app.currentIndex, currCollInfo.visualGuide);
     }, 500);
   }
 }
@@ -294,7 +138,7 @@ export function duplicateCollection() {
 
     setTimeout(() => {
       collectionsAvailable[collectionsAvailable.length - 1].collectionInfo.UID = newUID;
-      collectionsAvailable[collectionsAvailable.length - 1].collectionInfo.collectionName = "Copie de " + currentCollection.collectionInfo.collectionName;
+      collectionsAvailable[collectionsAvailable.length - 1].collectionInfo.collectionName = "Copie de " + currCollInfo.collectionName;
       var deckToSave = JSON.stringify(collectionsAvailable[collectionsAvailable.length - 1]);
       fs.writeFile(dir + "/collection.json", deckToSave, (err) => {
         if (err) {
@@ -311,7 +155,7 @@ export function duplicateCollection() {
 export function archiveCollection() {
   console.log("> archiveCollection");
 
-  currentCollection.collectionInfo.archived = !currentCollection.collectionInfo.archived;
+  currCollInfo.archived = !currCollInfo.archived;
   saveCollection(false, false);
   setCurrentCollection(-1);
   setTimeout(() => getCollections(), 300);
@@ -321,7 +165,7 @@ export function archiveCollection() {
 export function saveCollection(refreshAssets, reRenderCard) {
   console.log("> saveCollection");
 
-  var collInfo = currentCollection.collectionInfo;
+  var collInfo = currCollInfo;
 
   //ALTER THE DATA TO CURRENT DECK
   collInfo.collectionName = collectionNameInput.value;
@@ -368,7 +212,7 @@ export function saveCollection(refreshAssets, reRenderCard) {
 export function setupCollectionDimensions() {
   console.log("> setupCollectionDimensions");
 
-  var coll = currentCollection.collectionInfo;
+  var coll = currCollInfo;
 
   switch (coll.elementFormat) {
     case "pokerCard":
