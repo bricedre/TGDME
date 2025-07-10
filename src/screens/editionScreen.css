@@ -30,6 +30,10 @@ canvas {
 }
 
 #canvasDiv main {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
   rotate: 0deg;
   scale: 1;
   transition: all 0.3s ease-in-out;

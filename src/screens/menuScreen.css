@@ -33,25 +33,30 @@
 }
 
 #activeCollectionsDiv,
-#archivedCollectionsDiv {
+#archivedCollectionsDiv,
+#activeProjectsDiv,
+#archivedProjectsDiv {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 1rem;
   width: 100%;
 }
 
-#archivedCollectionsDiv {
+#archivedCollectionsDiv,
+#archivedProjectsDiv {
   margin-top: 1rem;
 }
 
-.archivedCollectionsHeader {
+.archivedCollectionsHeader,
+.archivedProjectsHeader {
   height: 2rem;
   display: flex;
   gap: 1rem;
   align-items: center;
 }
 
-.archivedCollectionsHeader img {
+.archivedCollectionsHeader img,
+.archivedProjectsHeader img {
   height: 2rem;
 }
 
@@ -66,7 +71,8 @@
   opacity: 0.5;
 }
 
-#archivedProjectsContainer.active .archivedArrow {
+#archivedProjectsContainer.active .archivedArrow,
+#archivedCollectionsContainer.active .archivedArrow {
   rotate: 90deg;
 }
 

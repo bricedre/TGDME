@@ -1,11 +1,11 @@
 import { checkOtherInputs, updateElementsCounter } from "./editionScreen.js";
-import { currCollInfo, currentCollection } from "../core/collectionsManager.js";
+import { currCollInfo, currentCollection, getCollections } from "../core/collectionsManager.js";
 import { populateComponents } from "../core/componentsManager.js";
 import { getFontList } from "../core/assetsManager.js";
 import { uiTexts } from "../translations.js";
 import { setGlobalVariables } from "../core/render.js";
 import { app } from "../app.js";
-import { currentProject } from "../core/projectsManager.js";
+import { appDataFolder, currentProject, getProjects } from "../core/projectsManager.js";
 
 const $ = require("jquery");
 const lodash = require("lodash");
@@ -113,12 +113,16 @@ export function openScene(panelName) {
         var projectBc = $("<span class='breadcrumbs'></span>").text(currentProject.projectName);
         $("#mainTitleDiv").append($("<span class='separatorBc'>></span>"), projectBc);
         nextPanel = $("#projectEditionPanel");
+        getCollections();
         break;
 
       case "collectionEdition":
         var projectBc = $("<span class='breadcrumbs'></span>")
           .text(currentProject.projectName)
-          .on("click", () => openScene("projectEdition"))
+          .on("click", () => {
+            getProjects();
+            openScene("projectEdition");
+          })
           .css("cursor", "pointer");
         var collectionBc = $("<span class='breadcrumbs'></span>").text(currCollInfo.collectionName);
         $("#mainTitleDiv").append($("<span class='separatorBc'>></span>"), projectBc, $("<span class='separatorBc'>></span>"), collectionBc);

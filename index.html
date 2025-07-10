@@ -36,9 +36,50 @@
     </nav>
 
     <div class="viewer">
-      <div id="projectSelectionPanel" class="panel"></div>
 
-      <div id="projectEditionPanel" class="panel"></div>
+      <div id="projectSelectionPanel" class="panel">
+        <div class="homePageHeader other_projectsHeader"></div>
+        <div id="activeProjectsDiv"></div>
+        <div id="archivedProjectsContainer">
+          <div class="archivedProjectsHeader">
+            <img src="assets/btnIcons/archiveCollection.png" />
+            <span class="other_archivedProjects"></span>
+            <span class="archivedSeparator"></span>
+            <span class="archivedArrow">></span>
+          </div>
+          <div id="archivedProjectsDiv"></div>
+        </div>
+
+        <div style="flex: 1"></div>
+
+        <div class="btnContainer">
+          <button class="navBtn btn_newProto"></button>
+          <button class="navBtn btn_importProto"></button>
+        </div>
+      </div>
+
+      <div id="projectEditionPanel" class="panel">
+        <div class="homePageHeader other_projectsHeader"></div>
+        <div id="activeCollectionsDiv"></div>
+        <div id="archivedCollectionsContainer">
+          <div class="archivedCollectionsHeader">
+            <img src="assets/btnIcons/archiveCollection.png" />
+            <span class="other_archivedCollections"></span>
+            <span class="archivedSeparator"></span>
+            <span class="archivedArrow">></span>
+          </div>
+          <div id="archivedCollectionsDiv"></div>
+        </div>
+
+        <div style="flex: 1"></div>
+
+        <div class="btnContainer">
+          <button class="navBtn btn_newCollection"></button>
+          <button class="navBtn btn_deleteProject"></button>
+          <button class="navBtn btn_duplicateProject"></button>
+          <button class="navBtn btn_archiveProject"></button>
+        </div>
+      </div>
 
       <div id="collectionEditionPanel" class="panel">
         <div class="tabs">

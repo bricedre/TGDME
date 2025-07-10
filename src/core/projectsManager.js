@@ -1,6 +1,7 @@
-import { getFolderContents } from "../screens/mainLayout.js";
+import { getFolderContents, openScene } from "../screens/mainLayout.js";
 import { setupProjectSelectionPanel } from "../screens/menuScreen.js";
 import { getCollections } from "./collectionsManager.js";
+import { projectTemplate } from "./templates.js";
 
 const getAppDataPath = require("appdata-path");
 
@@ -117,6 +118,27 @@ async function copyDirectoryRecursive(src, dest) {
     throw error;
   }
 }
+
+export function createNewProject() {
+  console.log("> createNewProject");
+
+  const newUID = getNextProjectUID();
+  var dir = `${appDataFolder}/projects/${newUID}`;
+
+  console.log(newUID, dir);
+
+  if (!fs2.existsSync(dir)) {
+    fs2.mkdirSync(dir);
+    fs2.mkdirSync(dir + "/renders");
+    fs2.mkdirSync(dir + "/collections");
+    fs2.writeFileSync(dir + "/project.json", JSON.stringify(projectTemplate(newUID)));
+
+    getProjects();
+
+  }
+}
+
+export function importProject() {}
 
 export async function getProjects() {
   console.log("> getProjects");

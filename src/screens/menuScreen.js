@@ -1,14 +1,11 @@
-import {
-  collectionsAvailable,
-  createNewCollection,
-  setCurrentCollection,
-} from "../core/collectionsManager.js";
-import { projectsAvailable, setCurrentProject } from "../core/projectsManager.js";
+import { collectionsAvailable, createNewCollection, setCurrentCollection } from "../core/collectionsManager.js";
+import { createNewProject, getProjects, importProject, projectsAvailable, setCurrentProject } from "../core/projectsManager.js";
 import { changeColorScheme, changeLangage, openScene, setupLangage } from "./mainLayout.js";
 
 const $ = require("jquery");
 
 $("#homeBtn").on("click", () => {
+  getProjects();
   openScene("home");
 });
 
@@ -33,19 +30,13 @@ export function setupProjectSelectionPanel() {
     return b.lastSavingTime - a.lastSavingTime;
   });
 
-  $("#projectSelectionPanel").empty();
-
-  //Title
-  $("#projectSelectionPanel").append($("<div></div>").addClass("homePageHeader other_projectsHeader"));
-
   // Collections to show
   if (projectsSorted.length > 0) {
     var activeProjects = [...projectsSorted].filter((col) => !col.archived);
     var archivedProjects = [...projectsSorted].filter((col) => col.archived);
 
+    $("#activeProjectsDiv").empty();
     if (activeProjects.length > 0) {
-      var activeCol = $("<div></div>").attr("id", "activeCollectionsDiv");
-
       activeProjects.forEach((project) => {
         var btnElement = $("<button></button>")
           .addClass("deckBtn")
@@ -57,36 +48,23 @@ export function setupProjectSelectionPanel() {
             openScene("projectEdition");
           });
 
-        activeCol.append(btnElement);
+        $("#activeProjectsDiv").append(btnElement);
       });
-
-      $("#projectSelectionPanel").append(activeCol);
     }
 
     if (archivedProjects.length > 0) {
-      var archivedColContainer = $("<div></div>")
-        .attr("id", "archivedProjectsContainer")
-        .on("click", () => {
-          if (archivedColContainer.hasClass("active")) {
-            archivedColContainer.css("max-height", "4rem");
-          } else {
-            archivedColContainer.css("max-height", `calc(${4.5 * Math.ceil(archivedProjects.length / 5)}rem + 4rem)`);
-          }
+      $("#archivedProjectsContainer").css("display", "block");
+      $("#archivedProjectsContainer").on("click", () => {
+        if ($("#archivedProjectsContainer").hasClass("active")) {
+          $("#archivedProjectsContainer").css("max-height", "4rem");
+          $("#archivedProjectsContainer").removeClass("active");
+        } else {
+          $("#archivedProjectsContainer").css("max-height", `calc(${4.5 * Math.ceil(archivedProjects.length / 5)}rem + 4rem)`);
+          $("#archivedProjectsContainer").addClass("active");
+        }
+      });
 
-          archivedColContainer.toggleClass("active");
-        });
-        
-      let archivedCollectionsHeader = $("<div></div>").addClass("archivedCollectionsHeader");
-      archivedCollectionsHeader.append($(`<img></img`).attr("src", `assets/btnIcons/archiveCollection.png`));
-      archivedCollectionsHeader.append($("<span></span>").addClass("other_archivedProjects"));
-      archivedCollectionsHeader.append($("<span></span>").addClass("archivedSeparator"));
-      archivedCollectionsHeader.append($("<span></span>").text(">").addClass("archivedArrow"));
-      archivedColContainer.append(archivedCollectionsHeader);
-      $("#projectSelectionPanel").append(archivedColContainer);
-
-      var archivedCol = $("<div></div>").attr("id", "archivedCollectionsDiv");
-      archivedColContainer.append(archivedCol);
-
+      $("#archivedProjectsDiv").empty();
       archivedProjects.forEach((project) => {
         var btnElement = $("<button></button>")
           .addClass("deckBtn")
@@ -95,146 +73,119 @@ export function setupProjectSelectionPanel() {
             e.preventDefault();
             e.stopPropagation();
             setCurrentProject(project.UID);
-            openSc("projectEdition");
+            openScene("projectEdition");
           });
 
-        archivedCol.append(btnElement);
+        $("#archivedProjectsDiv").append(btnElement);
       });
+    } else {
+      $("#archivedProjectsContainer").css("display", "none");
     }
   }
 
   //No Collections to show
   else {
-    var noResourceText = $("<div></div>").addClass("noStuffDiv other_noProject");
-
-    $("#projectSelectionPanel").append(noResourceText);
+    $("#projectSelectionPanel").append($("<div></div>").addClass("noStuffDiv other_noProject"));
   }
 
-  //Spacer
-  $("#projectSelectionPanel").append($("<div></div>").css("flex", "1"));
-
   //ACTIONS
-  const actionRow = $("<div></div>").addClass("btnContainer vertical");
+  $(".btn_newProto").on("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    createNewProject();
+  });
 
-  const newCollectionBtn = $("<button></button>")
-    .addClass("navBtn btn_newProto")
-    .on("click", (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      // createNewCollection();
-    });
-  actionRow.append(newCollectionBtn);
-
-  $("#projectSelectionPanel").append(actionRow);
-
-  const importCollectionBtn = $("<button></button>")
-    .addClass("navBtn btn_importProto")
-    .on("click", (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      // createNewCollection();
-    });
-  actionRow.append(importCollectionBtn);
-
-  $("#projectSelectionPanel").append(actionRow);
+  $("btn_importProto").on("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    importProject();
+  });
 
   setupLangage();
 }
 
 export function setupProjectEditionPanel() {
   let collectionsSorted = [...collectionsAvailable].sort((a, b) => {
-    return b.collectionInfo.lastSavingTime - a.collectionInfo.lastSavingTime;
+    return b.lastSavingTime - a.lastSavingTime;
   });
-
-  $("#projectEditionPanel").empty();
-
-  //Title
-  $("#projectEditionPanel").append($("<div></div>").addClass("homePageHeader other_collectionsHeader"));
 
   // Collections to show
   if (collectionsSorted.length > 0) {
-    var activeCollections = [...collectionsSorted].filter((col) => !col.collectionInfo.archived);
-    var archivedCollections = [...collectionsSorted].filter((col) => col.collectionInfo.archived);
+    var activeCollections = [...collectionsSorted].filter((col) => !col.archived);
+    var archivedCollections = [...collectionsSorted].filter((col) => col.archived);
 
+    $("#activeCollectionsDiv").empty();
     if (activeCollections.length > 0) {
-      var activeCol = $("<div></div>").attr("id", "activeCollectionsDiv");
-
-      activeCollections.forEach((collection) => {
+      activeCollections.forEach((coll) => {
         var btnElement = $("<button></button>")
           .addClass("deckBtn")
-          .text(collection.collectionInfo.collectionName)
+          .text(coll.collectionInfo.collectionName)
           .on("click", (e) => {
             e.preventDefault();
             e.stopPropagation();
-            setCurrentCollection(collection.collectionInfo.UID);
+            setCurrentCollection(coll.collectionInfo.UID);
             openScene("collectionEdition");
           });
 
-        activeCol.append(btnElement);
+        $("#activeCollectionsDiv").append(btnElement);
       });
-
-      $("#projectEditionPanel").append(activeCol);
     }
 
     if (archivedCollections.length > 0) {
-      var archivedColContainer = $("<div></div>")
-        .attr("id", "archivedCollectionsContainer")
-        .on("click", () => {
-          if (archivedColContainer.hasClass("active")) {
-            archivedColContainer.css("max-height", "4rem");
-          } else {
-            archivedColContainer.css("max-height", `calc(${4.5 * Math.ceil(archivedCollections.length / 5)}rem + 4rem)`);
-          }
+      $("#archivedCollectionsContainer").css("display", "block");
+      $("#archivedCollectionsContainer").on("click", () => {
+        if ($("#archivedCollectionsContainer").hasClass("active")) {
+          $("#archivedCollectionsContainer").css("max-height", "4rem");
+        } else {
+          $("#archivedCollectionsContainer").css("max-height", `calc(${4.5 * Math.ceil(archivedProjects.length / 5)}rem + 4rem)`);
+        }
 
-          archivedColContainer.toggleClass("active");
-        });
-      // archivedColContainer.css("display", "flex");
-      let archivedCollectionsHeader = $("<div></div>").addClass("archivedCollectionsHeader");
-      archivedCollectionsHeader.append($(`<img></img`).attr("src", `assets/btnIcons/archiveCollection.png`));
-      archivedCollectionsHeader.append($("<span></span>").addClass("other_archivedCollections"));
-      archivedColContainer.append(archivedCollectionsHeader);
-      $("#projectEditionPanel").append(archivedColContainer);
+        $("#archivedCollectionsContainer").toggleClass("active");
+      });
 
-      var archivedCol = $("<div></div>").attr("id", "archivedCollectionsDiv");
-      archivedColContainer.append(archivedCol);
-
-      archivedCollections.forEach((collection) => {
+      $("#archivedCollectionsDiv").empty();
+      archivedCollections.forEach((coll) => {
         var btnElement = $("<button></button>")
           .addClass("deckBtn")
-          .text(collection.collectionInfo.collectionName)
+          .text(coll.collectionInfo.collectionName)
           .on("click", (e) => {
             e.preventDefault();
             e.stopPropagation();
-            setCurrentCollection(collection.collectionInfo.UID);
+            setCurrentCollection(coll.collectionInfo.UID);
             openScene("collectionEdition");
           });
 
-        archivedCol.append(btnElement);
+        $("#archivedCollectionsDiv").append(btnElement);
       });
+    } else {
+      $("#archivedCollectionsContainer").css("display", "none");
     }
   }
 
   //No Collections to show
   else {
-    var noResourceText = $("<div></div>").addClass("noStuffDiv other_noCollection");
-
-    $("#projectEditionPanel").append(noResourceText);
+    $("#projectEditionPanel").append($("<div></div>").addClass("noStuffDiv other_noCollection"));
   }
 
-  //Spacer
-  $("#projectEditionPanel").append($("<div></div>").css("flex", "1"));
-
   //ACTIONS
-  const actionRow = $("<div></div>").addClass("btnContainer vertical");
-  const newCollectionBtn = $("<button></button>")
-    .addClass("navBtn btn_newCollection")
-    .on("click", (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      createNewCollection();
-    });
-  actionRow.append(newCollectionBtn);
-  $("#projectEditionPanel").append(actionRow);
+  $(".btn_newCollection").on("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    createNewCollection();
+  });
+
+  $("btn_deleteProject").on("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+  });
+  $("btn_duplicateProject").on("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+  });
+  $("btn_archiveProject").on("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+  });
 
   setupLangage();
 }

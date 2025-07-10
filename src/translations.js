@@ -121,6 +121,21 @@ export let uiTexts = {
     en: "IMPORT A PROJECT",
     de: "NEUES PROJEKT ERSTELLEN",
   },
+  btn_deleteProject: {
+    fr: "SUPPRIMER LE PROJET",
+    en: "IMPORT A PROJECT",
+    de: "NEUES PROJEKT ERSTELLEN",
+  },
+  btn_duplicateProject: {
+    fr: "DUPLIQUER LE PROJET",
+    en: "IMPORT A PROJECT",
+    de: "NEUES PROJEKT ERSTELLEN",
+  },
+  btn_archiveProject: {
+    fr: "ARCHIVER LE PROJET",
+    en: "IMPORT A PROJECT",
+    de: "NEUES PROJEKT ERSTELLEN",
+  },
   btn_newCollection: {
     fr: "CRÉER UNE NOUVELLE COLLECTION",
     en: "CREATE A NEW COLLECTION",

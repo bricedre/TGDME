@@ -1,5 +1,40 @@
+export const collectionTemplate = (UID) => {
+  return {
+    collectionInfo: {
+      archived: false,
+      UID: UID,
+      collectionName: "Nouvelle Collection",
+      resolution: 60,
+      elementFormat: "pokerCard",
+      pageFormat: "A4",
+      pageOrientation: "portrait",
+      visualGuide: "center",
+      W: 100,
+      H: 100,
+      pageWidth: 100,
+      pageHeight: 100,
+      lastComponentIndex: 0,
+      lastElementIndex: 0,
+      lastAssetIndex: 0,
+      maxElementQty: 52,
+      pageExportFormat: "jpg",
+      cuttingHelp: false,
+      lastSavingTime: Date.now(),
+    },
+    template: [],
+    elements: {
+      headers: [],
+      data: [],
+    },
+  };
+};
+
+export const projectTemplate = (UID) => {
+  return { UID: UID, projectName: "Nouveau Projet", lastSavingTime: Date.now(), archived: false };
+};
+
 export let shapeComponentTemplate = {
-  UID:0,
+  UID: 0,
   isVisible: true,
   component: "SHAPE",
   componentName: { value: "NOUVELLE FORME" },
@@ -22,7 +57,7 @@ export let shapeComponentTemplate = {
 };
 
 export let textComponentTemplate = {
-  UID:0,
+  UID: 0,
   isVisible: true,
   component: "TEXT",
   componentName: { value: "NOUVEAU TEXTE" },
@@ -32,9 +67,9 @@ export let textComponentTemplate = {
   maxWidth: { value: ":W", type: "0" },
   textAnchorHori: { value: ":CENTER", type: "0" },
   textAnchorVert: { value: ":CENTER", type: "0" },
-  interline : {value: "1", type:"0"},
-  inlineImgsSize : {value: "50", type:"0"},
-  inlineImgsXOffset : {value: "0", type:"0"},
+  interline: { value: "1", type: "0" },
+  inlineImgsSize: { value: "50", type: "0" },
+  inlineImgsXOffset: { value: "0", type: "0" },
   color: { value: "#000000", type: "0" },
   size: { value: "3", type: "0" },
   font: { value: "Verdana", type: "0" },
@@ -43,11 +78,11 @@ export let textComponentTemplate = {
   shadowColor: { value: "#000000", type: "0" },
   shadowOffsetX: { value: "5", type: "0" },
   shadowOffsetY: { value: "5", type: "0" },
-  shadowOpacity: { value: "0", type: "0" }, 
+  shadowOpacity: { value: "0", type: "0" },
 };
 
 export let titleComponentTemplate = {
-  UID:0,
+  UID: 0,
   isVisible: true,
   component: "TITLE",
   componentName: { value: "TITRE" },
@@ -67,7 +102,7 @@ export let titleComponentTemplate = {
 };
 
 export let imageComponentTemplate = {
-  UID:0,
+  UID: 0,
   isVisible: true,
   component: "IMAGE",
   componentName: { value: "NOUVELLE IMAGE" },

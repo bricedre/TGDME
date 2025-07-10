@@ -7,7 +7,7 @@ import { moveComponent } from "../screens/editionScreen.js";
 
 const $ = require("jquery");
 const cloneDeep = require("lodash/cloneDeep");
-import { imageComponentTemplate, textComponentTemplate, shapeComponentTemplate, titleComponentTemplate } from "./componentTemplates.js";
+import { imageComponentTemplate, textComponentTemplate, shapeComponentTemplate, titleComponentTemplate } from "./templates.js";
 
 export function setupComponents() {
 
@@ -470,6 +470,8 @@ export function addNewShape() {
   setupComponents();
   generateCollectionBtn.click();
 }
+
+
 
 function assignUIDToNewComponent() {
   console.log("> assignUIDToNewComponent");

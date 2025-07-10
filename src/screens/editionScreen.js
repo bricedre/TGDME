@@ -6,7 +6,7 @@ import {
   currentCollectionUID,
   deleteCurrentCollection,
   duplicateCollection,
-  saveCollection,
+  saveProject,
 } from "../core/collectionsManager.js";
 import { generatePages, renderCardUsingTemplate } from "../core/render.js";
 import { allSystemFonts, loadAssets } from "../core/assetsManager.js";
@@ -19,7 +19,7 @@ const $ = require("jquery");
 //GENERAL BUTTONS
 $("#generateCollectionBtn")
   .on("click", () => {
-    saveCollection(false, true);
+    saveProject(false, true);
     $("#generateCollectionBtn").css("animation", "0.5s beyblade");
   })
   .on("animationend", () => {

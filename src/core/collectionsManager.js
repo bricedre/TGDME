@@ -7,8 +7,8 @@ import { renderCardUsingTemplate, setCollectionSpecificVariables } from "./rende
 import { populateComponents, setupComponents } from "./componentsManager.js";
 import { loadDataFile, updateDataView } from "./elementsManager.js";
 import { setupProjectEditionPanel } from "../screens/menuScreen.js";
-import { collectionTemplate } from "./collectionTemplate.js";
-import { appDataFolder, currentProjectUID } from "./projectsManager.js";
+import { appDataFolder, currentProject, currentProjectUID } from "./projectsManager.js";
+import { collectionTemplate } from "./templates.js";
 
 const fs = require("fs").promises;
 const rimraf = require("rimraf");
@@ -16,12 +16,10 @@ const fsExtra = require("fs-extra");
 const fs2 = require("fs");
 const XLSX = require("xlsx");
 
-
 export let collectionsAvailable = [];
 export let currentCollectionUID = -1;
 export let currentCollection;
 export let currCollInfo;
-
 
 export async function getCollections() {
   console.log("> getCollections");
@@ -33,14 +31,18 @@ export async function getCollections() {
 export function setCurrentCollection(collectionUID) {
   currentCollectionUID = collectionUID;
   if (currentCollectionUID != -1) {
-
     currentCollection = collectionsAvailable.filter((coll) => coll.collectionInfo.UID == collectionUID)[0];
     currCollInfo = currentCollection.collectionInfo;
 
     loadAssets(app);
     setupCollectionDimensions();
 
-    app.setupCanvas(currCollInfo.W * currCollInfo.resolution, currCollInfo.H * currCollInfo.resolution, currCollInfo.pageWidth * currCollInfo.resolution, currCollInfo.pageHeight * currCollInfo.resolution);
+    app.setupCanvas(
+      currCollInfo.W * currCollInfo.resolution,
+      currCollInfo.H * currCollInfo.resolution,
+      currCollInfo.pageWidth * currCollInfo.resolution,
+      currCollInfo.pageHeight * currCollInfo.resolution
+    );
 
     app.currentIndex = 0;
     populateEditionFields();
@@ -66,7 +68,7 @@ export function createNewCollection() {
   if (!fs2.existsSync(dir)) {
     fs2.mkdirSync(dir);
     fs2.mkdirSync(dir + "/assets");
-    fs2.writeFileSync(dir + "/collection.json", JSON.stringify(collectionTemplate));
+    fs2.writeFileSync(dir + "/collection.json", JSON.stringify(collectionTemplate(newUID)));
 
     //CREATE DATA EXCEL SHEET
     const headers = ["donnée 1", "donnée 2"]; // No headers initially
@@ -85,19 +87,6 @@ export function createNewCollection() {
     fs2.writeFileSync(filePath, Buffer.from(excelBuffer));
 
     getCollections();
-
-    setTimeout(() => {
-      collectionsAvailable[collectionsAvailable.length - 1].collectionInfo.UID = newUID;
-      collectionsAvailable[collectionsAvailable.length - 1].collectionInfo.collectionName = "Nouvelle Collection";
-      var deckToSave = JSON.stringify(collectionsAvailable[collectionsAvailable.length - 1]);
-      fs.writeFile(dir + "/collection.json", deckToSave, (err) => {
-        if (err) {
-          console.error(err);
-        }
-      });
-      setCurrentCollection(newUID);
-      openScene("collectionEdition");
-    }, 500);
   }
 }
 
@@ -156,14 +145,14 @@ export function archiveCollection() {
   console.log("> archiveCollection");
 
   currCollInfo.archived = !currCollInfo.archived;
-  saveCollection(false, false);
+  saveProject(false, false);
   setCurrentCollection(-1);
   setTimeout(() => getCollections(), 300);
   setTimeout(() => openScene("projectEdition"), 1000);
 }
 
-export function saveCollection(refreshAssets, reRenderCard) {
-  console.log("> saveCollection");
+export function saveProject(refreshAssets, reRenderCard) {
+  console.log("> saveProject");
 
   var collInfo = currCollInfo;
 
@@ -188,13 +177,21 @@ export function saveCollection(refreshAssets, reRenderCard) {
 
   populateEditionFields();
 
-  //SAVE CURRENT DECK IN FOLDER
+  //SAVE CURRENT COLLECTION IN FOLDER
   var deckToSave = JSON.stringify(currentCollection);
   fs.writeFile(`${appDataFolder}/projects/${currentProjectUID}/collections/${currentCollectionUID}/collection.json`, deckToSave, (err) => {
     if (err) {
       console.error(err);
     }
-    // file written successfully
+  });
+
+  //SAVE CURRENT PROJECT IN FOLDER
+  currentProject.lastSavingTime = Date.now();
+  var projectToSave = JSON.stringify(currentProject);
+  fs.writeFile(`${appDataFolder}/projects/${currentProjectUID}/project.json`, projectToSave, (err) => {
+    if (err) {
+      console.error(err);
+    }
   });
 
   //RELOAD DECK
