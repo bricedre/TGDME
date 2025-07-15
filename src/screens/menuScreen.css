@@ -37,7 +37,7 @@
 #activeProjectsDiv,
 #archivedProjectsDiv {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
   width: 100%;
 }
@@ -45,6 +45,14 @@
 #archivedCollectionsDiv,
 #archivedProjectsDiv {
   margin-top: 1rem;
+}
+
+.deckBtn button{
+  opacity: 0;
+}
+
+.deckBtn:hover button{
+  opacity: 1;
 }
 
 .archivedCollectionsHeader,

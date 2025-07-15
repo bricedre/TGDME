@@ -1,5 +1,5 @@
 import { collectionsAvailable, createNewCollection, setCurrentCollection } from "../core/collectionsManager.js";
-import { createNewProject, getProjects, importProject, projectsAvailable, setCurrentProject } from "../core/projectsManager.js";
+import { archiveProject, createNewProject, deleteProject, duplicateProject, getProjects, importProject, projectsAvailable, setCurrentProject } from "../core/projectsManager.js";
 import { changeColorScheme, changeLangage, openScene, setupLangage } from "./mainLayout.js";
 
 const $ = require("jquery");
@@ -48,6 +48,36 @@ export function setupProjectSelectionPanel() {
             openScene("projectEdition");
           });
 
+          var archiveBtn = $("<button></button>")
+          .text("archiver")
+          .on("click", (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            archiveProject(project.UID);
+            
+          });
+
+          var duplicateBtn = $("<button></button>")
+          .text("dupliquer")
+          .on("click", (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            duplicateProject(project.UID);
+            
+          });
+
+          var deleteBtn = $("<button></button>")
+          .text("supprimer")
+          .on("click", (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            deleteProject(project.UID);
+            
+          });
+
+        btnElement.append(archiveBtn);
+        btnElement.append(duplicateBtn);
+        btnElement.append(deleteBtn);
         $("#activeProjectsDiv").append(btnElement);
       });
     }

@@ -1,9 +1,10 @@
 import { getFolderContents, openScene } from "../screens/mainLayout.js";
 import { setupProjectSelectionPanel } from "../screens/menuScreen.js";
-import { getCollections } from "./collectionsManager.js";
+import { getCollections, saveCollection } from "./collectionsManager.js";
 import { projectTemplate } from "./templates.js";
 
 const getAppDataPath = require("appdata-path");
+const rimraf = require("rimraf");
 
 export let appDataFolder;
 export let projectsAvailable = [];
@@ -134,8 +135,22 @@ export function createNewProject() {
     fs2.writeFileSync(dir + "/project.json", JSON.stringify(projectTemplate(newUID)));
 
     getProjects();
-
   }
+}
+
+export function saveProject() {
+  console.log("> saveProject");
+  
+  currentProject.projectName = collectionNameInput.value;
+  currentProject.lastSavingTime = Date.now();
+
+    //SAVE CURRENT PROJECT IN FOLDER
+  var deckToSave = JSON.stringify(currentProject);
+  fs.writeFile(`${appDataFolder}/projects/${currentProjectUID}/project.json`, deckToSave, (err) => {
+    if (err) {
+      console.error(err);
+    }
+  });
 }
 
 export function importProject() {}
@@ -166,4 +181,55 @@ function getNextProjectUID() {
     });
     return biggestUID + 1;
   }
+}
+
+export function deleteProject(UID) {
+  console.log("> deleteCurrentProject");
+
+  setCurrentProject(UID);
+
+  rimraf
+    .rimraf(`${appDataFolder}/projects/${currentProjectUID}`)
+    .then(() => {
+      setCurrentProject(-1);
+      getProjects();
+    })
+    .catch((e) => console.log(e));
+}
+
+export function duplicateProject(UID) {
+  console.log("> duplicateProject");
+
+  setCurrentProject(UID);
+
+  const newUID = getNextProjectUID();
+  var dir = `${appDataFolder}/projects/${currentProjectUID}`;
+
+  if (!fs2.existsSync(dir)) {
+    fsExtra.copy(dir, `${appDataFolder}/projects/${newUID}`);
+
+    getProjects();
+
+    setTimeout(() => {
+      projectsAvailable[projectsAvailable.length - 1].UID = newUID;
+      projectsAvailable[projectsAvailable.length - 1].projectName = "Copie de " + currentProject.projectName;
+      var deckToSave = JSON.stringify(projectsAvailable[projectsAvailable.length - 1]);
+      fs.writeFile(dir + "/project.json", deckToSave, (err) => {
+        if (err) {
+          console.error(err);
+        }
+      });
+      getProjects();
+    }, 500);
+  }
+}
+
+export function archiveProject(UID) {
+  console.log("> archiveProject");
+
+  setCurrentProject(UID);
+
+  currentProject.archived = !currentProject.archived;
+  saveProject();
+  setCurrentProject(-1);
 }

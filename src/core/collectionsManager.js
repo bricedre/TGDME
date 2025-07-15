@@ -145,14 +145,14 @@ export function archiveCollection() {
   console.log("> archiveCollection");
 
   currCollInfo.archived = !currCollInfo.archived;
-  saveProject(false, false);
+  saveCollection(false, false);
   setCurrentCollection(-1);
   setTimeout(() => getCollections(), 300);
   setTimeout(() => openScene("projectEdition"), 1000);
 }
 
-export function saveProject(refreshAssets, reRenderCard) {
-  console.log("> saveProject");
+export function saveCollection(refreshAssets, reRenderCard) {
+  console.log("> saveCollection");
 
   var collInfo = currCollInfo;
 

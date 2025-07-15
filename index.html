@@ -36,7 +36,6 @@
     </nav>
 
     <div class="viewer">
-
       <div id="projectSelectionPanel" class="panel">
         <div class="homePageHeader other_projectsHeader"></div>
         <div id="activeProjectsDiv"></div>
@@ -59,25 +58,26 @@
       </div>
 
       <div id="projectEditionPanel" class="panel">
-        <div class="homePageHeader other_projectsHeader"></div>
-        <div id="activeCollectionsDiv"></div>
-        <div id="archivedCollectionsContainer">
-          <div class="archivedCollectionsHeader">
-            <img src="assets/btnIcons/archiveCollection.png" />
-            <span class="other_archivedCollections"></span>
-            <span class="archivedSeparator"></span>
-            <span class="archivedArrow">></span>
+        <div>
+          <div class="homePageHeader other_projectsHeader"></div>
+          <div id="activeCollectionsDiv"></div>
+          <div id="archivedCollectionsContainer">
+            <div class="archivedCollectionsHeader">
+              <img src="assets/btnIcons/archiveCollection.png" />
+              <span class="other_archivedCollections"></span>
+              <span class="archivedSeparator"></span>
+              <span class="archivedArrow">></span>
+            </div>
+            <div id="archivedCollectionsDiv"></div>
           </div>
-          <div id="archivedCollectionsDiv"></div>
         </div>
-
-        <div style="flex: 1"></div>
-
-        <div class="btnContainer">
-          <button class="navBtn btn_newCollection"></button>
-          <button class="navBtn btn_deleteProject"></button>
-          <button class="navBtn btn_duplicateProject"></button>
-          <button class="navBtn btn_archiveProject"></button>
+        <div>
+          <div class="btnContainer">
+            <button class="navBtn btn_newCollection"></button>
+            <button class="navBtn btn_deleteProject"></button>
+            <button class="navBtn btn_duplicateProject"></button>
+            <button class="navBtn btn_archiveProject"></button>
+          </div>
         </div>
       </div>
 
@@ -173,12 +173,12 @@
                 </div>
               </div>
 
-              <div class="btnContainer">
+              <!-- <div class="btnContainer">
                 <button id="duplicateCollectionBtn" class="navBtn"><span class="btn_duplicateCollection"></span><img src="./assets/btnIcons/duplicateCollection.png" /></button>
                 <button id="unarchiveCollectionBtn" class="navBtn"><span class="btn_unarchiveCollection"></span><img src="./assets/btnIcons/archiveCollection.png" /></button>
                 <button id="archiveCollectionBtn" class="navBtn"><span class="btn_archiveCollection"></span><img src="./assets/btnIcons/archiveCollection.png" /></button>
                 <button id="deleteCollectionBtn" class="navBtn"><span class="btn_deleteCollection"></span><img src="./assets/btnIcons/deleteCollection.png" /></button>
-              </div>
+              </div> -->
             </div>
 
             <div id="contentRessDiv">
