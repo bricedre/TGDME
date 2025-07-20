@@ -5,6 +5,7 @@ import { projectTemplate } from "./templates.js";
 
 const getAppDataPath = require("appdata-path");
 const rimraf = require("rimraf");
+const $ = require("jquery");
 
 export let appDataFolder;
 export let projectsAvailable = [];
@@ -13,6 +14,7 @@ export let currentProject;
 
 const fs = require("fs").promises;
 const fs2 = require("fs");
+const fsExtra = require("fs-extra");
 const path = require("path");
 
 getAppDataFolder();
@@ -126,8 +128,6 @@ export function createNewProject() {
   const newUID = getNextProjectUID();
   var dir = `${appDataFolder}/projects/${newUID}`;
 
-  console.log(newUID, dir);
-
   if (!fs2.existsSync(dir)) {
     fs2.mkdirSync(dir);
     fs2.mkdirSync(dir + "/renders");
@@ -138,13 +138,15 @@ export function createNewProject() {
   }
 }
 
-export function saveProject() {
+export function saveProject(projectName = "") {
   console.log("> saveProject");
-  
-  currentProject.projectName = collectionNameInput.value;
+
+  if (projectName === "") currentProject.projectName = $("#projectNameInput").text();
+  else currentProject.projectName = projectName;
+
   currentProject.lastSavingTime = Date.now();
 
-    //SAVE CURRENT PROJECT IN FOLDER
+  //SAVE CURRENT PROJECT IN FOLDER
   var deckToSave = JSON.stringify(currentProject);
   fs.writeFile(`${appDataFolder}/projects/${currentProjectUID}/project.json`, deckToSave, (err) => {
     if (err) {
@@ -168,7 +170,6 @@ export function setCurrentProject(projectUID) {
   if (projectUID !== currentProjectUID) {
     currentProjectUID = projectUID;
     currentProject = projectsAvailable.filter((proj) => proj.UID == projectUID)[0];
-    getCollections();
   }
 }
 
@@ -186,15 +187,16 @@ function getNextProjectUID() {
 export function deleteProject(UID) {
   console.log("> deleteCurrentProject");
 
-  setCurrentProject(UID);
+  if (confirm("Attention ! Cette action est irréversible ! Supprimer ?")) {
+    setCurrentProject(UID);
 
-  rimraf
-    .rimraf(`${appDataFolder}/projects/${currentProjectUID}`)
-    .then(() => {
-      setCurrentProject(-1);
-      getProjects();
-    })
-    .catch((e) => console.log(e));
+    rimraf
+      .rimraf(`${appDataFolder}/projects/${currentProjectUID}`)
+      .then(() => {
+        getProjects();
+      })
+      .catch((e) => console.log(e));
+  }
 }
 
 export function duplicateProject(UID) {
@@ -203,25 +205,25 @@ export function duplicateProject(UID) {
   setCurrentProject(UID);
 
   const newUID = getNextProjectUID();
-  var dir = `${appDataFolder}/projects/${currentProjectUID}`;
+  var oldDir = `${appDataFolder}/projects/${currentProjectUID}`;
+  var newDir = `${appDataFolder}/projects/${newUID}`;
 
-  if (!fs2.existsSync(dir)) {
-    fsExtra.copy(dir, `${appDataFolder}/projects/${newUID}`);
+  fsExtra.copy(oldDir, newDir);
 
+  getProjects();
+
+  setTimeout(() => {
+    projectsAvailable[projectsAvailable.length - 1].UID = newUID;
+    projectsAvailable[projectsAvailable.length - 1].projectName = "Copie de " + currentProject.projectName;
+    var deckToSave = JSON.stringify(projectsAvailable[projectsAvailable.length - 1]);
+    fs.writeFile(`${newDir}/project.json`, deckToSave, (err) => {
+      if (err) {
+        console.error(err);
+      }
+    });
     getProjects();
-
-    setTimeout(() => {
-      projectsAvailable[projectsAvailable.length - 1].UID = newUID;
-      projectsAvailable[projectsAvailable.length - 1].projectName = "Copie de " + currentProject.projectName;
-      var deckToSave = JSON.stringify(projectsAvailable[projectsAvailable.length - 1]);
-      fs.writeFile(dir + "/project.json", deckToSave, (err) => {
-        if (err) {
-          console.error(err);
-        }
-      });
-      getProjects();
-    }, 500);
-  }
+    setupProjectSelectionPanel();
+  }, 500);
 }
 
 export function archiveProject(UID) {
@@ -230,6 +232,7 @@ export function archiveProject(UID) {
   setCurrentProject(UID);
 
   currentProject.archived = !currentProject.archived;
-  saveProject();
-  setCurrentProject(-1);
+  saveProject(currentProject.projectName);
+  getProjects();
+  setupProjectSelectionPanel();
 }

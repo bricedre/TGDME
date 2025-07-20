@@ -157,7 +157,7 @@ export function saveCollection(refreshAssets, reRenderCard) {
   var collInfo = currCollInfo;
 
   //ALTER THE DATA TO CURRENT DECK
-  collInfo.collectionName = collectionNameInput.value;
+  collInfo.collectionName = collectionNameInput.innerText;
   collInfo.elementFormat = elementFormatSelect.value;
   collInfo.W = elementWidthInput.value;
   collInfo.H = elementHeightInput.value;

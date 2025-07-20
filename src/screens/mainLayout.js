@@ -1,11 +1,11 @@
 import { checkOtherInputs, updateElementsCounter } from "./editionScreen.js";
-import { currCollInfo, currentCollection, getCollections } from "../core/collectionsManager.js";
+import { currCollInfo, currentCollection, getCollections, saveCollection } from "../core/collectionsManager.js";
 import { populateComponents } from "../core/componentsManager.js";
 import { getFontList } from "../core/assetsManager.js";
 import { uiTexts } from "../translations.js";
 import { setGlobalVariables } from "../core/render.js";
 import { app } from "../app.js";
-import { appDataFolder, currentProject, getProjects } from "../core/projectsManager.js";
+import { appDataFolder, currentProject, getProjects, saveProject } from "../core/projectsManager.js";
 
 const $ = require("jquery");
 const lodash = require("lodash");
@@ -93,6 +93,7 @@ export function openScene(panelName) {
       }
 
       lastPanel.css("opacity", 0);
+      $(".homePageHeader").css("translate", "-113% 15%");
       setTimeout(() => {
         lastPanel.css("display", "none");
       }, 500);
@@ -106,11 +107,10 @@ export function openScene(panelName) {
     switch (panelName) {
       case "home":
         nextPanel = $("#projectSelectionPanel");
-        $("#mainTitleDiv").addClass("other_mainTitle");
         break;
 
       case "projectEdition":
-        var projectBc = $("<span class='breadcrumbs'></span>").text(currentProject.projectName);
+        var projectBc = $("<span id='projectNameInput' contenteditable class='breadcrumbs editable'></span>").text(currentProject.projectName).on("input", () => saveProject());
         $("#mainTitleDiv").append($("<span class='separatorBc'>></span>"), projectBc);
         nextPanel = $("#projectEditionPanel");
         getCollections();
@@ -124,7 +124,7 @@ export function openScene(panelName) {
             openScene("projectEdition");
           })
           .css("cursor", "pointer");
-        var collectionBc = $("<span class='breadcrumbs'></span>").text(currCollInfo.collectionName);
+        var collectionBc = $("<span contenteditable id='collectionNameInput' class='breadcrumbs editable'></span>").text(currCollInfo.collectionName).on("input", () => saveCollection());
         $("#mainTitleDiv").append($("<span class='separatorBc'>></span>"), projectBc, $("<span class='separatorBc'>></span>"), collectionBc);
 
         $("#bottomBarDiv").css("display", "flex");
@@ -148,6 +148,7 @@ export function openScene(panelName) {
       nextPanel.css("display", "flex");
       setTimeout(() => {
         nextPanel.css("opacity", 1);
+        $(".homePageHeader").css("translate", "-10rem");
       }, 100);
     }, 500);
 

@@ -111,7 +111,6 @@ export function goToOtherCard(value) {
 }
 
 export function populateEditionFields() {
-  collectionNameInput.value = currCollInfo.collectionName;
   elementFormatSelect.value = currCollInfo.elementFormat;
   elementWidthInput.value = currCollInfo.W;
   elementHeightInput.value = currCollInfo.H;

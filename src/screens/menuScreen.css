@@ -9,9 +9,13 @@
 .homePageHeader {
   font-size: 2rem;
   background: var(--panelBGDarker);
-  padding: 1rem 3rem;
-  border-radius: 50vw;
+  padding: 1rem 1rem 1rem 10rem;
+  translate: -113% 15%;
+  border-radius: 0.5rem;
   text-align: center;
+  rotate: -2deg;
+  align-self: baseline;
+  transition: all 0.3s ease-in-out;
 }
 
 #archivedCollectionsContainer,
@@ -45,13 +49,19 @@
 #archivedCollectionsDiv,
 #archivedProjectsDiv {
   margin-top: 1rem;
+  /* display: none; */
 }
 
-.deckBtn button{
+.deckBtn button {
   opacity: 0;
+  padding: 0.5rem;
+  background-color: white;
+}
+.deckBtn button:hover {
+  background-color: var(--mainBtnColor);
 }
 
-.deckBtn:hover button{
+.deckBtn:hover button {
   opacity: 1;
 }
 
