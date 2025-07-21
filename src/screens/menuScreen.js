@@ -4,6 +4,9 @@ import { changeColorScheme, changeLangage, openScene, setupLangage } from "./mai
 
 const $ = require("jquery");
 
+let archivedProjectsShown = false;
+let archivedCollectionsShown = false;
+
 $("#homeBtn").on("click", () => {
   getProjects();
   openScene("home");
@@ -25,6 +28,35 @@ $("#langBtn").on("click", () => {
   changeLangage();
 });
 
+$(".btn_newProto").on("click", (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+  createNewProject();
+});
+
+$(".btn_importProto").on("click", (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+  importProject();
+});
+
+$(".btn_showArchivedProjects").on("click", (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+  toggleArchivedView("projects");
+});
+
+$(".btn_newCollection").on("click", (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+  createNewCollection();
+});
+$(".btn_showArchivedCollections").on("click", (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+  toggleArchivedView("collections");
+});
+
 export function setupProjectSelectionPanel() {
   let projectsSorted = [...projectsAvailable].sort((a, b) => {
     return b.lastSavingTime - a.lastSavingTime;
@@ -36,7 +68,6 @@ export function setupProjectSelectionPanel() {
     var archivedProjects = [...projectsSorted].filter((proj) => proj.archived);
 
     generateSelectionButtons("#activeProjectsDiv", activeProjects, "projectName", setCurrentProject, deleteProject, archiveProject, duplicateProject, "projectEdition");
-
     generateSelectionButtons("#archivedProjectsDiv", archivedProjects, "projectName", setCurrentProject, deleteProject, archiveProject, duplicateProject, "projectEdition");
   }
 
@@ -45,19 +76,6 @@ export function setupProjectSelectionPanel() {
     $("#activeProjectsDiv").empty();
     $("#activeProjectsDiv").append($("<div></div>").addClass("noStuffDiv other_noProject"));
   }
-
-  //ACTIONS
-  $(".btn_newProto").on("click", (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    createNewProject();
-  });
-
-  $("btn_importProto").on("click", (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    importProject();
-  });
 
   setupLangage();
 }
@@ -75,7 +93,6 @@ export function setupProjectEditionPanel() {
     generateSelectionButtons("#activeCollectionsDiv", activeCollections, "collectionName", setCurrentCollection, null, null, null, "collectionEdition", true);
 
     generateSelectionButtons("#archivedCollectionsDiv", archivedCollections, "collectionName", setCurrentCollection, null, null, null, "collectionEdition", true);
-
   }
 
   //No Collections to show
@@ -83,13 +100,6 @@ export function setupProjectEditionPanel() {
     $("#activeCollectionsDiv").empty();
     $("#activeCollectionsDiv").append($("<div></div>").addClass("noStuffDiv other_noCollection"));
   }
-
-  //ACTIONS
-  $(".btn_newCollection").on("click", (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    createNewCollection();
-  });
 
   setupLangage();
 }
@@ -105,7 +115,7 @@ function generateSelectionButtons(domElToFill, array, name, setFunction, deleteF
           e.preventDefault();
           e.stopPropagation();
           setFunction(btn.UID);
-          if(!colMode) getCollections();
+          if (!colMode) getCollections();
           openScene(goToScene);
         });
 
@@ -145,4 +155,39 @@ function generateSelectionButtons(domElToFill, array, name, setFunction, deleteF
       $(domElToFill).append(btnElement);
     });
   }
+}
+
+function toggleArchivedView(type) {
+  console.log("> toggleArchivedView");
+
+  let isShown, activeDiv, archivedDiv, archivedTag, shownTag, targetHeader;
+
+  if (type == "projects") {
+    archivedProjectsShown = !archivedProjectsShown;
+    isShown = archivedProjectsShown;
+    activeDiv = "#activeProjectsDiv";
+    archivedDiv = "#archivedProjectsDiv";
+    targetHeader= "#projectSelectionHeader"
+    shownTag = "other_projectsHeader";
+    archivedTag = "other_archivedProjectsHeader";
+  } else if (type == "collections") {
+    archivedCollectionsShown = !archivedCollectionsShown;
+    isShown = archivedCollectionsShown;
+    activeDiv = "#activeCollectionsDiv";
+    archivedDiv = "#archivedCollectionsDiv";
+    targetHeader= "#projectEditionHeader"
+    shownTag = "other_collectionsHeader";
+    archivedTag = "other_archivedCollectionsHeader";
+  }
+
+  $(activeDiv).css("display", isShown ? "none" : "grid");
+  $(archivedDiv).css("display", isShown ? "grid" : "none");
+
+  $(targetHeader).css("translate", "-113% 15%");
+  $(targetHeader).addClass(isShown ? archivedTag : shownTag);
+  $(targetHeader).removeClass(isShown ? shownTag : archivedTag);
+  setTimeout(() => {
+    $(targetHeader).css("translate", "-10rem");
+    setupLangage();
+  }, 500);
 }

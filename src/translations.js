@@ -11,13 +11,23 @@ export let uiTexts = {
     de: "DIE PROTO-HÜTTE",
   },
   other_collectionsHeader: {
-    fr: "LES COLLECTIONS DU PROJET",
+    fr: "COLLECTIONS DU PROJET",
     en: "PROJECT'S COLLECTIONS",
     de: "",
   },
+  other_archivedCollectionsHeader: {
+    fr: "COLLECTIONS ARCHIVÉES",
+    en: "",
+    de: "",
+  },
   other_projectsHeader: {
-    fr: "MES PROJETS",
-    en: "MY PROJECTS",
+    fr: "PROJETS",
+    en: "PROJECTS",
+    de: "",
+  },
+  other_archivedProjectsHeader: {
+    fr: "PROJETS ARCHIVÉS",
+    en: "",
     de: "",
   },
   other_noProject: {
@@ -30,13 +40,8 @@ export let uiTexts = {
     en: "No Collection to show",
     de: "",
   },
-  other_archivedProjects: {
-    fr: "Projets Archivés",
-    en: "",
-    de: "",
-  },
-  other_archivedCollections: {
-    fr: "Collections Archivées",
+  other_archivedCollectionsHeader: {
+    fr: "COLLECTIONS ARCHIVÉES",
     en: "Archived Collections",
     de: "Archivierte Sammlungen",
   },
@@ -112,14 +117,24 @@ export let uiTexts = {
     de: "|Sprache ändern",
   },
   btn_newProto: {
-    fr: "CRÉER UN NOUVEAU PROJET",
-    en: "CREATE A NEW PROJECT",
-    de: "NEUES PROJEKT ERSTELLEN",
+    fr: "|CRÉER UN NOUVEAU PROJET",
+    en: "|CREATE A NEW PROJECT",
+    de: "|NEUES PROJEKT ERSTELLEN",
   },
   btn_importProto: {
-    fr: "IMPORTER UN PROJET",
-    en: "IMPORT A PROJECT",
-    de: "NEUES PROJEKT ERSTELLEN",
+    fr: "|IMPORTER UN PROJET",
+    en: "|IMPORT A PROJECT",
+    de: "|NEUES PROJEKT ERSTELLEN",
+  },
+   btn_showArchivedProjects: {
+    fr: "|MONTRER LES PROJETS ARCHIVÉS",
+    en: "|SHOW ARCHIVED PROJECTS",
+    de: "|NEUES PROJEKT ERSTELLEN",
+  },
+  btn_showArchivedColelctions: {
+    fr: "|MONTRER LES COLLECTIONS ARCHIVÉES",
+    en: "|SHOW ARCHIVED COLLECTIONS",
+    de: "|NEUES PROJEKT ERSTELLEN",
   },
   btn_deleteProject: {
     fr: "SUPPRIMER LE PROJET",
@@ -137,8 +152,8 @@ export let uiTexts = {
     de: "NEUES PROJEKT ERSTELLEN",
   },
   btn_newCollection: {
-    fr: "CRÉER UNE NOUVELLE COLLECTION",
-    en: "CREATE A NEW COLLECTION",
+    fr: "|CRÉER UNE NOUVELLE COLLECTION",
+    en: "|CREATE A NEW COLLECTION",
     de: "",
   },
 

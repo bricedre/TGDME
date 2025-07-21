@@ -41,8 +41,6 @@ canvas {
 }
 
 #canvasDiv .btnContainer {
-  transition: all 0.3s ease-in-out;
-  opacity: 0;
   display: flex;
   flex-wrap: nowrap;
   position: absolute;
@@ -56,10 +54,6 @@ canvas {
   width: max-content;
 }
 
-#canvasDiv:hover .btnContainer {
-  opacity: 1;
-}
-
 #canvasDiv .btnContainer img {
   rotate: 0deg !important;
   height: 2rem;
@@ -70,6 +64,24 @@ canvas {
   flex-wrap: wrap;
   gap: 1rem;
   width: 100%;
+}
+
+.cornerContainer {
+  display: flex;
+  align-self: end;
+  width: auto;
+  flex-wrap: nowrap;
+}
+
+.cornerContainer button {
+  aspect-ratio: 1;
+  padding: 0.5rem;
+  flex: 0;
+}
+
+.cornerContainer img {
+  width: 3rem;
+  height: 3rem;
 }
 
 .vertical {
@@ -140,18 +152,12 @@ canvas {
 }
 
 #cardCounterDiv {
-  transition: all 0.3s ease-in-out;
-  opacity: 0;
   position: absolute;
   display: flex;
   bottom: 1rem;
   left: 50%;
   translate: -50% 0;
   width: calc(100% - 2rem);
-}
-
-#canvasDiv:hover #cardCounterDiv {
-  opacity: 1;
 }
 
 #cardCounterDivBtns {

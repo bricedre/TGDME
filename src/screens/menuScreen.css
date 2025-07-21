@@ -48,8 +48,8 @@
 
 #archivedCollectionsDiv,
 #archivedProjectsDiv {
-  margin-top: 1rem;
-  /* display: none; */
+  opacity: 0.5;
+  display: none;
 }
 
 .deckBtn button {

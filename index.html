@@ -37,25 +37,26 @@
 
     <div class="viewer">
       <div id="projectSelectionPanel" class="panel">
-        <div class="homePageHeader other_projectsHeader"></div>
+        <div id="projectSelectionHeader" class="homePageHeader other_projectsHeader"></div>
         <div id="activeProjectsDiv"></div>
         <div id="archivedProjectsDiv"></div>
         <div style="flex: 1"></div>
-        <div class="btnContainer">
-          <button class="navBtn btn_newProto"></button>
-          <button class="navBtn btn_importProto"></button>
+        <div class="btnContainer cornerContainer">
+          <button class="navBtn btn_newProto"><img id="langBtnIcon" src="./assets/btnIcons/newProject.png" alt="home btn" /></button>
+          <!-- <button class="navBtn btn_importProto"><img id="langBtnIcon" src="./assets/btnIcons/archiveCollection.png" alt="home btn" /></button> -->
+          <button class="navBtn btn_showArchivedProjects"><img id="langBtnIcon" src="./assets/btnIcons/archiveCollection.png" alt="home btn" /></button>
         </div>
       </div>
 
       <div id="projectEditionPanel" class="panel">
-       
-        <div class="homePageHeader other_collectionsHeader"></div>
+        <div id="projectEditionHeader" class="homePageHeader other_collectionsHeader"></div>
         <div id="activeCollectionsDiv"></div>
 
         <div id="archivedCollectionsDiv"></div>
-<div style="flex: 1"></div>
-        <div class="btnContainer">
-          <button class="navBtn btn_newCollection"></button>
+        <div style="flex: 1"></div>
+        <div class="btnContainer cornerContainer">
+          <button class="navBtn btn_newCollection"><img id="langBtnIcon" src="./assets/btnIcons/newProject.png" alt="home btn" /></button>
+          <button class="navBtn btn_showArchivedCollections"><img id="langBtnIcon" src="./assets/btnIcons/archiveCollection.png" alt="home btn" /></button>
         </div>
       </div>
 
