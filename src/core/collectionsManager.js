@@ -101,54 +101,57 @@ function getNextCollectionUID() {
   }
 }
 
-export function deleteCurrentCollection() {
+export function deleteCollection(UID) {
   console.log("> deleteCurrentCollection");
 
-  rimraf
-    .rimraf(`${appDataFolder}/projects/${currentProjectUID}/collections/${currentCollectionUID}`)
-    .then(() => {
-      setCurrentCollection(-1);
-      getCollections();
-      openScene("projectEdition");
-    })
-    .catch((e) => console.log(e));
-}
+  if (confirm("Attention ! Cette action est irréversible ! Supprimer ?")) {
+    setCurrentCollection(UID);
 
-export function duplicateCollection() {
-  console.log("> duplicateCollection");
-
-  const newUID = getNextCollectionUID();
-  var dir = `${appDataFolder}/projects/${currentProjectUID}/collections/${newUID}`;
-
-  if (!fs2.existsSync(dir)) {
-    fsExtra.copy(`${appDataFolder}/projects/${currentProjectUID}/collections/${currentCollectionUID}`, `${appDataFolder}/projects/${currentProjectUID}/collections/${newUID}`);
-
-    getCollections();
-
-    setTimeout(() => {
-      collectionsAvailable[collectionsAvailable.length - 1].collectionInfo.UID = newUID;
-      collectionsAvailable[collectionsAvailable.length - 1].collectionInfo.collectionName = "Copie de " + currCollInfo.collectionName;
-      var deckToSave = JSON.stringify(collectionsAvailable[collectionsAvailable.length - 1]);
-      fs.writeFile(dir + "/collection.json", deckToSave, (err) => {
-        if (err) {
-          console.error(err);
-        }
-      });
-      getCollections();
-      setCurrentCollection(newUID);
-      openScene("collectionEdition");
-    }, 500);
+    rimraf
+      .rimraf(`${appDataFolder}/projects/${currentProjectUID}/collections/${currentCollectionUID}`)
+      .then(() => {
+        getCollections();
+      })
+      .catch((e) => console.log(e));
   }
 }
 
-export function archiveCollection() {
+export function duplicateCollection(UID) {
+  console.log("> duplicateCollection");
+
+  setCurrentCollection(UID);
+
+  const newUID = getNextCollectionUID();
+  var oldDir = `${appDataFolder}/projects/${currentProjectUID}/collections/${currentCollectionUID}`;
+  var newDir = `${appDataFolder}/projects/${currentProjectUID}/collections/${newUID}`;
+
+  fsExtra.copy(oldDir, newDir);
+
+  getCollections();
+
+  setTimeout(() => {
+    collectionsAvailable[collectionsAvailable.length - 1].collectionInfo.UID = newUID;
+    collectionsAvailable[collectionsAvailable.length - 1].collectionInfo.collectionName = "Copie de " + currCollInfo.collectionName;
+    var deckToSave = JSON.stringify(collectionsAvailable[collectionsAvailable.length - 1]);
+    fs.writeFile(`${dir}/collection.json`, deckToSave, (err) => {
+      if (err) {
+        console.error(err);
+      }
+    });
+    getCollections();
+    setupProjectEditionPanel();
+  }, 500);
+}
+
+export function archiveCollection(UID) {
   console.log("> archiveCollection");
+
+  setCurrentCollection(UID);
 
   currCollInfo.archived = !currCollInfo.archived;
   saveCollection(false, false);
-  setCurrentCollection(-1);
-  setTimeout(() => getCollections(), 300);
-  setTimeout(() => openScene("projectEdition"), 1000);
+  getCollections();
+  setupProjectEditionPanel();
 }
 
 export function saveCollection(refreshAssets, reRenderCard) {

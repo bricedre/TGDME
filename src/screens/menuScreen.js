@@ -1,4 +1,4 @@
-import { collectionsAvailable, createNewCollection, getCollections, setCurrentCollection } from "../core/collectionsManager.js";
+import { archiveCollection, collectionsAvailable, createNewCollection, deleteCollection, duplicateCollection, getCollections, setCurrentCollection } from "../core/collectionsManager.js";
 import { archiveProject, createNewProject, deleteProject, duplicateProject, getProjects, importProject, projectsAvailable, setCurrentProject } from "../core/projectsManager.js";
 import { changeColorScheme, changeLangage, openScene, setupLangage } from "./mainLayout.js";
 
@@ -90,9 +90,9 @@ export function setupProjectEditionPanel() {
     var activeCollections = [...collectionsSorted].filter((col) => !col.archived);
     var archivedCollections = [...collectionsSorted].filter((col) => col.archived);
 
-    generateSelectionButtons("#activeCollectionsDiv", activeCollections, "collectionName", setCurrentCollection, null, null, null, "collectionEdition", true);
+    generateSelectionButtons("#activeCollectionsDiv", activeCollections, "collectionName", setCurrentCollection, deleteCollection, archiveCollection, duplicateCollection, "collectionEdition", true);
 
-    generateSelectionButtons("#archivedCollectionsDiv", archivedCollections, "collectionName", setCurrentCollection, null, null, null, "collectionEdition", true);
+    generateSelectionButtons("#archivedCollectionsDiv", archivedCollections, "collectionName", setCurrentCollection, deleteCollection, archiveCollection, duplicateCollection, "collectionEdition", true);
   }
 
   //No Collections to show
