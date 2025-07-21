@@ -100,7 +100,6 @@ export function openScene(panelName) {
     }
 
     //HEADER & FOOTER
-    $("#mainTitleDiv").removeClass("other_mainTitle");
     $("#mainTitleDiv").empty();
     $("#bottomBarDiv").css("display", "none");
 
@@ -132,10 +131,6 @@ export function openScene(panelName) {
         //Go back to Config tab all the time
         let firstRadio = document.querySelector(".tabs input");
         firstRadio.checked = true;
-
-        //Hide archive buttons depending on state
-        $("#unarchiveCollectionBtn").css("display", currCollInfo.archived ? "flex" : "none");
-        $("#archiveCollectionBtn").css("display", currCollInfo.archived ? "none" : "flex");
 
         updateElementsCounter();
 

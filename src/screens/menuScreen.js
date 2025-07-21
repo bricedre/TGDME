@@ -122,9 +122,23 @@ function generateSelectionButtons(domElToFill, array, name, setFunction, deleteF
       btnElement.append($("<div></div>").text(btn[name]));
       btnElement.append($("<div class='ressSeparator'></div>"));
 
+      let classToAdd = "";
+      if (colMode) {
+        if (domElToFill.includes("active")) {
+          classToAdd = "btn_archiveCollection";
+        } else {
+          classToAdd = "btn_unarchiveCollection";
+        }
+      } else {
+        if (domElToFill.includes("active")) {
+          classToAdd = "btn_archiveProject";
+        } else {
+          classToAdd = "btn_unarchiveProject";
+        }
+      }
       var archiveBtn = $("<button></button>")
         .html("<img src='assets/btnIcons/archiveCollection.png'></img>")
-        .attr("title", "Archiver")
+        .addClass(classToAdd)
         .on("click", (e) => {
           e.preventDefault();
           e.stopPropagation();
@@ -133,7 +147,7 @@ function generateSelectionButtons(domElToFill, array, name, setFunction, deleteF
 
       var duplicateBtn = $("<button></button>")
         .html("<img src='assets/btnIcons/duplicateCollection.png'></img>")
-        .attr("title", "Dupliquer")
+        .addClass(colMode ? "btn_duplicateCollection" : "btn_duplicateProject")
         .on("click", (e) => {
           e.preventDefault();
           e.stopPropagation();
@@ -142,7 +156,7 @@ function generateSelectionButtons(domElToFill, array, name, setFunction, deleteF
 
       var deleteBtn = $("<button></button>")
         .html("<img src='assets/btnIcons/deleteCollection.png'></img>")
-        .attr("title", "Supprimer")
+        .addClass(colMode ? "btn_deleteCollection" : "btn_deleteProject")
         .on("click", (e) => {
           e.preventDefault();
           e.stopPropagation();
@@ -167,7 +181,7 @@ function toggleArchivedView(type) {
     isShown = archivedProjectsShown;
     activeDiv = "#activeProjectsDiv";
     archivedDiv = "#archivedProjectsDiv";
-    targetHeader= "#projectSelectionHeader"
+    targetHeader = "#projectSelectionHeader";
     shownTag = "other_projectsHeader";
     archivedTag = "other_archivedProjectsHeader";
   } else if (type == "collections") {
@@ -175,7 +189,7 @@ function toggleArchivedView(type) {
     isShown = archivedCollectionsShown;
     activeDiv = "#activeCollectionsDiv";
     archivedDiv = "#archivedCollectionsDiv";
-    targetHeader= "#projectEditionHeader"
+    targetHeader = "#projectEditionHeader";
     shownTag = "other_collectionsHeader";
     archivedTag = "other_archivedCollectionsHeader";
   }

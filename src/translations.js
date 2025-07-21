@@ -5,75 +5,44 @@ export let uiTexts = {
     en: "[Entry Unavailable]",
     de: "[Eintrag nicht verfügbar]",
   },
-  other_mainTitle: {
-    fr: "LA CABANE À PROTOS",
-    en: "THE PROTO-SHACK",
-    de: "DIE PROTO-HÜTTE",
-  },
-  other_collectionsHeader: {
-    fr: "COLLECTIONS DU PROJET",
-    en: "PROJECT'S COLLECTIONS",
-    de: "",
-  },
-  other_archivedCollectionsHeader: {
-    fr: "COLLECTIONS ARCHIVÉES",
-    en: "",
-    de: "",
-  },
+
   other_projectsHeader: {
     fr: "PROJETS",
     en: "PROJECTS",
     de: "",
   },
-  other_archivedProjectsHeader: {
-    fr: "PROJETS ARCHIVÉS",
-    en: "",
+
+  other_collectionsHeader: {
+    fr: "COLLECTIONS DU PROJET",
+    en: "PROJECT'S COLLECTIONS",
     de: "",
   },
+
+  other_archivedProjectsHeader: {
+    fr: "PROJETS ARCHIVÉS",
+  },
+
+  other_archivedCollectionsHeader: {
+    fr: "COLLECTIONS ARCHIVÉES",
+  },
+
   other_noProject: {
     fr: "Aucun Projet à afficher",
-    en: "No Project to show",
-    de: "Kein Projekt anzuzeigen",
   },
   other_noCollection: {
     fr: "Aucune Collection à afficher",
-    en: "No Collection to show",
-    de: "",
-  },
-  other_archivedCollectionsHeader: {
-    fr: "COLLECTIONS ARCHIVÉES",
-    en: "Archived Collections",
-    de: "Archivierte Sammlungen",
-  },
-
-  other_project: {
-    fr: "PROJET",
-    en: "PROJECT",
-    de: "",
-  },
-
-  other_collection: {
-    fr: "COLLECTION",
-    en: "COLLECTION",
-    de: "",
   },
 
   other_dataKey: {
     fr: "CLÉ|Clé à renseigner dans votre Modèle",
-    en: "KEY|Key to use in your Template",
-    de: "",
   },
 
   other_dataValue: {
     fr: "VALEUR",
-    en: "VALUE",
-    de: "",
   },
 
   other_dataPreview: {
     fr: "APERÇU",
-    en: "PREVIEW",
-    de: "",
   },
 
   //! TABS //
@@ -108,143 +77,98 @@ export let uiTexts = {
 
   btn_mainMenu: {
     fr: "|Retour",
-    en: "|Back",
-    de: "|Zurück",
   },
   btn_changeLang: {
     fr: "|Changer la Langue",
-    en: "|Change Language",
-    de: "|Sprache ändern",
   },
   btn_newProto: {
     fr: "|CRÉER UN NOUVEAU PROJET",
-    en: "|CREATE A NEW PROJECT",
-    de: "|NEUES PROJEKT ERSTELLEN",
   },
   btn_importProto: {
     fr: "|IMPORTER UN PROJET",
-    en: "|IMPORT A PROJECT",
-    de: "|NEUES PROJEKT ERSTELLEN",
   },
-   btn_showArchivedProjects: {
+  btn_showArchivedProjects: {
     fr: "|MONTRER LES PROJETS ARCHIVÉS",
-    en: "|SHOW ARCHIVED PROJECTS",
-    de: "|NEUES PROJEKT ERSTELLEN",
   },
   btn_showArchivedColelctions: {
     fr: "|MONTRER LES COLLECTIONS ARCHIVÉES",
-    en: "|SHOW ARCHIVED COLLECTIONS",
-    de: "|NEUES PROJEKT ERSTELLEN",
   },
   btn_deleteProject: {
-    fr: "SUPPRIMER LE PROJET",
-    en: "IMPORT A PROJECT",
-    de: "NEUES PROJEKT ERSTELLEN",
+    fr: "|SUPPRIMER LE PROJET",
   },
   btn_duplicateProject: {
-    fr: "DUPLIQUER LE PROJET",
-    en: "IMPORT A PROJECT",
-    de: "NEUES PROJEKT ERSTELLEN",
+    fr: "|DUPLIQUER LE PROJET",
   },
   btn_archiveProject: {
-    fr: "ARCHIVER LE PROJET",
-    en: "IMPORT A PROJECT",
-    de: "NEUES PROJEKT ERSTELLEN",
+    fr: "|ARCHIVER LE PROJET",
   },
+
+  btn_unarchiveProject: {
+    fr: "|DÉSARCHIVER LE PROJET",
+  },
+
   btn_newCollection: {
     fr: "|CRÉER UNE NOUVELLE COLLECTION",
-    en: "|CREATE A NEW COLLECTION",
-    de: "",
+  },
+
+  btn_duplicateCollection: {
+    fr: "|DUPLIQUER LA COLLECTION",
+  },
+
+  btn_archiveCollection: {
+    fr: "|ARCHIVER LA COLLECTION",
+  },
+
+  btn_unarchiveCollection: {
+    fr: "|DÉSARCHIVER LA COLLECTION",
+  },
+
+  btn_deleteCollection: {
+    fr: "|SUPPRIMER LA COLLECTION",
   },
 
   btn_reRenderCollection: {
     fr: "|Re-générer la Collection (Entrée)",
-    en: "|Regenerate Collection (Return)",
-    de: "|Sammlung neu generieren (Eingabe)",
-  },
-
-  btn_duplicateCollection: {
-    fr: "DUPLIQUER|Créer une copie de la collection actuelle",
-    en: "DUPLICATE|Create a copy of the current collection",
-    de: "DUPLIZIEREN|Eine Kopie der aktuellen Sammlung erstellen",
-  },
-
-  btn_unarchiveCollection: {
-    fr: "DÉSARCHIVER|Désarchiver la collection actuelle",
-    en: "UNARCHIVE|Unarchive the current collection",
-    de: "|",
-  },
-
-  btn_archiveCollection: {
-    fr: "ARCHIVER|Archiver la collection actuelle",
-    en: "ARCHIVE|Archive (i.e. hide in the Library) the current collection",
-    de: "ARCHIVIEREN|Aktuelle Sammlung archivieren (d.h. in der Bibliothek verstecken)",
-  },
-
-  btn_deleteCollection: {
-    fr: "SUPPRIMER|Supprimer la collection actuelle",
-    en: "DELETE|Delete the current collection",
-    de: "LÖSCHEN|Aktuelle Sammlung löschen",
   },
 
   btn_openResFolder: {
     fr: "OUVRIR|Ouvrir le dossier des Ressources de la Collection",
-    en: "OPEN|Open the Collection Resources folder",
-    de: "ÖFFNEN|Sammlungsressourcen-Ordner öffnen",
   },
 
   btn_reloadRes: {
     fr: "RECHARGER|Recharger les Ressources afin de récupérer les modifications",
-    en: "RELOAD|Reload Resources to retrieve modifications",
-    de: "NEU LADEN|Ressourcen neu laden, um Änderungen abzurufen",
   },
 
   btn_editData: {
     fr: "MODIFIER|Ouvrir les données dans un tableur (nécessite la présence d'un tableur : Excel, OpenCalc...)",
-    en: "EDIT|Open data in a spreadsheet (requires a spreadsheet application: Excel, OpenCalc...)",
-    de: "BEARBEITEN|Daten in einer Tabellenkalkulation öffnen (erfordert eine Tabellenkalkulationsanwendung: Excel, OpenCalc...)",
   },
 
   btn_updateData: {
     fr: "METTRE A JOUR|Mettre à jour les données de la collection",
-    en: "UPDATE|Update the collection data",
-    de: "AKTUALISIEREN|Sammlungsdaten aktualisieren",
   },
 
   btn_addImageComponent: {
     fr: "AJOUTER IMAGE|Ajouter un composant Image",
-    en: "ADD IMAGE|Add an Image component",
-    de: "BILD HINZUFÜGEN|Eine Bildkomponente hinzufügen",
   },
 
   btn_addShapeComponent: {
     fr: "AJOUTER FORME|Ajouter un composant Forme",
-    en: "ADD SHAPE|Add a Shape component",
-    de: "FORM HINZUFÜGEN|Eine Formkomponente hinzufügen",
   },
 
   btn_addTitleComponent: {
     fr: "AJOUTER TITRE|Ajouter un composant Titre",
-    en: "ADD TITLE|Add a Title component",
-    de: "TITEL HINZUFÜGEN|Eine Titelkomponente hinzufügen",
   },
 
   btn_addTextComponent: {
     fr: "AJOUTER TEXTE|Ajouter un composant Texte",
-    en: "ADD TEXT|Add a Text component",
-    de: "TEXT HINZUFÜGEN|Eine Textkomponente hinzufügen",
   },
 
   btn_renderPages: {
     fr: "GÉNÉRER|Générer les pages d'élements en fonction des paramètres choisis",
-    en: "RENDER|Generate element pages based on chosen parameters",
-    de: "RENDERN|Elementseiten basierend auf gewählten Parametern generieren",
   },
 
   btn_openRenderFolder: {
     fr: "OUVRIR|Ouvrir le dossier des rendus",
-    en: "OPEN|Open the renders folder",
-    de: "ÖFFNEN|Render-Ordner öffnen",
   },
 
   //! PARAM CATS //
