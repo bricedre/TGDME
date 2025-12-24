@@ -92,7 +92,17 @@ export function setupProjectEditionPanel() {
 
     generateSelectionButtons("#activeCollectionsDiv", activeCollections, "collectionName", setCurrentCollection, deleteCollection, archiveCollection, duplicateCollection, "collectionEdition", true);
 
-    generateSelectionButtons("#archivedCollectionsDiv", archivedCollections, "collectionName", setCurrentCollection, deleteCollection, archiveCollection, duplicateCollection, "collectionEdition", true);
+    generateSelectionButtons(
+      "#archivedCollectionsDiv",
+      archivedCollections,
+      "collectionName",
+      setCurrentCollection,
+      deleteCollection,
+      archiveCollection,
+      duplicateCollection,
+      "collectionEdition",
+      true
+    );
   }
 
   //No Collections to show
@@ -119,7 +129,12 @@ function generateSelectionButtons(domElToFill, array, name, setFunction, deleteF
           openScene(goToScene);
         });
 
-      btnElement.append($("<div></div>").text(btn[name]));
+      let nameElement = $("<div></div>");
+      nameElement.append($("<span class='lettrine'></span>").text(btn[name].substring(0, 1)));
+      nameElement.append($("<span></span>").text(btn[name].substring(1, btn[name].length)));
+
+      btnElement.append(nameElement);
+      
       btnElement.append($("<div class='ressSeparator'></div>"));
 
       let classToAdd = "";

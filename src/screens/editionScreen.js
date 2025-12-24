@@ -1,11 +1,8 @@
 import { app } from "../app.js";
 import {
-  archiveCollection,
   currCollInfo,
   currentCollection,
   currentCollectionUID,
-  deleteCurrentCollection,
-  duplicateCollection,
   saveCollection,
 } from "../core/collectionsManager.js";
 import { generatePages, renderCardUsingTemplate } from "../core/render.js";
@@ -32,14 +29,6 @@ $("#prevCardBtn").on("click", () => goToOtherCard(-1));
 $("#nextCardBtn").on("click", () => goToOtherCard(1));
 $("#bigNextCardBtn").on("click", () => goToOtherCard(10));
 $("#endNextCardBtn").on("click", () => goToOtherCard(500));
-
-//TABS BUTTONS
-$("#duplicateCollectionBtn").on("click", () => duplicateCollection());
-$("#unarchiveCollectionBtn").on("click", () => archiveCollection());
-$("#archiveCollectionBtn").on("click", () => archiveCollection());
-$("#deleteCollectionBtn").on("click", () => {
-  if (confirm("Attention, cette action est irréversible !\nSupprimer ?")) deleteCurrentCollection();
-});
 
 $("#openResFolderBtn").on("click", () => openLocation(`${appDataFolder}/projects/${currentProjectUID}/collections/${currentCollectionUID}/assets`));
 $("#reloadResBtn").on("click", () => {

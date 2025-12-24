@@ -72,7 +72,9 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
 
   //IMAGE-SPECIFIC
   var _anchor = getActualValue(componentData.anchor, elementIndex, p5.CENTER);
-  var _tint = getActualValue(componentData.tint, elementIndex, "#FFFFFF");
+  console.log("tint1", componentData.tint)
+  var _tint = getActualValue(componentData.tint, elementIndex);
+  console.log("tint2", _tint)
   var _listAnchor = getActualValue(componentData.listAnchor, elementIndex, p5.CENTER);
   var _spacingX = getActualValue(componentData.spacingX, elementIndex, 0);
   var _spacingY = getActualValue(componentData.spacingY, elementIndex, 0);
@@ -149,7 +151,7 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
             p5.card.endShape(p5.CLOSE);
 
             p5.card.stroke(_borderColor + zeroPad(Math.floor(_borderOpacity * 255).toString(16), 2));
-            if (_borderWeight != 0) p5.card.strokeWeight(_borderWeight);
+            if (_borderWeight != 0) p5.card.strokeWeight(_borderWeight * currCollInfo.resolution * 0.01);
             else p5.card.noStroke();
             p5.card.noFill();
             p5.card.ellipse(0, 0, _width, _height);
@@ -179,7 +181,7 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
             p5.card.ellipse(0, 0, _width * 0.2, _height * 0.2);
 
             p5.card.stroke(_borderColor + zeroPad(Math.floor(_borderOpacity * 255).toString(16), 2));
-            if (_borderWeight != 0) p5.card.strokeWeight(_borderWeight);
+            if (_borderWeight != 0) p5.card.strokeWeight(_borderWeight * currCollInfo.resolution * 0.01);
             else p5.card.noStroke();
             p5.card.noFill();
             p5.card.ellipse(0, 0, _width * 0.2, _height * 0.2);
@@ -316,7 +318,7 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
             for (var i = 0; i < 5; i++) {
               var anchor1 = [Math.cos(Math.PI / 2 + (i * Math.PI) / 2.5) * _width * 0.8, Math.sin(Math.PI / 2 + (i * Math.PI) / 2.5) * _height * 0.8];
               var anchor2 = [Math.cos(Math.PI / 2 + ((i + 1) * Math.PI) / 2.5) * _width * 0.8, Math.sin(Math.PI / 2 + ((i + 1) * Math.PI) / 2.5) * _height * 0.8];
-              var nextPoint = [Math.cos(Math.PI / 2 + ((i + 1) * Math.PI) / 2.5) * _width * 0.2, Math.sin(Math.PI / 2 + ((i + 1) * Math.PI) / 2.5) * _height * 0.2];
+              var nextPoint = [Math.cos(Math.PI / 2 + ((i + 1) * Math.PI) / 2.5) * _width * 0.3, Math.sin(Math.PI / 2 + ((i + 1) * Math.PI) / 2.5) * _height * 0.2];
               p5.card.bezierVertex(anchor1[0], anchor1[1], anchor2[0], anchor2[1], nextPoint[0], nextPoint[1]);
             }
             p5.card.endShape(p5.CLOSE);
@@ -324,8 +326,8 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
           case "drop":
             p5.card.beginShape();
             p5.card.vertex(_width * 0.5, 0);
-            p5.card.vertex(_width * 0.8, _height * 0.5);
-            p5.card.bezierVertex(_width * 1.2, _height * 1.3, _width * -0.2, _height * 1.3, _width * 0.2, _height * 0.5);
+            p5.card.vertex(_width * 0.75, _height * 0.5);
+            p5.card.bezierVertex(_width * 1, _height * 1.1, _width * 0, _height * 1.1, _width * 0.25, _height * 0.5);
             p5.card.endShape(p5.CLOSE);
             break;
           case "hexa":
@@ -848,9 +850,11 @@ function getActualValue(refValue, elementIndex, dft) {
       //Card Based
       if (valueType == "1") {
         let indexOfValue = currentCollection.elements.headers.indexOf(cardBasedValue);
+        console.log("currentHeaders", currentCollection.elements.headers)
         //Header present in the data
         if (indexOfValue != -1) {
           finalValue = currentCollection.elements.data[elementIndex][indexOfValue];
+          console.log("finalValue", finalValue)
         }
       }
       //Fixed value
@@ -863,7 +867,6 @@ function getActualValue(refValue, elementIndex, dft) {
       console.log(e);
     }
   }
-
   return finalValue || finalValue == "0" ? finalValue : dft;
 }
 

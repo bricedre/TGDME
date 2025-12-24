@@ -54,7 +54,7 @@ export function loadDataFile() {
         });
 
         // Update currentCollection with the new data
-        currentCollection.elements.headers = headers;
+        currentCollection.elements.headers = headers.map((header) => header.trim());
         currentCollection.elements.data = data;
         
       } else {

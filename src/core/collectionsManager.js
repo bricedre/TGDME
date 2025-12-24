@@ -15,6 +15,7 @@ const rimraf = require("rimraf");
 const fsExtra = require("fs-extra");
 const fs2 = require("fs");
 const XLSX = require("xlsx");
+const $ = require("jquery");
 
 export let collectionsAvailable = [];
 export let currentCollectionUID = -1;
@@ -102,7 +103,7 @@ function getNextCollectionUID() {
 }
 
 export function deleteCollection(UID) {
-  console.log("> deleteCurrentCollection");
+  console.log("> deleteCollection");
 
   if (confirm("Attention ! Cette action est irréversible ! Supprimer ?")) {
     setCurrentCollection(UID);
@@ -149,18 +150,20 @@ export function archiveCollection(UID) {
   setCurrentCollection(UID);
 
   currCollInfo.archived = !currCollInfo.archived;
-  saveCollection(false, false);
+  saveCollection(false, false, currCollInfo.collectionName);
   getCollections();
   setupProjectEditionPanel();
 }
 
-export function saveCollection(refreshAssets, reRenderCard) {
+export function saveCollection(refreshAssets, reRenderCard, collectionName = "") {
   console.log("> saveCollection");
 
   var collInfo = currCollInfo;
 
   //ALTER THE DATA TO CURRENT DECK
-  collInfo.collectionName = collectionNameInput.innerText;
+  if (collectionName === "") collInfo.collectionName = $("#collectionNameInput").text();
+  else collInfo.collectionName = collectionName;
+
   collInfo.elementFormat = elementFormatSelect.value;
   collInfo.W = elementWidthInput.value;
   collInfo.H = elementHeightInput.value;
