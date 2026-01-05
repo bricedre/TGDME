@@ -1,13 +1,13 @@
 import { app } from "../app.js";
 import { populateEditionFields } from "../screens/editionScreen.js";
-import { getFolderContents, openScene } from "../screens/mainLayout.js";
+import { getFolderContents, openScene, debugMode } from "../screens/mainLayout.js";
 
 import { loadAssets } from "./assetsManager.js";
 import { renderCardUsingTemplate, setCollectionSpecificVariables } from "./render.js";
 import { populateComponents, setupComponents } from "./componentsManager.js";
 import { loadDataFile, updateDataView } from "./elementsManager.js";
 import { setupProjectEditionPanel } from "../screens/menuScreen.js";
-import { appDataFolder, currentProject, currentProjectUID } from "./projectsManager.js";
+import { appDataFolder, currentProject, currentProjectUID, saveProject } from "./projectsManager.js";
 import { collectionTemplate } from "./templates.js";
 
 const fs = require("fs").promises;
@@ -23,7 +23,7 @@ export let currentCollection;
 export let currCollInfo;
 
 export async function getCollections() {
-  console.log("> getCollections");
+  if(debugMode) console.log("> getCollections");
 
   collectionsAvailable = await getFolderContents(`${appDataFolder}/projects/${currentProjectUID}/collections`, "collection.json");
   setupProjectEditionPanel();
@@ -59,12 +59,10 @@ export function setCurrentCollection(collectionUID) {
 }
 
 export function createNewCollection() {
-  console.log("> createNewCollection");
+  if(debugMode) console.log("> createNewCollection");
 
   const newUID = getNextCollectionUID();
   var dir = `${appDataFolder}/projects/${currentProjectUID}/collections/${newUID}`;
-
-  console.log(newUID, dir);
 
   if (!fs2.existsSync(dir)) {
     fs2.mkdirSync(dir);
@@ -103,7 +101,7 @@ function getNextCollectionUID() {
 }
 
 export function deleteCollection(UID) {
-  console.log("> deleteCollection");
+  if(debugMode) console.log("> deleteCollection");
 
   if (confirm("Attention ! Cette action est irréversible ! Supprimer ?")) {
     setCurrentCollection(UID);
@@ -118,7 +116,7 @@ export function deleteCollection(UID) {
 }
 
 export function duplicateCollection(UID) {
-  console.log("> duplicateCollection");
+  if(debugMode) console.log("> duplicateCollection");
 
   setCurrentCollection(UID);
 
@@ -145,7 +143,7 @@ export function duplicateCollection(UID) {
 }
 
 export function archiveCollection(UID) {
-  console.log("> archiveCollection");
+  if(debugMode) console.log("> archiveCollection");
 
   setCurrentCollection(UID);
 
@@ -156,7 +154,7 @@ export function archiveCollection(UID) {
 }
 
 export function saveCollection(refreshAssets, reRenderCard, collectionName = "") {
-  console.log("> saveCollection");
+  if(debugMode) console.log("> saveCollection");
 
   var collInfo = currCollInfo;
 
@@ -192,13 +190,7 @@ export function saveCollection(refreshAssets, reRenderCard, collectionName = "")
   });
 
   //SAVE CURRENT PROJECT IN FOLDER
-  currentProject.lastSavingTime = Date.now();
-  var projectToSave = JSON.stringify(currentProject);
-  fs.writeFile(`${appDataFolder}/projects/${currentProjectUID}/project.json`, projectToSave, (err) => {
-    if (err) {
-      console.error(err);
-    }
-  });
+  saveProject()
 
   //RELOAD DECK
   if (refreshAssets) loadAssets(app);
@@ -213,7 +205,7 @@ export function saveCollection(refreshAssets, reRenderCard, collectionName = "")
 }
 
 export function setupCollectionDimensions() {
-  console.log("> setupCollectionDimensions");
+  if(debugMode) console.log("> setupCollectionDimensions");
 
   var coll = currCollInfo;
 

@@ -10,6 +10,8 @@ import { allSystemFonts, loadAssets } from "../core/assetsManager.js";
 import { addNewImage, addNewShape, addNewText, addNewTitle, setupComponents } from "../core/componentsManager.js";
 import { checkForFileUpdate, updateDataView } from "../core/elementsManager.js";
 import { appDataFolder, currentProjectUID } from "../core/projectsManager.js";
+import { currentPanel, debugMode } from "./mainLayout.js";
+
 
 const $ = require("jquery");
 
@@ -143,23 +145,34 @@ export function checkOtherInputs(eventTargetId, eventTargetValue) {
   }
 }
 
-export function moveComponent(currentIndex, delta) {
-  var allAccordions = templateItemsDiv.querySelectorAll(".accordion");
+// export function moveComponent(currentIndex, delta) {
+//   var allAccordions = templateItemsDiv.querySelectorAll(".accordion");
 
-  var destinationIndex = currentIndex + delta;
-  var currentElement = { ...currentCollection.template[currentIndex] };
-  var destinationElement = { ...currentCollection.template[destinationIndex] };
+//   var destinationIndex = currentIndex + delta;
+//   var currentElement = { ...currentCollection.template[currentIndex] };
+//   var destinationElement = { ...currentCollection.template[destinationIndex] };
 
-  currentCollection.template[destinationIndex] = currentElement;
-  currentCollection.template[currentIndex] = destinationElement;
+//   currentCollection.template[destinationIndex] = currentElement;
+//   currentCollection.template[currentIndex] = destinationElement;
 
-  allAccordions[currentIndex].style.translate = "0 " + 145 * delta + "%";
-  allAccordions[destinationIndex].style.translate = "0 " + 145 * -delta + "%";
+//   allAccordions[currentIndex].style.translate = "0 " + 145 * delta + "%";
+//   allAccordions[destinationIndex].style.translate = "0 " + 145 * -delta + "%";
 
-  setTimeout(() => {
+//   setTimeout(() => {
+//     setupComponents();
+//     generateCollectionBtn.click();
+//   }, 200);
+// }
+
+export function moveComponent(draggedIndex, dragOverIndex) {
+  if(debugMode) console.log("> moveComponent");
+  if (dragOverIndex !== null && draggedIndex !== null && dragOverIndex !== draggedIndex) {
+    const draggedElement = { ...currentCollection.template[draggedIndex] };
+    currentCollection.template.splice(draggedIndex, 1);
+    currentCollection.template.splice(dragOverIndex, 0, draggedElement);
     setupComponents();
     generateCollectionBtn.click();
-  }, 200);
+  }
 }
 
 export function openLocation(folder) {
@@ -183,3 +196,12 @@ function scaleCanvas(sign) {
   canvasScale = canvasScale + 0.1 * sign;
   $("#canvasDiv main").css("scale", canvasScale);
 }
+
+// Reload assets and refresh data when window regains focus
+window.addEventListener('focus', () => {
+  if(currentPanel == "collectionEdition"){
+    loadAssets(app);
+    checkForFileUpdate();
+    updateDataView();
+  }
+});

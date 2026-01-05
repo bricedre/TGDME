@@ -1,4 +1,4 @@
-import { getFolderContents, openScene } from "../screens/mainLayout.js";
+import { getFolderContents, openScene, debugMode } from "../screens/mainLayout.js";
 import { setupProjectSelectionPanel } from "../screens/menuScreen.js";
 import { getCollections, saveCollection } from "./collectionsManager.js";
 import { projectTemplate } from "./templates.js";
@@ -20,7 +20,7 @@ const path = require("path");
 getAppDataFolder();
 
 async function getAppDataFolder() {
-  console.log("> getAppDataFolder");
+  if(debugMode) console.log("> getAppDataFolder");
 
   let _appDataFolder = getAppDataPath();
 
@@ -39,7 +39,7 @@ async function getAppDataFolder() {
 }
 
 async function patchIfNotUsingProjectSystem() {
-  console.log("> patchIfNotUsingProjectSystem");
+  if(debugMode) console.log("> patchIfNotUsingProjectSystem");
 
   if (confirm("NOUVELLE FEATURE - LES PROJETS : L'application va mettre vos données en conformité et s'éteindre d'elle-même. Redémarrez-la ensuite.")) {
     await fs.mkdir(appDataFolder + "/projects");
@@ -99,7 +99,7 @@ async function patchIfNotUsingProjectSystem() {
 
 // Helper function to copy directory recursively
 async function copyDirectoryRecursive(src, dest) {
-  console.log("> copyDirectoryRecursive");
+  if(debugMode) console.log("> copyDirectoryRecursive");
 
   try {
     await fs.mkdir(dest, { recursive: true });
@@ -123,7 +123,7 @@ async function copyDirectoryRecursive(src, dest) {
 }
 
 export function createNewProject() {
-  console.log("> createNewProject");
+  if(debugMode) console.log("> createNewProject");
 
   const newUID = getNextProjectUID();
   var dir = `${appDataFolder}/projects/${newUID}`;
@@ -139,7 +139,7 @@ export function createNewProject() {
 }
 
 export function saveProject(projectName = "") {
-  console.log("> saveProject");
+  if(debugMode) ("> saveProject");
 
   if (projectName === "") currentProject.projectName = $("#projectNameInput").text();
   else currentProject.projectName = projectName;
@@ -158,14 +158,14 @@ export function saveProject(projectName = "") {
 export function importProject() {}
 
 export async function getProjects() {
-  console.log("> getProjects");
+  if(debugMode) console.log("> getProjects");
 
   projectsAvailable = await getFolderContents(`${appDataFolder}/projects`, "project.json");
   setupProjectSelectionPanel();
 }
 
 export function setCurrentProject(projectUID) {
-  console.log("> setCurrentProject", projectUID, currentProjectUID);
+  if(debugMode) console.log("> setCurrentProject", projectUID, currentProjectUID);
 
   if (projectUID !== currentProjectUID) {
     currentProjectUID = projectUID;
@@ -185,7 +185,7 @@ function getNextProjectUID() {
 }
 
 export function deleteProject(UID) {
-  console.log("> deleteCurrentProject");
+  if(debugMode) console.log("> deleteCurrentProject");
 
   if (confirm("Attention ! Cette action est irréversible ! Supprimer ?")) {
     setCurrentProject(UID);
@@ -200,7 +200,7 @@ export function deleteProject(UID) {
 }
 
 export function duplicateProject(UID) {
-  console.log("> duplicateProject");
+  if(debugMode) console.log("> duplicateProject");
 
   setCurrentProject(UID);
 
@@ -227,7 +227,7 @@ export function duplicateProject(UID) {
 }
 
 export function archiveProject(UID) {
-  console.log("> archiveProject");
+  if(debugMode) console.log("> archiveProject");
 
   setCurrentProject(UID);
 

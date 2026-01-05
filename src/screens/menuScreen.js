@@ -1,6 +1,6 @@
 import { archiveCollection, collectionsAvailable, createNewCollection, deleteCollection, duplicateCollection, getCollections, setCurrentCollection } from "../core/collectionsManager.js";
 import { archiveProject, createNewProject, deleteProject, duplicateProject, getProjects, importProject, projectsAvailable, setCurrentProject } from "../core/projectsManager.js";
-import { changeColorScheme, changeLangage, openScene, setupLangage } from "./mainLayout.js";
+import { changeColorScheme, changeLangage, debugMode, openScene, setupLangage } from "./mainLayout.js";
 
 const $ = require("jquery");
 
@@ -129,9 +129,9 @@ function generateSelectionButtons(domElToFill, array, name, setFunction, deleteF
           openScene(goToScene);
         });
 
-      let nameElement = $("<div></div>");
-      nameElement.append($("<span class='lettrine'></span>").text(btn[name].substring(0, 1)));
-      nameElement.append($("<span></span>").text(btn[name].substring(1, btn[name].length)));
+      let nameElement = $("<div class='projectName'></div>");
+      nameElement.append($("<span class='lettrine'></span>").text(btn[name].substring(0, 2)));
+      nameElement.append($("<span></span>").text(btn[name].substring(2, btn[name].length)));
 
       btnElement.append(nameElement);
       
@@ -187,7 +187,7 @@ function generateSelectionButtons(domElToFill, array, name, setFunction, deleteF
 }
 
 function toggleArchivedView(type) {
-  console.log("> toggleArchivedView");
+  if(debugMode) console.log("> toggleArchivedView");
 
   let isShown, activeDiv, archivedDiv, archivedTag, shownTag, targetHeader;
 

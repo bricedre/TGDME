@@ -5,6 +5,7 @@ import { assetsLibrary, errorImage } from "./assetsManager.js";
 import { IMAGE_parameters, TEXT_parameters, SHAPE_parameters } from "./componentsUI.js";
 import { openLocation } from "../screens/editionScreen.js";
 import { appDataFolder, currentProjectUID } from "./projectsManager.js";
+import { debugMode } from "../screens/mainLayout.js";
 const fs = require("fs");
 
 //GLOBAL VARIABLES THAT CAN BE USED IN EVALUATED VALUES
@@ -12,17 +13,15 @@ let W, L, H;
 let CENTER, CENTRE, CORNER, COIN, LEFT, GAUCHE, RIGHT, DROITE;
 
 export function setCollectionSpecificVariables() {
+  if(debugMode) console.log("> setCollectionSpecificVariables");
 
-  console.log("> setCollectionSpecificVariables")
-  
   W = currCollInfo.W * currCollInfo.resolution;
   L = currCollInfo.W * currCollInfo.resolution;
   H = currCollInfo.H * currCollInfo.resolution;
 }
 
 export function setGlobalVariables() {
-
-  console.log("> setGlobalVariables")
+ if(debugMode) console.log("> setGlobalVariables");
 
   CENTER = app.CENTER;
   CENTRE = app.CENTER;
@@ -35,8 +34,7 @@ export function setGlobalVariables() {
 }
 
 export function renderComponent(p5, componentType, componentIndex, elementIndex) {
-
-  console.log("> renderComponent")
+  if(debugMode) console.log("> renderComponent");
 
   let currentTemplate = currentCollection.template;
 
@@ -72,9 +70,7 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
 
   //IMAGE-SPECIFIC
   var _anchor = getActualValue(componentData.anchor, elementIndex, p5.CENTER);
-  console.log("tint1", componentData.tint)
   var _tint = getActualValue(componentData.tint, elementIndex);
-  console.log("tint2", _tint)
   var _listAnchor = getActualValue(componentData.listAnchor, elementIndex, p5.CENTER);
   var _spacingX = getActualValue(componentData.spacingX, elementIndex, 0);
   var _spacingY = getActualValue(componentData.spacingY, elementIndex, 0);
@@ -113,6 +109,7 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
 
     //! SHAPE
     if (componentType == "SHAPE") {
+
       var passes = 1;
       if (_shadowOpacity > 0) passes = 2;
       p5.card.strokeJoin(p5.ROUND);
@@ -690,16 +687,22 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
       let interline = _interline * _size * currCollInfo.H * currCollInfo.resolution * 0.02;
 
       let interlineQty = 0.5;
-      if(_textAnchorVert == "TOP") interlineQty = 0;
-      else if(_textAnchorVert == "BOTTOM") interlineQty = 1;
+      if (_textAnchorVert == "TOP") interlineQty = 0;
+      else if (_textAnchorVert == "BOTTOM") interlineQty = 1;
       let linesStartOffset = (lines.length - 1) * interlineQty * interline;
-      
+
       lines.forEach((line, index) => p5.card.text(line, 0, -linesStartOffset + index * interline));
-      
+
       imgs.forEach((img) => {
         p5.card.imageMode(p5.CENTER);
         let imgToShow = assetsLibrary[img.src];
-        p5.card.image(imgToShow, -(p5.card.textWidth(lines[img.lineIndex]) / 2) + img.xPlacement + parseFloat(_inlineImgsXOffset), -linesStartOffset + img.lineIndex * interline, _inlineImgsSize, _inlineImgsSize);
+        p5.card.image(
+          imgToShow,
+          -(p5.card.textWidth(lines[img.lineIndex]) / 2) + img.xPlacement + parseFloat(_inlineImgsXOffset),
+          -linesStartOffset + img.lineIndex * interline,
+          _inlineImgsSize,
+          _inlineImgsSize
+        );
       });
     }
 
@@ -728,17 +731,16 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
 
     //! IMAGE / STRIP
     else if (componentType == "IMAGE") {
-
-      if(_imgs.length > 0){
+      if (_imgs.length > 0) {
 
         var _totalWidth = (_elementsList.length * Math.min(_width, _spacingX) + (_elementsList.length - 2) * _spacingX) / 2;
         var _totalHeight = (_elementsList.length * Math.min(_height, _spacingY) + (_elementsList.length - 1) * _spacingY) / 2;
-        
+
         p5.card.imageMode(_anchor);
-        
+
         var passes = 1;
         if (_shadowOpacity > 0) passes = 2;
-        
+
         for (let i = 0; i < _elementsList.length; i++) {
           for (var pass = 0; pass < passes; pass++) {
             if (pass == 0 && _shadowOpacity > 0) {
@@ -750,36 +752,36 @@ export function renderComponent(p5, componentType, componentIndex, elementIndex)
 
             if (_listAnchor == p5.CENTER) {
               p5.card.image(
-              _imgs[i],
-              _elementsList.length > 1 ? (_spacingX > 0 ? i * _spacingX - _totalWidth / 2 : 0) + (_style == "alternate" ? (i % 2 == 0 ? _offsetX : -_offsetX) : 0) : 0,
-              _elementsList.length > 1 ? (_spacingY > 0 ? i * _spacingY - _totalHeight / 2 : 0) + (_style == "alternate" ? (i % 2 == 0 ? _offsetY : -_offsetY) : 0) : 0,
-              _width,
-              _height
-            );
-          } else if (_listAnchor == p5.LEFT) {
-            p5.card.image(
-              _imgs[i],
-              _elementsList.length > 1 ? i * _spacingX + (_style == "alternate" ? (i % 2 == 0 ? _offsetX : -_offsetX) : 0) : 0,
-              _elementsList.length > 1 ? i * _spacingY + (_style == "alternate" ? (i % 2 == 0 ? _offsetY : -_offsetY) : 0) : 0,
-              _width,
-              _height
-            );
-          } else if (_listAnchor == p5.CENTER.RIGHT) {
-            p5.card.image(
-              _imgs[i],
-              _elementsList.length > 1 ? (_spacingX > 0 ? i * _spacingX - _totalWidth : 0) + (_style == "alternate" ? (i % 2 == 0 ? _offsetX : -_offsetX) : 0) : 0,
-              _elementsList.length > 1 ? (_spacingY > 0 ? i * _spacingY - _totalHeight : 0) + (_style == "alternate" ? (i % 2 == 0 ? _offsetY : -_offsetY) : 0) : 0,
-              _width,
-              _height
-            );
-          }
-          
-          if (pass == 0 && _shadowOpacity > 0) {
-            p5.card.translate(-_shadowOffsetX, -_shadowOffsetY);
+                _imgs[i],
+                _elementsList.length > 1 ? (_spacingX > 0 ? i * _spacingX - _totalWidth / 2 : 0) + (_style == "alternate" ? (i % 2 == 0 ? _offsetX : -_offsetX) : 0) : 0,
+                _elementsList.length > 1 ? (_spacingY > 0 ? i * _spacingY - _totalHeight / 2 : 0) + (_style == "alternate" ? (i % 2 == 0 ? _offsetY : -_offsetY) : 0) : 0,
+                _width,
+                _height
+              );
+            } else if (_listAnchor == p5.LEFT) {
+              p5.card.image(
+                _imgs[i],
+                _elementsList.length > 1 ? i * _spacingX + (_style == "alternate" ? (i % 2 == 0 ? _offsetX : -_offsetX) : 0) : 0,
+                _elementsList.length > 1 ? i * _spacingY + (_style == "alternate" ? (i % 2 == 0 ? _offsetY : -_offsetY) : 0) : 0,
+                _width,
+                _height
+              );
+            } else if (_listAnchor == p5.CENTER.RIGHT) {
+              p5.card.image(
+                _imgs[i],
+                _elementsList.length > 1 ? (_spacingX > 0 ? i * _spacingX - _totalWidth : 0) + (_style == "alternate" ? (i % 2 == 0 ? _offsetX : -_offsetX) : 0) : 0,
+                _elementsList.length > 1 ? (_spacingY > 0 ? i * _spacingY - _totalHeight : 0) + (_style == "alternate" ? (i % 2 == 0 ? _offsetY : -_offsetY) : 0) : 0,
+                _width,
+                _height
+              );
+            }
+
+            if (pass == 0 && _shadowOpacity > 0) {
+              p5.card.translate(-_shadowOffsetX, -_shadowOffsetY);
+            }
           }
         }
       }
-    }
     }
 
     p5.card.pop();
@@ -850,11 +852,9 @@ function getActualValue(refValue, elementIndex, dft) {
       //Card Based
       if (valueType == "1") {
         let indexOfValue = currentCollection.elements.headers.indexOf(cardBasedValue);
-        console.log("currentHeaders", currentCollection.elements.headers)
         //Header present in the data
         if (indexOfValue != -1) {
           finalValue = currentCollection.elements.data[elementIndex][indexOfValue];
-          console.log("finalValue", finalValue)
         }
       }
       //Fixed value
@@ -862,9 +862,10 @@ function getActualValue(refValue, elementIndex, dft) {
         finalValue = fixedValue;
       }
 
-      if (finalValue != "" && finalValue?.charAt(0) == ":") finalValue = eval(finalValue.substring(1));
+      if (finalValue != "" && finalValue?.toString().charAt(0) == ":") finalValue = eval(finalValue.substring(1));
     } catch (e) {
       console.log(e);
+      console.log("Error evaluating value: " + finalValue);
     }
   }
   return finalValue || finalValue == "0" ? finalValue : dft;
@@ -952,8 +953,7 @@ export function generatePages() {
 }
 
 export function renderCardUsingTemplate(p, elementIndex, guide, finalRender = false) {
-
-  console.log("> renderCardUsingTemplate")
+  if(debugMode) console.log("> renderCardUsingTemplate");
 
   p.card.resetMatrix();
 
@@ -973,7 +973,7 @@ export function renderCardUsingTemplate(p, elementIndex, guide, finalRender = fa
       p.card.noFill();
       p.card.stroke(0, 80);
       p.card.strokeWeight(2);
-      p.card.rect(0, 0, currCollInfo.W*currCollInfo.resolution, currCollInfo.H*currCollInfo.resolution);
+      p.card.rect(0, 0, currCollInfo.W * currCollInfo.resolution, currCollInfo.H * currCollInfo.resolution);
     }
 
     if (!finalRender && currCollInfo.visualGuide != "none") {

@@ -11,8 +11,10 @@ const $ = require("jquery");
 const lodash = require("lodash");
 const fs = require("fs").promises;
 const fs2 = require("fs");
+const { dialog } = require("electron");
 
 export let currentPanel = "";
+export let debugMode = false;
 let currentColorScheme = 0;
 let langIndex = 0;
 let langs = ["fr", "en", "de"];
@@ -45,7 +47,7 @@ allSelects.forEach((select) => {
 
 // FUNCTIONS
 export async function getFolderContents(path, fileToExplore) {
-  console.log("> getFolderContents", fileToExplore);
+  if(debugMode) console.log("> getFolderContents", fileToExplore);
 
   let _content;
 
@@ -109,21 +111,34 @@ export function openScene(panelName) {
         break;
 
       case "projectEdition":
-        var projectBc = $("<span id='projectNameInput' contenteditable class='breadcrumbs editable'></span>").text(currentProject.projectName).on("input", () => saveProject());
+        var projectBc = $("<span id='projectNameInput' class='breadcrumbs'></span>")
+          .text(currentProject.projectName)
+          .on("click", () => {
+            const picker = ProjectNamePickerInit({ onChange: () => saveProject() });
+            picker.show($(projectBc));
+          });
+
         $("#mainTitleDiv").append($("<span class='separatorBc'>></span>"), projectBc);
         nextPanel = $("#projectEditionPanel");
         getCollections();
         break;
 
       case "collectionEdition":
-        var projectBc = $("<span class='breadcrumbs'></span>")
+        var projectBc = $("<span id='projectNameInput' class='breadcrumbs'></span>")
           .text(currentProject.projectName)
           .on("click", () => {
             getProjects();
             openScene("projectEdition");
           })
           .css("cursor", "pointer");
-        var collectionBc = $("<span contenteditable id='collectionNameInput' class='breadcrumbs editable'></span>").text(currCollInfo.collectionName).on("input", () => saveCollection());
+
+          var collectionBc = $("<span id='collectionNameInput' class='breadcrumbs'></span>")
+          .text(currCollInfo.collectionName)
+          .on("click", () => {
+            const picker = ProjectNamePickerInit({ onChange: () => saveCollection() });
+            picker.show($(collectionBc));
+          });
+
         $("#mainTitleDiv").append($("<span class='separatorBc'>></span>"), projectBc, $("<span class='separatorBc'>></span>"), collectionBc);
 
         $("#bottomBarDiv").css("display", "flex");

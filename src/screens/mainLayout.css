@@ -94,10 +94,6 @@ nav {
   transition: all 0.2s ease-in-out;
 }
 
-.breadcrumbs.editable{
-  cursor: text;
-}
-
 .breadcrumbs:hover {
   background: var(--categoryColor);
 }
@@ -189,6 +185,7 @@ main {
 }
 
 button {
+  position: relative;
   padding: 0.5rem 1rem;
   gap: 1rem;
   border-radius: 0.5rem;

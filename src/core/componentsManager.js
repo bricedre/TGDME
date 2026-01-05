@@ -1,17 +1,21 @@
 import { updateDataView } from "./elementsManager.js";
 
 import { IMAGE_parameters, TEXT_parameters, SHAPE_parameters, TITLE_parameters } from "./componentsUI.js";
-import { currCollInfo, currentCollection } from "./collectionsManager.js";
+import { currCollInfo, currentCollection, saveCollection } from "./collectionsManager.js";
 import { allSystemFonts } from "./assetsManager.js";
 import { moveComponent } from "../screens/editionScreen.js";
+import { debugMode } from "../screens/mainLayout.js";
 
 const $ = require("jquery");
 const cloneDeep = require("lodash/cloneDeep");
 import { imageComponentTemplate, textComponentTemplate, shapeComponentTemplate, titleComponentTemplate } from "./templates.js";
 
-export function setupComponents() {
+let dragging = false;
+let draggedIndex = null;
+let dragOverIndex = null;
 
-  console.log("> setupComponents")
+export function setupComponents() {
+  if(debugMode) console.log("> setupComponents");
 
   $("#templateItemsDiv").empty();
 
@@ -31,10 +35,10 @@ export function setupComponents() {
   }
 }
 
+
+
 export function createNewComponent(item, itemIndex) {
-
-  console.log("> createNewComponent")
-
+  if(debugMode) ("> createNewComponent");
 
   let itemAccordion = document.createElement("button");
   itemAccordion.id = item.UID;
@@ -61,34 +65,74 @@ export function createNewComponent(item, itemIndex) {
       break;
   }
 
-  itemAccordion.innerHTML = `<img src="${icon}"><span class="itemLabel">${item.componentName.value != "" ? item.componentName.value : "Composant sans Nom"}</span><span class="headerSpacer"><span>`;
+   let componentIcon = document.createElement("img");
+  componentIcon.src = icon;
+  componentIcon.classList.add("componentIcon");
+  itemAccordion.appendChild(componentIcon);
 
+  let itemLabel = document.createElement("span");
+  itemLabel.classList.add("itemLabel");
+  itemLabel.innerHTML = item.componentName.value != "" ? item.componentName.value : "Composant sans Nom";
+  itemAccordion.appendChild(itemLabel);
 
-  if (itemIndex > 0) {
-    let upElementBtn = document.createElement("img");
-    upElementBtn.classList.add("upElementBtn");
-    upElementBtn.src = "./assets/elementIcons/moveUp.png";
-    upElementBtn.title = "Reculer le Composant";
-    upElementBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      moveComponent(itemIndex, -1);
-    });
-    itemAccordion.appendChild(upElementBtn);
-  }
+  let spacer = document.createElement("div");
+  spacer.classList.add("headerSpacer");
+  itemAccordion.appendChild(spacer);
 
-  if (itemIndex < currentCollection.template.length - 1) {
-    let downElementBtn = document.createElement("img");
-    downElementBtn.classList.add("downElementBtn");
-    downElementBtn.src = "./assets/elementIcons/moveDown.png";
-    downElementBtn.title = "Avancer le Composant";
-    downElementBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      moveComponent(itemIndex, 1);
-    });
-    itemAccordion.appendChild(downElementBtn);
-  }
+  // if (itemIndex > 0) {
+  //   let upElementBtn = document.createElement("img");
+  //   upElementBtn.classList.add("upElementBtn");
+  //   upElementBtn.src = "./assets/elementIcons/moveUp.png";
+  //   upElementBtn.title = "Reculer le Composant";
+  //   upElementBtn.addEventListener("click", (e) => {
+  //     e.preventDefault();
+  //     e.stopPropagation();
+  //     moveComponent(itemIndex, -1);
+  //   });
+  //   itemAccordion.appendChild(upElementBtn);
+  // }
+
+  // if (itemIndex < currentCollection.template.length - 1) {
+  //   let downElementBtn = document.createElement("img");
+  //   downElementBtn.classList.add("downElementBtn");
+  //   downElementBtn.src = "./assets/elementIcons/moveDown.png";
+  //   downElementBtn.title = "Avancer le Composant";
+  //   downElementBtn.addEventListener("click", (e) => {
+  //     e.preventDefault();
+  //     e.stopPropagation();
+  //     moveComponent(itemIndex, 1);
+  //   });
+  //   itemAccordion.appendChild(downElementBtn);
+  // }
+
+  let dragHandle = document.createElement("img");
+  dragHandle.classList.add("dragHandle");
+  dragHandle.src = "./assets/elementIcons/move.png";
+  dragHandle.title = "Déplacer le Composant";
+  dragHandle.style.cursor = "grab";
+
+  dragHandle.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+  });
+
+  dragHandle.addEventListener("mousedown", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    dragging = true;
+    draggedIndex = itemIndex;
+    dragHandle.style.cursor = "grabbing";
+    console.log(dragging, draggedIndex);
+
+    //style original element
+    const allAccordions = document.querySelectorAll(".accordion");
+    allAccordions[itemIndex].style.opacity = "0.5";
+
+    
+
+  });
+  
+  itemAccordion.appendChild(dragHandle);
 
   let visibilityBtn = document.createElement("img");
   visibilityBtn.classList.add("visibilityBtn");
@@ -163,7 +207,6 @@ export function createNewComponent(item, itemIndex) {
 
   parametersToLoad.forEach((param, paramIndex) => {
     if (param.type == "catHeader") {
-
       let paramTabEl = $("<div></div>").html(param.name).addClass("paramTab");
       paramTabsEl.append(paramTabEl);
 
@@ -172,22 +215,19 @@ export function createNewComponent(item, itemIndex) {
       currentPanel = paramContentEl;
 
       paramTabEl.on("click", () => {
-
         itemPanel.find(".paramTab").removeClass("checked");
-        paramTabEl.addClass("checked")
+        paramTabEl.addClass("checked");
 
         itemPanel.find(".paramContent").removeClass("shown");
         paramContentEl.addClass("shown");
-      })
+      });
 
       if (isFirstOfComp) {
         paramTabEl.addClass("checked");
         paramContentEl.addClass("shown");
         isFirstOfComp = false;
       }
-
-    }
-    else {
+    } else {
       let parameterSlot = document.createElement("div");
       parameterSlot.classList.add("parameterSlot");
 
@@ -206,7 +246,6 @@ export function createNewComponent(item, itemIndex) {
       var inputID = itemIndex + "-" + param.refValue;
       parameterInput.id = inputID;
       if (param.type == "range") {
-
         parameterInput.setAttribute("min", 0.0);
         parameterInput.setAttribute("max", 1.0);
         parameterInput.setAttribute("step", 0.01);
@@ -215,7 +254,7 @@ export function createNewComponent(item, itemIndex) {
       parameterInput.addEventListener("input", (e) => {
         try {
           currentCollection.template[itemIndex][param.refValue].value = e.target.value;
-        } catch (e){
+        } catch (e) {
           currentCollection.template[itemIndex][param.refValue] = {
             value: e.target.value,
             type: "0",
@@ -380,35 +419,43 @@ export function createNewComponent(item, itemIndex) {
 
           if (param.type === "range") {
             parameterInput.style.padding = "0";
-          }
-          else if (param.type === "color") {
+          } else if (param.type === "color") {
             parameterInput.type = "text";
             parameterInput.style.textTransform = "uppercase";
             parameterInput.setAttribute("data-coloris", "");
-            parameterInput.addEventListener("input", e => {
+            parameterInput.addEventListener("input", (e) => {
               e.target.style.background = e.target.value;
-              if(getLuminanceFromHex(e.target.value) < 60) e.target.style.color = "white";
+              if (getLuminanceFromHex(e.target.value) < 60) e.target.style.color = "white";
               else e.target.style.color = "black";
-            })
+            });
             parameterInput.addEventListener("click", () => {
               Coloris({
                 alpha: false,
-                swatches: [
-                  'black',
-                  'white',
-                  'grey',
-                  'red',
-                  '#00cf00',
-                  'blue',
-                  'purple',
-                  'orange',
-                  'yellow',
-                  "#a65d29",
-                  "fuchsia"
-                ],
+                swatches: ["black", "white", "grey", "red", "#00cf00", "blue", "purple", "orange", "yellow", "#a65d29", "fuchsia"],
+              });
+            });
+          } else if (param.type === "angle") {
+            parameterInput.type = "text";
+            parameterInput.setAttribute("data-angle-picker", "");
 
-              })
-            })
+            parameterInput.addEventListener("click", () => {
+              const picker = AnglePickerInit({
+                size: 120,
+                handleSize: 20,
+                value: parseFloat(parameterInput.value) || 0,
+              });
+              picker.show(parameterInput);
+            });
+          } else if (param.type === "variable") {
+            parameterInput.type = "text";
+            parameterInput.setAttribute("data-variable-picker", "");
+
+            parameterInput.addEventListener("click", () => {
+              const picker = VariablePickerInit({
+                presets: [{ value: ":W" }, { value: ":H" }, { value: ":W*0.5" }, { value: ":H*0.5" }],
+              });
+              picker.show(parameterInput);
+            });
           }
 
           try {
@@ -437,10 +484,10 @@ export function createNewComponent(item, itemIndex) {
 
       currentPanel.append($(parameterSlot));
     }
-  })
+  });
 
   templateItemsDiv.appendChild(itemAccordion);
-  $("#templateItemsDiv").append(itemPanel);
+  templateItemsDiv.appendChild(itemPanel[0]);
 }
 
 export function addNewImage() {
@@ -471,17 +518,14 @@ export function addNewShape() {
   generateCollectionBtn.click();
 }
 
-
-
 function assignUIDToNewComponent() {
-  console.log("> assignUIDToNewComponent");
+  if(debugMode) console.log("> assignUIDToNewComponent");
   currentCollection.template[currentCollection.template.length - 1].UID = currCollInfo.lastComponentIndex;
   currCollInfo.lastComponentIndex++;
 }
 
 export function populateComponents() {
-
-  console.log("> populateComponents")
+  if(debugMode) console.log("> populateComponents");
 
   let allAccordions = templateItemsDiv.querySelectorAll(".accordion");
 
@@ -507,9 +551,9 @@ export function populateComponents() {
         break;
     }
 
-    allAccordions[index].querySelector("img").src = icon;
+    allAccordions[index].querySelector(".componentIcon").src = icon;
 
-    allAccordions[index].querySelector("span").innerHTML = item.componentName.value;
+    allAccordions[index].querySelector(".itemLabel").innerHTML = item.componentName.value;
     if (item.isVisible) allAccordions[index].querySelector(".visibilityBtn").src = "./assets/elementIcons/visibilityOn.png";
     else allAccordions[index].querySelector(".visibilityBtn").src = "./assets/elementIcons/visibilityOff.png";
   });
@@ -518,10 +562,48 @@ export function populateComponents() {
 function getLuminanceFromHex(hex) {
   var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
 
-  var r = parseInt(result[1], 16)/255;
-  var g = parseInt(result[2], 16)/255;
-  var b = parseInt(result[3], 16)/255;
+  var r = parseInt(result[1], 16) / 255;
+  var g = parseInt(result[2], 16) / 255;
+  var b = parseInt(result[3], 16) / 255;
 
   return Math.round((Math.max(r, g, b) + Math.min(r, g, b)) * 50);
-
 }
+
+document.addEventListener("mouseup", () => {
+  if (dragging) {
+    dragging = false;
+    if (draggedIndex !== null && dragOverIndex !== null && draggedIndex !== dragOverIndex) {
+      moveComponent(draggedIndex, dragOverIndex);
+      setupComponents();
+      generateCollectionBtn.click();
+    }
+    draggedIndex = null;
+    dragOverIndex = null;
+    const dragHandles = document.querySelectorAll(".drag-handle");
+    dragHandles.forEach((handle) => {
+      handle.style.cursor = "grab";
+    });
+    const allAccordions = document.querySelectorAll(".accordion");
+    allAccordions.forEach((accordion) => {
+      accordion.style.opacity = "1";
+    });
+  }
+});
+
+document.addEventListener("mousemove", (e) => {
+  if (dragging) {
+    const allAccordions = document.querySelectorAll(".accordion");
+    allAccordions.forEach((accordion, index) => {
+      const rect = accordion.getBoundingClientRect();
+      if (e.clientY >= rect.top && e.clientY <= rect.bottom) {
+        dragOverIndex = index;
+        //style hovered element
+        accordion.classList.add("drag-over");
+      } else {
+        accordion.classList.remove("drag-over");
+      }
+    });
+  } else {
+    dragOverIndex = null;
+  }
+});

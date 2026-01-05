@@ -11,6 +11,10 @@
     <meta charset="utf-8" />
     <title>LA CABANE À PROTOS</title>
     <script type="module" src="./src/app.js"></script>
+    <script src="./src/libraries/anglePicker.js"></script>
+    <script src="./src/libraries/variablePicker.js"></script>
+    <script src="./src/libraries/namePicker.js"></script>
+    <script src="./src/libraries/dragndrop.js"></script>
     <script src="./src/libraries/coloris.min.js"></script>
   </head>
 
@@ -43,7 +47,6 @@
         <div style="flex: 1"></div>
         <div class="btnContainer cornerContainer">
           <button class="navBtn btn_newProto"><img id="langBtnIcon" src="./assets/btnIcons/newProject.png" alt="home btn" /></button>
-          <!-- <button class="navBtn btn_importProto"><img id="langBtnIcon" src="./assets/btnIcons/archiveCollection.png" alt="home btn" /></button> -->
           <button class="navBtn btn_showArchivedProjects"><img id="langBtnIcon" src="./assets/btnIcons/archiveCollection.png" alt="home btn" /></button>
         </div>
       </div>
@@ -151,63 +154,56 @@
             <div id="contentRessDiv">
               <div id="ressItemsDiv" class="mainContent"></div>
               <div class="ressSeparator"></div>
-              <div class="btnContainer">
+              <div class="btnContainer cornerContainer">
                 <button id="openResFolderBtn" class="navBtn">
-                  <span class="btn_openResFolder">OUVRIR</span>
                   <img src="./assets/btnIcons/archiveCollection.png" />
                 </button>
-                <button id="reloadResBtn" class="navBtn">
+                <!-- <button id="reloadResBtn" class="navBtn">
                   <span class="btn_reloadRes">RECHARGER</span>
                   <img src="./assets/btnIcons/imgResource.png" />
-                </button>
+                </button> -->
               </div>
             </div>
 
             <div id="contentElementsDiv">
+              <table class="dataTableHeader">
+                <tr>
+                  <th class="other_dataKey"></th>
+                  <th class="other_dataValue"></th>
+                  <th class="other_dataPreview"></th>
+                </tr>
+              </table>
               <div id="elementItemsDiv" class="mainContent">
                 <table class="dataTable">
-                  <thead>
-                    <tr>
-                      <th class="other_dataKey"></th>
-                      <th class="other_dataValue"></th>
-                      <th class="other_dataPreview"></th>
-                    </tr>
-                  </thead>
                   <tbody id="dataTableBody"></tbody>
                 </table>
               </div>
-              <div class="btnContainer">
+              <div class="btnContainer cornerContainer">
                 <button id="modifyDataBtn" class="navBtn">
-                  <span class="btn_editData">MODIFIER</span>
-
                   <img src="./assets/btnIcons/fillData.png" />
                 </button>
-                <button id="updateDataBtn" class="navBtn">
+                <!-- <button id="updateDataBtn" class="navBtn">
                   <span class="btn_updateData">METTRE À JOUR</span>
                   <img src="./assets/btnIcons/wizardFillBtn.png" />
-                </button>
+                </button> -->
               </div>
             </div>
 
             <div id="contentTemplateDiv">
               <div id="templateItemsDiv" class="mainContent"></div>
-              <div class="btnContainer">
+              <div class="btnContainer cornerContainer">
                 <button id="addImageComponentBtn" class="navBtn">
-                  <span class="btn_addImageComponent">AJOUTER IMAGE</span>
                   <img src="./assets/btnIcons/addImageComponent.png" />
                 </button>
                 <button id="addShapeComponentBtn" class="navBtn">
-                  <span class="btn_addShapeComponent">AJOUTER FORME</span>
 
                   <img src="./assets/btnIcons/addShapeComponent.png" />
                 </button>
                 <button id="addTitleComponentBtn" class="navBtn">
-                  <span class="btn_addTitleComponent">AJOUTER TITRE</span>
 
                   <img src="./assets/btnIcons/addTitleComponent.png" />
                 </button>
                 <button id="addTextComponentBtn" class="navBtn">
-                  <span class="btn_addTextComponent">AJOUTER TEXTE</span>
 
                   <img src="./assets/btnIcons/addTextComponent.png" />
                 </button>
@@ -216,79 +212,77 @@
 
             <div id="contentPrintingDiv">
               <div class="mainContent">
-                <div class="parameterSlot">
-                  <p class="parameterName"><span class="render_pageFormat">Format de Page</span></p>
-                  <select id="pageFormatSelect" class="parameterInput">
-                    <optgroup label="Formats standards">
-                      <option value="A4"><span class="opt_a4">A4</span></option>
-                      <option value="A3"><span class="opt_a3">A3</span></option>
-                      <option value="TTS"><span class="opt_tableTopSimulator">TableTop Simulator</span></option>
-                    </optgroup>
-                    <optgroup label="Personnalisé">
-                      <option value="custom"><span class="opt_customDimensions">Choisir ses dimensions...</span></option>
-                    </optgroup>
-                  </select>
-                </div>
+                <div class="printingParams">
+                  <div class="parameterSlot">
+                    <p class="parameterName"><span class="render_pageFormat">Format de Page</span></p>
+                    <select id="pageFormatSelect" class="parameterInput">
+                      <optgroup label="Formats standards">
+                        <option value="A4"><span class="opt_a4">A4</span></option>
+                        <option value="A3"><span class="opt_a3">A3</span></option>
+                        <option value="TTS"><span class="opt_tableTopSimulator">TableTop Simulator</span></option>
+                      </optgroup>
+                      <optgroup label="Personnalisé">
+                        <option value="custom"><span class="opt_customDimensions">Choisir ses dimensions...</span></option>
+                      </optgroup>
+                    </select>
+                  </div>
 
-                <div class="parameterSlot">
-                  <p class="parameterName"><span class="render_pageOrientation">Orientation de Page</span></p>
-                  <select id="pageOrientationSelect" class="parameterInput">
-                    <option value="portrait"><span class="opt_portrait">Portrait</span></option>
-                    <option value="landscape"><span class="opt_landscape">Paysage</span></option>
-                  </select>
-                </div>
+                  <div class="parameterSlot">
+                    <p class="parameterName"><span class="render_pageOrientation">Orientation de Page</span></p>
+                    <select id="pageOrientationSelect" class="parameterInput">
+                      <option value="portrait"><span class="opt_portrait">Portrait</span></option>
+                      <option value="landscape"><span class="opt_landscape">Paysage</span></option>
+                    </select>
+                  </div>
 
-                <div class="parameterSlot">
-                  <p class="parameterName"><span class="render_pageWidth">Largeur de Page (cm)</span></p>
-                  <input id="pageWidthInput" disabled inputmode="decimal" class="parameterInput" step="0.1" />
-                </div>
+                  <div class="parameterSlot">
+                    <p class="parameterName"><span class="render_pageWidth">Largeur de Page (cm)</span></p>
+                    <input id="pageWidthInput" disabled inputmode="decimal" class="parameterInput" step="0.1" />
+                  </div>
 
-                <div class="parameterSlot">
-                  <p class="parameterName"><span class="render_pageHeight">Hauteur de Page (cm)</span></p>
-                  <input id="pageHeightInput" disabled inputmode="decimal" class="parameterInput" step="0.1" />
-                </div>
+                  <div class="parameterSlot">
+                    <p class="parameterName"><span class="render_pageHeight">Hauteur de Page (cm)</span></p>
+                    <input id="pageHeightInput" disabled inputmode="decimal" class="parameterInput" step="0.1" />
+                  </div>
 
-                <div class="parameterSlot">
-                  <p class="parameterName"><span class="render_elementsPerPage">Éléments par Page</span></p>
-                  <input id="maxElementQty" class="parameterInput" step="1" min="1" />
-                </div>
+                  <div class="parameterSlot">
+                    <p class="parameterName"><span class="render_elementsPerPage">Éléments par Page</span></p>
+                    <input id="maxElementQty" class="parameterInput" step="1" min="1" />
+                  </div>
 
-                <div class="parameterSlot" title="300 dpi = 118.11 ppcm | Plus cette valeur sera haute, plus votre image sera nette">
-                  <p class="parameterName"><span class="render_printResolution">Résolution d'Impression (pixels/cm) 🔍</span></p>
-                  <input id="pageResolutionInput" inputmode="decimal" class="parameterInput" step="0.1" />
-                </div>
+                  <div class="parameterSlot" title="300 dpi = 118.11 ppcm | Plus cette valeur sera haute, plus votre image sera nette">
+                    <p class="parameterName"><span class="render_printResolution">Résolution d'Impression (pixels/cm) 🔍</span></p>
+                    <input id="pageResolutionInput" inputmode="decimal" class="parameterInput" step="0.1" />
+                  </div>
 
-                <div class="parameterSlot">
-                  <p class="parameterName"><span class="render_exportFormat">Format d'Export</span></p>
-                  <select id="pageExportFormatSelect" class="parameterInput">
-                    <option value="pdf"><span class="opt_pdf">PDF</span></option>
-                    <option value="jpg"><span class="opt_jpg">JPG</span></option>
-                  </select>
-                </div>
+                  <div class="parameterSlot">
+                    <p class="parameterName"><span class="render_exportFormat">Format d'Export</span></p>
+                    <select id="pageExportFormatSelect" class="parameterInput">
+                      <option value="pdf"><span class="opt_pdf">PDF</span></option>
+                      <option value="jpg"><span class="opt_jpg">JPG</span></option>
+                    </select>
+                  </div>
 
-                <div class="parameterSlot" title="Décale les éléments en miroir pour pouvoir imprimer en verso">
-                  <p class="parameterName"><span class="render_exportSide">Recto/Verso ?</span></p>
-                  <select id="pageExportFormatSelect" class="parameterInput">
-                    <option value="pdf"><span class="opt_pdf">PDF</span></option>
-                    <option value="jpg"><span class="opt_jpg">JPG</span></option>
-                  </select>
-                </div>
+                  <div class="parameterSlot" title="Décale les éléments en miroir pour pouvoir imprimer en verso">
+                    <p class="parameterName"><span class="render_exportSide">Recto/Verso ?</span></p>
+                    <select id="pageExportFormatSelect" class="parameterInput">
+                      <option value="pdf"><span class="opt_pdf">PDF</span></option>
+                      <option value="jpg"><span class="opt_jpg">JPG</span></option>
+                    </select>
+                  </div>
 
-                <div class="parameterSlot" title="L'Aide à la Découpe est une simple bordure semi-transparente mise autour des élements afin de guider la découpe une fois imprimés">
-                  <input type="checkbox" id="cuttingHelpInput" name="cuttingHelpInput" />
-                  <label class="parameterName" for="cuttingHelpInput"><span class="render_cuttingHelp">Aide à la Découpe 🔍</span></label>
+                  <div class="parameterSlot" title="L'Aide à la Découpe est une simple bordure semi-transparente mise autour des élements afin de guider la découpe une fois imprimés">
+                    <input type="checkbox" id="cuttingHelpInput" name="cuttingHelpInput" />
+                    <label class="parameterName" for="cuttingHelpInput"><span class="render_cuttingHelp">Aide à la Découpe 🔍</span></label>
+                  </div>
                 </div>
               </div>
 
-              <div class="btnContainer">
+              <div class="btnContainer cornerContainer">
                 <button id="printPagesBtn" class="navBtn">
-                  <span class="btn_renderPages">GÉNÉRER</span>
-
                   <img src="./assets/btnIcons/toPrint.png" />
                 </button>
                 <button id="showRendersBtn" class="navBtn">
-                  <span class="btn_openRenderFolder">OUVRIR</span>
-
                   <img src="./assets/btnIcons/archiveCollection.png" />
                 </button>
               </div>
@@ -297,7 +291,6 @@
         </div>
 
         <div id="canvasDiv">
-          <p class="cardPreview"><span class="preview_currentElement">Aperçu de l'élément actuel</span></p>
           <div class="btnContainer">
             <button title="Tourner de 90°" id="turnCanvasBtn" class=""><img src="./assets/uiIcons/rotate.png" /></button>
             <button title="Agrandir" id="scaleUpCanvasBtn" class=""><img src="./assets/uiIcons/scaleUp.png" /></button>

@@ -52,17 +52,30 @@
   display: none;
 }
 
+.deckBtn {
+  padding-left: 0.5rem;
+}
+
 .deckBtn button {
   opacity: 0;
   padding: 0.5rem;
   background-color: white;
 }
+
 .deckBtn button:hover {
   background-color: var(--mainBtnColor);
 }
 
 .deckBtn:hover button {
   opacity: 1;
+}
+
+.projectName {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.2rem;
 }
 
 .archivedCollectionsHeader,
@@ -146,6 +159,8 @@
   height: 100%;
 }
 
-.lettrine{
-  font-size: 2rem;
+.lettrine {
+  font-size: 3rem;
+  translate: 0 -7%;
+  text-shadow: 0 0 15px #447d9a;
 }

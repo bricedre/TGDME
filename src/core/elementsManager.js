@@ -2,22 +2,21 @@ import { app } from "../app.js";
 import { currentCollection, currentCollectionUID } from "./collectionsManager.js";
 import { updateElementsCounter } from "../screens/editionScreen.js";
 import { appDataFolder, currentProjectUID } from "./projectsManager.js";
-
+import { debugMode } from "../screens/mainLayout.js";
 
 const $ = require("jquery");
 const XLSX = require("xlsx");
 const { exec } = require("child_process");
 
 export function checkForFileUpdate(){
-  console.log("checkForFileUpdate");
+  if(debugMode) console.log("> checkForFileUpdate");
 
   loadDataFile();
-  generateCollectionBtn.click(); //Saving mods to collection
 }
 
 export function loadDataFile() {
 
-  console.log("loadDataFile");
+  if(debugMode) console.log("> loadDataFile");
   const filePath = `${appDataFolder}/projects/${currentProjectUID}/collections/${currentCollectionUID}/data.xlsx`;
 
   fetch(filePath)
@@ -72,7 +71,7 @@ export function loadDataFile() {
 
 export function updateDataView() {
 
-  console.log("> updateDataView")
+  if(debugMode) console.log("> updateDataView")
   
   const elementItemsDiv = $("#elementItemsDiv");
   const dataTableBody = $("#dataTableBody");

@@ -3,7 +3,7 @@ export const collectionTemplate = (UID) => {
     collectionInfo: {
       archived: false,
       UID: UID,
-      collectionName: "Nouvelle Collection",
+      collectionName: "🎴 Nouvelle Collection",
       resolution: 60,
       elementFormat: "pokerCard",
       pageFormat: "A4",
@@ -30,7 +30,7 @@ export const collectionTemplate = (UID) => {
 };
 
 export const projectTemplate = (UID) => {
-  return { UID: UID, projectName: "Nouveau Projet", lastSavingTime: Date.now(), archived: false };
+  return { UID: UID, projectName: "🎲 Nouveau Projet", lastSavingTime: Date.now(), archived: false };
 };
 
 export let shapeComponentTemplate = {

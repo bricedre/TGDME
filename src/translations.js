@@ -48,29 +48,29 @@ export let uiTexts = {
   //! TABS //
 
   tabs_configuration: {
-    fr: "Configuration|Configuration générale de la Collection et des Éléments",
-    en: "Configuration|General Collection and Elements Configuration",
-    de: "Konfiguration|Allgemeine Sammlungs- und Elementkonfiguration",
+    fr: "⚙️ Configuration|Configuration générale de la Collection et des Éléments",
+    en: "⚙️ Configuration|General Collection and Elements Configuration",
+    de: "⚙️ Konfiguration|Allgemeine Sammlungs- und Elementkonfiguration",
   },
   tabs_images: {
-    fr: "Images|Images liées à la Collection",
-    en: "Images|Images linked to the Collection",
-    de: "Bilder|Mit der Sammlung verknüpfte Bilder",
+    fr: "🖼️ Images|Images liées à la Collection",
+    en: "🖼️ Images|Images linked to the Collection",
+    de: "🖼️ Bilder|Mit der Sammlung verknüpfte Bilder",
   },
   tabs_data: {
-    fr: "Données|Modification des Données",
-    en: "Data|Data Modification",
-    de: "Daten|Datenbearbeitung",
+    fr: "📊 Données|Modification des Données",
+    en: "📊 Data|Data Modification",
+    de: "📊 Daten|Datenbearbeitung",
   },
   tabs_template: {
-    fr: "Modèle|Création du Modèle",
-    en: "Template|Template Creation",
-    de: "Vorlage|Vorlagenerstellung",
+    fr: "✏️ Modèle|Création du Modèle",
+    en: "✏️ Template|Template Creation",
+    de: "✏️ Vorlage|Vorlagenerstellung",
   },
   tabs_render: {
-    fr: "Rendu|Paramètres de Rendu",
-    en: "Rendering|Rendering Parameters",
-    de: "Rendern|Render-Parameter",
+    fr: "📷 Rendu|Paramètres de Rendu",
+    en: "📷 Rendering|Rendering Parameters",
+    de: "📷 Rendern|Render-Parameter",
   },
 
   //! BUTTONS //

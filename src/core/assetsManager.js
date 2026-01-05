@@ -3,6 +3,7 @@ const fs = require("fs");
 
 import { currentCollectionUID} from "./collectionsManager.js";
 import { appDataFolder, currentProjectUID } from "./projectsManager.js";
+import { debugMode } from "../screens/mainLayout.js";
 
 export let allSystemFonts;
 export let assetsLibrary = {};
@@ -11,7 +12,7 @@ export let errorImage;
 
 export function setupResources() {
 
-  console.log("> setupResources")
+  if(debugMode) console.log("> setupResources")
 
   while (ressItemsDiv.firstChild) {
     ressItemsDiv.removeChild(ressItemsDiv.lastChild);
@@ -32,7 +33,7 @@ export function setupResources() {
 
 export function createNewResource(item, itemIndex) {
 
-    console.log("> createNewResource")
+    if(debugMode) console.log("> createNewResource")
 
   var ressContainer = document.createElement("div");
 
@@ -62,7 +63,7 @@ export function createNewResource(item, itemIndex) {
 
 export function loadAssets(p) {
 
-    console.log("> loadAssets")
+    if(debugMode) console.log("> loadAssets")
 
   let assetsPath = `${appDataFolder}/projects/${currentProjectUID}/collections/${currentCollectionUID}/assets/`;
   assetsLibrary = {};
@@ -89,7 +90,7 @@ export function loadAssets(p) {
 
 function getFiles(dir, files = []) {
 
-    console.log("> loadAssets > getFiles")
+    if(debugMode) console.log("> loadAssets > getFiles")
 
   // Get an array of all files and directories in the passed directory using fs.readdirSync
   const fileList = fs.readdirSync(dir);
@@ -112,7 +113,7 @@ export async function getFontList() {
 
   const fontList = require("font-list");
 
-  console.log("> getFontList")
+  if(debugMode) console.log("> getFontList")
 
   try {
     const fonts = await fontList.getFonts();
