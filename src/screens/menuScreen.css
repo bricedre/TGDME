@@ -44,6 +44,8 @@
   grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
   width: 100%;
+  overflow-y: scroll;
+  padding: 0.5rem 1rem 1rem 0.5rem;
 }
 
 #archivedCollectionsDiv,
@@ -58,7 +60,7 @@
 
 .deckBtn button {
   opacity: 0;
-  padding: 0.5rem;
+  padding: 0.2rem;
   background-color: white;
 }
 
@@ -163,4 +165,5 @@
   font-size: 3rem;
   translate: 0 -7%;
   text-shadow: 0 0 15px #447d9a;
+  font-family: "Segoe UI Emoji", sans-serif;
 }

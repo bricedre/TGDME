@@ -204,6 +204,10 @@ canvas {
   height: 100%;
 }
 
+#contentElementsDiv {
+  gap: 0.5rem;
+}
+
 .content .accordion {
   width: 100%;
 }
@@ -403,7 +407,7 @@ input[type="radio"] {
 }
 
 .accordion.drag-over::after {
-  content : "";
+  content: "";
   position: absolute;
   bottom: -0.3rem;
   left: 0;
@@ -515,7 +519,7 @@ input[type="radio"] {
   height: 7rem;
   aspect-ratio: 1;
   margin: 0 !important;
-  background-color: var(--mainColorDark);
+  background: repeating-conic-gradient(#aeaeae 0 25%, #c3c3c3 0 50%) 50% / 20px 20px;
   border-radius: 0.5rem;
   display: flex;
   align-items: center;
@@ -527,23 +531,22 @@ input[type="radio"] {
 }
 
 .ressContainer > img {
-  height: 100%;
+  width: 100%;
   rotate: 0deg;
   transition: all 0.1s ease-in-out;
-}
-
-.ressContainer:hover > img {
-  opacity: 0.3;
 }
 
 .ressTitle {
   position: absolute;
   opacity: 0;
-  max-width: 80%;
-  transition: all 0.1s ease-in-out;
+  inset: 0;
+  transition: all 0.2s ease-in-out;
   word-wrap: break-word;
   text-align: center;
   font-size: 0.8rem;
+  background: #2d94c794;
+  display: grid;
+  place-items: center;
 }
 
 .ressContainer:hover > .ressTitle {
@@ -557,6 +560,7 @@ input[type="radio"] {
   border-radius: 0.5rem;
   overflow: hidden;
   border-spacing: 0 0.6rem;
+  translate: 0 -0.5rem;
 }
 
 .dataTableHeader {

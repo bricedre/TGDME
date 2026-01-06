@@ -14,7 +14,7 @@ const fs2 = require("fs");
 const { dialog } = require("electron");
 
 export let currentPanel = "";
-export let debugMode = false;
+export let debugMode = true;
 let currentColorScheme = 0;
 let langIndex = 0;
 let langs = ["fr", "en", "de"];

@@ -5,9 +5,9 @@ import { getFolderContents, openScene, debugMode } from "../screens/mainLayout.j
 import { loadAssets } from "./assetsManager.js";
 import { renderCardUsingTemplate, setCollectionSpecificVariables } from "./render.js";
 import { populateComponents, setupComponents } from "./componentsManager.js";
-import { loadDataFile, updateDataView } from "./elementsManager.js";
+import { checkForFileUpdate, loadDataFile, updateDataView } from "./elementsManager.js";
 import { setupProjectEditionPanel } from "../screens/menuScreen.js";
-import { appDataFolder, currentProject, currentProjectUID, saveProject } from "./projectsManager.js";
+import { appDataFolder, currentProject, currentProjectUID, projectsAvailable, saveProject } from "./projectsManager.js";
 import { collectionTemplate } from "./templates.js";
 
 const fs = require("fs").promises;
@@ -50,9 +50,10 @@ export function setCurrentCollection(collectionUID) {
     setupComponents();
     populateComponents();
     loadDataFile();
-    updateDataView();
     setCollectionSpecificVariables();
+
     setTimeout(() => {
+      updateDataView();
       renderCardUsingTemplate(app, app.currentIndex, currCollInfo.visualGuide);
     }, 500);
   }
@@ -113,6 +114,113 @@ export function deleteCollection(UID) {
       })
       .catch((e) => console.log(e));
   }
+}
+
+// Add this function to create and show the picker
+export function showProjectPicker(collectionUID, callback) {
+  // Create modal overlay
+  const modal = $("<div></div>")
+    .addClass("project-picker-modal")
+    .css({
+      position: "fixed",
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "100%",
+      backgroundColor: "rgba(0,0,0,0.5)",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      zIndex: 9999
+    });
+
+  // Create picker content
+  const pickerContent = $("<div></div>")
+    .css({
+      backgroundColor: "#fff",
+      padding: "20px",
+      borderRadius: "8px",
+      minWidth: "300px",
+      maxHeight: "80vh",
+      overflow: "auto"
+    });
+
+  const title = $("<h3>Déplacer vers ...</h3>");
+  pickerContent.append(title);
+
+  //Sort projects alphabetically
+  let sortedProjects = [...projectsAvailable];
+  sortedProjects.sort((a, b) => {
+    const nameA = a.projectName.substring(2, a.projectName.length-1).toUpperCase();
+    const nameB = b.projectName.substring(2, b.projectName.length-1).toUpperCase();
+    return nameA.localeCompare(nameB);
+  });
+
+  // Add project buttons
+  sortedProjects.forEach((project) => {
+    const projectBtn = $("<button></button>")
+      .text(project.projectName)
+      .css({
+        display: "block",
+        width: "100%",
+        padding: "10px",
+        margin: "5px 0",
+        cursor: "pointer",
+        textAlign: "left"
+      })
+      .on("click", () => {
+        modal.remove();
+        callback(project.UID);
+      });
+
+    // Disable current project
+    if (project.UID === currentProjectUID) {
+      projectBtn.attr("disabled", true).css({ opacity: 0.5 });
+    }
+
+    pickerContent.append(projectBtn);
+  });
+
+  // Cancel button
+  const cancelBtn = $("<button>Annuler</button>")
+    .css({
+      marginTop: "10px",
+      padding: "8px 16px"
+    })
+    .on("click", () => modal.remove());
+  
+  pickerContent.append(cancelBtn);
+  modal.append(pickerContent);
+  $("body").append(modal);
+}
+
+export async function moveCollectionToProject(UID, targetProjectUID) {
+  if(debugMode) console.log("> moveCollectionToProject");
+  setCurrentCollection(UID);
+
+  var oldDir = `${appDataFolder}/projects/${currentProjectUID}/collections/${currentCollectionUID}`;
+
+  //Check for next available UID in target project by checking existing collections
+  let targetProjectCollections = await getFolderContents(`${appDataFolder}/projects/${targetProjectUID}/collections`, "collection.json");
+  
+  let biggestUID = 0;
+  targetProjectCollections.forEach((coll) => {
+    if (coll.collectionInfo.UID > biggestUID) biggestUID = parseInt(coll.collectionInfo.UID);
+  });
+  currentCollection.collectionInfo.UID = biggestUID + 1;
+  currentCollectionUID = currentCollection.collectionInfo.UID;
+
+  var newDir = `${appDataFolder}/projects/${targetProjectUID}/collections/${currentCollectionUID}`;
+  fsExtra.move(oldDir, newDir, { overwrite: true }, function (err) {
+    if (err) {
+      console.error(err);
+    } else {
+      getCollections();
+      if (currentProjectUID == targetProjectUID) {
+        setupProjectEditionPanel();
+      }
+    }
+  });
 }
 
 export function duplicateCollection(UID) {

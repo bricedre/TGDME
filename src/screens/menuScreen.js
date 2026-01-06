@@ -1,5 +1,25 @@
-import { archiveCollection, collectionsAvailable, createNewCollection, deleteCollection, duplicateCollection, getCollections, setCurrentCollection } from "../core/collectionsManager.js";
-import { archiveProject, createNewProject, deleteProject, duplicateProject, getProjects, importProject, projectsAvailable, setCurrentProject } from "../core/projectsManager.js";
+import {
+  archiveCollection,
+  collectionsAvailable,
+  createNewCollection,
+  deleteCollection,
+  duplicateCollection,
+  getCollections,
+  moveCollectionToProject,
+  setCurrentCollection,
+  showProjectPicker,
+} from "../core/collectionsManager.js";
+import {
+  archiveProject,
+  createNewProject,
+  deleteProject,
+  duplicateProject,
+  exportProject,
+  getProjects,
+  importProjectFromZipFile,
+  projectsAvailable,
+  setCurrentProject,
+} from "../core/projectsManager.js";
 import { changeColorScheme, changeLangage, debugMode, openScene, setupLangage } from "./mainLayout.js";
 
 const $ = require("jquery");
@@ -34,10 +54,16 @@ $(".btn_newProto").on("click", (e) => {
   createNewProject();
 });
 
-$(".btn_importProto").on("click", (e) => {
+$(".btn_importProject").on("click", (e) => {
   e.preventDefault();
   e.stopPropagation();
-  importProject();
+  importProjectFromZipFile();
+});
+
+$(".btn_exportProject").on("click", (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+  exportProject();
 });
 
 $(".btn_showArchivedProjects").on("click", (e) => {
@@ -134,7 +160,7 @@ function generateSelectionButtons(domElToFill, array, name, setFunction, deleteF
       nameElement.append($("<span></span>").text(btn[name].substring(2, btn[name].length)));
 
       btnElement.append(nameElement);
-      
+
       btnElement.append($("<div class='ressSeparator'></div>"));
 
       let classToAdd = "";
@@ -169,6 +195,18 @@ function generateSelectionButtons(domElToFill, array, name, setFunction, deleteF
           duplicateFunction(btn.UID);
         });
 
+      // Update your move button
+      var moveToAnotherProject = $("<button></button>")
+        .html("<img src='assets/btnIcons/moveCollection.png'></img>")
+        .addClass("btn_moveCollection")
+        .on("click", (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          showProjectPicker(btn.UID, (targetProjectUID) => {
+            moveCollectionToProject(btn.UID, targetProjectUID);
+          });
+        });
+
       var deleteBtn = $("<button></button>")
         .html("<img src='assets/btnIcons/deleteCollection.png'></img>")
         .addClass(colMode ? "btn_deleteCollection" : "btn_deleteProject")
@@ -180,6 +218,7 @@ function generateSelectionButtons(domElToFill, array, name, setFunction, deleteF
 
       btnElement.append(archiveBtn);
       btnElement.append(duplicateBtn);
+      if (colMode) btnElement.append(moveToAnotherProject);
       btnElement.append(deleteBtn);
       $(domElToFill).append(btnElement);
     });
@@ -187,7 +226,7 @@ function generateSelectionButtons(domElToFill, array, name, setFunction, deleteF
 }
 
 function toggleArchivedView(type) {
-  if(debugMode) console.log("> toggleArchivedView");
+  if (debugMode) console.log("> toggleArchivedView");
 
   let isShown, activeDiv, archivedDiv, archivedTag, shownTag, targetHeader;
 

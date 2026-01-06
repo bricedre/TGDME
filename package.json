@@ -13,10 +13,12 @@
   "author": "Brice ANDRÉ",
   "license": "MIT",
   "dependencies": {
+    "@electron/remote": "^2.1.3",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.14.18",
     "@mui/material": "^5.14.18",
+    "adm-zip": "^0.5.16",
     "appdata-path": "^1.0.0",
     "electron-reload": "^2.0.0-alpha.1",
     "electron-root-path": "^1.1.0",
@@ -30,6 +32,7 @@
     "lodash": "^4.17.21",
     "p5": "^1.8.0",
     "rimraf": "^5.0.5",
+    "unzipper": "^0.12.3",
     "xlsx": "^0.18.5"
   },
   "devDependencies": {

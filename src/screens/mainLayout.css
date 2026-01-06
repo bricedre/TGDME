@@ -19,6 +19,7 @@
 * {
   user-select: none;
   box-sizing: border-box;
+  font-family: "Main Font", sans-serif;
 }
 
 input,
@@ -203,7 +204,7 @@ button {
 }
 
 button > img {
-  height: 1.5rem;
+  height: 2.5rem;
   rotate: 3deg;
   filter: drop-shadow(2px 2px 2px var(--mainColorShadows));
 }

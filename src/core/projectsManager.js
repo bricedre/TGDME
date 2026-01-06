@@ -20,7 +20,7 @@ const path = require("path");
 getAppDataFolder();
 
 async function getAppDataFolder() {
-  if(debugMode) console.log("> getAppDataFolder");
+  if (debugMode) console.log("> getAppDataFolder");
 
   let _appDataFolder = getAppDataPath();
 
@@ -39,7 +39,7 @@ async function getAppDataFolder() {
 }
 
 async function patchIfNotUsingProjectSystem() {
-  if(debugMode) console.log("> patchIfNotUsingProjectSystem");
+  if (debugMode) console.log("> patchIfNotUsingProjectSystem");
 
   if (confirm("NOUVELLE FEATURE - LES PROJETS : L'application va mettre vos données en conformité et s'éteindre d'elle-même. Redémarrez-la ensuite.")) {
     await fs.mkdir(appDataFolder + "/projects");
@@ -99,7 +99,7 @@ async function patchIfNotUsingProjectSystem() {
 
 // Helper function to copy directory recursively
 async function copyDirectoryRecursive(src, dest) {
-  if(debugMode) console.log("> copyDirectoryRecursive");
+  if (debugMode) console.log("> copyDirectoryRecursive");
 
   try {
     await fs.mkdir(dest, { recursive: true });
@@ -123,7 +123,7 @@ async function copyDirectoryRecursive(src, dest) {
 }
 
 export function createNewProject() {
-  if(debugMode) console.log("> createNewProject");
+  if (debugMode) console.log("> createNewProject");
 
   const newUID = getNextProjectUID();
   var dir = `${appDataFolder}/projects/${newUID}`;
@@ -139,7 +139,7 @@ export function createNewProject() {
 }
 
 export function saveProject(projectName = "") {
-  if(debugMode) ("> saveProject");
+  if (debugMode) "> saveProject";
 
   if (projectName === "") currentProject.projectName = $("#projectNameInput").text();
   else currentProject.projectName = projectName;
@@ -155,17 +155,88 @@ export function saveProject(projectName = "") {
   });
 }
 
-export function importProject() {}
+//Export a project as a .cap zipfile
+export function exportProject() {
+  if (debugMode) console.log("> exportProject");
+
+  const zip = require("adm-zip");
+  const exportZip = new zip();
+  const projectDir = `${appDataFolder}/projects/${currentProjectUID}`;
+  exportZip.addLocalFolder(projectDir);
+  const exportPath = require("@electron/remote").dialog.showSaveDialogSync({
+    title: "Exporter le projet .CAP",
+    defaultPath: `${currentProject.projectName}.cap`,
+    filters: [{ name: "Projet Cabane a Protos", extensions: ["cap"] }],
+  });
+  if (exportPath) {
+    exportZip.writeZip(exportPath);
+  }
+}
+
+export function importProjectFromZipFile() {
+  if (debugMode) console.log("> importProjectFromZipFile");
+  const { dialog } = require("@electron/remote");
+  const selectedPaths = dialog.showOpenDialogSync({
+    title: "Importer un projet .CAP",
+    filters: [{ name: "Projets Cabane a Protos", extensions: ["cap"] }],
+    properties: ["openFile"],
+  });
+  if (selectedPaths && selectedPaths.length > 0) {
+    const sourceFile = selectedPaths[0];
+    const unzipper = require("unzipper");
+    const newUID = getNextProjectUID();
+    const destDir = `${appDataFolder}/projects/${newUID}`;
+    console.log("Starting extraction to:", destDir); // Debug
+    fs2
+      .createReadStream(sourceFile)
+      .pipe(unzipper.Extract({ path: destDir }))
+      .on("close", () => {
+        console.log("Extraction closed");
+        setTimeout(() => {
+          console.log("Timeout started, reading file...");
+          const projectPath = `${destDir}/project.json`;
+          console.log("Reading from:", projectPath);
+
+          // Try using fs2 for everything
+          fs2.readFile(projectPath, "utf8", (err, data) => {
+            console.log("readFile callback triggered");
+            if (err) {
+              console.error("Error reading file:", err);
+              return;
+            }
+            const importedProject = JSON.parse(data);
+            importedProject.UID = newUID;
+            importedProject.projectName = importedProject.projectName + " (Importé)";
+
+            console.log("Saving with new UID:", newUID);
+
+            var deckToSave = JSON.stringify(importedProject, null, 2);
+            fs2.writeFile(projectPath, deckToSave, (err) => {
+              if (err) {
+                console.error(err);
+              } else {
+                console.log("Project saved successfully");
+                getProjects();
+                setupProjectSelectionPanel();
+              }
+            });
+          });
+        }, 500);
+      });
+  } else {
+    console.log("No file selected");
+  }
+}
 
 export async function getProjects() {
-  if(debugMode) console.log("> getProjects");
+  if (debugMode) console.log("> getProjects");
 
   projectsAvailable = await getFolderContents(`${appDataFolder}/projects`, "project.json");
   setupProjectSelectionPanel();
 }
 
 export function setCurrentProject(projectUID) {
-  if(debugMode) console.log("> setCurrentProject", projectUID, currentProjectUID);
+  if (debugMode) console.log("> setCurrentProject", projectUID, currentProjectUID);
 
   if (projectUID !== currentProjectUID) {
     currentProjectUID = projectUID;
@@ -185,7 +256,7 @@ function getNextProjectUID() {
 }
 
 export function deleteProject(UID) {
-  if(debugMode) console.log("> deleteCurrentProject");
+  if (debugMode) console.log("> deleteCurrentProject");
 
   if (confirm("Attention ! Cette action est irréversible ! Supprimer ?")) {
     setCurrentProject(UID);
@@ -200,7 +271,7 @@ export function deleteProject(UID) {
 }
 
 export function duplicateProject(UID) {
-  if(debugMode) console.log("> duplicateProject");
+  if (debugMode) console.log("> duplicateProject");
 
   setCurrentProject(UID);
 
@@ -227,7 +298,7 @@ export function duplicateProject(UID) {
 }
 
 export function archiveProject(UID) {
-  if(debugMode) console.log("> archiveProject");
+  if (debugMode) console.log("> archiveProject");
 
   setCurrentProject(UID);
 

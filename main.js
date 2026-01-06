@@ -1,6 +1,9 @@
 const electron = require("electron");
 const path = require("path");
 
+const remoteMain = require('@electron/remote/main');
+remoteMain.initialize();
+
 const { app, BrowserWindow } = electron;
 
 // require("electron-reload")(__dirname, {
@@ -20,6 +23,8 @@ const createWindow = () => {
   mainWindow.maximize();
   // mainWindow.removeMenu();
   mainWindow.loadURL(`file://${__dirname}/index.html`);
+
+  remoteMain.enable(mainWindow.webContents);
 
   mainWindow.on("closed", function () {
     mainWindow = null;
