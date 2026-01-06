@@ -165,7 +165,7 @@ export function exportProject() {
   exportZip.addLocalFolder(projectDir);
   const exportPath = require("@electron/remote").dialog.showSaveDialogSync({
     title: "Exporter le projet .CAP",
-    defaultPath: `${currentProject.projectName}.cap`,
+    defaultPath: `${currentProject.projectName.substring(3, currentProject.projectName.length)}.cap`,
     filters: [{ name: "Projet Cabane a Protos", extensions: ["cap"] }],
   });
   if (exportPath) {
