@@ -12,7 +12,7 @@ canvas {
   padding: 4rem;
   position: relative;
   height: 100%;
-  width: 40vw;
+  width: calc((100vw - 6rem) / 2);
   background-color: var(--panelBG);
   border-radius: 1rem;
   display: grid;
@@ -48,7 +48,6 @@ canvas {
   top: 8%;
   translate: -50% -50%;
   z-index: 5;
-  background: rgba(0, 0, 0, 0.37);
   padding: 1rem;
   border-radius: 0.5rem;
   width: max-content;
@@ -97,7 +96,7 @@ canvas {
 .cardBtn {
   display: flex;
   height: 100%;
-  color: var(--mainColorDark);
+  color: #1A5471;
 }
 
 .cardBtn:hover {
@@ -129,7 +128,7 @@ canvas {
   scale: 1.3;
 }
 
-#generateCollectionBtn > img {
+#generateCollectionBtn>img {
   height: 4rem;
 }
 
@@ -163,14 +162,22 @@ canvas {
 #cardCounterDivBtns {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
+  gap: 1rem;
   width: 100%;
+  
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
+
+.transBG{
+  background: #1062936e;
 }
 
 /*      TAB SYSTEM     */
 
 .tabs {
-  width: 55vw;
+  width: calc((100vw - 6rem) / 2);
   height: 100%;
   background-color: var(--panelBG);
   border-radius: 1rem;
@@ -189,7 +196,7 @@ canvas {
   height: 94%;
 }
 
-.content > div {
+.content>div {
   display: none;
   padding: 1rem;
 }
@@ -216,7 +223,7 @@ input[type="radio"] {
   display: none;
 }
 
-.tabs > label {
+.tabs>label {
   display: inline-block;
   padding: 0.5rem;
   text-align: center;
@@ -228,25 +235,25 @@ input[type="radio"] {
   transition: all 0.2s ease-in-out;
 }
 
-.tabs > label:hover {
+.tabs>label:hover {
   background: var(--categoryColor);
   cursor: pointer;
 }
 
-.tabs > input:checked + label {
+.tabs>input:checked+label {
   background: var(--mainColorDark);
 }
 
-#tabConfigInput + label {
+#tabConfigInput+label {
   margin: 1rem 0 0 1rem;
 }
 
-#tabConfigInput:checked ~ .content #contentConfigDiv,
-#tabPrintingInput:checked ~ .content #contentPrintingDiv,
-#tabTemplateInput:checked ~ .content #contentTemplateDiv,
-#tabElementsInput:checked ~ .content #contentElementsDiv,
-#tabRessInput:checked ~ .content #contentRessDiv,
-#tabPrinting:checked ~ .content #contentPrintingDiv {
+#tabConfigInput:checked~.content #contentConfigDiv,
+#tabPrintingInput:checked~.content #contentPrintingDiv,
+#tabTemplateInput:checked~.content #contentTemplateDiv,
+#tabElementsInput:checked~.content #contentElementsDiv,
+#tabRessInput:checked~.content #contentRessDiv,
+#tabPrinting:checked~.content #contentPrintingDiv {
   display: flex;
 }
 
@@ -417,7 +424,7 @@ input[type="radio"] {
   background-color: #1a6489;
 }
 
-.accordion > img {
+.accordion>img {
   aspect-ratio: 1;
   height: 1.8rem;
   rotate: 0deg;
@@ -445,7 +452,7 @@ input[type="radio"] {
   border-radius: 0.5rem 0.5rem 0 0;
 }
 
-.paramAccordion > img {
+.paramAccordion>img {
   aspect-ratio: 1;
   height: 1.8rem;
   rotate: 0deg;
@@ -498,7 +505,7 @@ input[type="radio"] {
   gap: 0.5rem;
 }
 
-.elementsHeaderDiv > img {
+.elementsHeaderDiv>img {
   aspect-ratio: 1;
   height: 3.2rem;
   padding: 0.3rem;
@@ -530,7 +537,7 @@ input[type="radio"] {
   cursor: pointer;
 }
 
-.ressContainer > img {
+.ressContainer>img {
   width: 100%;
   rotate: 0deg;
   transition: all 0.1s ease-in-out;
@@ -549,7 +556,7 @@ input[type="radio"] {
   place-items: center;
 }
 
-.ressContainer:hover > .ressTitle {
+.ressContainer:hover>.ressTitle {
   opacity: 1;
 }
 
