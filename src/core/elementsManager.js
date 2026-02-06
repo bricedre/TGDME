@@ -8,15 +8,14 @@ const $ = require("jquery");
 const XLSX = require("xlsx");
 const { exec } = require("child_process");
 
-export function checkForFileUpdate(){
-  if(debugMode) console.log("> checkForFileUpdate");
+export function checkForFileUpdate() {
+  if (debugMode) console.log("> checkForFileUpdate");
 
   loadDataFile();
 }
 
 export function loadDataFile() {
-
-  if(debugMode) console.log("> loadDataFile");
+  if (debugMode) console.log("> loadDataFile");
   const filePath = `${appDataFolder}/projects/${currentProjectUID}/collections/${currentCollectionUID}/data.xlsx`;
 
   fetch(filePath)
@@ -55,7 +54,6 @@ export function loadDataFile() {
         // Update currentCollection with the new data
         currentCollection.elements.headers = headers.map((header) => header.trim());
         currentCollection.elements.data = data;
-        
       } else {
         currentCollection.elements = {
           headers: [],
@@ -70,18 +68,15 @@ export function loadDataFile() {
 }
 
 export function updateDataView() {
+  if (debugMode) console.log("> updateDataView");
 
-  if(debugMode) console.log("> updateDataView")
-  
   const elementItemsDiv = $("#elementItemsDiv");
   const dataTableBody = $("#dataTableBody");
   dataTableBody.empty();
 
-
   //Has data to show
   if (currentCollection.elements.headers.length > 0) {
-
-    dataTableBody.css("background", "#ffffff")
+    dataTableBody.css("background", "#ffffff");
 
     currentCollection.elements.headers.forEach((header, index) => {
       let newRow = $("<tr></tr>");
@@ -93,15 +88,12 @@ export function updateDataView() {
 
       if (valueToShow) {
         if (valueToShow.toString().charAt(0) == "#") {
-          // newRow.append($("<td></td>")
-          let colorPreview = $("<div></div>").css("background", valueToShow).css("border-radius", "50%").css("width", "3rem").css("height", "3rem").css("border", "3px solid #0006").css("margin", "0 auto");
-          let td = $("<td></td>");
-          td.append(colorPreview);
+          let td = $("<td></td>").css("background", valueToShow).css("border", "10px solid #FFF");
           newRow.append(td);
         } else if ([".png", ".jpg"].includes(valueToShow.toString().substring(valueToShow.length - 4))) {
           let imgUrl = `${appDataFolder}/projects/${currentProjectUID}/collections/${currentCollectionUID}/assets/${valueToShow}`;
           imgUrl = imgUrl.replaceAll("\\", "/");
-          newRow.append($("<td></td>").css("background-image", 'url("'+imgUrl+'")'));
+          newRow.append($("<td></td>").css("background-image", 'url("' + imgUrl + '")'));
         } else {
           newRow.append($("<td></td>"));
         }

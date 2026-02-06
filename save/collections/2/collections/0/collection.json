@@ -1,0 +1,3727 @@
+{
+  "collectionInfo": {
+    "archived": false,
+    "UID": "0",
+    "collectionName": "Floréalys",
+    "resolution": 60,
+    "elementFormat": "dominoCard",
+    "pageFormat": "TTS",
+    "pageOrientation": "portrait",
+    "visualGuide": "none",
+    "W": 4.4,
+    "H": 8.8,
+    "pageWidth": 44,
+    "pageHeight": 61.6,
+    "lastComponentIndex": 27,
+    "lastElementIndex": 0,
+    "lastAssetIndex": 0,
+    "colCount": 10,
+    "rowCount": 7,
+    "marginX": 0,
+    "marginY": -2.1316282072803006e-13,
+    "pageExportFormat": "jpg",
+    "cuttingHelp": false,
+    "lastSavingTime": 1749667926075,
+    "maxElementQty": "52"
+  },
+  "template": [
+    {
+      "UID": 0,
+      "isVisible": true,
+      "component": "IMAGE",
+      "componentName": {
+        "value": "Fond"
+      },
+      "src": {
+        "value": "",
+        "type": "1",
+        "valueCB": "fond"
+      },
+      "positionX": {
+        "value": ":0.5*W",
+        "type": "0"
+      },
+      "positionY": {
+        "value": ":0.5*H",
+        "type": "0"
+      },
+      "width": {
+        "value": ":W",
+        "type": "0"
+      },
+      "height": {
+        "value": ":H",
+        "type": "0"
+      },
+      "anchor": {
+        "value": ":CENTER",
+        "type": "0"
+      },
+      "mirror": {
+        "value": "none",
+        "type": "0"
+      },
+      "opacity": {
+        "value": "100",
+        "type": "0"
+      },
+      "tint": {
+        "value": "#ffffff",
+        "type": "0"
+      },
+      "angle": {
+        "value": "0",
+        "type": "0"
+      },
+      "listAnchor": {
+        "value": ":CENTER",
+        "type": "0"
+      },
+      "spacingX": {
+        "value": "100",
+        "type": "0"
+      },
+      "spacingY": {
+        "value": "0",
+        "type": "0"
+      },
+      "style": {
+        "value": "straight",
+        "type": "0"
+      },
+      "offsetX": {
+        "value": "100",
+        "type": "0"
+      },
+      "offsetY": {
+        "value": "0",
+        "type": "0"
+      },
+      "shadowColor": {
+        "value": "#000000",
+        "type": "0"
+      },
+      "shadowOffsetX": {
+        "value": "5",
+        "type": "0"
+      },
+      "shadowOffsetY": {
+        "value": "5",
+        "type": "0"
+      },
+      "shadowOpacity": {
+        "value": "100",
+        "type": "0"
+      },
+      "shadowBlur": {
+        "value": "0",
+        "type": "0"
+      }
+    },
+    {
+      "UID": 20,
+      "isVisible": true,
+      "component": "IMAGE",
+      "componentName": {
+        "value": "Fleur 1"
+      },
+      "src": {
+        "value": "",
+        "type": "1",
+        "valueCB": "fleur1"
+      },
+      "positionX": {
+        "value": ":W*0.5",
+        "type": "0"
+      },
+      "positionY": {
+        "value": ":0.25*H",
+        "type": "0"
+      },
+      "width": {
+        "value": "180",
+        "type": "0"
+      },
+      "height": {
+        "value": "180",
+        "type": "0"
+      },
+      "anchor": {
+        "value": ":CENTER",
+        "type": "0"
+      },
+      "mirror": {
+        "value": "none",
+        "type": "0"
+      },
+      "opacity": {
+        "value": "100",
+        "type": "0"
+      },
+      "tint": {
+        "value": "#ffffff",
+        "type": "0"
+      },
+      "angle": {
+        "value": "0",
+        "type": "0"
+      },
+      "listAnchor": {
+        "value": ":CENTER",
+        "type": "0"
+      },
+      "spacingX": {
+        "value": "100",
+        "type": "0"
+      },
+      "spacingY": {
+        "value": "0",
+        "type": "0"
+      },
+      "style": {
+        "value": "straight",
+        "type": "0"
+      },
+      "offsetX": {
+        "value": "0",
+        "type": "0"
+      },
+      "offsetY": {
+        "value": "0",
+        "type": "0"
+      },
+      "shadowColor": {
+        "value": "#000000",
+        "type": "0"
+      },
+      "shadowOffsetX": {
+        "value": "5",
+        "type": "0"
+      },
+      "shadowOffsetY": {
+        "value": "5",
+        "type": "0"
+      },
+      "shadowOpacity": {
+        "value": "0",
+        "type": "0"
+      },
+      "shadowBlur": {
+        "value": "0",
+        "type": "0"
+      }
+    },
+    {
+      "UID": 1,
+      "isVisible": true,
+      "component": "IMAGE",
+      "componentName": {
+        "value": "Fleur 21"
+      },
+      "src": {
+        "value": "",
+        "type": "1",
+        "valueCB": "fleur21"
+      },
+      "positionX": {
+        "value": ":0.3*W",
+        "type": "0"
+      },
+      "positionY": {
+        "value": ":0.25*H",
+        "type": "0"
+      },
+      "width": {
+        "value": "100",
+        "type": "0"
+      },
+      "height": {
+        "value": "100",
+        "type": "0"
+      },
+      "anchor": {
+        "value": ":CENTER",
+        "type": "0"
+      },
+      "mirror": {
+        "value": "none",
+        "type": "0"
+      },
+      "opacity": {
+        "value": "100",
+        "type": "0"
+      },
+      "tint": {
+        "value": "#ffffff",
+        "type": "0"
+      },
+      "angle": {
+        "value": "0",
+        "type": "0"
+      },
+      "listAnchor": {
+        "value": ":LEFT",
+        "type": "0"
+      },
+      "spacingX": {
+        "value": "0",
+        "type": "0"
+      },
+      "spacingY": {
+        "value": ":H*0.48",
+        "type": "0"
+      },
+      "style": {
+        "value": "alternate",
+        "type": "0"
+      },
+      "offsetX": {
+        "value": "0",
+        "type": "0"
+      },
+      "offsetY": {
+        "value": "0",
+        "type": "0"
+      },
+      "shadowColor": {
+        "value": "#000000",
+        "type": "0"
+      },
+      "shadowOffsetX": {
+        "value": "5",
+        "type": "0"
+      },
+      "shadowOffsetY": {
+        "value": "5",
+        "type": "0"
+      },
+      "shadowOpacity": {
+        "value": "0",
+        "type": "0"
+      },
+      "shadowBlur": {
+        "value": "0",
+        "type": "0"
+      }
+    },
+    {
+      "UID": 2,
+      "isVisible": true,
+      "component": "IMAGE",
+      "componentName": {
+        "value": "Fleur 22"
+      },
+      "src": {
+        "value": "",
+        "type": "1",
+        "valueCB": "fleur22"
+      },
+      "positionX": {
+        "value": ":0.7*W",
+        "type": "0"
+      },
+      "positionY": {
+        "value": ":0.25*H",
+        "type": "0"
+      },
+      "width": {
+        "value": "100",
+        "type": "0"
+      },
+      "height": {
+        "value": "100",
+        "type": "0"
+      },
+      "anchor": {
+        "value": ":CENTER",
+        "type": "0"
+      },
+      "mirror": {
+        "value": "none",
+        "type": "0"
+      },
+      "opacity": {
+        "value": "100",
+        "type": "0"
+      },
+      "tint": {
+        "value": "#ffffff",
+        "type": "0"
+      },
+      "angle": {
+        "value": "0",
+        "type": "0"
+      },
+      "listAnchor": {
+        "value": ":LEFT",
+        "type": "0"
+      },
+      "spacingX": {
+        "value": "0",
+        "type": "0"
+      },
+      "spacingY": {
+        "value": ":H*0.48",
+        "type": "0"
+      },
+      "style": {
+        "value": "straight",
+        "type": "0"
+      },
+      "offsetX": {
+        "value": "100",
+        "type": "0"
+      },
+      "offsetY": {
+        "value": "0",
+        "type": "0"
+      },
+      "shadowColor": {
+        "value": "#000000",
+        "type": "0"
+      },
+      "shadowOffsetX": {
+        "value": "5",
+        "type": "0"
+      },
+      "shadowOffsetY": {
+        "value": "5",
+        "type": "0"
+      },
+      "shadowOpacity": {
+        "value": "0",
+        "type": "0"
+      },
+      "shadowBlur": {
+        "value": "0",
+        "type": "0"
+      }
+    },
+    {
+      "UID": 16,
+      "isVisible": true,
+      "component": "IMAGE",
+      "componentName": {
+        "value": "Fleur 31"
+      },
+      "src": {
+        "value": "",
+        "type": "1",
+        "valueCB": "fleur31"
+      },
+      "positionX": {
+        "value": ":0.3*W",
+        "type": "0"
+      },
+      "positionY": {
+        "value": ":0.15*H",
+        "type": "0"
+      },
+      "width": {
+        "value": "100",
+        "type": "0"
+      },
+      "height": {
+        "value": "100",
+        "type": "0"
+      },
+      "anchor": {
+        "value": ":CENTER",
+        "type": "0"
+      },
+      "mirror": {
+        "value": "none",
+        "type": "0"
+      },
+      "opacity": {
+        "value": "100",
+        "type": "0"
+      },
+      "tint": {
+        "value": "#ffffff",
+        "type": "0"
+      },
+      "angle": {
+        "value": "0",
+        "type": "0"
+      },
+      "listAnchor": {
+        "value": ":LEFT",
+        "type": "0"
+      },
+      "spacingX": {
+        "value": "0",
+        "type": "0"
+      },
+      "spacingY": {
+        "value": ":H*0.70",
+        "type": "0"
+      },
+      "style": {
+        "value": "straight",
+        "type": "0"
+      },
+      "offsetX": {
+        "value": "100",
+        "type": "0"
+      },
+      "offsetY": {
+        "value": "0",
+        "type": "0"
+      },
+      "shadowColor": {
+        "value": "#000000",
+        "type": "0"
+      },
+      "shadowOffsetX": {
+        "value": "5",
+        "type": "0"
+      },
+      "shadowOffsetY": {
+        "value": "5",
+        "type": "0"
+      },
+      "shadowOpacity": {
+        "value": "0",
+        "type": "0"
+      },
+      "shadowBlur": {
+        "value": "0",
+        "type": "0"
+      }
+    },
+    {
+      "UID": 17,
+      "isVisible": true,
+      "component": "IMAGE",
+      "componentName": {
+        "value": "Fleur 32"
+      },
+      "src": {
+        "value": "",
+        "type": "1",
+        "valueCB": "fleur32"
+      },
+      "positionX": {
+        "value": ":0.7*W",
+        "type": "0"
+      },
+      "positionY": {
+        "value": ":0.15*H",
+        "type": "0"
+      },
+      "width": {
+        "value": "100",
+        "type": "0"
+      },
+      "height": {
+        "value": "100",
+        "type": "0"
+      },
+      "anchor": {
+        "value": ":CENTER",
+        "type": "0"
+      },
+      "mirror": {
+        "value": "none",
+        "type": "0"
+      },
+      "opacity": {
+        "value": "100",
+        "type": "0"
+      },
+      "tint": {
+        "value": "#ffffff",
+        "type": "0"
+      },
+      "angle": {
+        "value": "0",
+        "type": "0"
+      },
+      "listAnchor": {
+        "value": ":LEFT",
+        "type": "0"
+      },
+      "spacingX": {
+        "value": "0",
+        "type": "0"
+      },
+      "spacingY": {
+        "value": ":H*0.70",
+        "type": "0"
+      },
+      "style": {
+        "value": "straight",
+        "type": "0"
+      },
+      "offsetX": {
+        "value": "100",
+        "type": "0"
+      },
+      "offsetY": {
+        "value": "0",
+        "type": "0"
+      },
+      "shadowColor": {
+        "value": "#000000",
+        "type": "0"
+      },
+      "shadowOffsetX": {
+        "value": "5",
+        "type": "0"
+      },
+      "shadowOffsetY": {
+        "value": "5",
+        "type": "0"
+      },
+      "shadowOpacity": {
+        "value": "0",
+        "type": "0"
+      },
+      "shadowBlur": {
+        "value": "0",
+        "type": "0"
+      }
+    },
+    {
+      "UID": 18,
+      "isVisible": true,
+      "component": "IMAGE",
+      "componentName": {
+        "value": "Fleur 33"
+      },
+      "src": {
+        "value": "",
+        "type": "1",
+        "valueCB": "fleur33"
+      },
+      "positionX": {
+        "value": ":0.5*W",
+        "type": "0"
+      },
+      "positionY": {
+        "value": ":0.35*H",
+        "type": "0"
+      },
+      "width": {
+        "value": "100",
+        "type": "0"
+      },
+      "height": {
+        "value": "100",
+        "type": "0"
+      },
+      "anchor": {
+        "value": ":CENTER",
+        "type": "0"
+      },
+      "mirror": {
+        "value": "none",
+        "type": "0"
+      },
+      "opacity": {
+        "value": "100",
+        "type": "0"
+      },
+      "tint": {
+        "value": "#ffffff",
+        "type": "0"
+      },
+      "angle": {
+        "value": "0",
+        "type": "0"
+      },
+      "listAnchor": {
+        "value": ":LEFT",
+        "type": "0"
+      },
+      "spacingX": {
+        "value": "0",
+        "type": "0"
+      },
+      "spacingY": {
+        "value": ":H*0.28",
+        "type": "0"
+      },
+      "style": {
+        "value": "straight",
+        "type": "0"
+      },
+      "offsetX": {
+        "value": "100",
+        "type": "0"
+      },
+      "offsetY": {
+        "value": "0",
+        "type": "0"
+      },
+      "shadowColor": {
+        "value": "#000000",
+        "type": "0"
+      },
+      "shadowOffsetX": {
+        "value": "5",
+        "type": "0"
+      },
+      "shadowOffsetY": {
+        "value": "5",
+        "type": "0"
+      },
+      "shadowOpacity": {
+        "value": "0",
+        "type": "0"
+      },
+      "shadowBlur": {
+        "value": "0",
+        "type": "0"
+      }
+    },
+    {
+      "UID": 12,
+      "isVisible": true,
+      "component": "IMAGE",
+      "componentName": {
+        "value": "Fleur 41"
+      },
+      "src": {
+        "value": "",
+        "type": "1",
+        "valueCB": "fleur41"
+      },
+      "positionX": {
+        "value": ":0.3*W",
+        "type": "0"
+      },
+      "positionY": {
+        "value": ":0.15*H",
+        "type": "0"
+      },
+      "width": {
+        "value": "100",
+        "type": "0"
+      },
+      "height": {
+        "value": "100",
+        "type": "0"
+      },
+      "anchor": {
+        "value": ":CENTER",
+        "type": "0"
+      },
+      "mirror": {
+        "value": "none",
+        "type": "0"
+      },
+      "opacity": {
+        "value": "100",
+        "type": "0"
+      },
+      "tint": {
+        "value": "#ffffff",
+        "type": "0"
+      },
+      "angle": {
+        "value": "0",
+        "type": "0"
+      },
+      "listAnchor": {
+        "value": ":LEFT",
+        "type": "0"
+      },
+      "spacingX": {
+        "value": "0",
+        "type": "0"
+      },
+      "spacingY": {
+        "value": ":H*0.48",
+        "type": "0"
+      },
+      "style": {
+        "value": "straight",
+        "type": "0"
+      },
+      "offsetX": {
+        "value": "100",
+        "type": "0"
+      },
+      "offsetY": {
+        "value": "0",
+        "type": "0"
+      },
+      "shadowColor": {
+        "value": "#000000",
+        "type": "0"
+      },
+      "shadowOffsetX": {
+        "value": "5",
+        "type": "0"
+      },
+      "shadowOffsetY": {
+        "value": "5",
+        "type": "0"
+      },
+      "shadowOpacity": {
+        "value": "0",
+        "type": "0"
+      },
+      "shadowBlur": {
+        "value": "0",
+        "type": "0"
+      }
+    },
+    {
+      "UID": 13,
+      "isVisible": true,
+      "component": "IMAGE",
+      "componentName": {
+        "value": "Fleur 42"
+      },
+      "src": {
+        "value": "",
+        "type": "1",
+        "valueCB": "fleur42"
+      },
+      "positionX": {
+        "value": ":0.7*W",
+        "type": "0"
+      },
+      "positionY": {
+        "value": ":0.15*H",
+        "type": "0"
+      },
+      "width": {
+        "value": "100",
+        "type": "0"
+      },
+      "height": {
+        "value": "100",
+        "type": "0"
+      },
+      "anchor": {
+        "value": ":CENTER",
+        "type": "0"
+      },
+      "mirror": {
+        "value": "none",
+        "type": "0"
+      },
+      "opacity": {
+        "value": "100",
+        "type": "0"
+      },
+      "tint": {
+        "value": "#ffffff",
+        "type": "0"
+      },
+      "angle": {
+        "value": "0",
+        "type": "0"
+      },
+      "listAnchor": {
+        "value": ":LEFT",
+        "type": "0"
+      },
+      "spacingX": {
+        "value": "0",
+        "type": "0"
+      },
+      "spacingY": {
+        "value": ":H*0.48",
+        "type": "0"
+      },
+      "style": {
+        "value": "straight",
+        "type": "0"
+      },
+      "offsetX": {
+        "value": "100",
+        "type": "0"
+      },
+      "offsetY": {
+        "value": "0",
+        "type": "0"
+      },
+      "shadowColor": {
+        "value": "#000000",
+        "type": "0"
+      },
+      "shadowOffsetX": {
+        "value": "5",
+        "type": "0"
+      },
+      "shadowOffsetY": {
+        "value": "5",
+        "type": "0"
+      },
+      "shadowOpacity": {
+        "value": "0",
+        "type": "0"
+      },
+      "shadowBlur": {
+        "value": "0",
+        "type": "0"
+      }
+    },
+    {
+      "UID": 14,
+      "isVisible": true,
+      "component": "IMAGE",
+      "componentName": {
+        "value": "Fleur 43"
+      },
+      "src": {
+        "value": "",
+        "type": "1",
+        "valueCB": "fleur43"
+      },
+      "positionX": {
+        "value": ":0.3*W",
+        "type": "0"
+      },
+      "positionY": {
+        "value": ":0.35*H",
+        "type": "0"
+      },
+      "width": {
+        "value": "100",
+        "type": "0"
+      },
+      "height": {
+        "value": "100",
+        "type": "0"
+      },
+      "anchor": {
+        "value": ":CENTER",
+        "type": "0"
+      },
+      "mirror": {
+        "value": "none",
+        "type": "0"
+      },
+      "opacity": {
+        "value": "100",
+        "type": "0"
+      },
+      "tint": {
+        "value": "#ffffff",
+        "type": "0"
+      },
+      "angle": {
+        "value": "0",
+        "type": "0"
+      },
+      "listAnchor": {
+        "value": ":LEFT",
+        "type": "0"
+      },
+      "spacingX": {
+        "value": "0",
+        "type": "0"
+      },
+      "spacingY": {
+        "value": ":H*0.48",
+        "type": "0"
+      },
+      "style": {
+        "value": "straight",
+        "type": "0"
+      },
+      "offsetX": {
+        "value": "100",
+        "type": "0"
+      },
+      "offsetY": {
+        "value": "0",
+        "type": "0"
+      },
+      "shadowColor": {
+        "value": "#000000",
+        "type": "0"
+      },
+      "shadowOffsetX": {
+        "value": "5",
+        "type": "0"
+      },
+      "shadowOffsetY": {
+        "value": "5",
+        "type": "0"
+      },
+      "shadowOpacity": {
+        "value": "0",
+        "type": "0"
+      },
+      "shadowBlur": {
+        "value": "0",
+        "type": "0"
+      }
+    },
+    {
+      "UID": 15,
+      "isVisible": true,
+      "component": "IMAGE",
+      "componentName": {
+        "value": "Fleur 44"
+      },
+      "src": {
+        "value": "",
+        "type": "1",
+        "valueCB": "fleur44"
+      },
+      "positionX": {
+        "value": ":0.7*W",
+        "type": "0"
+      },
+      "positionY": {
+        "value": ":0.35*H",
+        "type": "0"
+      },
+      "width": {
+        "value": "100",
+        "type": "0"
+      },
+      "height": {
+        "value": "100",
+        "type": "0"
+      },
+      "anchor": {
+        "value": ":CENTER",
+        "type": "0"
+      },
+      "mirror": {
+        "value": "none",
+        "type": "0"
+      },
+      "opacity": {
+        "value": "100",
+        "type": "0"
+      },
+      "tint": {
+        "value": "#ffffff",
+        "type": "0"
+      },
+      "angle": {
+        "value": "0",
+        "type": "0"
+      },
+      "listAnchor": {
+        "value": ":LEFT",
+        "type": "0"
+      },
+      "spacingX": {
+        "value": "0",
+        "type": "0"
+      },
+      "spacingY": {
+        "value": ":H*0.48",
+        "type": "0"
+      },
+      "style": {
+        "value": "straight",
+        "type": "0"
+      },
+      "offsetX": {
+        "value": "100",
+        "type": "0"
+      },
+      "offsetY": {
+        "value": "0",
+        "type": "0"
+      },
+      "shadowColor": {
+        "value": "#000000",
+        "type": "0"
+      },
+      "shadowOffsetX": {
+        "value": "5",
+        "type": "0"
+      },
+      "shadowOffsetY": {
+        "value": "5",
+        "type": "0"
+      },
+      "shadowOpacity": {
+        "value": "0",
+        "type": "0"
+      },
+      "shadowBlur": {
+        "value": "0",
+        "type": "0"
+      }
+    },
+    {
+      "UID": 8,
+      "isVisible": true,
+      "component": "IMAGE",
+      "componentName": {
+        "value": "Bonus"
+      },
+      "src": {
+        "value": "",
+        "type": "1",
+        "valueCB": "bonus"
+      },
+      "positionX": {
+        "value": ":W*0.5",
+        "type": "0"
+      },
+      "positionY": {
+        "value": ":0.25*H",
+        "type": "0"
+      },
+      "width": {
+        "value": "220",
+        "type": "0"
+      },
+      "height": {
+        "value": "220",
+        "type": "0"
+      },
+      "anchor": {
+        "value": ":CENTER",
+        "type": "0"
+      },
+      "mirror": {
+        "value": "none",
+        "type": "0"
+      },
+      "opacity": {
+        "value": "100",
+        "type": "0"
+      },
+      "tint": {
+        "value": "#ffffff",
+        "type": "0"
+      },
+      "angle": {
+        "value": "0",
+        "type": "0"
+      },
+      "listAnchor": {
+        "value": ":CENTER",
+        "type": "0"
+      },
+      "spacingX": {
+        "value": "100",
+        "type": "0"
+      },
+      "spacingY": {
+        "value": "0",
+        "type": "0"
+      },
+      "style": {
+        "value": "straight",
+        "type": "0"
+      },
+      "offsetX": {
+        "value": "0",
+        "type": "0"
+      },
+      "offsetY": {
+        "value": "0",
+        "type": "0"
+      },
+      "shadowColor": {
+        "value": "#000000",
+        "type": "0"
+      },
+      "shadowOffsetX": {
+        "value": "5",
+        "type": "0"
+      },
+      "shadowOffsetY": {
+        "value": "5",
+        "type": "0"
+      },
+      "shadowOpacity": {
+        "value": "0",
+        "type": "0"
+      },
+      "shadowBlur": {
+        "value": "0",
+        "type": "0"
+      }
+    },
+    {
+      "UID": 21,
+      "isVisible": true,
+      "component": "IMAGE",
+      "componentName": {
+        "value": "Pieces"
+      },
+      "src": {
+        "value": "",
+        "type": "1",
+        "valueCB": "pieces"
+      },
+      "positionX": {
+        "value": ":W*0.5",
+        "type": "0"
+      },
+      "positionY": {
+        "value": ":0.77*H",
+        "type": "0"
+      },
+      "width": {
+        "value": "220",
+        "type": "0"
+      },
+      "height": {
+        "value": "220",
+        "type": "0"
+      },
+      "anchor": {
+        "value": ":CENTER",
+        "type": "0"
+      },
+      "mirror": {
+        "value": "none",
+        "type": "0"
+      },
+      "opacity": {
+        "value": "100",
+        "type": "0"
+      },
+      "tint": {
+        "value": "#ffffff",
+        "type": "0"
+      },
+      "angle": {
+        "value": "0",
+        "type": "0"
+      },
+      "listAnchor": {
+        "value": ":CENTER",
+        "type": "0"
+      },
+      "spacingX": {
+        "value": "100",
+        "type": "0"
+      },
+      "spacingY": {
+        "value": "0",
+        "type": "0"
+      },
+      "style": {
+        "value": "straight",
+        "type": "0"
+      },
+      "offsetX": {
+        "value": "0",
+        "type": "0"
+      },
+      "offsetY": {
+        "value": "0",
+        "type": "0"
+      },
+      "shadowColor": {
+        "value": "#000000",
+        "type": "0"
+      },
+      "shadowOffsetX": {
+        "value": "5",
+        "type": "0"
+      },
+      "shadowOffsetY": {
+        "value": "5",
+        "type": "0"
+      },
+      "shadowOpacity": {
+        "value": "0",
+        "type": "0"
+      },
+      "shadowBlur": {
+        "value": "0",
+        "type": "0"
+      }
+    },
+    {
+      "UID": 23,
+      "isVisible": true,
+      "component": "IMAGE",
+      "componentName": {
+        "value": "Botte"
+      },
+      "src": {
+        "value": "",
+        "type": "1",
+        "valueCB": "botte"
+      },
+      "positionX": {
+        "value": ":W*0.5",
+        "type": "0"
+      },
+      "positionY": {
+        "value": ":0.7*H",
+        "type": "0"
+      },
+      "width": {
+        "value": ":W",
+        "type": "0"
+      },
+      "height": {
+        "value": ":W",
+        "type": "0"
+      },
+      "anchor": {
+        "value": ":CENTER",
+        "type": "0"
+      },
+      "mirror": {
+        "value": "none",
+        "type": "0"
+      },
+      "opacity": {
+        "value": "100",
+        "type": "0"
+      },
+      "tint": {
+        "value": "#ffffff",
+        "type": "0"
+      },
+      "angle": {
+        "value": "0",
+        "type": "0"
+      },
+      "listAnchor": {
+        "value": ":CENTER",
+        "type": "0"
+      },
+      "spacingX": {
+        "value": "100",
+        "type": "0"
+      },
+      "spacingY": {
+        "value": "0",
+        "type": "0"
+      },
+      "style": {
+        "value": "straight",
+        "type": "0"
+      },
+      "offsetX": {
+        "value": "0",
+        "type": "0"
+      },
+      "offsetY": {
+        "value": "0",
+        "type": "0"
+      },
+      "shadowColor": {
+        "value": "#000000",
+        "type": "0"
+      },
+      "shadowOffsetX": {
+        "value": "5",
+        "type": "0"
+      },
+      "shadowOffsetY": {
+        "value": "5",
+        "type": "0"
+      },
+      "shadowOpacity": {
+        "value": "0",
+        "type": "0"
+      },
+      "shadowBlur": {
+        "value": "0",
+        "type": "0"
+      }
+    },
+    {
+      "UID": 24,
+      "isVisible": true,
+      "component": "IMAGE",
+      "componentName": {
+        "value": "Validé"
+      },
+      "src": {
+        "value": "",
+        "type": "1",
+        "valueCB": "coche"
+      },
+      "positionX": {
+        "value": ":W*0.5",
+        "type": "0"
+      },
+      "positionY": {
+        "value": ":0.77*H",
+        "type": "0"
+      },
+      "width": {
+        "value": ":W*0.8",
+        "type": "0"
+      },
+      "height": {
+        "value": ":W*0.8",
+        "type": "0"
+      },
+      "anchor": {
+        "value": ":CENTER",
+        "type": "0"
+      },
+      "mirror": {
+        "value": "none",
+        "type": "0"
+      },
+      "opacity": {
+        "value": "100",
+        "type": "0"
+      },
+      "tint": {
+        "value": "#ffffff",
+        "type": "0"
+      },
+      "angle": {
+        "value": "0",
+        "type": "0"
+      },
+      "listAnchor": {
+        "value": ":CENTER",
+        "type": "0"
+      },
+      "spacingX": {
+        "value": "100",
+        "type": "0"
+      },
+      "spacingY": {
+        "value": "0",
+        "type": "0"
+      },
+      "style": {
+        "value": "straight",
+        "type": "0"
+      },
+      "offsetX": {
+        "value": "0",
+        "type": "0"
+      },
+      "offsetY": {
+        "value": "0",
+        "type": "0"
+      },
+      "shadowColor": {
+        "value": "#000000",
+        "type": "0"
+      },
+      "shadowOffsetX": {
+        "value": "5",
+        "type": "0"
+      },
+      "shadowOffsetY": {
+        "value": "5",
+        "type": "0"
+      },
+      "shadowOpacity": {
+        "value": "0",
+        "type": "0"
+      },
+      "shadowBlur": {
+        "value": "0",
+        "type": "0"
+      }
+    },
+    {
+      "UID": 26,
+      "isVisible": true,
+      "component": "IMAGE",
+      "componentName": {
+        "value": "Argent"
+      },
+      "src": {
+        "value": "",
+        "type": "1",
+        "valueCB": "argent"
+      },
+      "positionX": {
+        "value": ":W*0.49",
+        "type": "0"
+      },
+      "positionY": {
+        "value": ":0.23*H",
+        "type": "0"
+      },
+      "width": {
+        "value": ":W*0.85",
+        "type": "0"
+      },
+      "height": {
+        "value": ":W*0.75",
+        "type": "0"
+      },
+      "anchor": {
+        "value": ":CENTER",
+        "type": "0"
+      },
+      "mirror": {
+        "value": "none",
+        "type": "0"
+      },
+      "opacity": {
+        "value": "100",
+        "type": "0"
+      },
+      "tint": {
+        "value": "#ffffff",
+        "type": "0"
+      },
+      "angle": {
+        "value": "0",
+        "type": "0"
+      },
+      "listAnchor": {
+        "value": ":CENTER",
+        "type": "0"
+      },
+      "spacingX": {
+        "value": "100",
+        "type": "0"
+      },
+      "spacingY": {
+        "value": "200",
+        "type": "0"
+      },
+      "style": {
+        "value": "straight",
+        "type": "0"
+      },
+      "offsetX": {
+        "value": "100",
+        "type": "0"
+      },
+      "offsetY": {
+        "value": "0",
+        "type": "0"
+      },
+      "shadowColor": {
+        "value": "#000000",
+        "type": "0"
+      },
+      "shadowOffsetX": {
+        "value": "5",
+        "type": "0"
+      },
+      "shadowOffsetY": {
+        "value": "5",
+        "type": "0"
+      },
+      "shadowOpacity": {
+        "value": "0",
+        "type": "0"
+      },
+      "shadowBlur": {
+        "value": "0",
+        "type": "0"
+      }
+    },
+    {
+      "UID": 19,
+      "isVisible": true,
+      "component": "IMAGE",
+      "componentName": {
+        "value": "Objet 1"
+      },
+      "src": {
+        "value": "",
+        "type": "1",
+        "valueCB": "objet1"
+      },
+      "positionX": {
+        "value": ":W*0.05",
+        "type": "0"
+      },
+      "positionY": {
+        "value": ":0.75*H",
+        "type": "0"
+      },
+      "width": {
+        "value": "200",
+        "type": "0"
+      },
+      "height": {
+        "value": "200",
+        "type": "0"
+      },
+      "anchor": {
+        "value": ":CENTER",
+        "type": "0"
+      },
+      "mirror": {
+        "value": "none",
+        "type": "0"
+      },
+      "opacity": {
+        "value": "100",
+        "type": "0"
+      },
+      "tint": {
+        "value": "#ffffff",
+        "type": "0"
+      },
+      "angle": {
+        "value": "0",
+        "type": "0"
+      },
+      "listAnchor": {
+        "value": ":CENTER",
+        "type": "0"
+      },
+      "spacingX": {
+        "value": "100",
+        "type": "0"
+      },
+      "spacingY": {
+        "value": "0",
+        "type": "0"
+      },
+      "style": {
+        "value": "straight",
+        "type": "0"
+      },
+      "offsetX": {
+        "value": "0",
+        "type": "0"
+      },
+      "offsetY": {
+        "value": "0",
+        "type": "0"
+      },
+      "shadowColor": {
+        "value": "#000000",
+        "type": "0"
+      },
+      "shadowOffsetX": {
+        "value": "5",
+        "type": "0"
+      },
+      "shadowOffsetY": {
+        "value": "5",
+        "type": "0"
+      },
+      "shadowOpacity": {
+        "value": "0",
+        "type": "0"
+      },
+      "shadowBlur": {
+        "value": "0",
+        "type": "0"
+      }
+    },
+    {
+      "UID": 7,
+      "isVisible": true,
+      "component": "IMAGE",
+      "componentName": {
+        "value": "Objet 2"
+      },
+      "src": {
+        "value": "",
+        "type": "1",
+        "valueCB": "objet2"
+      },
+      "positionX": {
+        "value": ":W*0.95",
+        "type": "0"
+      },
+      "positionY": {
+        "value": ":0.75*H",
+        "type": "0"
+      },
+      "width": {
+        "value": "200",
+        "type": "0"
+      },
+      "height": {
+        "value": "200",
+        "type": "0"
+      },
+      "anchor": {
+        "value": ":CENTER",
+        "type": "0"
+      },
+      "mirror": {
+        "value": "none",
+        "type": "0"
+      },
+      "opacity": {
+        "value": "100",
+        "type": "0"
+      },
+      "tint": {
+        "value": "#ffffff",
+        "type": "0"
+      },
+      "angle": {
+        "value": "0",
+        "type": "0"
+      },
+      "listAnchor": {
+        "value": ":CENTER",
+        "type": "0"
+      },
+      "spacingX": {
+        "value": "100",
+        "type": "0"
+      },
+      "spacingY": {
+        "value": "0",
+        "type": "0"
+      },
+      "style": {
+        "value": "straight",
+        "type": "0"
+      },
+      "offsetX": {
+        "value": "0",
+        "type": "0"
+      },
+      "offsetY": {
+        "value": "0",
+        "type": "0"
+      },
+      "shadowColor": {
+        "value": "#000000",
+        "type": "0"
+      },
+      "shadowOffsetX": {
+        "value": "5",
+        "type": "0"
+      },
+      "shadowOffsetY": {
+        "value": "5",
+        "type": "0"
+      },
+      "shadowOpacity": {
+        "value": "0",
+        "type": "0"
+      },
+      "shadowBlur": {
+        "value": "0",
+        "type": "0"
+      }
+    },
+    {
+      "UID": 22,
+      "isVisible": true,
+      "component": "TEXT",
+      "componentName": {
+        "value": "Pas"
+      },
+      "src": {
+        "value": "",
+        "type": "1",
+        "valueCB": "pas"
+      },
+      "positionX": {
+        "value": ":0.5*W",
+        "type": "0"
+      },
+      "positionY": {
+        "value": ":0.3*H",
+        "type": "0"
+      },
+      "anchor": {
+        "value": ":CENTER",
+        "type": "0"
+      },
+      "mirror": {
+        "value": "none",
+        "type": "0"
+      },
+      "color": {
+        "value": "#000000",
+        "type": "0"
+      },
+      "size": {
+        "value": "13",
+        "type": "0"
+      },
+      "font": {
+        "value": "\"KG Red Hands\"",
+        "type": "0"
+      },
+      "angle": {
+        "value": "0",
+        "type": "0"
+      },
+      "opacity": {
+        "value": "100",
+        "type": "0"
+      },
+      "shadowColor": {
+        "value": "#000000",
+        "type": "0"
+      },
+      "shadowOffsetX": {
+        "value": "5",
+        "type": "0"
+      },
+      "shadowOffsetY": {
+        "value": "5",
+        "type": "0"
+      },
+      "shadowOpacity": {
+        "value": "0",
+        "type": "0"
+      },
+      "shadowBlur": {
+        "value": "0",
+        "type": "0"
+      }
+    }
+  ],
+  "elements": {
+    "headers": [
+      null,
+      null,
+      "fleur1",
+      "fleur21",
+      "fleur22",
+      "fleur31",
+      "fleur32",
+      "fleur33",
+      "fleur41",
+      "fleur42",
+      "fleur43",
+      "fleur44",
+      "objet1",
+      "objet2",
+      "fond",
+      "bonus",
+      "pieces",
+      "botte",
+      "pas",
+      "coche",
+      "argent"
+    ],
+    "data": [
+      [
+        "rectos",
+        1,
+        null,
+        "bleu.png",
+        "bleu.png",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "lunettes.png",
+        "gant.png",
+        "fond_fleurs.png"
+      ],
+      [
+        null,
+        2,
+        null,
+        "rouge.png",
+        "rouge.png",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "gant.png",
+        "serpe.png",
+        "fond_fleurs.png"
+      ],
+      [
+        null,
+        3,
+        null,
+        "jaune.png",
+        "jaune.png",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "serpe.png",
+        "lunettes.png",
+        "fond_fleurs.png"
+      ],
+      [
+        null,
+        4,
+        null,
+        "violet.png",
+        "violet.png",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "lunettes.png",
+        "gant.png",
+        "fond_fleurs.png"
+      ],
+      [
+        null,
+        5,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "bleu.png",
+        "rouge.png",
+        "jaune.png",
+        "violet.png",
+        "lunettes.png",
+        "serpe.png",
+        "fond_fleurs.png"
+      ],
+      [
+        null,
+        6,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "bleu.png",
+        "rouge.png",
+        "jaune.png",
+        "violet.png",
+        "lunettes.png",
+        "serpe.png",
+        "fond_fleurs.png"
+      ],
+      [
+        null,
+        7,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "bleu.png",
+        "rouge.png",
+        "jaune.png",
+        "violet.png",
+        "lunettes.png",
+        "serpe.png",
+        "fond_fleurs.png"
+      ],
+      [
+        null,
+        8,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "bleu.png",
+        "rouge.png",
+        "jaune.png",
+        "violet.png",
+        "lunettes.png",
+        "serpe.png",
+        "fond_fleurs.png"
+      ],
+      [
+        null,
+        9,
+        null,
+        null,
+        null,
+        "bleu.png",
+        "bleu.png",
+        "bleu.png",
+        null,
+        null,
+        null,
+        null,
+        "serpe.png",
+        "lunettes.png",
+        "fond_fleurs.png"
+      ],
+      [
+        null,
+        10,
+        null,
+        null,
+        null,
+        "rouge.png",
+        "rouge.png",
+        "rouge.png",
+        null,
+        null,
+        null,
+        null,
+        "lunettes.png",
+        "gant.png",
+        "fond_fleurs.png"
+      ],
+      [
+        null,
+        11,
+        null,
+        null,
+        null,
+        "jaune.png",
+        "jaune.png",
+        "jaune.png",
+        null,
+        null,
+        null,
+        null,
+        "gant.png",
+        "serpe.png",
+        "fond_fleurs.png"
+      ],
+      [
+        null,
+        12,
+        null,
+        null,
+        null,
+        "violet.png",
+        "violet.png",
+        "violet.png",
+        null,
+        null,
+        null,
+        null,
+        "serpe.png",
+        "lunettes.png",
+        "fond_fleurs.png"
+      ],
+      [
+        null,
+        13,
+        null,
+        null,
+        null,
+        "bleu.png",
+        "bleu.png",
+        "bleu.png",
+        null,
+        null,
+        null,
+        null,
+        "serpe.png",
+        "lunettes.png",
+        "fond_fleurs.png"
+      ],
+      [
+        null,
+        14,
+        null,
+        null,
+        null,
+        "rouge.png",
+        "rouge.png",
+        "rouge.png",
+        null,
+        null,
+        null,
+        null,
+        "lunettes.png",
+        "gant.png",
+        "fond_fleurs.png"
+      ],
+      [
+        null,
+        15,
+        null,
+        null,
+        null,
+        "jaune.png",
+        "jaune.png",
+        "jaune.png",
+        null,
+        null,
+        null,
+        null,
+        "gant.png",
+        "serpe.png",
+        "fond_fleurs.png"
+      ],
+      [
+        null,
+        16,
+        null,
+        null,
+        null,
+        "violet.png",
+        "violet.png",
+        "violet.png",
+        null,
+        null,
+        null,
+        null,
+        "serpe.png",
+        "lunettes.png",
+        "fond_fleurs.png"
+      ],
+      [
+        null,
+        17,
+        null,
+        null,
+        null,
+        "bleu.png",
+        "bleu.png",
+        "rouge.png",
+        null,
+        null,
+        null,
+        null,
+        "gant.png",
+        "serpe.png",
+        "fond_fleurs.png"
+      ],
+      [
+        null,
+        18,
+        null,
+        null,
+        null,
+        "bleu.png",
+        "bleu.png",
+        "jaune.png",
+        null,
+        null,
+        null,
+        null,
+        "serpe.png",
+        "lunettes.png",
+        "fond_fleurs.png"
+      ],
+      [
+        null,
+        19,
+        null,
+        null,
+        null,
+        "bleu.png",
+        "bleu.png",
+        "violet.png",
+        null,
+        null,
+        null,
+        null,
+        "lunettes.png",
+        "gant.png",
+        "fond_fleurs.png"
+      ],
+      [
+        null,
+        20,
+        null,
+        null,
+        null,
+        "rouge.png",
+        "rouge.png",
+        "bleu.png",
+        null,
+        null,
+        null,
+        null,
+        "gant.png",
+        "serpe.png",
+        "fond_fleurs.png"
+      ],
+      [
+        null,
+        21,
+        null,
+        null,
+        null,
+        "rouge.png",
+        "rouge.png",
+        "jaune.png",
+        null,
+        null,
+        null,
+        null,
+        "serpe.png",
+        "lunettes.png",
+        "fond_fleurs.png"
+      ],
+      [
+        null,
+        22,
+        null,
+        null,
+        null,
+        "rouge.png",
+        "rouge.png",
+        "violet.png",
+        null,
+        null,
+        null,
+        null,
+        "lunettes.png",
+        "gant.png",
+        "fond_fleurs.png"
+      ],
+      [
+        null,
+        23,
+        null,
+        null,
+        null,
+        "jaune.png",
+        "jaune.png",
+        "bleu.png",
+        null,
+        null,
+        null,
+        null,
+        "gant.png",
+        "serpe.png",
+        "fond_fleurs.png"
+      ],
+      [
+        null,
+        24,
+        null,
+        null,
+        null,
+        "jaune.png",
+        "jaune.png",
+        "rouge.png",
+        null,
+        null,
+        null,
+        null,
+        "serpe.png",
+        "lunettes.png",
+        "fond_fleurs.png"
+      ],
+      [
+        null,
+        25,
+        null,
+        null,
+        null,
+        "jaune.png",
+        "jaune.png",
+        "violet.png",
+        null,
+        null,
+        null,
+        null,
+        "lunettes.png",
+        "gant.png",
+        "fond_fleurs.png"
+      ],
+      [
+        null,
+        26,
+        null,
+        null,
+        null,
+        "violet.png",
+        "violet.png",
+        "bleu.png",
+        null,
+        null,
+        null,
+        null,
+        "gant.png",
+        "serpe.png",
+        "fond_fleurs.png"
+      ],
+      [
+        null,
+        27,
+        null,
+        null,
+        null,
+        "violet.png",
+        "violet.png",
+        "rouge.png",
+        null,
+        null,
+        null,
+        null,
+        "serpe.png",
+        "lunettes.png",
+        "fond_fleurs.png"
+      ],
+      [
+        null,
+        28,
+        null,
+        null,
+        null,
+        "violet.png",
+        "violet.png",
+        "jaune.png",
+        null,
+        null,
+        null,
+        null,
+        "lunettes.png",
+        "gant.png",
+        "fond_fleurs.png"
+      ],
+      [
+        null,
+        29,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "gant.png",
+        "serpe.png",
+        "fond_fleurs.png",
+        "fougere.png"
+      ],
+      [
+        null,
+        30,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "serpe.png",
+        "lunettes.png",
+        "fond_fleurs.png",
+        "fougere.png"
+      ],
+      [
+        null,
+        31,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "lunettes.png",
+        "gant.png",
+        "fond_fleurs.png",
+        "fougere.png"
+      ],
+      [
+        null,
+        32,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "gant.png",
+        "serpe.png",
+        "fond_fleurs.png",
+        "fougere.png"
+      ],
+      [
+        null,
+        33,
+        "bleu.png",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "fond_commande.png",
+        null,
+        "3pieces.png"
+      ],
+      [
+        null,
+        34,
+        "rouge.png",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "fond_commande.png",
+        null,
+        "3pieces.png"
+      ],
+      [
+        null,
+        35,
+        "jaune.png",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "fond_commande.png",
+        null,
+        "3pieces.png"
+      ],
+      [
+        null,
+        36,
+        "violet.png",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "fond_commande.png",
+        null,
+        "3pieces.png"
+      ],
+      [
+        null,
+        37,
+        null,
+        "bleu.png",
+        "rouge.png",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "fond_commande.png",
+        null,
+        "2pieces.png"
+      ],
+      [
+        null,
+        38,
+        null,
+        "bleu.png",
+        "jaune.png",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "fond_commande.png",
+        null,
+        "2pieces.png"
+      ],
+      [
+        null,
+        39,
+        null,
+        "bleu.png",
+        "violet.png",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "fond_commande.png",
+        null,
+        "2pieces.png"
+      ],
+      [
+        null,
+        40,
+        null,
+        "rouge.png",
+        "jaune.png",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "fond_commande.png",
+        null,
+        "2pieces.png"
+      ],
+      [
+        null,
+        41,
+        null,
+        "rouge.png",
+        "violet.png",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "fond_commande.png",
+        null,
+        "2pieces.png"
+      ],
+      [
+        null,
+        42,
+        null,
+        "jaune.png",
+        "violet.png",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "fond_commande.png",
+        null,
+        "2pieces.png"
+      ],
+      [
+        null,
+        43,
+        null,
+        null,
+        null,
+        "bleu.png",
+        "rouge.png",
+        "jaune.png",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "fond_commande.png",
+        null,
+        "2pieces.png"
+      ],
+      [
+        null,
+        44,
+        null,
+        null,
+        null,
+        "bleu.png",
+        "rouge.png",
+        "violet.png",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "fond_commande.png",
+        null,
+        "2pieces.png"
+      ],
+      [
+        null,
+        45,
+        null,
+        null,
+        null,
+        "bleu.png",
+        "jaune.png",
+        "violet.png",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "fond_commande.png",
+        null,
+        "2pieces.png"
+      ],
+      [
+        null,
+        46,
+        null,
+        null,
+        null,
+        "rouge.png",
+        "jaune.png",
+        "violet.png",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "fond_commande.png",
+        null,
+        "2pieces.png"
+      ],
+      [
+        null,
+        47,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "fond_herbe.png",
+        null,
+        null,
+        "botte.png",
+        1
+      ],
+      [
+        null,
+        48,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "fond_herbe.png",
+        null,
+        null,
+        "botte.png",
+        2
+      ],
+      [
+        null,
+        49,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "fond_herbe.png",
+        null,
+        null,
+        "botte.png",
+        3
+      ],
+      [
+        null,
+        50,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "fond_herbe.png",
+        null,
+        null,
+        "botte.png",
+        4
+      ],
+      [
+        null,
+        51,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "fond_herbe.png",
+        null,
+        null,
+        "botte.png",
+        5
+      ],
+      [
+        null,
+        "intro",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "logo.png"
+      ],
+      [
+        "versos",
+        1,
+        null,
+        "bleu.png,bleu.png",
+        "bleu.png,bleu.png",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "fond_herbe.png"
+      ],
+      [
+        null,
+        2,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "fond_sanglier.png"
+      ],
+      [
+        null,
+        3,
+        null,
+        "jaune.png,jaune.png",
+        "jaune.png,jaune.png",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "fond_herbe.png"
+      ],
+      [
+        null,
+        4,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "fond_sanglier.png"
+      ],
+      [
+        null,
+        5,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "bleu.png,bleu.png",
+        "rouge.png,rouge.png",
+        "jaune.png,jaune.png",
+        "violet.png,violet.png",
+        null,
+        null,
+        "fond_herbe.png"
+      ],
+      [
+        null,
+        6,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "bleu.png,bleu.png",
+        "rouge.png,rouge.png",
+        "jaune.png,jaune.png",
+        "violet.png,violet.png",
+        null,
+        null,
+        "fond_herbe.png"
+      ],
+      [
+        null,
+        7,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "bleu.png,bleu.png",
+        "rouge.png,rouge.png",
+        "jaune.png,jaune.png",
+        "violet.png,violet.png",
+        null,
+        null,
+        "fond_herbe.png"
+      ],
+      [
+        null,
+        8,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "fond_sanglier.png"
+      ],
+      [
+        null,
+        9,
+        null,
+        null,
+        null,
+        "bleu.png,bleu.png",
+        "bleu.png,bleu.png",
+        "bleu.png,bleu.png",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "fond_herbe.png"
+      ],
+      [
+        null,
+        10,
+        null,
+        null,
+        null,
+        "rouge.png,rouge.png",
+        "rouge.png,rouge.png",
+        "rouge.png,rouge.png",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "fond_herbe.png"
+      ],
+      [
+        null,
+        11,
+        null,
+        null,
+        null,
+        "jaune.png,jaune.png",
+        "jaune.png,jaune.png",
+        "jaune.png,jaune.png",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "fond_herbe.png"
+      ],
+      [
+        null,
+        12,
+        null,
+        null,
+        null,
+        "violet.png,violet.png",
+        "violet.png,violet.png",
+        "violet.png,violet.png",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "fond_herbe.png"
+      ],
+      [
+        null,
+        13,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "fond_sanglier.png"
+      ],
+      [
+        null,
+        14,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "fond_sanglier.png"
+      ],
+      [
+        null,
+        15,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "fond_sanglier.png"
+      ],
+      [
+        null,
+        16,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "fond_sanglier.png"
+      ],
+      [
+        null,
+        17,
+        null,
+        null,
+        null,
+        "bleu.png,bleu.png",
+        "bleu.png,bleu.png",
+        "rouge.png,rouge.png",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "fond_herbe.png"
+      ],
+      [
+        null,
+        18,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "fond_sanglier.png"
+      ],
+      [
+        null,
+        19,
+        null,
+        null,
+        null,
+        "bleu.png,bleu.png",
+        "bleu.png,bleu.png",
+        "violet.png,violet.png",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "fond_herbe.png"
+      ],
+      [
+        null,
+        20,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "fond_sanglier.png"
+      ],
+      [
+        null,
+        21,
+        null,
+        null,
+        null,
+        "rouge.png,rouge.png",
+        "rouge.png,rouge.png",
+        "jaune.png,jaune.png",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "fond_herbe.png"
+      ],
+      [
+        null,
+        22,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "fond_sanglier.png"
+      ],
+      [
+        null,
+        23,
+        null,
+        null,
+        null,
+        "jaune.png,jaune.png",
+        "jaune.png,jaune.png",
+        "bleu.png,bleu.png",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "fond_herbe.png"
+      ],
+      [
+        null,
+        24,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "fond_sanglier.png"
+      ],
+      [
+        null,
+        25,
+        null,
+        null,
+        null,
+        "jaune.png,jaune.png",
+        "jaune.png,jaune.png",
+        "violet.png,violet.png",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "fond_herbe.png"
+      ],
+      [
+        null,
+        26,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "fond_sanglier.png"
+      ],
+      [
+        null,
+        27,
+        null,
+        null,
+        null,
+        "violet.png,violet.png",
+        "violet.png,violet.png",
+        "rouge.png,rouge.png",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "fond_herbe.png"
+      ],
+      [
+        null,
+        28,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "fond_sanglier.png"
+      ],
+      [
+        null,
+        29,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "gant.png",
+        "serpe.png",
+        "fond_fleurs.png",
+        "fougere.png"
+      ],
+      [
+        null,
+        30,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "serpe.png",
+        "lunettes.png",
+        "fond_fleurs.png",
+        "fougere.png"
+      ],
+      [
+        null,
+        31,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "lunettes.png",
+        "gant.png",
+        "fond_fleurs.png",
+        "fougere.png"
+      ],
+      [
+        null,
+        32,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "gant.png",
+        "serpe.png",
+        "fond_fleurs.png",
+        "fougere.png"
+      ],
+      [
+        null,
+        33,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "fond_commande.png",
+        null,
+        null,
+        null,
+        null,
+        "coche.png",
+        "argent.png"
+      ],
+      [
+        null,
+        34,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "fond_commande.png",
+        null,
+        null,
+        null,
+        null,
+        "coche.png",
+        "argent.png"
+      ],
+      [
+        null,
+        35,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "fond_commande.png",
+        null,
+        null,
+        null,
+        null,
+        "coche.png",
+        "argent.png"
+      ],
+      [
+        null,
+        36,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "fond_commande.png",
+        null,
+        null,
+        null,
+        null,
+        "coche.png",
+        "argent.png"
+      ],
+      [
+        null,
+        37,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "fond_commande.png",
+        null,
+        null,
+        null,
+        null,
+        "coche.png",
+        "argent.png"
+      ],
+      [
+        null,
+        38,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "fond_commande.png",
+        null,
+        null,
+        null,
+        null,
+        "coche.png",
+        "argent.png"
+      ],
+      [
+        null,
+        39,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "fond_commande.png",
+        null,
+        null,
+        null,
+        null,
+        "coche.png",
+        "argent.png"
+      ],
+      [
+        null,
+        40,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "fond_commande.png",
+        null,
+        null,
+        null,
+        null,
+        "coche.png",
+        "argent.png"
+      ],
+      [
+        null,
+        41,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "fond_commande.png",
+        null,
+        null,
+        null,
+        null,
+        "coche.png",
+        "argent.png"
+      ],
+      [
+        null,
+        42,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "fond_commande.png",
+        null,
+        null,
+        null,
+        null,
+        "coche.png",
+        "argent.png"
+      ],
+      [
+        null,
+        43,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "fond_commande.png",
+        null,
+        null,
+        null,
+        null,
+        "coche.png",
+        "argent.png"
+      ],
+      [
+        null,
+        44,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "fond_commande.png",
+        null,
+        null,
+        null,
+        null,
+        "coche.png",
+        "argent.png"
+      ],
+      [
+        null,
+        45,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "fond_commande.png",
+        null,
+        null,
+        null,
+        null,
+        "coche.png",
+        "argent.png"
+      ],
+      [
+        null,
+        46,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "fond_commande.png",
+        null,
+        null,
+        null,
+        null,
+        "coche.png",
+        "argent.png"
+      ],
+      [
+        null,
+        47,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "fond_herbe_gris.png",
+        null,
+        null,
+        "botte_grise.png",
+        1
+      ],
+      [
+        null,
+        48,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "fond_herbe_gris.png",
+        null,
+        null,
+        "botte_grise.png",
+        2
+      ],
+      [
+        null,
+        49,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "fond_herbe_gris.png",
+        null,
+        null,
+        "botte_grise.png",
+        3
+      ],
+      [
+        null,
+        50,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "fond_herbe_gris.png",
+        null,
+        null,
+        "botte_grise.png",
+        4
+      ],
+      [
+        null,
+        51,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "fond_herbe_gris.png",
+        null,
+        null,
+        "botte_grise.png",
+        5
+      ],
+      [
+        null,
+        "règles",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "logo.png"
+      ]
+    ]
+  }
+}

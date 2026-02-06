@@ -1,0 +1,547 @@
+{
+  "collectionInfo": {
+    "archived": true,
+    "UID": "0",
+    "collectionName": "Caravansérail - Dos",
+    "resolution": 60,
+    "elementFormat": "squareCard",
+    "pageFormat": "A4",
+    "pageOrientation": "portrait",
+    "visualGuide": "none",
+    "W": 8.8,
+    "H": 8.8,
+    "pageWidth": 21,
+    "pageHeight": 29.7,
+    "lastComponentIndex": 60,
+    "lastElementIndex": 0,
+    "lastAssetIndex": 0,
+    "maxElementQty": "6",
+    "pageExportFormat": "jpg",
+    "cuttingHelp": false,
+    "colCount": 2,
+    "rowCount": 3,
+    "marginX": 101.99999999999996,
+    "marginY": 98.99999999999991,
+    "lastSavingTime": 1751404936094
+  },
+  "template": [
+    {
+      "UID": 55,
+      "isVisible": false,
+      "component": "IMAGE",
+      "componentName": {
+        "value": "NOUVELLE IMAGE"
+      },
+      "src": {
+        "value": "fond.png",
+        "type": "0"
+      },
+      "positionX": {
+        "value": ":0.5*W",
+        "type": "0"
+      },
+      "positionY": {
+        "value": ":0.5*H",
+        "type": "0"
+      },
+      "width": {
+        "value": ":W",
+        "type": "0"
+      },
+      "height": {
+        "value": ":H",
+        "type": "0"
+      },
+      "anchor": {
+        "value": ":CENTER",
+        "type": "0"
+      },
+      "opacity": {
+        "value": "1",
+        "type": "0"
+      },
+      "tint": {
+        "value": "#ffffff",
+        "type": "0"
+      },
+      "angle": {
+        "value": "0",
+        "type": "0"
+      },
+      "listAnchor": {
+        "value": ":CENTER",
+        "type": "0"
+      },
+      "spacingX": {
+        "value": "0",
+        "type": "0"
+      },
+      "spacingY": {
+        "value": "0",
+        "type": "0"
+      },
+      "style": {
+        "value": "straight",
+        "type": "0"
+      },
+      "offsetX": {
+        "value": "0",
+        "type": "0"
+      },
+      "offsetY": {
+        "value": "0",
+        "type": "0"
+      },
+      "shadowColor": {
+        "value": "#000000",
+        "type": "0"
+      },
+      "shadowOffsetX": {
+        "value": "5",
+        "type": "0"
+      },
+      "shadowOffsetY": {
+        "value": "5",
+        "type": "0"
+      },
+      "shadowOpacity": {
+        "value": "0",
+        "type": "0"
+      }
+    },
+    {
+      "UID": 56,
+      "isVisible": true,
+      "component": "IMAGE",
+      "componentName": {
+        "value": "étoiles"
+      },
+      "src": {
+        "value": "",
+        "type": "1",
+        "valueCB": "etoiles"
+      },
+      "positionX": {
+        "value": ":0.5*W",
+        "type": "0"
+      },
+      "positionY": {
+        "value": ":0.8*H",
+        "type": "0"
+      },
+      "width": {
+        "value": "50",
+        "type": "0"
+      },
+      "height": {
+        "value": "50",
+        "type": "0"
+      },
+      "anchor": {
+        "value": ":CENTER",
+        "type": "0"
+      },
+      "opacity": {
+        "value": "1",
+        "type": "0"
+      },
+      "tint": {
+        "value": "#ffffff",
+        "type": "0"
+      },
+      "angle": {
+        "value": "0",
+        "type": "0"
+      },
+      "listAnchor": {
+        "value": ":CENTER",
+        "type": "0"
+      },
+      "spacingX": {
+        "value": "50",
+        "type": "0"
+      },
+      "spacingY": {
+        "value": "0",
+        "type": "0"
+      },
+      "style": {
+        "value": "straight",
+        "type": "0"
+      },
+      "offsetX": {
+        "value": "0",
+        "type": "0"
+      },
+      "offsetY": {
+        "value": "0",
+        "type": "0"
+      },
+      "shadowColor": {
+        "value": "#000000",
+        "type": "0"
+      },
+      "shadowOffsetX": {
+        "value": "5",
+        "type": "0"
+      },
+      "shadowOffsetY": {
+        "value": "5",
+        "type": "0"
+      },
+      "shadowOpacity": {
+        "value": "0",
+        "type": "0"
+      }
+    },
+    {
+      "UID": 57,
+      "isVisible": true,
+      "component": "SHAPE",
+      "componentName": {
+        "value": "NOUVELLE FORME"
+      },
+      "src": {
+        "value": "tri",
+        "type": "0"
+      },
+      "positionX": {
+        "value": ":0.2*W",
+        "type": "0"
+      },
+      "positionY": {
+        "value": ":0.5*H",
+        "type": "0"
+      },
+      "width": {
+        "value": "100",
+        "type": "0"
+      },
+      "height": {
+        "value": "100",
+        "type": "0"
+      },
+      "anchor": {
+        "value": ":CENTER",
+        "type": "0"
+      },
+      "angle": {
+        "value": "0",
+        "type": "0"
+      },
+      "color": {
+        "value": "#DDDDDD",
+        "type": "1",
+        "valueCB": "color1"
+      },
+      "opacity": {
+        "value": "1",
+        "type": "0"
+      },
+      "borderColor": {
+        "value": "#000000",
+        "type": "0"
+      },
+      "borderOpacity": {
+        "value": "0.33",
+        "type": "0"
+      },
+      "borderWeight": {
+        "value": "0",
+        "type": "0"
+      },
+      "shadowColor": {
+        "value": "#000000",
+        "type": "0"
+      },
+      "shadowOffsetX": {
+        "value": "5",
+        "type": "0"
+      },
+      "shadowOffsetY": {
+        "value": "5",
+        "type": "0"
+      },
+      "shadowOpacity": {
+        "value": "0",
+        "type": "0"
+      }
+    },
+    {
+      "UID": 58,
+      "isVisible": true,
+      "component": "SHAPE",
+      "componentName": {
+        "value": "NOUVELLE FORME"
+      },
+      "src": {
+        "value": "rect",
+        "type": "0"
+      },
+      "positionX": {
+        "value": ":0.5*W",
+        "type": "0"
+      },
+      "positionY": {
+        "value": ":0.5*H",
+        "type": "0"
+      },
+      "width": {
+        "value": "100",
+        "type": "0"
+      },
+      "height": {
+        "value": "100",
+        "type": "0"
+      },
+      "anchor": {
+        "value": ":CENTER",
+        "type": "0"
+      },
+      "angle": {
+        "value": "0",
+        "type": "0"
+      },
+      "color": {
+        "value": "#DDDDDD",
+        "type": "1",
+        "valueCB": "color2"
+      },
+      "opacity": {
+        "value": "1",
+        "type": "0"
+      },
+      "borderColor": {
+        "value": "#FF00FF",
+        "type": "0"
+      },
+      "borderOpacity": {
+        "value": "1",
+        "type": "0"
+      },
+      "borderWeight": {
+        "value": "0",
+        "type": "0"
+      },
+      "shadowColor": {
+        "value": "#000000",
+        "type": "0"
+      },
+      "shadowOffsetX": {
+        "value": "5",
+        "type": "0"
+      },
+      "shadowOffsetY": {
+        "value": "5",
+        "type": "0"
+      },
+      "shadowOpacity": {
+        "value": "0",
+        "type": "0"
+      }
+    },
+    {
+      "UID": 59,
+      "isVisible": true,
+      "component": "SHAPE",
+      "componentName": {
+        "value": "NOUVELLE FORME"
+      },
+      "src": {
+        "value": "pent",
+        "type": "0"
+      },
+      "positionX": {
+        "value": ":0.8*W",
+        "type": "0"
+      },
+      "positionY": {
+        "value": ":0.5*H",
+        "type": "0"
+      },
+      "width": {
+        "value": "100",
+        "type": "0"
+      },
+      "height": {
+        "value": "100",
+        "type": "0"
+      },
+      "anchor": {
+        "value": ":CENTER",
+        "type": "0"
+      },
+      "angle": {
+        "value": "0",
+        "type": "0"
+      },
+      "color": {
+        "value": "#DDDDDD",
+        "type": "1",
+        "valueCB": "color3"
+      },
+      "opacity": {
+        "value": "1",
+        "type": "0"
+      },
+      "borderColor": {
+        "value": "#FF00FF",
+        "type": "0"
+      },
+      "borderOpacity": {
+        "value": "1",
+        "type": "0"
+      },
+      "borderWeight": {
+        "value": "0",
+        "type": "0"
+      },
+      "shadowColor": {
+        "value": "#000000",
+        "type": "0"
+      },
+      "shadowOffsetX": {
+        "value": "5",
+        "type": "0"
+      },
+      "shadowOffsetY": {
+        "value": "5",
+        "type": "0"
+      },
+      "shadowOpacity": {
+        "value": "0",
+        "type": "0"
+      }
+    }
+  ],
+  "elements": {
+    "headers": [
+      "etoiles",
+      "color1",
+      "color2",
+      "color3"
+    ],
+    "data": [
+      [
+        "star.png,star.png,star.png,star.png",
+        "#0000FF",
+        "#FF0000",
+        "#0000FF"
+      ],
+      [
+        "star.png,star.png,star.png",
+        "#FF0000",
+        "#00FF00",
+        "#00FF00"
+      ],
+      [
+        "star.png",
+        "#FF0000",
+        "#0000FF",
+        "#DD00DD"
+      ],
+      [
+        "star.png,star.png",
+        "#0000FF",
+        "#DD00DD",
+        "#FF0000"
+      ],
+      [
+        "star.png,star.png,star.png,star.png",
+        "#FF0000",
+        "#0000FF",
+        "#00FF00"
+      ],
+      [
+        "star.png,star.png,star.png",
+        "#DD00DD",
+        "#DD00DD",
+        "#FF0000"
+      ],
+      [
+        "star.png",
+        "#DD00DD",
+        "#FF0000",
+        "#FFFF00"
+      ],
+      [
+        "star.png,star.png",
+        "#FF0000",
+        "#00FF00",
+        "#DD00DD"
+      ],
+      [
+        "star.png,star.png,star.png,star.png",
+        "#DD00DD",
+        "#00FF00",
+        "#FFFF00"
+      ],
+      [
+        "star.png,star.png,star.png",
+        "#0000FF",
+        "#0000FF",
+        "#0000FF"
+      ],
+      [
+        "star.png",
+        "#0000FF",
+        "#DD00DD",
+        "#FF0000"
+      ],
+      [
+        "star.png,star.png",
+        "#DD00DD",
+        "#FF0000",
+        "#00FF00"
+      ],
+      [
+        "star.png,star.png,star.png,star.png",
+        "#EEEEEE",
+        "#DD00DD",
+        "#FF0000"
+      ],
+      [
+        "star.png,star.png,star.png",
+        "#EEEEEE",
+        "#FF0000",
+        "#DD00DD"
+      ],
+      [
+        "star.png",
+        "#EEEEEE",
+        "#00FF00",
+        "#0000FF"
+      ],
+      [
+        "star.png,star.png",
+        "#EEEEEE",
+        "#0000FF",
+        "#FFFF00"
+      ],
+      [
+        "star.png,star.png,star.png,star.png",
+        "#EEEEEE",
+        "#EEEEEE",
+        "#DD00DD"
+      ],
+      [
+        "star.png,star.png,star.png",
+        "#EEEEEE",
+        "#EEEEEE",
+        "#FFFF00"
+      ],
+      [
+        "star.png",
+        "#EEEEEE",
+        "#EEEEEE",
+        "#00FF00"
+      ],
+      [
+        "star.png,star.png",
+        "#EEEEEE",
+        "#EEEEEE",
+        "#0000FF"
+      ]
+    ]
+  }
+}

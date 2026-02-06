@@ -597,7 +597,6 @@ th:nth-child(3) {
   background-position: center;
   background-size: contain;
   background-repeat: no-repeat;
-  height: 4rem;
   overflow-wrap: anywhere;
   color: var(--mainColorText);
 }
